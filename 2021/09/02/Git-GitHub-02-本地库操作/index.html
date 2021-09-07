@@ -461,7 +461,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    5.7k
+                    5.8k
                 </div>
                 
 
@@ -489,12 +489,12 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>上一篇文章中提到，Git的操作主要分为命令行操作和图形化界面操作，作为一名程序员，主要用到的是命令行操作，图形化界面操作则用的很少。命令行操作分为<strong>本地库操作</strong>和<strong>远程库操作</strong>。本文介绍本地库操作。</p>
-<h2 id="1-本地库初始化"><a href="#1-本地库初始化" class="headerlink" title="1. 本地库初始化"></a>1. 本地库初始化</h2><p>本地库操作首先要有本地库。打开Git Bash，在<strong>项目根目录下</strong>用命令<code>git init</code>初始化本地库。可以看到，项目文件夹中多了一个隐藏文件夹**.git**，里面存放的是本地库相关的子目录和文件，不要删除也不要修改。</p>
+<h2 id="1-本地库初始化"><a href="#1-本地库初始化" class="headerlink" title="1. 本地库初始化"></a>1. 本地库初始化</h2><p>本地库操作首先要有本地库。打开Git Bash，在<strong>项目根目录下</strong>用命令<code>git init</code>初始化本地库。可以看到，项目文件夹中多了一个隐藏文件夹 <strong>.git</strong> ，里面存放的是本地库相关的子目录和文件，不要删除也不要修改。</p>
 <p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_local/git_local_01.jpg" alt="初始化"></p>
 <p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_local/git_local_02.jpg" alt="初始化"></p>
 <p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_local/git_local_03.jpg" alt="初始化"></p>
-<p>**注意，git的命令和Linux命令兼容，但是git专属的命令都是以git开头的，比如查看帮助命令，是 <code>git help 具体命令</code>**。</p>
-<p>在本地库初始化之后，需要设置一个签名（用户名，Email），作用是为了区分不同开发人员的身份。<strong>注意，在后期推送到代码托管中心的时候，需要账号密码，和此时的签名没有关系。</strong>签名分为<strong>项目级别</strong>和<strong>系统级别</strong>两类，项目级别指的是设置的签名只对本项目有效，系统级别指的是设置的签名对本计算机内的所有项目都有效。</p>
+<p>注意，git的命令和Linux命令兼容，但是git专属的命令都是以git开头的，比如查看帮助命令，是 <code>git help 具体命令</code>。</p>
+<p>在本地库初始化之后，需要设置一个签名（用户名，Email），作用是为了区分不同开发人员的身份，比如后续日志中的作者信息等等。<strong>注意，在后期推送到代码托管中心的时候，需要账号密码，和此时的签名没有关系。</strong>签名分为<strong>项目级别</strong>和<strong>系统级别</strong>两类，项目级别指的是设置的签名只对本项目有效，系统级别指的是设置的签名对本计算机内的所有项目都有效。</p>
 <p>很明显，系统级别的范围要比项目级别的范围大。如果没有设置项目级别的签名，则默认使用系统用户级别的签名。反之，如果都设置的话，则项目级别的签名生效。不允许二者都没有设置。</p>
 <ul>
 <li>项目级别<ul>
@@ -509,7 +509,7 @@
 </li>
 </ul>
 <p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_local/git_local_04.jpg" alt="设置签名"></p>
-<p>设置的项目级别的签名信息保存在**.git/config<strong>文件里面（项目目录里面的隐藏文件夹）。系统级别的签名信息保存在计算机的</strong>~/.gitconfig**文件里面（系统登录用户里的隐藏文件）。一般来说，设置一个系统级别的就足够了。</p>
+<p>设置的项目级别的签名信息保存在 <strong>.git/config</strong> 文件里面（项目目录里面的隐藏文件夹）。系统级别的签名信息保存在计算机的 <strong>~/.gitconfig</strong> 文件里面（系统登录用户里的隐藏文件）。一般来说，设置一个系统级别的就足够了。</p>
 <h2 id="2-Git基本操作"><a href="#2-Git基本操作" class="headerlink" title="2. Git基本操作"></a>2. Git基本操作</h2><h3 id="2-1-基本指令"><a href="#2-1-基本指令" class="headerlink" title="2.1 基本指令"></a>2.1 基本指令</h3><ol>
 <li><p><code>git status</code></p>
 <p>查看工作区、暂存区状态，<strong>注意是在项目的根目录下运行指令，这样是以根目录的视野显示当前项目的所有变化</strong>。如图所示：</p>
@@ -537,11 +537,11 @@
 <p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_local/git_local_11.jpg" alt="git commit"></p>
 <p>图中的提示信息中后三行：</p>
 <ol>
-<li><p><strong>master表明这是主干；因为是第一次提交，所以其实就是根节点了root-commit；后面的一次数字表明了本次提交，或者说本次提交的一个版本号；接着就是之前那个注释文本里自己编写的内容</strong>。</p>
+<li><p><strong>master表明这是主干；因为是第一次提交，所以其实就是根节点了root-commit；后面的一串数字表明了本次提交，或者说本次提交的一个版本号；接着就是之前那个注释文本里自己编写的内容</strong>。</p>
 </li>
 <li><p><strong>然后下一行就是提交的详细信息，一个文件被修改了，增加了3行</strong>。</p>
 </li>
-<li><p><strong>下一行表明是创建了一个文件，100 644指明了文件的权限</strong>。（**其实还有一种方法提交，那就是<code>git commit -m “注释信息” 文件名</code>**，就是直接在命令行将注释信息附带执行，就不需要进入vim编辑了。）</p>
+<li><p><strong>下一行表明是创建了一个文件，100 644指明了文件的权限</strong>。（其实还有一种方法提交，那就是<code>git commit -m “注释信息” 文件名</code>，就是直接在命令行将注释信息附带执行，就不需要进入vim编辑了。）</p>
 </li>
 </ol>
 <p>接着继续查看状态，可以看到没有了本地库那一行了，并且多了工作树是“干净”的。</p>
@@ -614,13 +614,13 @@
 <p>只能后退版本，不能前进。一个异或符号只能后退一步，二个异或符号则能后退两步。使用1个异或符号，表示后退一步。如图所示，可以看到，确实回到了上一个版本。</p>
 <p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_local/git_local_19.jpg" alt="git reset --hard HEAD^"></p>
 </li>
-<li><p>使用<del>符号：`git reset –hard HEAD</del>n`</p>
+<li><p>使用~符号：<code>git reset --hard HEAD~n</code></p>
 <p>上面的1个异或符号只能后退一步。如果后退好多步，肯定不能无脑的写很多个。因此可以用<strong>波浪线+数字</strong>，表示后退具体的步数。也是只能后退。n表示具体的数字，即后退步数。</p>
 <p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_local/git_local_20.jpg" alt="git reset --hard HEAD~n"></p>
 </li>
 </ol>
 <h4 id="2-3-3-删除文件后找回"><a href="#2-3-3-删除文件后找回" class="headerlink" title="2.3.3 删除文件后找回"></a>2.3.3 删除文件后找回</h4><p>这个功能比较容易理解，有了版本的前进和后退，那么在删除工作区的文件是可以被找回的，即将版本回退到对应的版本。</p>
-<p>由于分为三个区，所以删除文件也分为三类，并且恢复文件也可分为三类。不过恢复文件最直观的是在工作区回复，所以下面仅以恢复工作区为例。</p>
+<p>由于分为三个区，所以删除文件也分为三类，并且恢复文件也可分为三类。不过恢复文件最直观的是在工作区恢复，所以下面仅以恢复工作区为例。下面是三类删除情况：</p>
 <ul>
 <li>仅在工作区删除文件。</li>
 <li>工作区删除文件，仅同步到暂存区。</li>
@@ -655,7 +655,7 @@
 <p>查看工作区指定文件和本地库最新版本的上n个版本的差异。</p>
 </li>
 </ul>
-<p>因为git是以行为基本单位进行管理的。所以如果是在某行添加了代码或者修改了，如下图所示。减号表明删除该行，加号表明增加该行。（**本次修改是在源文件中在dddd行后增加了@@@@**）。</p>
+<p>因为git是以行为基本单位进行管理的。所以如果是在某行添加了代码或者修改了，如下图所示。减号表明删除该行，加号表明增加该行。（ <strong>本次修改是在源文件中在dddd行后增加了@@@@</strong> ）。</p>
 <p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_local/git_local_26.jpg" alt="git diff 文件名"></p>
 <p>本次修改是在apple中插入了adsf。</p>
 <p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_local/git_local_27.jpg" alt="git diff 文件名"></p>
@@ -705,7 +705,7 @@
 <p>查看文件内容，可以看到自动增加了一些标记内容。从“&lt;&lt;&lt;&lt;&lt;&lt; HEAD”到一串等号，因为HEAD表示的是当前分支的最新版本，也就是当前分支修改的内容；而从一串等号到“&gt;&gt;&gt;&gt;&gt;&gt;master”，则表示的是要合并的分支的修改的内容。也就是二者在此处修改的内容不一样，因此Git决定不了到底采用哪个。</p>
 <p>因此用户手动解决冲突其实就是决定使用哪个版本修改的内容即可，编辑文件，将特殊符号删除，并删除掉不想要的内容即可。</p>
 <p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_local/git_local_32.jpg" alt="分支冲突解决"></p>
-<p>手动解决掉冲突之后，查看状态，提示有未解决的合并，可以标记为解决，也可以撤销合并（和前面的刚刚修改完工作区的状态类似的）。执行<code>git add</code>标记合并，然后继续查看状态，提示冲突已解决，但此时仍然是处于合并状态，执行<code>git commit</code>指令完成合并（<strong>注意，不用带文件名，但是可以带日志注释信息</strong>）。注意此时看提示符行尾，已经退出了合并状态。<img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_local/git_local_33.jpg" alt="分支冲突解决"></p>
+<p>手动解决掉冲突之后，查看状态，提示有未解决的合并，可以标记为解决，也可以撤销合并（和前面的刚刚修改完工作区的状态类似）。执行<code>git add</code>标记合并，然后继续查看状态，提示冲突已解决，但此时仍然是处于合并状态，执行<code>git commit</code>指令完成合并（<strong>注意，不用带文件名，但是可以带日志注释信息</strong>）。注意此时看提示符行尾，已经退出了合并状态。<img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_local/git_local_33.jpg" alt="分支冲突解决"></p>
 <blockquote>
 <p>总结:</p>
 <ol>
@@ -719,7 +719,7 @@
 <p>SVN是仅仅保存修改的部分数据。那么我们要拿到某个最新版本的数据时，它就会将最新版本及以前的数据合并到一块（因为是仅仅保存了修改的数据）。<strong>即增量式控制</strong>。</p>
 <p><strong>Git把数据看成是小型文件系统的一组快照，每次提交更新时，Git都会对当前的全部文件制作一个快照并保存这个快照的索引。为了高效，如果这个文件没有修改，Git不会重新存储该文件，而是只保存一个链接指向之前存储的文件。所以Git的工作方式可以称为快照流。</strong></p>
 <p>每次提交的时候，都会创建一个提交对象，所有文件的哈希值组成了一个树对象，这个树对象有一个哈希值，然后提交对象也有自己的哈希值。提交对象的哈希值就是git log里面的commit后面的一串的哈希值。不同次的提交，就创建了各自的提交对象，然后这些提交对象构成了链表，有父子关系。</p>
-<p>因此多次提交就构成了提交对象链表。那么创建一个分支，则是新创建了一个指针，指向链表中的某个版本，然后如果在分支上进行开发，则是在分支上创建了一个子链表，类似hashmap。那么切换分支则是将HEAD指针指向不同的分支指针即可（最开始是指向master指针）。</p>
+<p>因此多次提交就构成了提交对象链表。那么创建一个分支，就相当于新创建了一个指针，指向链表中的某个版本，然后如果在分支上进行开发，则是在分支上创建了一个子链表，类似hashmap。那么切换分支则是将HEAD指针指向不同的分支指针即可（最开始是指向master指针）。</p>
 <h2 id="5-总结"><a href="#5-总结" class="headerlink" title="5. 总结"></a>5. 总结</h2><ul>
 <li><strong>git status</strong>，查看状态。</li>
 <li>**git add [文件名]**，将文件添加到暂存区。</li>
