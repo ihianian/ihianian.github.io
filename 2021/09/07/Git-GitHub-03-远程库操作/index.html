@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Hello World, ihianian">
+    <meta name="keywords" content="Git_GitHub_03_远程库操作, ihianian">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Hello World | ihianian</title>
+    <title>Git_GitHub_03_远程库操作 | ihianian</title>
     <link rel="icon" type="image/png" href="/header.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -310,12 +310,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Hello World</h1>
+                    <h1 class="description center-align post-title">Git_GitHub_03_远程库操作</h1>
                 </div>
             </div>
         </div>
@@ -429,9 +429,13 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Git-GitHub/">
+                                <span class="chip bg-color">Git/GitHub</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -443,28 +447,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-08-21
+                    2021-09-07
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-08-21
+                    2021-09-08
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    75
+                    2.1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    7 分
                 </div>
                 
 
@@ -484,19 +488,77 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+                <p>上一篇文章介绍了本地库操作，有了本地库，接下来可以将其推送到远程库中方便多人协作开发。远程库依托于代码托管平台，本文采用的是GitHub。<strong>本文主要介绍Git和GitHub远程库交互，模拟团队协作</strong>。</p>
+<blockquote>
+<p><strong>不要把GitHub想的多么复杂，简单地说，它就是一个代码托管平台，每个人都可以在上面创建自己的账户（相当于文件系统），每个人可以在自己的账户里面创建项目仓库（相当于PC端的本地库），因为有公网IP地址，所以方便多人连接，相当于中心节点。</strong></p>
+</blockquote>
+<p>和本地库操作一样，想要操作远程库，就需要在代码托管中心创建一个远程库。首先需要在本地创建一个本地库，然后在GitHub上创建一个远程库，之后从本地push到远程库。所有人都可以下载远程库的数据，即clone。但是只有团队的人才能提交推送到远程库。</p>
+<h2 id="1-新建本地库"><a href="#1-新建本地库" class="headerlink" title="1. 新建本地库"></a>1. 新建本地库</h2><p>和上一篇文章中的操作一样，初始化，新建文件，提交到本地库。</p>
+<p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_remote/git_remote_01.jpg" alt="新建本地库"></p>
+<h2 id="2-新建远程库"><a href="#2-新建远程库" class="headerlink" title="2. 新建远程库"></a>2. 新建远程库</h2><p>在GitHub上注册账号并登陆，手动创建一个仓库，并复制其HTTPS地址（<strong>在绿色的Code下拉菜单那里，也可选择其他地址方式</strong>）。这个地址就是用来本地库和远程库之间进行交互。但是每次如果都引用这个地址的话，有点太冗长，所以可以给地址起一个简短的别名。（如果和其他仓库也有联系，比如前面提到的团队之间的协作，这个时候，也可以起别名，总之就是和远程仓库之间有关联的，就可以进行起别名。<strong>一般来说自己的远程仓库起的别名是origin</strong>）</p>
+<p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_remote/git_remote_02.jpg" alt="新建远程库"></p>
+<p>别名指令如下：</p>
+<ul>
+<li><p><code>git remote -v</code></p>
+<p>查看当前所有的别名以及对应的远程仓库地址。</p>
+</li>
+<li><p><code>git remote add 别名 远程仓库地址</code></p>
+<p>给指定远程仓库起别名。</p>
+</li>
+<li><p><code>git remote rm 别名</code></p>
+<p>删除指定的别名。</p>
+</li>
+</ul>
+<p>注意，在给远程仓库地址起名字之后，查看当前的仓库的别名，可以看到，其实一个别名有两条记录，也就是fetch和push。其中fetch是用来取回的，就是从远程仓库取到本地（就是把该仓库都取下来，自动初始化了）；而push则是用来从本地库推送到远程仓库的。总之，这个简短的别名既可以用来推送到远程库，也可以下载到本地库。</p>
+<p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_remote/git_remote_03.jpg" alt="远程仓库别名"></p>
+<h2 id="3-本地库推送到远程库"><a href="#3-本地库推送到远程库" class="headerlink" title="3. 本地库推送到远程库"></a>3. 本地库推送到远程库</h2><ul>
+<li><p><code>git push 仓库别名/仓库地址 本地库分支</code></p>
+<p>将指定本地库分支推送到指定的远程库，<strong>如果远程库有对应的本地库分支名，则推送到该分支，如果没有，则创建该分支。</strong></p>
+</li>
+</ul>
+<p>如下图所示，有的时候显示GitHub的登录窗口，输入账户和密码即可。（本次是提示从浏览器中授权登录授权，有的时候是命令行形式）。之后本地执行push操作，可以推送成功。</p>
+<p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_remote/git_remote_04.jpg" alt="本地库推送到远程库"></p>
+<img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_remote/git_remote_05.jpg" alt="本地库推送到远程库" style="zoom: 50%;" />
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_remote/git_remote_06.jpg" alt="本地库推送到远程库"></p>
+<p><em>注意，在bash的最后一行，从本地的master分支推送到远程库的master分支。因为本来没有这个分支，所以这是在远程库新建的一个分支。</em></p>
+<h2 id="4-远程库克隆到本地库"><a href="#4-远程库克隆到本地库" class="headerlink" title="4. 远程库克隆到本地库"></a>4. 远程库克隆到本地库</h2><p>我们在浏览GitHub的时候，看到了感兴趣的项目，这时候可以将远程库克隆到本地，自己进行开发。另外，如果团队新进来一个人，这个时候首先这个人就要将远程库克隆到本地，这样才能进行开发。</p>
+<ul>
+<li><p><code>git clone 远程仓库地址</code></p>
+<p>将指定的远程仓库克隆到本地当前所在文件夹。（<strong>注意，就是把该远程库整体复制下来，并且分支、或者一些配置之类的都复制了；自动创建远程地址别名origin；并且自动初始化了本地库。</strong>）</p>
+</li>
+</ul>
+<p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_remote/git_remote_07.jpg" alt="远程库克隆到本地库"></p>
+<p>克隆下来之后，就可以修改了，然后提交到本地库。如果想上传的话，必须是要改团队的人员，这个时候就需要在团队人员在远程库那里邀请你的本地登录时的GitHub账号，然后才能push。这里就不演示了，因为我之前已经自动授权了，所以默认就是我之前团队的GitHub账号，自然就默认push成功了。（<strong>凭据管理器中保存了账号和密码，这样就不会每次就手动输入了</strong>）。</p>
+<p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_remote/git_remote_08.jpg" alt="凭据管理器"></p>
+<h2 id="5-拉取操作"><a href="#5-拉取操作" class="headerlink" title="5. 拉取操作"></a>5. 拉取操作</h2><p>上面的操作是克隆，把远程库完整的复制到本地库。那么如果本地库已经有了，只是想将远程库中其他人更新的部分“克隆”到本地该怎么操作呢？答案是<strong>拉取</strong>。</p>
+<p>在别人push到远程库之后，其他人就可以拉取操作了。拉取pull操作分为两步，fetch和merge。<strong>注意，这里的拉取以及子命令fetch和merge都是读操作，不需要验证身份啥的</strong>。</p>
+<p>抓取下来之后，其实本地文件并没有变，它只是下载到了本地库（就是将其作为一个分支下载到本地），还没有对本地库进行合并。（下载的分支是origin/master，但是查看当前分支，不会显式地显示该分支）。</p>
+<ul>
+<li><p><code>git fetch 远程库 分支</code></p>
+<p>将指定的远程库的指定分支拉取到本地库。</p>
+</li>
+</ul>
+<p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_remote/git_remote_09.jpg" alt="fetch 操作"></p>
+<p>此时，切换到下载的分支：origin/master，查看文件，和远程库上的文件一样。</p>
+<p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_remote/git_remote_10.jpg" alt="fetch 操作"></p>
+<p>这时候，就相当于之前说的分支合并了，直接切换到接收合并的分支，然后执行下面的指令。查看文件内容，果然内容合并了。</p>
+<p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_remote/git_remote_11.jpg" alt="merge 操作"></p>
+<p>除了上面的操作，其实还要一种一步到位的操作，就是直接pull。（<strong>一般如果修改的内容比较少的话，并且不太可能产生冲突，就可以采用这种方法。否则，采用上面分步的那种方法，先fetch抓取下来，看看具体的内容，然后再手动合并merge</strong>）</p>
+<ul>
+<li><p><code>git pull 远程仓库 分支</code></p>
+<p>将指定的远程库的指定分支拉取到本地库，并将其分支合并到当前本地库所在分支。</p>
+</li>
+</ul>
+<p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_remote/git_remote_12.jpg" alt="pull 操作"></p>
+<h2 id="6-协同开发时冲突的解决"><a href="#6-协同开发时冲突的解决" class="headerlink" title="6. 协同开发时冲突的解决"></a>6. 协同开发时冲突的解决</h2><p>只要有团队开发，就一定会有冲突发生。比如两个团队成员修改同一个文件的同一个地方（至少有交叉修改的），然后其中一个人A先push的，那么另一个人B再push的时候，就会失败。因为Git那里会记录的，知道B是在原先的版本的基础上进行修改的，但是当前远程库的版本已经更新了，也就是说B不是基于目前最新版本的基础开发提交的，所以就会失败。</p>
+<p><strong>总之，如果不是基于远程库的最新版本所做的修改，不能推送，必须先拉取。拉取下来之后，如果进入冲突状态，则按照“分支冲突解决”操作即可。</strong></p>
+<p>所以后提交的人B必须先执行pull操作，即把最新的版本拉取下来并合并已修改的地方，如果是有冲突，则手动修改一下。</p>
+<h2 id="7-跨团队协作操作"><a href="#7-跨团队协作操作" class="headerlink" title="7. 跨团队协作操作"></a>7. 跨团队协作操作</h2><p>如果是跨团队的话，因为不是一个团队的，所以即使你clone下来也不能push回远程库，所以需要一种新的方法。可以先fork该远程库到自己的远程库，然后clone到本地库，修改之后，push到自己的远程库，之后再请求该远程库的所有人拉取pull即可。（即pull-request）。比如下面第二行显示了Forked from哪哪哪。</p>
+<p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_remote/git_remote_13.jpg" alt="fork"></p>
+<p>本地库修改之后，提交到远程库。在对应的仓库，创建pull requests，发送（这里不需要指明发送对象，因为从哪里fork的就默认是发送到那里）。等对面接收请求同意即可。（对方也可以给你回话，即二人可以在此进行对话）</p>
+<p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_remote/git_remote_14.jpg" alt="pull request"></p>
+<h2 id="8-备注"><a href="#8-备注" class="headerlink" title="8. 备注"></a>8. 备注</h2><p><em>参考 B站《尚硅谷》。</em></p>
 
                 
             </div>
@@ -513,7 +575,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">hianian</a>
+                    <a href="/about" rel="external nofollow noreferrer">浮云</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -523,7 +585,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://ihianian.github.io/2021/08/21/hello-world/">https://ihianian.github.io/2021/08/21/hello-world/</a>
+                    <a href="https://ihianian.github.io/2021/09/07/Git-GitHub-03-%E8%BF%9C%E7%A8%8B%E5%BA%93%E6%93%8D%E4%BD%9C/">https://ihianian.github.io/2021/09/07/Git-GitHub-03-%E8%BF%9C%E7%A8%8B%E5%BA%93%E6%93%8D%E4%BD%9C/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -536,7 +598,7 @@
                     本博客所有文章除特別声明外，均采用
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     许可协议。转载请注明来源
-                    <a href="/about" target="_blank">hianian</a>
+                    <a href="/about" target="_blank">浮云</a>
                     !
                 </span>
             </div>
@@ -560,7 +622,11 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/Git-GitHub/">
+                                    <span class="chip bg-color">Git/GitHub</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -728,17 +794,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/08/24/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/">
+                <a href="/2021/09/07/Git-GitHub-03-%E8%BF%9C%E7%A8%8B%E5%BA%93%E6%93%8D%E4%BD%9C/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="我的第一篇博客">
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="Git_GitHub_03_远程库操作">
                         
-                        <span class="card-title">我的第一篇博客</span>
+                        <span class="card-title">Git_GitHub_03_远程库操作</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -748,9 +815,55 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-08-24
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-07
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            浮云
+                            
                         </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Git-GitHub/">
+                        <span class="chip bg-color">Git/GitHub</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2021/09/02/Git-GitHub-02-%E6%9C%AC%E5%9C%B0%E5%BA%93%E6%93%8D%E4%BD%9C/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="Git_GitHub_02_本地库操作">
+                        
+                        <span class="card-title">Git_GitHub_02_本地库操作</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-02
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -762,49 +875,11 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%B5%8B%E8%AF%95/">
-                        <span class="chip bg-color">测试</span>
+                    <a href="/tags/Git-GitHub/">
+                        <span class="chip bg-color">Git/GitHub</span>
                     </a>
                     
                 </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
-            </div>
-            <div class="card">
-                <a href="/2021/08/21/hello-world/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Hello World">
-                        
-                        <span class="card-title">Hello World</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-08-21
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-user fa-fw"></i>
-                            hianian
-                            
-                        </span>
-                    </div>
-                </div>
-
                 
             </div>
         </div>
