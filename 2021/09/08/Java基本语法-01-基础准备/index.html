@@ -429,9 +429,13 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Java/">
+                                <span class="chip bg-color">Java</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -450,21 +454,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-09-08
+                    2021-09-10
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    0
+                    1.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    4 分
                 </div>
                 
 
@@ -484,7 +488,55 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                
+                <p>在介绍基本语法之前，先简单介绍一些基本知识，为后续做准备。</p>
+<h2 id="1-注释"><a href="#1-注释" class="headerlink" title="1. 注释"></a>1. 注释</h2><p>注释并不是真正的代码，不会被编译生成到<code>.class</code>字节码文件中。它的作用是对Java源代码的解释说明。一个好的开发习惯应该是多编写注释，这样程序的可读性比较强。</p>
+<p><strong>Java的注释分为三种：单行注释，多行注释，Javadoc注释</strong>。</p>
+<ul>
+<li><p>单行注释</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 两个斜杠表示注释，只注释当前 斜杠后面的内容</span></span><br></pre></td></tr></table></figure></li>
+<li><p>多行注释</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">斜杠和星号，成对出现，表示多行注释</span></span><br><span class="line"><span class="comment">注释内容，在此之间，可以注释很多行</span></span><br><span class="line"><span class="comment">...</span></span><br><span class="line"><span class="comment">...</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure></li>
+<li><p>Javadoc注释</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* 在多行注释的基础上，其中每一行开头都有一个星号</span></span><br><span class="line"><span class="comment">* 表示Javadoc注释，这种注释一般对类和方法进行注释</span></span><br><span class="line"><span class="comment">* 前期不会用到，后期再提，而且一般IDE可自动生成</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="2-public-class和class"><a href="#2-public-class和class" class="headerlink" title="2. public class和class"></a>2. public class和class</h2><blockquote>
+<p>在上一篇文章的HelloWorld例子中，出现了基本的代码，简单描述一下程序框架。</p>
+<p>public是修饰符，class是类，里面的main是方法，这是属于面向对象的概念，后期会提到，这里先记住一些基本语法。</p>
+<p>一个源文件中可以有多个类，只能有一个public修饰的类；一个类中可以有多个方法，只能有一个main方法。</p>
+</blockquote>
+<p>基本语法如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[<span class="keyword">public</span>] <span class="class"><span class="keyword">class</span> 类名</span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        Java语句;</span><br><span class="line">        Java语句;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>中括号括起来表示里面的内容可有可无，也就是说public可以加可以不加。<strong>Java语句</strong>是我们可以编写的内容，类名可以自定义，其余的内容目前我们都不可改变。</p>
+<p><strong>下面的内容作为简单了解，有一个初步的认识即可。</strong></p>
+<ol>
+<li>一个<code>.java</code>源文件中最多只能出现一个<strong>public</strong>修饰的<strong>class</strong>，即最多只能有一个<code>public class&#123;&#125;</code>。</li>
+<li>一个<code>.java</code>源文件中可以出现多个 <code>class&#123;&#125;</code>。</li>
+<li><code>.java</code>源文件在编译后，会生成对应的<code>.class</code>字节码文件，源文件中有几个<code>class&#123;&#125;</code>就会生成几个<code>.class</code>字节码文件。</li>
+<li>一个<code>.java</code>源文件中如果有多个class的话，每个class中都可以编写<code>main</code>方法，作为程序的入口方法。如果想执行某个类中的入口方法，直接<code>java 类名</code>即可。因为每一个class都生成了对应的.class字节码文件，这时候只需要运行对应的字节码文件即可（<strong>注意，该类必须有main方法程序入口，否则运行失败</strong>）。</li>
+</ol>
+<h2 id="3-关键字"><a href="#3-关键字" class="headerlink" title="3. 关键字"></a>3. 关键字</h2><p>HelloWorld例子以及上面的基本语法中，有<strong>public</strong>、<strong>class</strong>、<strong>main</strong>等等，这些单词具有特殊的含义，程序员不能修改，这是Java语法特有的、固定的、提前制定好的一些具有特定含义的字符序列。</p>
+<p>这就是关键字（也可称为保留字，<strong>保留字的范围更大</strong>），在语言当中具有特殊含义的单词，这些单词构成Java程序的骨架，是需要记住的，不能随意修改，包括大小写也不能改变。一般情况下，Java语言中的关键字一般是全部小写。</p>
+<h2 id="4-标识符"><a href="#4-标识符" class="headerlink" title="4. 标识符"></a>4. 标识符</h2><p>HelloWorld例子中，除了上面的关键字，还有<strong>HelloWorld</strong>类名，这个名字是自己可以定义的，这就是标识符。凡是程序员有权利自己命名的单词都是标识符，比如<strong>类名、方法名、变量名、接口名、常量名</strong>等等。</p>
+<h3 id="4-1-标识符的命名规则"><a href="#4-1-标识符的命名规则" class="headerlink" title="4.1 标识符的命名规则"></a>4.1 标识符的命名规则</h3><p><strong>既然标识符可以由程序员自己命名，为了防止命名五花八门，Java制定了一些命名规则。不按照这个规则来，编译阶段就会报错</strong>。</p>
+<ol>
+<li>由字母、数字、下划线、美元符号组成，不能包括其他符号。</li>
+<li>不能以数字开头。</li>
+<li>严格区分大小写。</li>
+<li>关键字不能做标识符。</li>
+<li>理论上无长度限制，但是最好不要太长。</li>
+</ol>
+<h3 id="4-2-标识符的命名规范"><a href="#4-2-标识符的命名规范" class="headerlink" title="4.2 标识符的命名规范"></a>4.2 标识符的命名规范</h3><p>虽然Java制定了命名规则，但是不同的人有不同的命名习惯，比较专业的人员形成了自己的一套命名规范，<strong>注意，这仅仅是规范，不是语法，不遵守规范，编译阶段不会报错，规范仅仅是为了让其他人更加阅读而已。</strong></p>
+<ol>
+<li>最好见名知意。</li>
+<li>遵循驼峰命名方式<ol>
+<li>类名、接口名：首字母大写，后面每个单词首字母大写。（<strong>大驼峰</strong>）</li>
+<li>变量名、方法名：首字母小写，后面每个单词首字母大写。（<strong>小驼峰</strong>）</li>
+<li>常量名：全部大写，如果常量名是多个单词，单词之间要有下划线隔开。</li>
+</ol>
+</li>
+</ol>
+
                 
             </div>
             <hr/>
@@ -500,7 +552,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">hianian</a>
+                    <a href="/about" rel="external nofollow noreferrer">浮云</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -523,7 +575,7 @@
                     本博客所有文章除特別声明外，均采用
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     许可协议。转载请注明来源
-                    <a href="/about" target="_blank">hianian</a>
+                    <a href="/about" target="_blank">浮云</a>
                     !
                 </span>
             </div>
@@ -547,7 +599,11 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/Java/">
+                                    <span class="chip bg-color">Java</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -715,18 +771,17 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/09/08/Java%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95-01-%E5%9F%BA%E7%A1%80%E5%87%86%E5%A4%87/">
+                <a href="/2021/09/10/Java%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95-02-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="Java基本语法_01_基础准备">
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="Java基本语法_02_数据类型">
                         
-                        <span class="card-title">Java基本语法_01_基础准备</span>
+                        <span class="card-title">Java基本语法_02_数据类型</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -736,9 +791,9 @@
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-08
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-09-10
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -747,7 +802,6 @@
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>
@@ -992,7 +1046,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">12k</span>&nbsp;字
+                class="white-color">13.2k</span>&nbsp;字
             
             
             
