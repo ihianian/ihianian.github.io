@@ -461,14 +461,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.5k
+                    2.9k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    9 分
+                    10 分
                 </div>
                 
 
@@ -612,6 +612,25 @@
 <p>语法：<code>int a = (long)1234567L;</code></p>
 </li>
 </ul>
+<h4 id="1-4-1-基本数据类型之间的互相转换"><a href="#1-4-1-基本数据类型之间的互相转换" class="headerlink" title="1.4.1 基本数据类型之间的互相转换"></a>1.4.1 基本数据类型之间的互相转换</h4><ol>
+<li><p>八种基本数据类型当中除布尔类型之外剩下的7种类型之间都可以互相转换。</p>
+</li>
+<li><p>小容量向大容量转换，称为自动类型转换，容量从小到大排序：(注意是容量，不是占的字节数)</p>
+<p>byte &lt; short &lt; int &lt; long &lt; float &lt; double</p>
+<p>​             char &lt;</p>
+<p>注意：任何浮点类型不管占用多少个字节，都比整数型容量大。</p>
+<p>​            char和short可表示的种类数量相同，但是char可以取更大的正整数（因为char没有符号，不分正负）。</p>
+</li>
+<li><p>大容量转换成小容量，叫做强制类型转换，需要加强制类型转换符，程序才能编译通过，但是在运行阶段可能会损失精度，所以谨慎使用。</p>
+</li>
+<li><p>当整数字面值没有超出byte，short，char的取值范围，可以直接赋值给byte，short，char类型的变量。</p>
+</li>
+<li><p><strong>byte，short，char混合运算的时候，各自先转换成int类型再做运算</strong>。</p>
+</li>
+<li><p><strong>多种数据类型混合运算，先转换成容量最大的那种类型再做运算</strong>。</p>
+</li>
+</ol>
+<p><strong>注意：编译的时候仅仅检查语法，而不会运算检查结果。</strong>比如，<code>int a = 10; short b = a;</code>，这样就会出错，因为a是int类型的，赋值给b，需要强转，而没有强转，所以报错。（不会因为a是10，在short类型的范围内，就不报错，不会检查结果）。</p>
 <h2 id="2-字面值"><a href="#2-字面值" class="headerlink" title="2. 字面值"></a>2. 字面值</h2><p>字面值就是程序中实际存在的值，字面值就是数据，看到它就知道它具体的值。比如<code>3.14</code>，<code>&#39;a&#39;</code>，<code>100</code>等等。根据数据类型的不同，字面值也分为不同的种类：</p>
 <ul>
 <li>整数型字面值</li>
@@ -893,10 +912,18 @@
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
-                            hianian
+                            浮云
                             
                         </span>
                     </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Java/">
+                        <span class="chip bg-color">Java</span>
+                    </a>
+                    
                 </div>
                 
             </div>
@@ -1142,7 +1169,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">15.7k</span>&nbsp;字
+                class="white-color">16.2k</span>&nbsp;字
             
             
             
