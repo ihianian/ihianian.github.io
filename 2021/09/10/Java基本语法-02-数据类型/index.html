@@ -454,21 +454,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-09-10
+                    2021-09-24
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    87
+                    2.5k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    9 分
                 </div>
                 
 
@@ -488,8 +488,151 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>本质上说，<strong>程序是对数据的处理</strong>。不同的编程语言为了适应自己的用途，结合设计理念制定了不同的数据类型以及存储方式。本文介绍数据类型、字面值、变量和常量等相关内容。</p>
-<h2 id="1-数据类型"><a href="#1-数据类型" class="headerlink" title="1. 数据类型"></a>1. 数据类型</h2><h2 id="2-字面值"><a href="#2-字面值" class="headerlink" title="2. 字面值"></a>2. 字面值</h2><h2 id="3-常量"><a href="#3-常量" class="headerlink" title="3. 常量"></a>3. 常量</h2><h2 id="4-变量"><a href="#4-变量" class="headerlink" title="4. 变量"></a>4. 变量</h2>
+                <p>本质上说，<strong>程序就是对数据的处理</strong>。不同的编程语言为了满足自己的语言优势和特色，结合设计理念制定了不同的数据类型以及存储方式。本文主要介绍数据类型、字面值、变量和常量等相关内容。</p>
+<h2 id="1-数据类型"><a href="#1-数据类型" class="headerlink" title="1. 数据类型"></a>1. 数据类型</h2><h3 id="1-1-数据类型的作用"><a href="#1-1-数据类型的作用" class="headerlink" title="1.1 数据类型的作用"></a>1.1 数据类型的作用</h3><p>程序中有很多数据，每一个数据都是有类型的，不同类型的数据占用内存空间大小不同，数据类型的作用是指导JVM在运行程序的时候给该数据分配多大的内存空间。</p>
+<p>Java中的数据类型包括两种：</p>
+<ol>
+<li>基本数据类型：如int，char等；</li>
+<li>引用数据类型，如数组，字符串，类对象等。（后面面向对象部分介绍）</li>
+</ol>
+<h3 id="1-2-基本数据类型"><a href="#1-2-基本数据类型" class="headerlink" title="1.2 基本数据类型"></a>1.2 基本数据类型</h3><p>和C/C++类似，Java中的基本数据类型包括四大类八小类，如下所示：</p>
+<ol>
+<li>整数型：byte, short, int, long</li>
+<li>浮点型：float, double</li>
+<li>布尔型：boolean</li>
+<li>字符型：char</li>
+</ol>
+<p>具体每个类型所占内存空间大小相关信息如下表所示：</p>
+<table>
+<thead>
+<tr>
+<th align="center">数据类型</th>
+<th align="center">占用空间大小(字节)</th>
+<th align="center">取值范围（无符号）</th>
+<th align="center">取值范围（有符号）</th>
+<th align="center">默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">byte</td>
+<td align="center">1</td>
+<td align="center">0 ~ 255</td>
+<td align="center">-128 ~ 127</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center">short</td>
+<td align="center">2</td>
+<td align="center">0 ~ 65535</td>
+<td align="center">-32768 ~ 32767</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center">int</td>
+<td align="center">4</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center">long</td>
+<td align="center">8</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">0L</td>
+</tr>
+<tr>
+<td align="center">float</td>
+<td align="center">4</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">0.0</td>
+</tr>
+<tr>
+<td align="center">double</td>
+<td align="center">8</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">0.0</td>
+</tr>
+<tr>
+<td align="center">boolean</td>
+<td align="center">1</td>
+<td align="center">true/false</td>
+<td align="center"></td>
+<td align="center">false</td>
+</tr>
+<tr>
+<td align="center">char</td>
+<td align="center">2</td>
+<td align="center">0 ~ 65535</td>
+<td align="center"></td>
+<td align="center">\u0000</td>
+</tr>
+<tr>
+<td align="center">引用数据类型</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">null</td>
+</tr>
+</tbody></table>
+<h4 id="1-2-1-整数型"><a href="#1-2-1-整数型" class="headerlink" title="1.2.1 整数型"></a>1.2.1 整数型</h4><p>Java语言中的整数型有四种，取值范围从小到大分别是byte, short, int, long。除了数据类型，还有不同的表示方式，Java语言中整数型一共有三种表示方式：</p>
+<ul>
+<li><p>十进制（默认）：普通数字。</p>
+<p>如：10，15，20等等。</p>
+</li>
+<li><p>八进制：以 0 开头。</p>
+<p>如：010，011，012，分别表示十进制的8，9，10。</p>
+</li>
+<li><p>十六进制：以 0x 开头。</p>
+<p>如：0x10，0x11，0x12，分别表示十进制的16，17，18。</p>
+</li>
+</ul>
+<p><strong>既然存在四种整数类型，那么对于一个整数型数据，比如 732，那么它是哪个类型呢？在Java语言中，默认被当做int类型来处理，即使这个数值超过了int的取值范围，它仍然是被当做int类型，只不过会报错，这个时候需要在数值后面加上字母L，如1234567L，即代表long类型，见后面的字面值部分</strong>。对于byte和short，见后续的变量以及类型转换。</p>
+<h4 id="1-2-2-浮点型"><a href="#1-2-2-浮点型" class="headerlink" title="1.2.2 浮点型"></a>1.2.2 浮点型</h4><p>Java语言中的浮点型有两种，取值范围从小到大分别是float, double。float是单精度，double是双精度。但是相对来说，double的精度也不是很高，对于财务类数据，double仍然不够，为此，Java提供了<code>java.math.BigDecimal</code>类型。</p>
+<p><strong>在Java语言当中，所有的浮点型数据默认被当做是double类型处理，如果想让Java当做float类型来处理，需要在字面值后面加上字母f或F。</strong></p>
+<p><strong>注意，double和float在计算机内部二进制存储的时候存储的都是近似值。在现实世界当中有一些数字是无限循环的，例如：3.3333333333…。计算机的资源是有限的，用有限的资源存储无限的数据只能存储近似值。</strong></p>
+<h4 id="1-2-3-布尔型"><a href="#1-2-3-布尔型" class="headerlink" title="1.2.3 布尔型"></a>1.2.3 布尔型</h4><p>Java语言中的布尔型只有一种boolean，取值为true和false两个。布尔类型数据在实际开发中非常重要，经常用在逻辑运算和条件控制语句当中。</p>
+<h4 id="1-2-4-字符型"><a href="#1-2-4-字符型" class="headerlink" title="1.2.4 字符型"></a>1.2.4 字符型</h4><p>Java语言中的字符型只有一种char，占用两个字节，可以表示65535个数字，将字符编码并转换成对应的数字，即char可表示65535个字符。</p>
+<h3 id="1-3-字符编码"><a href="#1-3-字符编码" class="headerlink" title="1.3 字符编码"></a>1.3 字符编码</h3><p>有了数据类型，那么计算机是如何存储这些数据呢？</p>
+<p>众所周知，计算机是根据电脉冲的有无来执行指令的，而电脉冲的有无则表示0和1，也就是只能表示二进制。那么对于上述的整数型（十进制），则需要进制转换。对于浮点型，本质上也是十进制，只不过需要分别表示整数位和小数位。对于布尔型，因为只有两个取值，直接一一映射即可。对于字符型，一方面字符的取值较多，另一方面，字符的取值和二进制之间没有关系，所以需要对字符进行编码（使其和二进制有关系），然后进行一一映射。</p>
+<p>编码不是什么了不起的东西，就是同一种事物的另一种表示形式而已。比如，人，不可能实际存储在计算机中，就用他的身份证号表示。对于字符，计算机无法存储，只能先存储它的编码，然后在显示器显示的时候，进行转换。</p>
+<p>最早的编码是ASCII码，只能编码英文。后来随着计算机的发展，出现了一种编码方式，它是国际化标准组织ISO制定的，这种编码方式支持西欧语言，向上兼容ASCII码，仍然不支持中文。这种编码方式是ISO-8859-1，又被称为Latin-1。</p>
+<p>随机计算机向亚洲发展，计算机开始支持中文、日文、韩文等国家文字，其中支持简体中文的编码方式有：GB2312 ， GBK ， GB18030。支持数量由少到多，其中GB2312支持的中文数量最少。支持繁体中文的有：Big5。</p>
+<p>后来又出现了一种编码方式统一了全球所有的文字，容量较大，这种编码方式叫做：Unicode编码。Unicode编码方式有多种具体的实现：比如UTF-8，UTF-16，UTF-32等等。<strong>Java语言源代码采用的是Unicode编码方式，所以“标识符”可以用中文</strong>。</p>
+<p><strong>JDK自带的native2ascii命令工具可以将中文转换成Unicode编码</strong>。（似乎JDK9及以后的就没有了该命令）。</p>
+<h3 id="1-4-类型转换"><a href="#1-4-类型转换" class="headerlink" title="1.4 类型转换"></a>1.4 类型转换</h3><p>既然存在不同的数据类型，那么Java也提供了数据类型之间的转换（<strong>具体的例子见后面的字面值以及变量部分</strong>）。类型转换分为两种：</p>
+<ul>
+<li><p>自动类型转换</p>
+<p><strong>从大容量到小容量的数据转换，Java会自动执行。</strong>其实相当于直接在数字的前面填充0即可，使其满足特定字节的长度即可。</p>
+</li>
+<li><p>强制类型转换</p>
+<p><strong>从小容量到大容量的数据转换，需要手动执行</strong>，但是这仅仅是编译通过了，在实际运行过程中，可能会损失精度。其实相当于直接从前面截断，比如long类型转换到int类型，直接将前面四个字节截断，取后四个字节。</p>
+<p>语法：<code>int a = (long)1234567L;</code></p>
+</li>
+</ul>
+<h2 id="2-字面值"><a href="#2-字面值" class="headerlink" title="2. 字面值"></a>2. 字面值</h2><p>字面值就是程序中实际存在的值，字面值就是数据，看到它就知道它具体的值。比如<code>3.14</code>，<code>&#39;a&#39;</code>，<code>100</code>等等。根据数据类型的不同，字面值也分为不同的种类：</p>
+<ul>
+<li>整数型字面值</li>
+<li>浮点型字面值</li>
+<li>字符型字面值</li>
+<li>字符串型字面值</li>
+<li>布尔型字面值</li>
+</ul>
+<p>注意，<strong>Java语言当中所有的字符串型字面值必须使用双引号括起来；Java语言当中所有的字符型字面值必须使用单引号括起来</strong>。在程序中，如果有字面值，那么就会开辟一块内存空间，（不管字面值的值是否一样）。</p>
+<h2 id="3-变量"><a href="#3-变量" class="headerlink" title="3. 变量"></a>3. 变量</h2><p><strong>程序本质上是对数据的处理，数据需要开辟内存空间存储，为了高效地利用内存空间，在一些数据不用之后，可以重新在这块内存空间上存储其他同种类型数据，为了找到这块内存空间，给这块内存空间起了一个名字，名字+内存空间存储的值+数据类型=变量。</strong></p>
+<p>变量本质上来说是内存中的一块空间，这块空间有“数据类型”、“名字”、“字面值”。<strong>即变量包含三部分：数据类型，名称，字面值（数据）</strong></p>
+<p>变量的相关语法如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 声明变量，即说明这个变量的数据类型和名称，还没有赋值</span></span><br><span class="line"><span class="keyword">int</span> a;</span><br><span class="line"><span class="comment">// 给变量赋值，将字面值 100 赋值给变量a。</span></span><br><span class="line">a = <span class="number">100</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 声明变量并赋值</span></span><br><span class="line"><span class="keyword">int</span> b = <span class="number">200</span>;</span><br></pre></td></tr></table></figure>
+
+<p>变量是内存中存储数据的基本单元。有了变量之后，内存空间得到了重复使用。比如<code>int a = 10;</code>和<code>int b = 10</code>；那么此时两个10字面值都是指的是一块内存空间。<strong>注意和字面值的区别，如果字面值单独存在，那么即使值相同，也会单独开辟空间，而赋值给变量后，就会仅开辟一块空间。</strong></p>
+<p><strong>注意：</strong>在方法体中的Java代码，是遵守自上而下的顺序依次执行的，逐行执行。所以必须先声明变量才能使用该变量。</p>
+<h2 id="4-常量"><a href="#4-常量" class="headerlink" title="4. 常量"></a>4. 常量</h2><p>常量就是定义之后，其值不会再变化的变量。比如在程序中定义了PI，值为3.1415926。这个值是公认的，为了避免后续误操作被修改，可以在变量前添加修饰符final。</p>
+<h2 id="5-例子"><a href="#5-例子" class="headerlink" title="5. 例子"></a>5. 例子</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Example</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 整数型数字，默认是int类型，这里的byte和short，大容量向小容量数据转换。</span></span><br><span class="line">        <span class="comment">// 这里有一个特殊情况，当一个字面值没有超过byte, short, char的取值范围，这个字面值是可以直接赋值给byte，short，char的变量，而不需要强制类型转换。</span></span><br><span class="line">        <span class="keyword">byte</span> a = <span class="number">10</span>;</span><br><span class="line">        <span class="keyword">short</span> b = <span class="number">11</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// byte aa = 128; // 报错，因为 128 超过了byte的范围，必须强转。</span></span><br><span class="line">        <span class="keyword">byte</span> aa = (<span class="keyword">byte</span>)<span class="number">128</span>;	<span class="comment">// 强转</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> c = <span class="number">12</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">long</span> d = <span class="number">13L</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 小容量向大容量 数据类型转换，自动转换</span></span><br><span class="line">        <span class="keyword">long</span> dd = <span class="number">13</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">char</span> e = <span class="string">&#x27;e&#x27;</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">boolean</span> f = <span class="keyword">true</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">float</span> g = <span class="number">3.14f</span>;</span><br><span class="line">        <span class="keyword">double</span> h = <span class="number">2.71828</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 常量，定义之后无法再修改它的值。</span></span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">double</span> PI = <span class="number">3.14</span>;</span><br><span class="line">        </span><br><span class="line">        System.out.println(<span class="string">&quot;Hello World!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-备注"><a href="#6-备注" class="headerlink" title="6. 备注"></a>6. 备注</h2><p><em>参考B站《动力节点》。</em></p>
+
                 
             </div>
             <hr/>
@@ -1009,7 +1152,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">13.3k</span>&nbsp;字
+                class="white-color">15.7k</span>&nbsp;字
             
             
             
