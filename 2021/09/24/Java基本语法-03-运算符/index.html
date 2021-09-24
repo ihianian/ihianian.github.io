@@ -461,14 +461,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    62
+                    1.3k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    4 分
                 </div>
                 
 
@@ -488,8 +488,188 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p><strong>程序是对数据的处理</strong>，前面介绍了数据类型以及变量等相关知识，接下来介绍对数据的处理，简而言之就是对数据的运算，运算用运算符表明。</p>
-<h2 id="1-运算符"><a href="#1-运算符" class="headerlink" title="1. 运算符"></a>1. 运算符</h2>
+                <p><strong>程序是对数据的处理</strong>，前面介绍了数据类型以及变量等相关知识，接下来介绍对数据的处理，简而言之就是对数据的运算，运算需要用运算符表明。</p>
+<h2 id="1-运算符"><a href="#1-运算符" class="headerlink" title="1. 运算符"></a>1. 运算符</h2><p>数据之间的运算除了基本的加减乘除之外，还有一些“高级运算”。对应的运算符也是，简单的运算主要有常见的加减乘除等算数运算，另外还有一些比较运算符，如&gt;，&lt;等等。除此之外还有一些逻辑运算符：与或非，赋值类运算符以及三目运算符等等。</p>
+<h3 id="1-1-算数运算符"><a href="#1-1-算数运算符" class="headerlink" title="1.1 算数运算符"></a>1.1 算数运算符</h3><table>
+<thead>
+<tr>
+<th align="center">运算符</th>
+<th align="center">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">+</td>
+<td align="center">求和</td>
+</tr>
+<tr>
+<td align="center">-</td>
+<td align="center">相减</td>
+</tr>
+<tr>
+<td align="center">*</td>
+<td align="center">乘积</td>
+</tr>
+<tr>
+<td align="center">/</td>
+<td align="center">商</td>
+</tr>
+<tr>
+<td align="center">%</td>
+<td align="center">求余数（取模）</td>
+</tr>
+<tr>
+<td align="center">++</td>
+<td align="center">自加1</td>
+</tr>
+<tr>
+<td align="center">–</td>
+<td align="center">自减1</td>
+</tr>
+</tbody></table>
+<p>注意：一个表达式当中有多个运算符，运算符有优先级，不确定的可以加小括号，优先级得到提升。</p>
+<h3 id="1-2-关系运算符"><a href="#1-2-关系运算符" class="headerlink" title="1.2 关系运算符"></a>1.2 关系运算符</h3><table>
+<thead>
+<tr>
+<th align="center">运算符</th>
+<th align="center">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">&gt;</td>
+<td align="center">大于</td>
+</tr>
+<tr>
+<td align="center">&gt;=</td>
+<td align="center">大于等于</td>
+</tr>
+<tr>
+<td align="center">&lt;</td>
+<td align="center">小于</td>
+</tr>
+<tr>
+<td align="center">&lt;=</td>
+<td align="center">小于等于</td>
+</tr>
+<tr>
+<td align="center">==</td>
+<td align="center">等于</td>
+</tr>
+<tr>
+<td align="center">!=</td>
+<td align="center">不等于</td>
+</tr>
+</tbody></table>
+<p>注意：关系运算符的运算结果一定是布尔类型：true/false。</p>
+<h3 id="1-3-逻辑运算符"><a href="#1-3-逻辑运算符" class="headerlink" title="1.3 逻辑运算符"></a>1.3 逻辑运算符</h3><table>
+<thead>
+<tr>
+<th align="center">运算符</th>
+<th align="center">含义</th>
+<th align="center">运算结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">&amp;</td>
+<td align="center">逻辑与</td>
+<td align="center">两边的算子都是true，结果才是true</td>
+</tr>
+<tr>
+<td align="center">|</td>
+<td align="center">逻辑或</td>
+<td align="center">两边的算子只要有一个是true，结果就是true</td>
+</tr>
+<tr>
+<td align="center">!</td>
+<td align="center">逻辑非</td>
+<td align="center">取反，! true 就是false，! false就是true，单目运算符</td>
+</tr>
+<tr>
+<td align="center">^</td>
+<td align="center">逻辑异或</td>
+<td align="center">两边的算子只要不一样，结果就是true</td>
+</tr>
+<tr>
+<td align="center">&amp;&amp;</td>
+<td align="center">短路与</td>
+<td align="center">同逻辑与</td>
+</tr>
+<tr>
+<td align="center">||</td>
+<td align="center">短路或</td>
+<td align="center">同逻辑或</td>
+</tr>
+</tbody></table>
+<p>注意：</p>
+<ol>
+<li><strong>逻辑运算符运算两边的算子都是布尔类型，并且逻辑运算符最终的运算结果也是布尔类型</strong>。</li>
+<li>短路与和逻辑与最终的运算结果是相同的，只不过短路与存在短路现象。</li>
+<li>短路或与逻辑或最终的运算结果是相同的，只不过短路或存在短路现象。</li>
+</ol>
+<p><strong>短路的意思就是：如果根据运算符的左边的算子就已经知道整个表达式的结果了，那么右边的算子就不需要再执行了，而直接给出运算结果</strong>。</p>
+<p>从某个角度看，短路更智能，由于后面的表达式可能不执行，所以执行效率更高。这种方式在实际的开发中使用更多。短路与比逻辑与使用的多，短路更常用。</p>
+<p>但是，<strong>在某些特殊的业务逻辑当中，要求运算符两边的算子必须全部执行，此时必须使用逻辑与，不能使用短路与</strong>，使用短路与可能导致右边的表达式不执行。</p>
+<h3 id="1-4-赋值类运算符"><a href="#1-4-赋值类运算符" class="headerlink" title="1.4 赋值类运算符"></a>1.4 赋值类运算符</h3><table>
+<thead>
+<tr>
+<th align="center">运算符</th>
+<th align="center">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">=</td>
+<td align="center">赋值</td>
+</tr>
+<tr>
+<td align="center">+=</td>
+<td align="center">左侧算子等于自身加上右侧算子</td>
+</tr>
+<tr>
+<td align="center">-=</td>
+<td align="center">左侧算子等于自身减去右侧算子</td>
+</tr>
+<tr>
+<td align="center">*=</td>
+<td align="center">左侧算子等于自身乘右侧算子</td>
+</tr>
+<tr>
+<td align="center">/=</td>
+<td align="center">左侧算子等于自身除右侧算子</td>
+</tr>
+<tr>
+<td align="center">%=</td>
+<td align="center">左侧算子等于自身对右侧算子取余</td>
+</tr>
+</tbody></table>
+<p>注意：赋值类的运算符优先级：先执行等号右边的表达式，将执行结果赋值给左边的变量。<strong>除了第一个基本的赋值运算符，剩下的扩展赋值符在运算结果上和表中的“含义”是一样的，但是会自动类型转换。</strong>换句话说，扩展类的赋值运算符不改变左侧算子的类型（<strong>如果右侧的算子结果类型和左侧的不一样，则会自动强制类型转换</strong>）。如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">byte</span> b = <span class="number">10</span>;</span><br><span class="line">b = b + <span class="number">5</span>;		<span class="comment">// 报错，因为没有强转</span></span><br><span class="line">b += <span class="number">5</span>;		<span class="comment">// 可以，没有报错，此时等同于 b = (byte)(b + 5);</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="1-5-字符串连接运算符"><a href="#1-5-字符串连接运算符" class="headerlink" title="1.5 字符串连接运算符"></a>1.5 字符串连接运算符</h3><blockquote>
+<p>字符串是引用数据类型，语法：<code>String s = &quot;Hello world!&quot;;</code>，</p>
+</blockquote>
+<p>字符串连接运算符主要是采用“+”运算符来实现。</p>
+<p>关于Java中的“+”运算符：</p>
+<ol>
+<li>“+”运算符在Java语言当中有两个作用：<ol>
+<li>加法运算，求和；</li>
+<li>字符串的连接运算；</li>
+</ol>
+</li>
+<li>当“+”运算符两边的数据都是数字的话，一定是进行加法运算。</li>
+<li>当“+”运算符两边的数据只要有一个数据是字符串，一定会进行字符串连接运算。并且，连接运算之后的结果还是一个字符串类型。（<strong>默认将另一个非字符串型数据强制转换成字符串型数据，直接拼接</strong>）。</li>
+</ol>
+<h3 id="1-6-条件运算符"><a href="#1-6-条件运算符" class="headerlink" title="1.6 条件运算符"></a>1.6 条件运算符</h3><p> 条件运算符也叫三元运算符/三目运算符。</p>
+<ol>
+<li><p>语法规则：</p>
+<p><code>布尔表达式 ? 表达式1 : 表达式2</code></p>
+</li>
+<li><p>执行原理：</p>
+<p>当布尔表达式的结果是true的时候，选择表达式1作为整个表达式的执行结果；当布尔表达式的结果是false的时候，选择表达式2作为整个表达式的执行结果。</p>
+</li>
+</ol>
+<h2 id="2-例子"><a href="#2-例子" class="headerlink" title="2. 例子"></a>2. 例子</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Example</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> a = <span class="number">10</span>, b = <span class="number">20</span>, c;</span><br><span class="line">        c = a + b;</span><br><span class="line">        System.out.println(c);</span><br><span class="line">        </span><br><span class="line">        c += <span class="number">5</span>;</span><br><span class="line">        System.out.println(c);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">boolean</span> d, e, f;</span><br><span class="line">        d = a &gt; b;</span><br><span class="line">        e = c &gt; b;</span><br><span class="line">        f = d &amp; e;</span><br><span class="line">        System.out.println(f);</span><br><span class="line">        </span><br><span class="line">        String s = <span class="string">&quot;Hello world!&quot;</span>;</span><br><span class="line">        String ss = s + a;</span><br><span class="line">        System.out.println(ss);</span><br><span class="line">        </span><br><span class="line">        c = a &gt; b ? a : b;</span><br><span class="line">        System.out.println(c);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-备注"><a href="#3-备注" class="headerlink" title="3. 备注"></a>3. 备注</h2><p><em>参考B站《动力节点》。</em></p>
+
                 
             </div>
             <hr/>
@@ -750,10 +930,18 @@
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
-                            hianian
+                            浮云
                             
                         </span>
                     </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Java/">
+                        <span class="chip bg-color">Java</span>
+                    </a>
+                    
                 </div>
                 
             </div>
@@ -999,7 +1187,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">16.2k</span>&nbsp;字
+                class="white-color">17.5k</span>&nbsp;字
             
             
             
