@@ -605,10 +605,10 @@
 <h3 id="1-4-类型转换"><a href="#1-4-类型转换" class="headerlink" title="1.4 类型转换"></a>1.4 类型转换</h3><p>既然存在不同的数据类型，那么Java也提供了数据类型之间的转换（<strong>具体的例子见后面的字面值以及变量部分</strong>）。类型转换分为两种：</p>
 <ul>
 <li><p>自动类型转换</p>
-<p><strong>从大容量到小容量的数据转换，Java会自动执行。</strong>其实相当于直接在数字的前面填充0即可，使其满足特定字节的长度即可。</p>
+<p><strong>从小容量到大容量的数据转换，Java会自动执行。</strong>其实相当于直接在数字的前面填充0即可，使其满足特定字节的长度即可。</p>
 </li>
 <li><p>强制类型转换</p>
-<p><strong>从小容量到大容量的数据转换，需要手动执行</strong>，但是这仅仅是编译通过了，在实际运行过程中，可能会损失精度。其实相当于直接从前面截断，比如long类型转换到int类型，直接将前面四个字节截断，取后四个字节。</p>
+<p><strong>从大容量到小容量的数据转换，需要手动执行</strong>，但是这仅仅是编译通过了，在实际运行过程中，可能会损失精度。其实相当于直接从前面截断，比如long类型转换到int类型，直接将前面四个字节截断，取后四个字节。</p>
 <p>语法：<code>int a = (long)1234567L;</code></p>
 </li>
 </ul>
@@ -867,18 +867,17 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/09/10/Java%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95-02-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/">
+                <a href="/2021/09/24/Java%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95-03-%E8%BF%90%E7%AE%97%E7%AC%A6/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="Java基本语法_02_数据类型">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="Java基本语法_03_运算符">
                         
-                        <span class="card-title">Java基本语法_02_数据类型</span>
+                        <span class="card-title">Java基本语法_03_运算符</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -888,25 +887,16 @@
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-10
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-09-24
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
-                            浮云
+                            hianian
                             
                         </span>
                     </div>
-                </div>
-
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/Java/">
-                        <span class="chip bg-color">Java</span>
-                    </a>
-                    
                 </div>
                 
             </div>
