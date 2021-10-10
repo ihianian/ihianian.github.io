@@ -429,9 +429,13 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Java/">
+                                <span class="chip bg-color">Java</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -450,21 +454,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-10-04
+                    2021-10-10
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    0
+                    4.9k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    17 分
                 </div>
                 
 
@@ -484,7 +488,227 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                
+                <h2 id="1-基本介绍"><a href="#1-基本介绍" class="headerlink" title="1. 基本介绍"></a>1. 基本介绍</h2><p><strong>类属于引用数据类型</strong>，描述的是对象的共同特征，是对一类事物的抽象。共同特征如身高，这个身高特征在访问的时候，必须先创建对象，通过对象去访问这个特征。因为这个特征具体到不同的对象，其值不同。</p>
+<p>一个类主要描述的是：<code>状态+动作</code>。状态信息就是前面提到的成分，如名字、身高、性别等等；动作信息就是前面提到的功能，如吃饭、学习等等。</p>
+<ul>
+<li><strong>状态 —&gt; 类中的属性：通常是采用一个变量的形式来完成定义的（基本数据类型和引用数据类型均可）。</strong></li>
+<li><strong>动作 —&gt; 类中的方法：通常是采用一个方法的形式来完成定义的。</strong></li>
+</ul>
+<p>所以，类中主要包含<strong>属性</strong>和<strong>方法</strong>两部分。</p>
+<h2 id="2-类的基本定义"><a href="#2-类的基本定义" class="headerlink" title="2. 类的基本定义"></a>2. 类的基本定义</h2><p>类的基本语法结构如下所示，<strong>其中extends是继承的意思，implements是实现的意思，作用分别是继承某个类和实现某个结构，见后续文章介绍。</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[修饰符列表] <span class="class"><span class="keyword">class</span> 类名 [<span class="keyword">extends</span> 类名] [<span class="keyword">implements</span> 接口名]</span>&#123;</span><br><span class="line">    类体;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>修饰符列表是关键字，用于修改这个类或方法的一些权限，如public、static等等。</li>
+<li>类名是标识符，满足前面提到的命名规则。</li>
+<li>extends是关键字，用于继承某类。</li>
+<li>implements是关键字，用于实现某接口。</li>
+</ul>
+<p>案例如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 属性【描述的是对象的状态信息】</span></span><br><span class="line">    <span class="comment">// 属性通常采用变量的方式来定义</span></span><br><span class="line">    <span class="comment">// 在类体当中，方法体之外定义的变量被称为“成员变量”</span></span><br><span class="line">    <span class="comment">// 成员变量没有赋值，系统会默认赋值：一切向“0”看齐</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> no;</span><br><span class="line">    String name;</span><br><span class="line">    <span class="keyword">boolean</span> sex;</span><br><span class="line">    <span class="keyword">int</span> age;</span><br><span class="line">    String address;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">eat</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sleep</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-1-构造方法"><a href="#2-1-构造方法" class="headerlink" title="2.1 构造方法"></a>2.1 构造方法</h3><p>类中可以定义很多方法，一个比较重要的方法是<strong>构造方法</strong>，也被称为构造函数/构造器/Constructor。构造方法的语法结构如下所示，<strong>注意，该方法没有返回值类型，和普通的方法不一样</strong>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[修饰符列表] 构造方法名(形式参数列表)&#123;</span><br><span class="line">    构造方法体;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><p><strong>构造方法名必须和当前类名保持一致，不需要指定返回值类型，也不能写void，void也算一种返回值类型。</strong></p>
+</li>
+<li><p>构造方法存在的意义是：</p>
+<ol>
+<li>通过构造方法的调用，可以创建对象。</li>
+<li>初始化实例变量的内存空间。</li>
+</ol>
+</li>
+<li><p>构造方法怎么调用？和创建对象时的语法一样吗？</p>
+<ol>
+<li>类中的普通方法是这样调用的：<ol>
+<li>调用静态方法：<code>类名.方法名(实参列表);</code></li>
+<li>调用非静态方法：<code>引用.方法名(实参列表);</code></li>
+</ol>
+</li>
+<li>构造方法是这样调用的：<ol>
+<li><code>new 构造方法名(实参列表);</code></li>
+<li>其实创建对象时就是调用的是构造方法。</li>
+<li>还有一种说法是，构造方法在创建对象的时候会自动调用，由于构造方法名和类名一样，所以两种说法都说的通。</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p><strong>构造方法执行结束之后都有返回值</strong>，<strong>返回值是对象在堆内存中的内存地址，类型就是该类本身</strong>。但是写构造方法的时候不需要写<code>return 值;</code>这样的语句。构造方法结束的时候Java程序自动返回值，并且返回值类型就是构造方法所在的类。</p>
+</li>
+<li><p>当一个类中没有定义任何构造方法的话，系统默认给该类提供一个无参数的构造方法，这个构造方法被称为缺省构造器（以默认值自动初始化实例变量。<strong>参见后面的继承</strong>）。</p>
+</li>
+<li><p>当一个类显式的将构造方法定义出来了，那么系统则不再默认为这个类提供缺省构造器。建议在开发中，手动为当前类提供无参数方法（<strong>参见后面的super关键字</strong>）。（这样，即使有他人写了带参数的构造方法，原来的没有带参数的创建对象的语句，也能够顺利执行，<strong>即重载</strong>，所以说构造方法也支持重载）</p>
+</li>
+<li><p>简单案例如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User02</span></span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">User02</span><span class="params">()</span></span>&#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;无参数的构造方法&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 下面几个构造方法构成重载</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">User02</span><span class="params">(<span class="keyword">int</span> a)</span></span>&#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;带有int类型参数的构造方法&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">User02</span><span class="params">(String name)</span></span>&#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;带有String类型参数的构造方法&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">User02</span><span class="params">(<span class="keyword">int</span> a, String name)</span></span>&#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;带有int, String类型的构造方法&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="3-对象和引用"><a href="#3-对象和引用" class="headerlink" title="3. 对象和引用"></a>3. 对象和引用</h2><h3 id="3-1-对象的创建"><a href="#3-1-对象的创建" class="headerlink" title="3.1 对象的创建"></a>3.1 对象的创建</h3><p><strong>类相当于数据类型，创建的变量称为实例/对象/引用。</strong>和定义普通变量类似，一个类可以创建多个对象，创建对象的语法和定义变量的语法类似：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">类名 变量名 = <span class="keyword">new</span> 类名(实参列表);</span><br></pre></td></tr></table></figure>
+
+<p>其中new是Java语言中的一个运算符，作用是在<strong>JVM堆内存</strong>当中开辟新的内存空间，即创建对象。<strong>注意，这个变量名就是引用，值是JVM中的内存地址，JVM中开辟的那一块内存空间称为对象/实例。每创建一个对象，就会在内存中开辟一块空间。</strong>即对象是一块内存空间，引用则是一个变量，其值是对象在内存空间的地址。</p>
+<p>因此，在JVM三块主要内存中，方法区内存存储代码；执行代码的时候，栈内存存储方法（局部变量）；堆内存存储对象（成员变量，非静态变量）。<strong>注意，因为引用是一个变量，是在方法中定义的，相当于局部变量，所以存储在栈内存中；而对象中的成员变量，不是在方法中定义的，所以存储在堆内存中。</strong></p>
+<p>Java语言中，只能通过“引用”去访问堆内存中对象的属性/成员变量，即<code>引用.变量名</code>的形式，和上面调用非对象中的非静态方法类似。</p>
+<p>一些补充知识：</p>
+<blockquote>
+<ol>
+<li>堆内存和方法区内存各有一个，一个线程有一个栈内存。</li>
+<li>栈内存中主要存储的是方法体当中的局部变量。</li>
+<li>方法的代码片段以及整个类的代码片段都被存储到方法区内存当中，在类加载的时候会载入。</li>
+<li>在程序执行过程中使用 new运算符创建的 Java对象，存储在堆内存当中。对象内部有实例变量，所以实例变量存储在堆内存当中。在调用对象中的方法的时候，会在栈内存中分配对应局部变量的内存空间。</li>
+<li>变量分类：<ol>
+<li>局部变量【方法体中声明】</li>
+<li>成员变量【方法体外声明】<ul>
+<li>实例变量【前边修饰符没有static】</li>
+<li>静态变量【前边修饰符中有static】</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><strong>静态变量存储在方法区内存当中</strong>。</li>
+<li><strong>三块内存当中变化最频繁的是栈内存，最先有数据的是方法区内存，垃圾回收器主要针对的是堆内存</strong>。</li>
+<li>垃圾回收器【自动垃圾回收机制，GC机制】什么时候会考虑将某个Java对象的内存回收呢？<ul>
+<li>当堆内存当中的Java对象称为垃圾数据的时候，会被垃圾回收器回收。</li>
+<li>什么时候堆内存中的Java对象会变成垃圾呢？<ul>
+<li>当没有更多的引用指向它的时候，这个对象无法被访问，因为访问对象只能通过引用的方式访问。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</blockquote>
+<h3 id="3-2-对象和引用"><a href="#3-2-对象和引用" class="headerlink" title="3.2 对象和引用"></a>3.2 对象和引用</h3><p>前文对象和引用经常一起出现，但是要注意二者的区别。</p>
+<ul>
+<li>对象：目前使用new运算符在堆中开辟的内存空间称为对象。</li>
+<li>引用：是一个变量，不一定是局部变量，还可能是成员变量。引用保存了内存地址，指向了堆内存中的对象。</li>
+<li>所有访问和实对象相关的数据（属性、方法），都需要通过“引用.”的方式访问，因为只有通过引用才能找到对象。</li>
+<li>如果只有一个空的引用，访问对象的实例相关的数据会出现空指针异常。</li>
+</ul>
+<h3 id="3-3-参数传递"><a href="#3-3-参数传递" class="headerlink" title="3.3 参数传递"></a>3.3 参数传递</h3><p>Java语言当中方法调用的时候涉及到的参数传递问题，参数传递实际上传递的是变量中保存的具体值。方法调用的时候，涉及到参数传递的问题，传递的时候，Java只遵循一种语法机制，就是将变量中保存的“值”传递过去了，只不过有的时候这个值是一个字面值10，有的时候这个值是另一个Java对象的内存地址0x1234。</p>
+<h2 id="4-常用关键字"><a href="#4-常用关键字" class="headerlink" title="4. 常用关键字"></a>4. 常用关键字</h2><p>简单介绍两个常用的关键字，其中static关键字作为修饰符，可以用来修饰方法和属性。</p>
+<h3 id="4-1-static关键字"><a href="#4-1-static关键字" class="headerlink" title="4.1 static关键字"></a>4.1 static关键字</h3><blockquote>
+<p>有的时候，一个类的所有实例化对象，都有一个共同的属性值，比如“中国人”类，该类所有对象的“国籍”属性都是一样的，即“中国”。但是实例化对象是存储在堆内存中的，明显这样做会造成空间浪费。这个属性其实已经不是对象级别的特征了，而是类级别的特征。可以将该成员变量定义为静态变量，即用static修饰。</p>
+<p>静态变量存储在方法区内存当中，静态变量在类加载的时候初始化，不需要创建对象来实例化，很明显，所有的实例化对象都共享这个变量，大大减少了内存开销。</p>
+<p><strong>static也可以用来修饰方法，即静态方法。</strong></p>
+<p>静态方法和静态变量由于是类级别的，所以可以通过<code>类名.方法/变量名</code>来调用，当然也可以通过<code>引用.方法/变量名</code>来调用。</p>
+</blockquote>
+<ol>
+<li><p>什么时候成员变量声明为实例变量呢？</p>
+<ul>
+<li>所有对象都有这个属性，但是这个属性的值会随着对象的变化而变化，即不同对象的这个属性值不同。</li>
+</ul>
+</li>
+<li><p>什么时候成员变量声明为静态变量呢？</p>
+<ul>
+<li>所有对象都有这个属性，并且所有对象的这个属性的值是一样的，建议定义为静态变量，节省内存的开销。</li>
+</ul>
+</li>
+<li><p>方法什么时候定义为静态的？</p>
+<ul>
+<li>方法描述的是动作，当所有的对象执行这个动作的时候，最终产生的影响是一样的，那么这个动作已经不再属于某一个对象动作了，可以将这个动作提升为类级别的动作，模板级别的动作。</li>
+<li><strong>注意，静态方法中无法直接访问实例变量和实例方法。</strong></li>
+</ul>
+</li>
+<li><p>静态变量在类加载的时候初始化，存储在方法区内存中。</p>
+</li>
+<li><p>可以使用static关键字来定义“静态代码块”：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span>&#123;</span><br><span class="line">    代码块;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意，静态代码块在类加载时执行，并且只执行一次。静态代码块在一个类中可以编写多个，并且遵循自上而下的顺序依次执行。</p>
+</blockquote>
+</li>
+<li><p>静态代码块的作用是什么？怎么用？用在哪儿？什么时候用？</p>
+<ul>
+<li>这和具体的需求有关，例如<strong>项目中要求在类加载的时刻完成代码完成日志的记录。那么这段记录日志的代码就可以编写到静态代码块当中，完成日志记录</strong>。</li>
+<li>静态代码块是Java为程序员准备一个特殊的时刻，这个特殊的时刻被称为类加载时刻。若希望在此刻执行一段特殊的程序，这段程序可以直接放到静态代码块当中，</li>
+<li>通常在静态代码块当中完成预备工作，先完成数据的准备工作，例如：初始化连接池，解析XML配置文件。</li>
+</ul>
+</li>
+<li><p>除了有“静态代码块”，还有“实例代码块”。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    代码块</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>实例代码块，是在创建对象的时候才会执行，并且是在构造方法执行之前执行。所以，每创建一个实例对象，就会执行一次实例代码块。</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="4-2-this关键字"><a href="#4-2-this关键字" class="headerlink" title="4.2 this关键字"></a>4.2 this关键字</h3><ol>
+<li>this是一个关键字，翻译为：这个</li>
+<li>this是一个引用，this是一个变量，this变量保存了内存地址指向了自身，this存储在JVM堆内存中Java对象内部。</li>
+<li>创建100个Java对象，每一个对象都有this，也就说有100个不同的this。</li>
+</ol>
+<p>this关键字可以使用在：</p>
+<ul>
+<li>当局部变量和成员变量重名的时候可以使用this指定调用成员变量。</li>
+<li>通过this调用另一个构造方法。</li>
+<li>在构造方法中，如果使用this方法调用其他构造方法，那么this语句必须放在第一句，如果不放在第一句，会发生编译错误。</li>
+</ul>
+<p>需要注意，this只能用在构造函数和成员方法内部（声明变量也可以用）。static标识的方法是并不能使用this的（因为static修饰的方法是可以用“类名.”的形式来访问的，但是如果在里面用了this的话，而this指的是当前的对象，而“类名.”的方式并没有传进来对象，所以会有冲突）。<strong>所以，在static标识的方法里面，是不能访问非static标识的变量和方法的。</strong></p>
+<p>简单例子如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Date</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> year;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> month;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> day;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 无参数构造方法，直接默认是1970年1月1日。</span></span><br><span class="line">    <span class="comment">// 这样写的话，有些复杂，因为如果参数很多的话，无参数构造方法里面的代码也有很多。所以可以采用下面的另一种方法，就是通过this()直接调用其他的有参数构造方法。</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Date</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.year = <span class="number">1970</span>;</span><br><span class="line">        <span class="keyword">this</span>.month = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">this</span>.day = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 通过this直接调用有参数构造方法。</span></span><br><span class="line">    <span class="comment">// 注意，该语句必须出现在方法中的第一行。</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Date</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>(<span class="number">1970</span>, <span class="number">1</span>, <span class="number">1</span>);	<span class="comment">// 该语句必须出现在方法中的第一行，否则报错。</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 有参数构造方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Date</span><span class="params">(<span class="keyword">int</span> year, <span class="keyword">int</span> month, <span class="keyword">int</span> day)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.year = year;</span><br><span class="line">        <span class="keyword">this</span>.month = month;</span><br><span class="line">        <span class="keyword">this</span>.day = day;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意：带有static的方法，其实既可以采用类名的方式访问，也可以采用引用的方式访问；但是采用引用的方式去访问，实际上执行的时候和引用指向的对象无关。</strong></p>
+<h2 id="5-封装机制"><a href="#5-封装机制" class="headerlink" title="5. 封装机制"></a>5. 封装机制</h2><h3 id="5-1-什么是封装？"><a href="#5-1-什么是封装？" class="headerlink" title="5.1 什么是封装？"></a>5.1 什么是封装？</h3><p>封装就是对类的属性和方法进行特殊修饰，使得外部只能通过类提供的简单方法来访问类内部的属性，具有安全性。具体操作如下：</p>
+<ol>
+<li>所有属性私有化，使用<strong>private</strong>关键字进行修饰，private表示私有的，修饰的变量或方法只能在本类中访问，<strong>外部程序无法直接访问</strong>。</li>
+<li>对外提供简单的操作入口，即外部程序想要访问private修饰的变量或方法，只能通过提供的入口进行访问。<strong>一般情况下都是对外提供两个公开的方法，用于访问这些属性（即使用不到，也要尽量写上）</strong>：<ol>
+<li>set方法，用于修饰属性值；</li>
+<li>get方法，用于读取属性值；</li>
+</ol>
+</li>
+</ol>
+<h3 id="5-2-封装的好处"><a href="#5-2-封装的好处" class="headerlink" title="5.2 封装的好处"></a>5.2 封装的好处</h3><ol>
+<li><p>封装之后，对于那个事物来说，外面看不到这个事物的复杂面，只看到该事物简单的那一面。复杂性封装，对外提供简单的操作入口。照相机就是一个很好的封装案例，照相机的实现原理非常复杂，但是对于使用照相机的人来说，操作起来是非常方便的，因为对外提供了非常简单的按钮。</p>
+</li>
+<li><p>封装之后，才会形成真正的“个体”、“独立体”。</p>
+</li>
+<li><p>封装之后，对于事物本身，提高了安全性，安全级别较高。</p>
+<p>一个简单的例子是电视机，电视机外壳将里面元器件保护起来，使得用户不能随意拆卸操作元器件，对外提供了遥控器以及按钮，这些遥控器和按钮无论怎么操作都不会对电视机造成任何破坏性影响，不会涉及到内部安全的相关操作。<strong>类也是，只需要对外提供基本的操作即可，不需要给予外部过多的权限。</strong></p>
+</li>
+</ol>
+<h2 id="6-访问控制权限修饰符："><a href="#6-访问控制权限修饰符：" class="headerlink" title="6. 访问控制权限修饰符："></a>6. 访问控制权限修饰符：</h2><p>正如前面提到的public、private一样，为了更好的封装以及实现其他功能，Java提供了访问控制权限修饰符。<strong>访问控制权限修饰符用来控制元素的访问范围。</strong>访问控制权限修饰符包括以下几种：</p>
+<table>
+<thead>
+<tr>
+<th align="center">修饰符</th>
+<th align="center">作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">public</td>
+<td align="center">表示公开的，在任何位置都可以访问</td>
+</tr>
+<tr>
+<td align="center">protected</td>
+<td align="center">表示受保护的，同一个下可以访问，子类可以访问</td>
+</tr>
+<tr>
+<td align="center">缺省</td>
+<td align="center">同一个包下可以访问</td>
+</tr>
+<tr>
+<td align="center">private</td>
+<td align="center">表示私有的，只能在本类中访问</td>
+</tr>
+</tbody></table>
+<ol>
+<li><p><strong>访问控制权限修饰符可以修饰类、变量、方法…</strong></p>
+</li>
+<li><p>当某个数据只希望子类使用，那么使用protected进行修饰</p>
+</li>
+<li><p>修饰符的权限范围：</p>
+<p>private &lt; 缺省 &lt; protected &lt; public</p>
+</li>
+<li><p>一般情况下，<strong>类只能采用 public 和缺省 两种修饰符进行修饰（内部类除外）</strong>。</p>
+</li>
+</ol>
+<h2 id="7-简单案例"><a href="#7-简单案例" class="headerlink" title="7. 简单案例"></a>7. 简单案例</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 注意，因为将两个类写在了一个文件中，因为一个文件中只能有一个public修饰的类，所以Chinese类是缺省修饰。</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Chinese</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;这是写在Chinese类中的静态代码块&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> String nationality = <span class="string">&quot;China&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">float</span> height;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">float</span> weight;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> sex;</span><br><span class="line"></span><br><span class="line">    Chinese()&#123;</span><br><span class="line">        <span class="comment">// 无参构造方法，以 this 关键字调用有参构造方法。</span></span><br><span class="line">        <span class="comment">// flase 表示男性</span></span><br><span class="line">        <span class="keyword">this</span>(<span class="string">&quot;张三&quot;</span>, <span class="number">1.78f</span>, <span class="number">70.0f</span>, <span class="keyword">false</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Chinese(String name, <span class="keyword">float</span> height, <span class="keyword">float</span> weight, <span class="keyword">boolean</span> sex)&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.height = height;</span><br><span class="line">        <span class="keyword">this</span>.weight = weight;</span><br><span class="line">        <span class="keyword">this</span>.sex = sex;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// set 和 get 方法</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">getName</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">setHeight</span><span class="params">(<span class="keyword">float</span> height)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.height = height;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">float</span> <span class="title">getHeight</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.height;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">setWeight</span><span class="params">(<span class="keyword">float</span> weight)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.weight = weight;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">float</span> <span class="title">getWeight</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.weight;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">setSex</span><span class="params">(<span class="keyword">boolean</span> sex)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.sex = sex;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">getSex</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> sex ? <span class="string">&quot;女&quot;</span> : <span class="string">&quot;男&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">sleeping</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="keyword">this</span>.name + <span class="string">&quot;正在睡觉中...&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">eating</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="keyword">this</span>.name + <span class="string">&quot;正在吃饭中...&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// toString方法，见后续的object类。</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Chinese&#123;&quot;</span> +</span><br><span class="line">                <span class="string">&quot;name=&#x27;&quot;</span> + name + <span class="string">&#x27;\&#x27;&#x27;</span> +</span><br><span class="line">                <span class="string">&quot;, height=&quot;</span> + height + <span class="string">&quot; m&quot;</span> +</span><br><span class="line">                <span class="string">&quot;, weight=&quot;</span> + weight + <span class="string">&quot; kg&quot;</span> +</span><br><span class="line">                <span class="string">&quot;, sex=&quot;</span> + (sex ? <span class="string">&quot;女&quot;</span> : <span class="string">&quot;男&quot;</span>) +</span><br><span class="line">                <span class="string">&#x27;&#125;&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 测试类</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestOOP_01</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">        Chinese zhangSan = <span class="keyword">new</span> Chinese();</span><br><span class="line">        System.out.println(zhangSan);</span><br><span class="line">        zhangSan.eating();</span><br><span class="line">        zhangSan.sleeping();</span><br><span class="line"></span><br><span class="line"><span class="comment">//        System.out.println(zhangSan.name);</span></span><br><span class="line">        System.out.println(zhangSan.getName());</span><br><span class="line"></span><br><span class="line">        System.out.println(zhangSan.nationality);</span><br><span class="line">        System.out.println(Chinese.nationality);</span><br><span class="line"></span><br><span class="line">        Chinese liSi = <span class="keyword">new</span> Chinese(<span class="string">&quot;李思&quot;</span>, <span class="number">1.67f</span>, <span class="number">51.0f</span>, <span class="keyword">true</span>);</span><br><span class="line">        System.out.println(liSi);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="8-备注"><a href="#8-备注" class="headerlink" title="8. 备注"></a>8. 备注</h2><p><em>参考B站《动力节点》。</em></p>
+
                 
             </div>
             <hr/>
@@ -500,7 +724,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">hianian</a>
+                    <a href="/about" rel="external nofollow noreferrer">浮云</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -523,7 +747,7 @@
                     本博客所有文章除特別声明外，均采用
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     许可协议。转载请注明来源
-                    <a href="/about" target="_blank">hianian</a>
+                    <a href="/about" target="_blank">浮云</a>
                     !
                 </span>
             </div>
@@ -547,7 +771,11 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/Java/">
+                                    <span class="chip bg-color">Java</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -741,10 +969,18 @@
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
-                            hianian
+                            浮云
                             
                         </span>
                     </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Java/">
+                        <span class="chip bg-color">Java</span>
+                    </a>
+                    
                 </div>
                 
             </div>
@@ -990,7 +1226,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">23.3k</span>&nbsp;字
+                class="white-color">28.4k</span>&nbsp;字
             
             
             
