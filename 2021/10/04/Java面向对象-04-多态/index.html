@@ -429,9 +429,13 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Java/">
+                                <span class="chip bg-color">Java</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -450,21 +454,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-10-04
+                    2021-10-12
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    0
+                    1.8k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    6 分
                 </div>
                 
 
@@ -484,7 +488,57 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                
+                <h2 id="1-多态"><a href="#1-多态" class="headerlink" title="1. 多态"></a>1. 多态</h2><p>面向对象三特特征中，除了封装、继承，还有多态。（<strong>为什么出现这种需求，不是很理解</strong>）</p>
+<p>关于多态中涉及到的几个概念：</p>
+<ul>
+<li><p>向上转型（upcasting）：</p>
+<p>子类型转换成父类型，也被称为自动类型转换。</p>
+</li>
+<li><p>向下转型（downcasting）：</p>
+<p>父类型转换成子类型，也被称为强制类型转换。（需要加强制类型转换）</p>
+</li>
+<li><p><strong>注意，无论是向上转型还是向下转型，两种类型之间必须有继承关系。没有继承关系，程序是无法编译通过的。</strong></p>
+</li>
+</ul>
+<p>多态即多种状态，在Java程序中，有编译和运行两个阶段。多态指的是编译时是一种状态，运行时是另一种状态。比如向上转型之后（<strong>左侧引用是父类型，右侧实际对象是子类型</strong>），父类型引用指向子类型对象。即在编译的时候，父类型引用调用自己类的方法；但是在运行的时候，调用的其实是子类中的<strong>同名方法</strong>。即多种状态。</p>
+<p>多态可以降低程序的耦合度，提高程序的可扩展力。能使用多态尽量使用多态，核心是面向抽象编程，尽量不要面向具体编程。多态的底层实质上还是指向的最终的那个具体的类对象。</p>
+<p>这样有一个好处，就是在传参的时候，形参可以只定义一种（父类型引用），实参可以传入它的任何子类。类似重载而又不需要定义多个方法。</p>
+<h3 id="1-1-流程分析"><a href="#1-1-流程分析" class="headerlink" title="1.1 流程分析"></a>1.1 流程分析</h3><p>Animal、Cat、Bird三个类之间的关系：</p>
+<ul>
+<li>Cat继承Animal</li>
+<li>Bird继承Animal</li>
+<li>Cat和Bird之间没有任何关系</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Animal a = <span class="keyword">new</span> Cat();</span><br><span class="line">a.move();</span><br></pre></td></tr></table></figure>
+
+<p>分析：</p>
+<blockquote>
+<p>首先Animal和Cat之间存在继承关系，并且Animal是父类，Cat是子类。Animal类中有move()方法，Cat is a Animal，new Cat() 创建的对象的类型是Cat，a这个引用的数据类型是Animal，可见它们进行了类型转换。子类型转换成父类型，称为向上转型。（<strong>注意，这是把Cat对象的内存地址赋值给Animal类型的引用，所以是子类型转换成父类型</strong>），是自动类型转换。</p>
+<ol>
+<li>Java程序分为编译阶段和运行阶段，先编译再运行。</li>
+<li>在编译阶段，编译器检查语法，a的引用数据类型为Animal，父类型指向子类型，满足自动类型转换，并且Animal.class字节码文件中有move方法，所以编译通过了。这个编译阶段绑定的过程称为静态绑定，只有静态绑定成功之后才有后续的运行。</li>
+<li>在运行阶段，JVM堆内存当中真实创建的对象是Cat对象，那么运行阶段则会调用Cat对象的move()方法，此时发生了程序的动态绑定，在运行阶段绑定。</li>
+<li><strong>注意，无论Cat有没有重写move()方法，运行阶段一定调用的是Cat对象的move方法，因为底层的真实对象是Cat对象。</strong></li>
+<li>父类型引用指向子类型对象这种机制导致程序在编译阶段和运行阶段绑定两种不同的状态。</li>
+</ol>
+<p>这种机制可以称为一种多态机制，本科时候，似乎可以这么认为，这种向上转型就是：父类型的引用仅仅能访问 子类型对象中 继承父类中的那部分区域。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Animal a = <span class="keyword">new</span> Cat();</span><br><span class="line"></span><br><span class="line">a.catchMouse();		<span class="comment">// 报错，编译阶段不通过</span></span><br><span class="line"></span><br><span class="line">Cat c = (Cat)a;</span><br><span class="line">c.catchMouse();</span><br></pre></td></tr></table></figure>
+
+<p>分析：</p>
+<blockquote>
+<p>上述的注释行就会报错，因为编译阶段，检测到a是Animal数据类型，但是.class字节码文件中的Animal并没有catchMouse()方法，所以静态绑定失败，即编译未通过。</p>
+<p>为了执行catchMouse()方法，必须使得编译通过，即Cat类型才有catchMouse()方法，此时可以向下转型，即子类型引用指向父类型对象。将a的数据类型转换为Cat，即第三行的强制类型转换。</p>
+<p><strong>注意，向下转型也需要两种类型之间有继承关系，不然编译报错，强制类型转换需要加强制类型转换符。</strong></p>
+<p>和向上转型对比，什么时候需要使用向下转型呢？</p>
+<p><strong>前面提到过，向上转型只能访问父类型中有的，那么当调用的方法或者访问的属性是子类型中特有的，就必须进行向下转型。</strong></p>
+</blockquote>
+<p><strong>注意，此时可能会有疑问，向上转型只能访问到父类型中有的。这肯定是不满足要求的，否则继承的意义就不是那么明显了。为了访问子类型特有的，还需要向下转型。转来转去还是回到了原来，这不累吗？</strong></p>
+<p>其实不是的，父类型引用指向子类型对象，这部分满足了形参可以只定义一种类型，而实参则可以传多种子类型，类似重载。传进来之后，可根据需求进行向下类型转换，降低耦合度，提高可扩展力。<strong>假如有多个子类，如何判断向下转换到哪个子类型呢，参加案例中的instanceof关键字。</strong>instanceof是用来判断前者是否是后者的一个实例，（也<strong>就是在底层内存上，前者是否指向的是后者</strong>）。</p>
+<h2 id="2-简单案例"><a href="#2-简单案例" class="headerlink" title="2. 简单案例"></a>2. 简单案例</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Animals</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">move</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;动物在移动！&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Cat</span> <span class="keyword">extends</span> <span class="title">Animals</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 重写父类move方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">move</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;猫在走猫步！&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Cat类独有的方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">catchMouse</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;猫在抓老鼠！&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bird</span> <span class="keyword">extends</span> <span class="title">Animals</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 重写父类move方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">move</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;鸟儿在飞翔！&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Bird类独有的方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;鸟儿飞呀飞！&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestOOP_03</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">castClass</span><span class="params">(Animals animals)</span></span>&#123;</span><br><span class="line">        animals.move();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 按条件判断向下转型的子类型，然后向下转，再调用子类型特有的方法。</span></span><br><span class="line">        <span class="keyword">if</span>(animals <span class="keyword">instanceof</span> Cat)&#123;</span><br><span class="line">            ((Cat) animals).catchMouse();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(animals <span class="keyword">instanceof</span> Bird)&#123;</span><br><span class="line">            ((Bird) animals).fly();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        <span class="comment">// 没有多态时的写法</span></span><br><span class="line">        <span class="comment">// 即创建对应的对象，然后调用对应的方法</span></span><br><span class="line">        System.out.println(<span class="string">&quot;------多态前------&quot;</span>);</span><br><span class="line">        Animals aml = <span class="keyword">new</span> Animals();</span><br><span class="line">        aml.move();</span><br><span class="line"></span><br><span class="line">        Cat cat = <span class="keyword">new</span> Cat();</span><br><span class="line">        cat.move();</span><br><span class="line"></span><br><span class="line">        Bird bird = <span class="keyword">new</span> Bird();</span><br><span class="line">        bird.move();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 有了多态后，可以向上转型（自动转）</span></span><br><span class="line">        System.out.println(<span class="string">&quot;------多态后（普通，向上转）------&quot;</span>);</span><br><span class="line">        Animals aml_1 = <span class="keyword">new</span> Animals();</span><br><span class="line">        aml_1.move();</span><br><span class="line"></span><br><span class="line">        Animals aml_2 = <span class="keyword">new</span> Cat();      <span class="comment">// 父类型Animals引用指向 子类型Cat对象，自动类型转换，</span></span><br><span class="line">        aml_2.move();       <span class="comment">// 表面上编译时调用的是Animals类对对象的move方法，但运行的时候，调用的是Cat类对象的方法</span></span><br><span class="line">        <span class="comment">// aml_2.catchMouse();      // 编译失败，Animals类型没有catchMouse()方法。可采用下面向上转型</span></span><br><span class="line"></span><br><span class="line">        Cat c = (Cat)aml_2;     <span class="comment">// 强转</span></span><br><span class="line">        c.catchMouse();</span><br><span class="line"></span><br><span class="line">        Animals aml_3 = <span class="keyword">new</span> Bird();</span><br><span class="line">        aml_3.move();</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;-----------------------------------&quot;</span>);</span><br><span class="line">        castClass(aml_2);</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;-----------------------------------&quot;</span>);</span><br><span class="line">        castClass(aml_3);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-备注"><a href="#3-备注" class="headerlink" title="3. 备注"></a>3. 备注</h2><p><em>参考B站《动力节点》。</em></p>
+
                 
             </div>
             <hr/>
@@ -500,7 +554,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">hianian</a>
+                    <a href="/about" rel="external nofollow noreferrer">浮云</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -523,7 +577,7 @@
                     本博客所有文章除特別声明外，均采用
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     许可协议。转载请注明来源
-                    <a href="/about" target="_blank">hianian</a>
+                    <a href="/about" target="_blank">浮云</a>
                     !
                 </span>
             </div>
@@ -547,7 +601,11 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/Java/">
+                                    <span class="chip bg-color">Java</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -990,7 +1048,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">29.4k</span>&nbsp;字
+                class="white-color">31.2k</span>&nbsp;字
             
             
             
