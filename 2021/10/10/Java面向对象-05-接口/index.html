@@ -429,9 +429,13 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Java/">
+                                <span class="chip bg-color">Java</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -450,21 +454,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-10-10
+                    2021-10-12
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    0
+                    2.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    8 分
                 </div>
                 
 
@@ -484,7 +488,90 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                
+                <p>面向对象引入了类的概念，即将相似的事物抽象出来形成模板，用于后续事物的创建。那么有没有相似的类，将相似的类进行抽象呢？这样就可以定义相似的类，实现更高层次的代码复用，Java提供了<strong>抽象类</strong>和<strong>接口</strong>的概念。</p>
+<h2 id="1-抽象类"><a href="#1-抽象类" class="headerlink" title="1. 抽象类"></a>1. 抽象类</h2><h3 id="1-1-抽象类的基本介绍"><a href="#1-1-抽象类的基本介绍" class="headerlink" title="1.1 抽象类的基本介绍"></a>1.1 抽象类的基本介绍</h3><p>类和类之间具有共同特征，将这些共同特征提取出来，形成的类就是抽象类。注意，<strong>抽象级别：对象 &lt; 类 &lt; 抽象类</strong>。因为对象是实际存在的，所以类可以实例化；但是因为类本身是不存在的，仅仅是抽象出的一个概念，所以抽象类无法实例化（无法创建对象）成类，<strong>抽象类也属于引用数据类型</strong>。</p>
+<p>抽象类是在类的基础上进一步提取共有特征而抽象出来的，对对象进行抽象形成类，对类进行抽象则形成抽象类。换句话说，对抽象类也可进一步抽象。注意，类和抽象类在现实世界中是不存在的，对象则是现实世界中实际存在的。</p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/Java/Java_oop/oop_01.png" alt="oop_01.png (1400×690) (gitee.io)"></p>
+<p>抽象类的定义语法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[修饰符列表] <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> 类名</span>&#123;</span><br><span class="line">    类体;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><strong>抽象类是无法实例化的，主要用来被子类继承</strong>。抽象类可以继承抽象类，仍然是抽象类。</li>
+<li>因为抽象类是用来继承的，所以abstract不能和final关键字一起使用，会报错：<strong>非法的修饰符组合</strong>。</li>
+<li>抽象类虽然无法实例化，但是有构造方法，这个构造方法是供子类使用的。因为继承，子类创建对象的时候，会默认有super()方法，就是默认调用父类的构造方法。</li>
+<li>抽象类中的一个概念：抽象方法。<strong>抽象类中可以没有抽象方法，但抽象方法必须出现在抽象类中</strong>。所以，非抽象子类必须实现父类的抽象方法，否则，因为子类也会继承父类的抽象方法，如果抽象方法没有实现（覆盖、重写）的话，这就是普通类中有抽象方法了。</li>
+<li><strong>抽象类也可以实现多态，抽象父类指向非抽象子类对象。</strong></li>
+</ol>
+<h3 id="1-2-抽象方法"><a href="#1-2-抽象方法" class="headerlink" title="1.2 抽象方法"></a>1.2 抽象方法</h3><p><strong>抽象方法只能存在抽象类中，表示没有实现的方法。</strong>该方法没有方法体（即没有大括号），修饰符列表中有abstract关键字，语法结构如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[修饰符列表] <span class="keyword">abstract</span> 返回值类型 方法名();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 例如</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">doSome</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>抽象类多态代码案例如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 抽象类</span></span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AnimalPlus</span></span>&#123;</span><br><span class="line">    <span class="comment">// 抽象方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">move</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BirdPlus</span> <span class="keyword">extends</span> <span class="title">AnimalPlus</span></span>&#123;</span><br><span class="line">    <span class="comment">// 实现抽象方法，注意要去掉abstract关键字。</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">move</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;鸟儿在飞翔！&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractTest</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 抽象，父类型引用指向子类型对象。</span></span><br><span class="line">        <span class="comment">// 注意，此处虽然表面上是创建了抽象类对象，但实际上底层不是。</span></span><br><span class="line">        AnimalPlus ap = <span class="keyword">new</span> BirdPlus();</span><br><span class="line">        ap.move();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意，问题：Java语言中凡是没有方法体的方法都是抽象方法？</strong></p>
+<blockquote>
+<p>不对，是错误的，Object类中就有很多方法都没有方法体，都是以”;”结尾的，但他们都不是抽象方法，例如<code>public native int hashCode();</code>，这个方法就是底层调用了c++写的动态链接库程序。前面修饰符列表中没有abstract，有一个native。表示调用 JVM本地程序。</p>
+</blockquote>
+<h2 id="2-接口"><a href="#2-接口" class="headerlink" title="2. 接口"></a>2. 接口</h2><p>抽象类中既有抽象方法也有非抽象方法，并且存在构造方法，并不是完全抽象，那么此时结构上可能就不是很清晰。可不可以将其完全抽象呢？Java提供了<strong>接口</strong>的概念。</p>
+<h3 id="2-1-接口的基本介绍"><a href="#2-1-接口的基本介绍" class="headerlink" title="2.1 接口的基本介绍"></a>2.1 接口的基本介绍</h3><p>接口是完全抽象的，而抽象类则是半抽象的，或者也可以说接口是特殊的抽象类。接口也是一种引用数据类型，和抽象类一样，编译后生成<code>.class</code>文件。接口的基本语法如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[修饰符列表] <span class="class"><span class="keyword">interface</span> 接口名</span>&#123;</span><br><span class="line">    接口体;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><p><strong>接口可以继承，支持多继承。一个接口可以继承多个接口，一个类可以实现多个接口，弥补了单继承带来的缺陷。</strong></p>
+</li>
+<li><p><strong>接口中只包含两部分内容：常量和抽象方法。</strong>不包含其他的普通方法。</p>
+</li>
+<li><p><strong>接口中所有的元素都是public修饰的，即都是公开的。</strong>既然接口中都是抽象方法，并且都有public，所以<strong>实际上public和abstract是可以省略的，系统会自动加上</strong>。</p>
+</li>
+<li><p>同上，变量都是常量，所以public、static、final也是可以省略的，系统会自动加上。</p>
+</li>
+<li><p>类和类之间叫做<strong>继承extends</strong>，类和接口之间叫做<strong>实现implements</strong>。</p>
+</li>
+<li><p>抽象类也可以实现接口，但是<strong>非抽象类实现接口，必须实现接口里的所有方法</strong>。（因为接口里的方法都是抽象的，如果不实现的话，那这就是抽象方法存在于非抽象类中了）</p>
+</li>
+<li><p><strong>注意，类在实现接口方法的时候，一定要注意修饰符列表，因为在接口中是默认加public和abstract的，而在类中，是不会加上的，所以要手动加上public。</strong></p>
+</li>
+<li><p>接口也是一种类，可以使用多态。</p>
+</li>
+<li><p><strong>继承和实现都存在的话？</strong>要先继承，再实现。就是<strong>extends要在implements的前面</strong>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Cat</span> <span class="keyword">extends</span> <span class="title">Animal</span> <span class="keyword">implements</span> <span class="title">Flyable</span></span>&#123;&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>注意，之前提到过，每个类都是默认继承Object的，那么如果我们只是实现了某个接口，底层实际上是先继承Object类的，如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Fish</span> <span class="keyword">implements</span> <span class="title">Flyable</span></span>&#123;&#125;</span><br><span class="line"><span class="comment">// 底层实际上是这样的</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Fish</span> <span class="keyword">extends</span> <span class="title">Object</span> <span class="keyword">implements</span> <span class="title">Flyable</span></span>&#123;&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="2-2-接口在开发中的作用"><a href="#2-2-接口在开发中的作用" class="headerlink" title="2.2 接口在开发中的作用"></a>2.2 接口在开发中的作用</h3><p>接口在开发中的作用，类似于多态在开发中的作用。多态的作用：面向抽象编程，不要面向具体编程。降低程序的耦合度，提高程序的扩展力。</p>
+<p>简单案例如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Master</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">feed</span><span class="params">(Dog d)</span></span>&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">feed</span><span class="params">(Cat c)</span></span>&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 这样写是不合理的，扩展力太差了，如果再养一个其他宠物，那么就得再写一个方法。那么如果用多态的话，可以直接写一个方法。Dog和Cat都继承Animal，直接传入Animal参数即可。父类型引用指向子类型对象。</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Master</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">feed</span><span class="params">(Animal a)</span></span>&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接口：接口是纯抽象的，面向抽象编程，可以认为是面向接口编程。可以降低程序的耦合度，提高程序的扩展力。符合OCP开发原则。<strong>另外，接口是将两侧给解耦合了，一侧是调用接口的方法，另一侧是实现接口。即其中一侧只负责调用接口的方法，另一侧只要按照要求实现接口的方法即可。根据多态，接口类型引用指向实现接口类的对象。所以接口相当于解耦合了。</strong></p>
+<p><strong>所以，接口的作用就是解耦合。</strong>当然，除了解耦合，另一个作用就是代码复用了。</p>
+<h3 id="2-3-抽象类和接口有什么区别？"><a href="#2-3-抽象类和接口有什么区别？" class="headerlink" title="2.3 抽象类和接口有什么区别？"></a>2.3 抽象类和接口有什么区别？</h3><blockquote>
+<p>只说一下二者在语法上的区别。</p>
+</blockquote>
+<ol>
+<li>抽象类是半抽象的，接口是完全抽象的。</li>
+<li><strong>抽象类中有构造方法，接口中没有构造方法</strong>。</li>
+<li>接口和接口之间支持多继承。类和类之间只能单继承。</li>
+<li>一个类可以同时实现多个接口，一个抽象类只能继承一个类。</li>
+<li>接口中只允许出现常量和抽象方法。<strong>接口使用的比抽象类多。</strong></li>
+<li><strong>接口一般都是对行为的抽象</strong>。</li>
+<li>接口的祖先也是Object类。</li>
+</ol>
+<h2 id="3-类型之间的关系"><a href="#3-类型之间的关系" class="headerlink" title="3. 类型之间的关系"></a>3. 类型之间的关系</h2><p>目前介绍到的类型有<strong>方法/属性</strong>、<strong>对象</strong>、<strong>类</strong>、<strong>接口（抽象类）</strong>。四者的关系如下：</p>
+<ol>
+<li><p><strong>is a</strong></p>
+<p><strong>is a</strong>表示的是“继承关系”，即类之间的继承关系。</p>
+</li>
+<li><p><strong>has a</strong></p>
+<p><strong>has a</strong>表示的是“关联关系”，即类有某些属性/方法。</p>
+</li>
+<li><p><strong>like a</strong></p>
+<p><strong>like a</strong>表示的是“实现关系”，类实现接口。</p>
+</li>
+</ol>
+<h2 id="4-简单案例"><a href="#4-简单案例" class="headerlink" title="4. 简单案例"></a>4. 简单案例</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Eating</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">eating</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CatItf</span> <span class="keyword">implements</span> <span class="title">Eating</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">eating</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;猫在吃鱼！&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSome</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;猫在走猫步！&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DogItf</span> <span class="keyword">implements</span> <span class="title">Eating</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">eating</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;狗在吃骨头！&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSome</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;狗在奔跑！&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestOOP_05</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">someMethod</span><span class="params">(Eating e)</span></span>&#123;</span><br><span class="line">        e.eating();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(e <span class="keyword">instanceof</span> CatItf)&#123;</span><br><span class="line">            ((CatItf) e).doSome();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(e <span class="keyword">instanceof</span> DogItf)&#123;</span><br><span class="line">            ((DogItf) e).doSome();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Eating eC = <span class="keyword">new</span> CatItf();</span><br><span class="line">        Eating eD = <span class="keyword">new</span> DogItf();</span><br><span class="line"></span><br><span class="line">        someMethod(eC);</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;--------------&quot;</span>);</span><br><span class="line"></span><br><span class="line">        someMethod(eD);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-备注"><a href="#5-备注" class="headerlink" title="5. 备注"></a>5. 备注</h2><p><em>参考B站《动力节点》。</em></p>
+
                 
             </div>
             <hr/>
@@ -500,7 +587,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">hianian</a>
+                    <a href="/about" rel="external nofollow noreferrer">浮云</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -523,7 +610,7 @@
                     本博客所有文章除特別声明外，均采用
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     许可协议。转载请注明来源
-                    <a href="/about" target="_blank">hianian</a>
+                    <a href="/about" target="_blank">浮云</a>
                     !
                 </span>
             </div>
@@ -547,7 +634,11 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/Java/">
+                                    <span class="chip bg-color">Java</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -990,7 +1081,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">31.2k</span>&nbsp;字
+                class="white-color">33.4k</span>&nbsp;字
             
             
             
