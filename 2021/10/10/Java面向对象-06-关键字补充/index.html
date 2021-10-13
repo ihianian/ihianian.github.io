@@ -429,9 +429,13 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Java/">
+                                <span class="chip bg-color">Java</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -450,21 +454,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-10-10
+                    2021-10-13
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    0
+                    1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    3 分
                 </div>
                 
 
@@ -484,7 +488,48 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                
+                <p>Java基本的语法结构已经介绍完毕，本文介绍一些常用的关键字，用于修饰权限以及调用。</p>
+<h2 id="1-final关键字"><a href="#1-final关键字" class="headerlink" title="1. final关键字"></a>1. final关键字</h2><ol>
+<li><p>final是一个关键字，表示最终的，不可变的。</p>
+</li>
+<li><p><strong>final修饰的类无法被继承。</strong></p>
+</li>
+<li><p>final修饰的<strong>方法</strong>无法被重写/覆盖。</p>
+</li>
+<li><p>final修饰的<strong>变量</strong>，一旦赋值之后，不可重新赋值。</p>
+</li>
+<li><p>final修饰的<strong>实例变量</strong></p>
+<blockquote>
+<p><strong>如果是实例变量，那么必须手动赋值</strong>。因为如果不赋值的话，系统会自动赋值，而final修饰的不可二次赋值，所以不手动赋值的话，以后就没机会修改了，这样做无意义，所以会编译报错，即Java规定对于final修饰的实例变量，必须手动初始化，不会自动初始化。</p>
+<p>final修饰的实例变量是不可变的，这种变量一般和static联合使用，被称为“常量”。<strong>之前的例子中，因为一个类中的所有对象的某个属性都是一样的，所以设置为静态变量。即将变量上升为类级别的。但是为了防止被修改，可以在此基础上，用final修饰。</strong></p>
+<p>常量一般是公开的，所以前面加一个public。常量名满足Java语法规范：名字全部大写，单词之间用下划线分开。</p>
+<p>常量的定义语法格式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> 类型 常量名 = 值;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 例如</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">double</span> PI = <span class="number">3.1415926</span>;</span><br></pre></td></tr></table></figure>
+
+</blockquote>
+</li>
+<li><p>final修饰的<strong>引用</strong></p>
+<blockquote>
+<p>final修饰的引用，一旦指向某个对象之后，不能再指向其他对象，那么被<strong>指向的对象无法被垃圾回收器回收</strong>。直到当前方法结束，才会释放空间。（和普通的变量一样，不能重新赋值）。但是可以通过引用，修改对象里面的属性值，即内存的内容是可以修改的。</p>
+</blockquote>
+</li>
+<li><p>final控制不了能不能调用的问题，final修饰的表示最后的，不能改变的。</p>
+</li>
+<li><p><strong>常量：前面提到过，如果一个类中的所有对象实例的某个属性值都是一样的，那么可以将其声明为静态static，此时，如果这个静态变量如果是永远不变的，那么就可以将其声明为final，所以final和static一起修饰，这个变量就是常量了。</strong></p>
+<p>其实，常量和静态变量是一样的，都是存储的方法区，都是在类加载时初始化。区别就是常量的值不能变，而静态变量则可以改变。</p>
+<p>常量一般都是公开的，因为公开了你也改不了它。</p>
+</li>
+</ol>
+<h2 id="2-super关键字"><a href="#2-super关键字" class="headerlink" title="2. super关键字"></a>2. super关键字</h2><p>super关键字主要用来调用父类的一些属性和方法，this关键字指的是当前类/对象，而super则指的是父类。</p>
+<p>super主要用在实例方法和构造方法中，不能用在静态方法中，其语法有<code>super.</code>和<code>super()</code>两种，其中<code>super.</code>大部分情况下是可以省略的。<strong>super</strong>不能单独使用，虽然可以认为指的是一块空间，但实际上仅仅指的是父类的那一块特征。</p>
+<p><code>super()</code>只能出现在构造方法第一行，即在当前的构造方法中去调用“父类”中的构造方法，目的是代码复用（<strong>创建子类对象的时候，先初始化父类型特征</strong>）：</p>
+<ol>
+<li><strong>super(实参)的作用是：初始化当前对象的父类型特征，并不是创建新对象。</strong></li>
+<li><strong>super关键字代表的就是“当前对象”的那部分父类型特征。就是说，虽然是继承了父类的，但是实际上自身已经拥有了，可以用super来初始化。</strong></li>
+<li><strong>可以认为super指的是当前对象空间中的父类中的那部分空间。通过<code>super.属性/方法</code>来调用继承的父类的特征。见第三段代码。</strong></li>
+<li><strong>当继承的父类属性和自身的属性重名时，也可以用this和super来区分父类的和子类的属性。</strong></li>
+</ol>
+
                 
             </div>
             <hr/>
@@ -500,7 +545,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">hianian</a>
+                    <a href="/about" rel="external nofollow noreferrer">浮云</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -523,7 +568,7 @@
                     本博客所有文章除特別声明外，均采用
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     许可协议。转载请注明来源
-                    <a href="/about" target="_blank">hianian</a>
+                    <a href="/about" target="_blank">浮云</a>
                     !
                 </span>
             </div>
@@ -547,7 +592,11 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/Java/">
+                                    <span class="chip bg-color">Java</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -741,10 +790,18 @@
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
-                            hianian
+                            浮云
                             
                         </span>
                     </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Java/">
+                        <span class="chip bg-color">Java</span>
+                    </a>
+                    
                 </div>
                 
             </div>
@@ -990,7 +1047,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">33.5k</span>&nbsp;字
+                class="white-color">34.6k</span>&nbsp;字
             
             
             
