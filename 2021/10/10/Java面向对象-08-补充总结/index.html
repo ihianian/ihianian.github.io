@@ -454,21 +454,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-10-13
+                    2021-10-14
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    87
+                    650
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    2 分
                 </div>
                 
 
@@ -488,7 +488,23 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>至此，Java的基本语法介绍完毕，再来看一下main方法。程序的执行需要一个入口，这个入口就是main方法。首先它是在一个类中，并且修饰符列表是public和static，因此可以不需要创建对象，在类加载到方法区内存的时候就会执行。</p>
+                <p>至此，Java的基本语法介绍完毕，本文补充一下main方法以及总结。</p>
+<h2 id="1-main方法"><a href="#1-main方法" class="headerlink" title="1. main方法"></a>1. main方法</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Example</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Hello World!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，前面文章中的例子中，总是有main方法，基本结构中并没有涉及到main方法的要求，那么这个main方法是用来干什么的呢？</p>
+<p>首先程序的执行需要一个入口，而且JVM加载完类之后就要进入这个入口。这个入口就是main方法。首先它是在一个类中，可以被加载进去，另外修饰符列表是<strong>public</strong>和<strong>static</strong>，可以被任意类访问，并且不需要创建对象，在类加载到方法区内存的时候就会执行。</p>
+<p>另外，main方法的形参是数组，该函数作为程序的入口怎么接收参数呢？<strong>其实是接收命令行运行的时候传入的参数的。</strong>一般情况下，命令行编译和运行的命令分别是：<code>javac Example.java</code>和<code>java Example</code>。其实在运行阶段可以传入参数：<code>java Example 1 2 &#39;a&#39; &quot;hello world&quot;</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Example</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        System.out.println(args.length);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> index=<span class="number">0</span>; index &lt; args.length; index++)&#123;</span><br><span class="line">            System.out.println(args[index]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/Java/Java_oop/oop_04.png" alt="oop_04.png (796×154) (gitee.io)"></p>
+<h2 id="2-总结"><a href="#2-总结" class="headerlink" title="2. 总结"></a>2. 总结</h2><p>以自顶向下的角度来看，首先是要有面向对象的思想，模块化，需要用到<strong>package机制</strong>，进而创建不同的<strong>类（class）</strong>、<strong>接口</strong>等等，不同的类以及接口之间有<strong>继承（extends）</strong>和<strong>实现（implements）</strong>的关系，父子之间的方法有<strong>覆盖（override）关系</strong>。</p>
+<p>类有<strong>属性</strong>和<strong>方法</strong>两种成分。</p>
+<ul>
+<li>属性就是单纯的引用，作为数据，有着不同的<strong>数据类型</strong>。</li>
+<li>方法则是对数据的操作，有<strong>运算操作</strong>，有<strong>流程控制</strong>等等。</li>
+</ul>
+<p>以自底向上的角度来看，程序就是对数据的处理。首先要有数据，数据有着不同的<strong>数据类型</strong>；为了方便对数据处理，有着不同的<strong>流程控制</strong>语句；进一步，为了代码复用以及规整，将相似的流程语句抽象出<strong>方法</strong>；为了以更为直观的角度来编写代码，将<strong>方法和数据</strong>进一步抽象形成<strong>类</strong>，有了<strong>类</strong>和<strong>对象</strong>的概念；随后，为了进一步降低耦合度以及增强可扩展性，形成了<strong>抽象类</strong>以及<strong>接口</strong>等概念。为了方便管理不同功能的代码文件，形成了<strong>package机制</strong>。</p>
+<h2 id="3-备注"><a href="#3-备注" class="headerlink" title="3. 备注"></a>3. 备注</h2><p><em>参考B站《动力节点》。</em></p>
 
                 
             </div>
@@ -1009,7 +1025,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">37.3k</span>&nbsp;字
+                class="white-color">37.8k</span>&nbsp;字
             
             
             
