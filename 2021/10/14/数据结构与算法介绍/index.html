@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Git_GitHub_02_本地库操作, ihianian">
+    <meta name="keywords" content="数据结构与算法介绍, ihianian">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Git_GitHub_02_本地库操作 | ihianian</title>
+    <title>数据结构与算法介绍 | ihianian</title>
     <link rel="icon" type="image/png" href="/header.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -310,12 +310,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Git_GitHub_02_本地库操作</h1>
+                    <h1 class="description center-align post-title">数据结构与算法介绍</h1>
                 </div>
             </div>
         </div>
@@ -431,8 +431,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Git-GitHub/">
-                                <span class="chip bg-color">Git/GitHub</span>
+                            <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">
+                                <span class="chip bg-color">数据结构与算法</span>
                             </a>
                         
                     </div>
@@ -447,28 +447,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-09-02
+                    2021-10-14
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-09-07
+                    2021-10-14
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    5.8k
+                    824
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    20 分
+                    2 分
                 </div>
                 
 
@@ -488,250 +488,21 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>上一篇文章中提到，Git的操作主要分为命令行操作和图形化界面操作，作为一名程序员，主要用到的是命令行操作，图形化界面操作则用的很少。命令行操作分为<strong>本地库操作</strong>和<strong>远程库操作</strong>。本文介绍本地库操作。</p>
-<h2 id="1-本地库初始化"><a href="#1-本地库初始化" class="headerlink" title="1. 本地库初始化"></a>1. 本地库初始化</h2><p>本地库操作首先要有本地库。打开Git Bash，在<strong>项目根目录下</strong>用命令<code>git init</code>初始化本地库。可以看到，项目文件夹中多了一个隐藏文件夹 <strong>.git</strong> ，里面存放的是本地库相关的子目录和文件，不要删除也不要修改。</p>
-<p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_local/git_local_01.jpg" alt="初始化"></p>
-<p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_local/git_local_02.jpg" alt="初始化"></p>
-<p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_local/git_local_03.jpg" alt="初始化"></p>
-<p>注意，git的命令和Linux命令兼容，但是git专属的命令都是以git开头的，比如查看帮助命令，是 <code>git help 具体命令</code>。</p>
-<p>在本地库初始化之后，需要设置一个签名（用户名，Email），作用是为了区分不同开发人员的身份，比如后续日志中的作者信息等等。<strong>注意，在后期推送到代码托管中心的时候，需要账号密码，和此时的签名没有关系。</strong>签名分为<strong>项目级别</strong>和<strong>系统级别</strong>两类，项目级别指的是设置的签名只对本项目有效，系统级别指的是设置的签名对本计算机内的所有项目都有效。</p>
-<p>很明显，系统级别的范围要比项目级别的范围大。如果没有设置项目级别的签名，则默认使用系统用户级别的签名。反之，如果都设置的话，则项目级别的签名生效。不允许二者都没有设置。</p>
-<ul>
-<li>项目级别<ul>
-<li><code>git config user.name 用户名</code></li>
-<li><code>git config user.email Email</code></li>
-</ul>
-</li>
-<li>系统级别<ul>
-<li><code>git config --global user.name 用户名</code></li>
-<li><code>git config --global user.email Email</code></li>
-</ul>
-</li>
-</ul>
-<p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_local/git_local_04.jpg" alt="设置签名"></p>
-<p>设置的项目级别的签名信息保存在 <strong>.git/config</strong> 文件里面（项目目录里面的隐藏文件夹）。系统级别的签名信息保存在计算机的 <strong>~/.gitconfig</strong> 文件里面（系统登录用户里的隐藏文件）。一般来说，设置一个系统级别的就足够了。</p>
-<h2 id="2-Git基本操作"><a href="#2-Git基本操作" class="headerlink" title="2. Git基本操作"></a>2. Git基本操作</h2><h3 id="2-1-基本指令"><a href="#2-1-基本指令" class="headerlink" title="2.1 基本指令"></a>2.1 基本指令</h3><ol>
-<li><p><code>git status</code></p>
-<p>查看工作区、暂存区状态，<strong>注意是在项目的根目录下运行指令，这样是以根目录的视野显示当前项目的所有变化</strong>。如图所示：</p>
-<ol>
-<li><strong>第一行指明当前在master分支，名词master分支解释见后文；</strong></li>
-<li><strong>第二行指明没有提交的东西，也就是说本地库没有更新的东西；</strong></li>
-<li><strong>第三行指明没有要提交的东西，也就是说暂存区没有东西。</strong></li>
-</ol>
-<p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_local/git_local_05.jpg" alt="git status"></p>
-<p>接着，编写文件，继续查看当前状态。基本上和上面的类似，不过出现了“未追踪文件”，也就是说工作区出现了版本变化。提示可以用<code>git add 文件名</code>将指定文件添加到暂存区。</p>
-<p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_local/git_local_06.jpg" alt="git status"></p>
-</li>
-<li><p><code>git add 文件名</code></p>
-<p>将指定工作区文件添加到暂存区。警告信息就是说换行符被替换为回车换行符，但是在本地工作区还是原始的，只不过在暂存区临时修改了一下。（<a target="_blank" rel="noopener" href="https://blog.csdn.net/lishuoboy/article/details/84768748">参考链接</a>）。继续查看状态，显示可以提交到本地库中的文件。（提示，可以使用<code>git rm --cached 文件名</code>来撤销暂存区的内容）</p>
-<p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_local/git_local_07.jpg" alt="git add"></p>
-<p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_local/git_local_08.jpg" alt="git add"></p>
-</li>
-<li><p><code>git rm --cached 文件名</code></p>
-<p>将指定文件从暂存区撤销，相当于add操作的逆操作，执行此命令后相当于刚刚修改了文件后的状态。</p>
-<p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_local/git_local_09.jpg" alt="git rm --cached"></p>
-</li>
-<li><p><code>git commit 文件名</code></p>
-<p>将暂存区指定文件提交到本地库。执行命令后，自动创建文件并进入编辑，如下图所示：提示让用户输入提交修改的信息（应该就是类似注释的作用，说明自己开发了哪里，修改了哪里，简而言之就是本次提交有什么变化）。这个是处于vim编辑模式下，这是自动创建了一个文件。填写一段文本之后，保存退出，自动提交。</p>
-<p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_local/git_local_10.jpg" alt="git commit"></p>
-<p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_local/git_local_11.jpg" alt="git commit"></p>
-<p>图中的提示信息中后三行：</p>
-<ol>
-<li><p><strong>master表明这是主干；因为是第一次提交，所以其实就是根节点了root-commit；后面的一串数字表明了本次提交，或者说本次提交的一个版本号；接着就是之前那个注释文本里自己编写的内容</strong>。</p>
-</li>
-<li><p><strong>然后下一行就是提交的详细信息，一个文件被修改了，增加了3行</strong>。</p>
-</li>
-<li><p><strong>下一行表明是创建了一个文件，100 644指明了文件的权限</strong>。（其实还有一种方法提交，那就是<code>git commit -m “注释信息” 文件名</code>，就是直接在命令行将注释信息附带执行，就不需要进入vim编辑了。）</p>
-</li>
-</ol>
-<p>接着继续查看状态，可以看到没有了本地库那一行了，并且多了工作树是“干净”的。</p>
-<p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_local/git_local_12.jpg" alt="git commit"></p>
-</li>
-</ol>
-<h3 id="2-2-修改文件并提交"><a href="#2-2-修改文件并提交" class="headerlink" title="2.2 修改文件并提交"></a>2.2 修改文件并提交</h3><p><strong>重复上面的步骤，体会修改文件和新建文件的区别</strong>。在之前的基础上，修改文件，并重复上面的步骤，对比新建和后期修改的区别（在原始文件good.txt中新增了一行内容）。</p>
-<ol>
-<li><p>继续查看状态，可以看到中间的提示信息和前面的不一样，联想到前面的unstage，意思就是说修改没有暂存到暂存区，其实就在提醒：文件修改了，还没有提交到暂存区。（<strong>下面的提示就是说，可以将其添加（更新）到暂存区；也可以恢复到源文件，即相当于撤销修改</strong>）。然后最后提示和之前的一样，先添加到暂存区再提交到本地库；也可以一步到位，直接由工作区提交到本地库。（<strong>注意，要想追踪track这个文件，必须添加到暂存区；但是由于此处是修改，也就是说已经追踪了，可以直接添加到本地库。追踪其实就是为了版本控制或者检查文件是否修改等等，就是说新建的文件，必须先添加到暂存区再提交到本地库。</strong>）。</p>
-<p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_local/git_local_13.jpg" alt="change and commit"></p>
-</li>
-<li><p>采用原始的方法将其添加到暂存区。和之前一样，唯一的区别就是使用<code>git restore --staged 文件名</code>来将其从暂存区撤销。</p>
-<p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_local/git_local_14.jpg" alt="change and commit"></p>
-</li>
-<li><p>继续提交到本地库。本次采用第二种方法，可以看到版本号不一样。</p>
-<p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_local/git_local_15.jpg" alt="change and commit"></p>
-</li>
-</ol>
-<h3 id="2-3-版本的前进和后退"><a href="#2-3-版本的前进和后退" class="headerlink" title="2.3 版本的前进和后退"></a>2.3 版本的前进和后退</h3><p>经过上面的操作，已经可以新建提交和修改提交了，即基本的管理已经可以进行了。接下来就是一些历史记录操作了，即版本的查看、前进和后退。</p>
-<h4 id="2-3-1-查看版本"><a href="#2-3-1-查看版本" class="headerlink" title="2.3.1 查看版本"></a>2.3.1 查看版本</h4><ol>
-<li><p><code>git log</code></p>
-<p>顾名思义，就是查看日志，即显示各个版本的提交记录。如下所示，当前有两个版本。第一行是提交的标志，哈希值，<strong>HEAD是指针，指示当前的版本（即最后一次提交的版本）</strong>。（版本的前进后退就是HEAD指针的索引。）最后是作者（签名），日期时间。然后是提交时的注释信息。图中显示共提交了两次。</p>
-<p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_local/git_local_16.jpg" alt="git log"></p>
-</li>
-<li><p><code>git log --pretty=oneline</code></p>
-<p>每次的提交记录都以一行来显示，这样更方便查看一些，忽略掉不重要的信息。</p>
-</li>
-<li><p><code>git log --oneline</code></p>
-<p>哈希值仅仅显示开头的一部分。</p>
-</li>
-<li><p><code>git reflog</code></p>
-<p>和上面的没什么区别，主要是提示了当前HEAD指针节点的位置，并且指明了当前版本前进回退到指定版本时需要移动的步数，大括号里面的数字就是步数。</p>
-<p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_local/git_local_17.jpg" alt="git log"></p>
-</li>
-</ol>
-<h4 id="2-3-2-版本的前进和后退"><a href="#2-3-2-版本的前进和后退" class="headerlink" title="2.3.2 版本的前进和后退"></a>2.3.2 版本的前进和后退</h4><p>Git在管理各个版本的时候，有一个指针名为HEAD，基于HEAD指针，可以随便移动（更改）操作的版本。前面提到过，<strong>Git有三个区：工作区、暂存区和本地库，那么版本的前进后退具体操作的是哪个区的版本呢？</strong>答案是根据参数的不同对不同的区进行操作。</p>
-<ol>
-<li><p><code>git reset --soft 参数</code></p>
-<blockquote>
-<p>Does not touch the index file or the working tree at all (but resets the head to &lt;commit&gt;, just like all modes do). This leaves all your changed files “Changes to be committed”, as git status would put it.</p>
-</blockquote>
-<p>其中<strong>index file</strong>指的是暂存区，<strong>working tree</strong>指的是工作区。就是说这个命令不会碰这两个区，言外之意就是<strong>仅仅操作本地库，移动HEAD指针</strong>。</p>
-<p><strong>注意，工作区就是本地的文件，暂存区就是提交到暂存区的，本地库则是提交到本地库的。那么附带这个soft参数，即仅修改本地库的指针，那么此时工作区和暂存区的版本是不变的。那么此时工作区、暂存区和本地库就不是一个版本，就相当于常规操作下添加到了暂存区，还没有提交到本地库（还没有commit）。查看状态，就会发现暂存区的状态是modified</strong>。</p>
-<p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_local/git_local_21.jpg" alt="git reset --soft"></p>
-</li>
-<li><p><code>git reset --mixed 参数</code></p>
-<blockquote>
-<p>Resets the index but not the working tree (i.e., the changed files are preserved but not marked for commit) and reports what has not been updated. This is the default action.</p>
-</blockquote>
-<p>会碰暂存区，但是不会碰工作区。就是<strong>在本地库移动HEAD指针，并且重置暂存区</strong>。</p>
-<p>这个也是比较容易理解，就是除了改变本地库的指针，也会把暂存区变成对应的（和本地库同步）。而工作区不会变，这样的话，其实就是相当于常规操作下工作区修改了（还没有add和commit），查看状态发现，“需要添加到暂存区”。</p>
-<p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_local/git_local_22.jpg" alt="git reset --mixed"></p>
-</li>
-<li><p><code>git reset --hard 参数</code></p>
-<blockquote>
-<p>Resets the index and working tree. Any changes to tracked files in the working tree since &lt;commit&gt; are discarded.</p>
-</blockquote>
-<p><strong>在本地库移动HEAD指针，重置暂存区，重置工作区</strong>。</p>
-<p>hard参数就更容易理解了，相当于把三个区都撤销了，三个区是同步的。</p>
-<p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_local/git_local_23.jpg" alt="git reset --hard"></p>
-</li>
-</ol>
-<p>上面介绍了版本前进后退的覆盖范围，那么如果前进后退到指定的版本、前进后退指定的步数该怎么做呢？接下来介绍前进后退的具体方式，<strong>主要有三种方式：基于索引值操作，使用^符号，使用~符号</strong>。下面以<code>--hard</code>为例介绍。</p>
-<ol>
-<li><p>基于索引值操作：<code>git reset --hard 索引值</code></p>
-<p>索引值就是每条记录前面的哈希值（这个哈希值可以使用reflog里面的部分哈希值）。跳转到指定索引值的版本。如下图所示，可以看到，当前的版本是最新的版本，内容到G，使用指令后退后，查看日志，虽然仍然有两个HEAD，但是<strong>仔细看，其实是多了一条记录，可以认为是指向记录</strong>，并且后面的提示显示指针移动到了003467f。查看文件内容，可以看到，确实内容也回退到003467f版本。（<strong>注意，也可以用git log –oneline查看，且不会有多个HEAD显示</strong>）</p>
-<p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_local/git_local_18.jpg" alt="git reset --hard 索引值"></p>
-</li>
-<li><p>使用^符号：<code>git reset --hard HEAD^</code></p>
-<p>只能后退版本，不能前进。一个异或符号只能后退一步，二个异或符号则能后退两步。使用1个异或符号，表示后退一步。如图所示，可以看到，确实回到了上一个版本。</p>
-<p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_local/git_local_19.jpg" alt="git reset --hard HEAD^"></p>
-</li>
-<li><p>使用~符号：<code>git reset --hard HEAD~n</code></p>
-<p>上面的1个异或符号只能后退一步。如果后退好多步，肯定不能无脑的写很多个。因此可以用<strong>波浪线+数字</strong>，表示后退具体的步数。也是只能后退。n表示具体的数字，即后退步数。</p>
-<p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_local/git_local_20.jpg" alt="git reset --hard HEAD~n"></p>
-</li>
-</ol>
-<h4 id="2-3-3-删除文件后找回"><a href="#2-3-3-删除文件后找回" class="headerlink" title="2.3.3 删除文件后找回"></a>2.3.3 删除文件后找回</h4><p>这个功能比较容易理解，有了版本的前进和后退，那么在删除工作区的文件是可以被找回的，即将版本回退到对应的版本。</p>
-<p>由于分为三个区，所以删除文件也分为三类，并且恢复文件也可分为三类。不过恢复文件最直观的是在工作区恢复，所以下面仅以恢复工作区为例。下面是三类删除情况：</p>
-<ul>
-<li>仅在工作区删除文件。</li>
-<li>工作区删除文件，仅同步到暂存区。</li>
-<li>工作区删除文件，同步到本地库。</li>
-</ul>
-<p>这三类删除，想要在工作区恢复文件，需要采用上面的<code>--hard</code>参数，想要恢复哪个版本的文件，就直接输入对应的哈希值版本即可。</p>
-<p>删除提交到本地库的例子如下图所示。</p>
-<p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_local/git_local_23.jpg" alt="删除提交到本地库"></p>
-<p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_local/git_local_24.jpg" alt="删除提交到本地库"></p>
-<p>删除提交到暂存区的例子如下图所示。</p>
-<p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_local/git_local_25.jpg" alt="删除提交到暂存区"></p>
-<blockquote>
-<p><strong>总之，如果想要找回删除的文件，那么这个文件存在的状态版本必须已经提交到了本地库。然后将当前版本回退到那个文件存在的版本即可。</strong></p>
-</blockquote>
-<h4 id="2-3-4-比较文件差异"><a href="#2-3-4-比较文件差异" class="headerlink" title="2.3.4 比较文件差异"></a>2.3.4 比较文件差异</h4><p>git是版本控制思想，所以可以比较文件的差异。具体有以下几种比较形式</p>
-<h5 id="2-3-4-1-工作区和暂存区的差异"><a href="#2-3-4-1-工作区和暂存区的差异" class="headerlink" title="2.3.4.1 工作区和暂存区的差异"></a>2.3.4.1 工作区和暂存区的差异</h5><ul>
-<li><p><code>git diff 文件名</code></p>
-<p>查看工作区指定文件和暂存区的差异，前提是该文件曾经提交过暂存区或本地库，对于那种新建的文件不适用。</p>
-</li>
-</ul>
-<h5 id="2-3-4-2-工作区和本地库的差异"><a href="#2-3-4-2-工作区和本地库的差异" class="headerlink" title="2.3.4.2 工作区和本地库的差异"></a>2.3.4.2 工作区和本地库的差异</h5><ul>
-<li><p><code>git diff HEAD 文件名</code></p>
-<p>查看工作区指定文件和本地库最新版本（也就是HEAD指针的位置）的差异。</p>
-</li>
-<li><p><code>git diff 版本哈希号 文件名</code> </p>
-<p>查看工作区指定文件和本地库指定版本的差异。</p>
-</li>
-<li><p><code>git diff HEAD^ 文件名</code></p>
-<p>查看工作区指定文件和本地库最新版本的上一个版本的差异。</p>
-</li>
-<li><p><code>git diff HEAD~n 文件名</code></p>
-<p>查看工作区指定文件和本地库最新版本的上n个版本的差异。</p>
-</li>
-</ul>
-<p>因为git是以行为基本单位进行管理的。所以如果是在某行添加了代码或者修改了，如下图所示。减号表明删除该行，加号表明增加该行。（ <strong>本次修改是在源文件中在dddd行后增加了@@@@</strong> ）。</p>
-<p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_local/git_local_26.jpg" alt="git diff 文件名"></p>
-<p>本次修改是在apple中插入了adsf。</p>
-<p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_local/git_local_27.jpg" alt="git diff 文件名"></p>
-<h2 id="3-Git分支管理"><a href="#3-Git分支管理" class="headerlink" title="3. Git分支管理"></a>3. Git分支管理</h2><blockquote>
-<p>在版本控制过程中，使用多条线同时推进多个任务，多条线就是多个分支。在项目初始化好之后，本身就有一个master分支（如上述图中最后的蓝色括号中的master，就是当前所在分支的名字），也被称为主干。</p>
-<p>如果现在想要开发一些新的功能，但不想在master主干上开发，或者说在开发结束之前，不想对master主干造成污染。这个时候就可以创建一个分支，在新的分支里面开发。</p>
-<p>一般创建新的分支，就是从主干里面复制一份内容。然后就和平常一样在该分支上进行开发即可，可以创建多个分支，各自开发各自的。<strong>这样，如果某个分支开发失败，可以直接删除该分支即可，对其他分支以及主干没有任何影响，方便试错</strong>。之后，如果某个分支开发完成，可以合并到master主干。</p>
-<p>另外，如果程序开发完成之后，主干运行，出现bug，则从主干创建一个分支，修复bug，因为主干程序还在运行，所以就是热修复（类似热插拔）。然后再合并到主干。</p>
-<p>分支的好处：可以同时并行去推进多个功能开发，提高开发效率。各个分支在开发过程中，如果某一个分支开发失败，不会对其他分支有任何影响，失败的分支删除或者重新开始就可以，彼此独立。（SVN也有分支，但是不是很好）。</p>
-</blockquote>
-<p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_local/git_local_28.jpg" alt="git分支"></p>
-<h3 id="3-1-分支操作"><a href="#3-1-分支操作" class="headerlink" title="3.1 分支操作"></a>3.1 分支操作</h3><h4 id="3-1-1-查看所有分支"><a href="#3-1-1-查看所有分支" class="headerlink" title="3.1.1 查看所有分支"></a>3.1.1 查看所有分支</h4><ul>
-<li><p><code>git branch -v</code></p>
-<p>查看所有的分支。</p>
-<p>如下图所示，带有*的表示当前所在分支，后面的哈希值则表示该分支当前的最新版本，最后的字符串表示最后一次提交时的信息。可以看到当前主分支在哪个版本，其创建的分支就在哪个版本的基础上。另外每次的提示符行尾也显示了当前所在分支，如蓝色括号中的master。</p>
-</li>
-</ul>
-<h4 id="3-1-2-创建新的分支-删除分支"><a href="#3-1-2-创建新的分支-删除分支" class="headerlink" title="3.1.2 创建新的分支/删除分支"></a>3.1.2 创建新的分支/删除分支</h4><ul>
-<li><p><code>git branch 分支名</code></p>
-<p>创建新的分支。</p>
-<p>如下图所示，可以看到主干和分支的版本是一样的，即证实了上面的那句话：<strong>当前主分支在哪个版本，其创建的分支就在哪个版本上</strong>。</p>
-</li>
-<li><p><code>git branch -d 分支名</code></p>
-<p>删除指定分支。</p>
-<p>注意，不能删除当前所在分支，如果想要删除必须要提前切换出去。</p>
-</li>
-</ul>
-<h4 id="3-1-3-切换到指定分支"><a href="#3-1-3-切换到指定分支" class="headerlink" title="3.1.3 切换到指定分支"></a>3.1.3 切换到指定分支</h4><ul>
-<li><p><code>git checkout 分支名</code></p>
-<p>切换到指定的分支。</p>
-<p>如下图所示，切换分支后，查看所有的分支，显示当前分支为切换后的分支。</p>
-</li>
-</ul>
-<p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_local/git_local_29.jpg" alt="查看、创建、切换分支"></p>
-<h4 id="3-1-4-将指定分支合并"><a href="#3-1-4-将指定分支合并" class="headerlink" title="3.1.4 将指定分支合并"></a>3.1.4 将指定分支合并</h4><ul>
-<li><p><code>git merge 分支名</code></p>
-<p>将指定分支合并到当前所在分支上。</p>
-<p>注意，合并分支的时候，一定要<strong>切换到接收合并的那个分支上</strong>，比如将分支合并到主干上，则需要切换到主干分支上。</p>
-<p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_local/git_local_30.jpg" alt="合并分支"></p>
-<p>上图是在hot_fix分支上对good.txt进行修改（模拟修复bug），并提交到本地库，然后将其合并到master主干上面。</p>
-<p>可以看到在hot_fix分支上修改文件之后，该分支所在的版本就更新了，而主干分支则继续保持原来的版本。之后切换到master分支上面，执行合并命令，之后可以在master主干找到更新后的文件，并且其版本哈希号也发生了变化，和hot-fix分支一样了。即合并成功。</p>
-</li>
-</ul>
-<h3 id="3-2-分支冲突解决"><a href="#3-2-分支冲突解决" class="headerlink" title="3.2 分支冲突解决"></a>3.2 分支冲突解决</h3><p>git在合并过程中<strong>可能会产生冲突</strong>。那么<strong>为什么会产生冲突</strong>呢？和上面一样，比如当前有两个分支，那么每个分支都可以向前推进的，也就是并发执行。<strong>当两个分支都有修改的时候，恰好修改的是同一文件的同一个位置，而且修改的内容还不一致，这个时候Git在合并的时候就不知道到底选择哪一个了</strong>。</p>
-<p>例子如下图所示，当前master和hot_fix分支已经是一样的了，那么二者都修改第7行，修改的内容不一样。（为了简单起见，直接在hot_fix分支上面合并master的内容）。<strong>可以看到在合并的时候，提示有冲突，然后Git让用户自己解决冲突，注意行尾的提示：（hot_fix|MERGING），显示当前已经不是普通的分支了，而是进入了正在合并的状态，可以看到没有产生额外的文件，而SVN则会产生新的文件</strong>。</p>
-<p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_local/git_local_31.jpg" alt="分支冲突解决"></p>
-<p>查看文件内容，可以看到自动增加了一些标记内容。从“&lt;&lt;&lt;&lt;&lt;&lt; HEAD”到一串等号，因为HEAD表示的是当前分支的最新版本，也就是当前分支修改的内容；而从一串等号到“&gt;&gt;&gt;&gt;&gt;&gt;master”，则表示的是要合并的分支的修改的内容。也就是二者在此处修改的内容不一样，因此Git决定不了到底采用哪个。</p>
-<p>因此用户手动解决冲突其实就是决定使用哪个版本修改的内容即可，编辑文件，将特殊符号删除，并删除掉不想要的内容即可。</p>
-<p><img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_local/git_local_32.jpg" alt="分支冲突解决"></p>
-<p>手动解决掉冲突之后，查看状态，提示有未解决的合并，可以标记为解决，也可以撤销合并（和前面的刚刚修改完工作区的状态类似）。执行<code>git add</code>标记合并，然后继续查看状态，提示冲突已解决，但此时仍然是处于合并状态，执行<code>git commit</code>指令完成合并（<strong>注意，不用带文件名，但是可以带日志注释信息</strong>）。注意此时看提示符行尾，已经退出了合并状态。<img src="https://cybersecurity.gitee.io/blog-image-bed/Git_GitHub/Git_local/git_local_33.jpg" alt="分支冲突解决"></p>
-<blockquote>
-<p>总结:</p>
-<ol>
-<li>第一步：编辑文件，删除特殊符号；</li>
-<li>第二步：把文件修改到满意的程度，保存退出；</li>
-<li>第三步：git add [文件名]；</li>
-<li>第四步：git commit -m “日志信息”（<strong>注意，一定不要带文件名</strong>）。</li>
-</ol>
-</blockquote>
-<h2 id="4-Git基本原理（了解）"><a href="#4-Git基本原理（了解）" class="headerlink" title="4. Git基本原理（了解）"></a>4. Git基本原理（了解）</h2><p>每次将修改的文件提交到本地库之后，就会产生一个新的历史记录。不同的版本控制系统用不同的策略来保存历史记录。</p>
-<p>SVN是仅仅保存修改的部分数据。那么我们要拿到某个最新版本的数据时，它就会将最新版本及以前的数据合并到一块（因为是仅仅保存了修改的数据）。<strong>即增量式控制</strong>。</p>
-<p><strong>Git把数据看成是小型文件系统的一组快照，每次提交更新时，Git都会对当前的全部文件制作一个快照并保存这个快照的索引。为了高效，如果这个文件没有修改，Git不会重新存储该文件，而是只保存一个链接指向之前存储的文件。所以Git的工作方式可以称为快照流。</strong></p>
-<p>每次提交的时候，都会创建一个提交对象，所有文件的哈希值组成了一个树对象，这个树对象有一个哈希值，然后提交对象也有自己的哈希值。提交对象的哈希值就是git log里面的commit后面的一串的哈希值。不同次的提交，就创建了各自的提交对象，然后这些提交对象构成了链表，有父子关系。</p>
-<p>因此多次提交就构成了提交对象链表。那么创建一个分支，就相当于新创建了一个指针，指向链表中的某个版本，然后如果在分支上进行开发，则是在分支上创建了一个子链表，类似hashmap。那么切换分支则是将HEAD指针指向不同的分支指针即可（最开始是指向master指针）。</p>
-<h2 id="5-总结"><a href="#5-总结" class="headerlink" title="5. 总结"></a>5. 总结</h2><ul>
-<li><strong>git status</strong>，查看状态。</li>
-<li>**git add [文件名]**，将文件添加到暂存区。</li>
-<li>**git commit [-m “message”] [文件名]**，将文件提交到本地库。</li>
-<li><strong>git reset –hard/mixed/soft 哈希值</strong>，前进或回退到指定的版本。</li>
-<li><strong>git branch 分支名</strong>，创建分支。</li>
-<li><strong>git branch -d 分支名</strong>，删除指定分支。</li>
-<li><strong>git branch -v</strong>，查看所有分支。</li>
-<li><strong>git checkout 分支名</strong>，切换到指定分支。</li>
-<li><strong>git merge 分支名</strong>，合并指定分支到当前分支。</li>
-</ul>
-<h2 id="6-备注"><a href="#6-备注" class="headerlink" title="6. 备注"></a>6. 备注</h2><p><em>参考教程，B站《尚硅谷》。</em></p>
+                <h2 id="1-数据结构与算法概述"><a href="#1-数据结构与算法概述" class="headerlink" title="1. 数据结构与算法概述"></a>1. 数据结构与算法概述</h2><p>在Java中提到，程序本质上是对数据的处理，而数据需要存储在计算机中。程序除了满足基本功能外，还需要考虑性能，比如能够很快的得到计算结果，能够处理更多的数据等等。</p>
+<p>众所周知，计算机内存是有限制的，不可能无限存储数据，因此需要对数据高效存储，对程序运行过程中的内存占用有要求；另一方面，程序也是需要考虑处理速度的，所以对数据处理方法的计算速度有要求，因此对数据存储以及对数据的计算过程需要着重考虑。</p>
+<p>上述的内存占用和计算速度形成了两个指标：<strong>空间复杂度</strong>和<strong>时间复杂度</strong>。为了方便的存储数据以及处理数据，设计了多种不同的数据结构。简单地说，<strong>数据结构包含数据和数据之间的关系</strong>。为了更高效地处理数据，设计了多种算法，简单地说，<strong>算法就是处理的方法，解题的方法</strong>。</p>
+<h2 id="2-复杂度"><a href="#2-复杂度" class="headerlink" title="2. 复杂度"></a>2. 复杂度</h2><h3 id="2-1-时间复杂度"><a href="#2-1-时间复杂度" class="headerlink" title="2.1 时间复杂度"></a>2.1 时间复杂度</h3><p>时间复杂度是一个函数，它定性描述该算法的运行时间，或者说程序运行时间的估计值。</p>
+<p>那么如何估计程序的运行时间呢？通常会估算算法的<strong>操作单元</strong>数量来代表程序消耗的时间，这里默认CPU的每个单元运行消耗的时间是相同的。</p>
+<p>假设<strong>算法的问题规模为n</strong>，那么<strong>操作单元数量</strong>使用函数*f(n)<em>来表示，随着数据规模n的扩大，**算法执行时间的增长率和</em>f(n)<em>的增长率相同**，这称作为算法的渐进时间复杂度，简称时间复杂度，记为</em>O(f(n))*。</p>
+<p>算法导论中提到：<strong>大O是用来表示上界的</strong>，当用它作为算法的最坏情况运行时间的上界，就是对任意数据输入的运行时间的上界。</p>
+<p>输入数据的形式对程序运算时间是有很大影响的，在数据本来有序的情况下，插入排序的时间复杂度是<em>O(n)<em>，但如果数据是逆序的话，插入排序的时间复杂度是</em>O(n^2)<em>。**但是，我们一般情况下认为，大O代表的是一般情况，即一般情况下的数据形式是最常见的数据形式，考虑此时的复杂度。</em></em></p>
+<p>数据规模对时间复杂度也有一定的影响，如下图所示：</p>
+<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CDataStructureAndAlgorithm%5CDSAA_001.png" alt="image-20211014155940852"></p>
+<p><strong>另外，我们所说的时间复杂度都是省略常数项系数的，是因为一般情况下默认数据规模足够大，基于这样的事实，给出的时间复杂度的一个排行如下所示：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">O(<span class="number">1</span>) &lt; O(logn) &lt; O(n) &lt; O(n^<span class="number">2</span>) &lt; O(n^<span class="number">3</span>) &lt; O(<span class="number">2</span>^n)</span><br></pre></td></tr></table></figure>
+
+<p>但是也要注意大常数，如果这个常数非常大，例如10^7，那么常数就是不得不考虑的因素了。</p>
+<h2 id="3-数据结构"><a href="#3-数据结构" class="headerlink" title="3. 数据结构"></a>3. 数据结构</h2><h2 id="4-算法"><a href="#4-算法" class="headerlink" title="4. 算法"></a>4. 算法</h2><h2 id="5-备注"><a href="#5-备注" class="headerlink" title="5. 备注"></a>5. 备注</h2><p><em>部分参考<a target="_blank" rel="noopener" href="https://programmercarl.com/">代码随想录 (programmercarl.com)</a>。</em></p>
 
                 
             </div>
@@ -758,7 +529,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://ihianian.github.io/2021/09/02/Git-GitHub-02-%E6%9C%AC%E5%9C%B0%E5%BA%93%E6%93%8D%E4%BD%9C/">https://ihianian.github.io/2021/09/02/Git-GitHub-02-%E6%9C%AC%E5%9C%B0%E5%BA%93%E6%93%8D%E4%BD%9C/</a>
+                    <a href="https://ihianian.github.io/2021/10/14/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%BB%8B%E7%BB%8D/">https://ihianian.github.io/2021/10/14/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%BB%8B%E7%BB%8D/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -796,8 +567,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Git-GitHub/">
-                                    <span class="chip bg-color">Git/GitHub</span>
+                                <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">
+                                    <span class="chip bg-color">数据结构与算法</span>
                                 </a>
                             
                         </div>
@@ -967,17 +738,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/09/07/Git-GitHub-03-%E8%BF%9C%E7%A8%8B%E5%BA%93%E6%93%8D%E4%BD%9C/">
+                <a href="/2021/10/14/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%BB%8B%E7%BB%8D/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="Git_GitHub_03_远程库操作">
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="数据结构与算法介绍">
                         
-                        <span class="card-title">Git_GitHub_03_远程库操作</span>
+                        <span class="card-title">数据结构与算法介绍</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -987,9 +759,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-09-07
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-14
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -998,11 +770,12 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Git-GitHub/">
-                        <span class="chip bg-color">Git/GitHub</span>
+                    <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">数据结构与算法</span>
                     </a>
                     
                 </div>
@@ -1016,13 +789,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/09/02/Git-GitHub-01-%E7%AE%80%E4%BB%8B/">
+                <a href="/2021/10/10/Java%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-08-%E8%A1%A5%E5%85%85%E6%80%BB%E7%BB%93/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="Git_GitHub_01_简介">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="Java面向对象_08_补充总结">
                         
-                        <span class="card-title">Git_GitHub_01_简介</span>
+                        <span class="card-title">Java面向对象_08_补充总结</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1033,7 +806,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-02
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-10
                             </span>
                         <span class="publish-author">
                             
@@ -1046,8 +819,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Git-GitHub/">
-                        <span class="chip bg-color">Git/GitHub</span>
+                    <a href="/tags/Java/">
+                        <span class="chip bg-color">Java</span>
                     </a>
                     
                 </div>
