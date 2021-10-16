@@ -454,21 +454,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-10-14
+                    2021-10-16
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    824
+                    4.1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    2 分
+                    15 分
                 </div>
                 
 
@@ -497,12 +497,166 @@
 <p>算法导论中提到：<strong>大O是用来表示上界的</strong>，当用它作为算法的最坏情况运行时间的上界，就是对任意数据输入的运行时间的上界。</p>
 <p>输入数据的形式对程序运算时间是有很大影响的，在数据本来有序的情况下，插入排序的时间复杂度是<em>O(n)<em>，但如果数据是逆序的话，插入排序的时间复杂度是</em>O(n^2)<em>。**但是，我们一般情况下认为，大O代表的是一般情况，即一般情况下的数据形式是最常见的数据形式，考虑此时的复杂度。</em></em></p>
 <p>数据规模对时间复杂度也有一定的影响，如下图所示：</p>
-<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CDataStructureAndAlgorithm%5CDSAA_001.png" alt="image-20211014155940852"></p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/DataStructureAndAlgorithm/DSAA_001.png" alt="DSAA_001.png (748×496) (gitee.io)"></p>
+<p>在决定使用哪些算法的时候，不是时间复杂度越低越好，因为简化后的时间复杂度忽略了常数项以及系数，需要考虑数据规模，如果数据规模很小，或者有常数项，<em>O(n^2)<em>的算法可能比</em>O(n)<em>的更合适。就像上图中</em>O(5n^2)</em> 和* O(100n)* 在n为20之前，很明显*O(5n^2)*是更优的，所花费的时间也是最少的。</p>
+<p>那为什么在计算时间复杂度的时候要忽略常数项系数呢，也就说<em>O(100n)</em> 就是O(n)的时间复杂度，<em>O(5n^2)<em>就是</em>O(n^2)<em>的时间复杂度，而且要默认</em>O(n)</em> 优于<em>O(n^2)</em> 呢 ？</p>
+<p>这里就又涉及到大O的定义，<strong>因为大O就是数据量级突破一个点且数据量级非常大的情况下所表现出的时间复杂度，这个数据量也就是常数项系数已经不起决定性作用的数据量</strong>。</p>
 <p><strong>另外，我们所说的时间复杂度都是省略常数项系数的，是因为一般情况下默认数据规模足够大，基于这样的事实，给出的时间复杂度的一个排行如下所示：</strong></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">O(<span class="number">1</span>) &lt; O(logn) &lt; O(n) &lt; O(n^<span class="number">2</span>) &lt; O(n^<span class="number">3</span>) &lt; O(<span class="number">2</span>^n)</span><br></pre></td></tr></table></figure>
 
 <p>但是也要注意大常数，如果这个常数非常大，例如10^7，那么常数就是不得不考虑的因素了。</p>
-<h2 id="3-数据结构"><a href="#3-数据结构" class="headerlink" title="3. 数据结构"></a>3. 数据结构</h2><h2 id="4-算法"><a href="#4-算法" class="headerlink" title="4. 算法"></a>4. 算法</h2><h2 id="5-备注"><a href="#5-备注" class="headerlink" title="5. 备注"></a>5. 备注</h2><p><em>部分参考<a target="_blank" rel="noopener" href="https://programmercarl.com/">代码随想录 (programmercarl.com)</a>。</em></p>
+<h3 id="2-2-复杂表达式的化简"><a href="#2-2-复杂表达式的化简" class="headerlink" title="2.2 复杂表达式的化简"></a>2.2 复杂表达式的化简</h3><p>有时候我们去计算时间复杂度的时候发现不是一个简单的O(n) 或者O(n^2)， 而是一个复杂的表达式，例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">O(<span class="number">2</span>*n^<span class="number">2</span> + <span class="number">10</span>*n + <span class="number">1000</span>)</span><br></pre></td></tr></table></figure>
+
+<p>那这里如何描述这个算法的时间复杂度呢，一种方法就是简化法。</p>
+<p>去掉运行时间中的加法常数项 （因为常数项并不会因为n的增大而增加计算机的操作次数）。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">O(<span class="number">2</span>*n^<span class="number">2</span> + <span class="number">10</span>*n)</span><br></pre></td></tr></table></figure>
+
+<p>去掉常数系数（上文中已经详细讲过为什么可以去掉常数项的原因）。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">O(n^<span class="number">2</span> + n)</span><br></pre></td></tr></table></figure>
+
+<p>只保留保留最高项，去掉数量级小一级的n （因为n^2 的数据规模远大于n），最终简化为：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">O(n^<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-O-logn-中的log是以什么为底？"><a href="#2-3-O-logn-中的log是以什么为底？" class="headerlink" title="2.3 O(logn)中的log是以什么为底？"></a>2.3 O(logn)中的log是以什么为底？</h3><p>其实这个底数并不重要，因为都可以转换为以另一个数为底数的对数，统一说成<strong>logn</strong>，就是为了忽略底数的描述。</p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/DataStructureAndAlgorithm/DSAA_002.png" alt="DSAA_002.png (719×483) (gitee.io)"></p>
+<p>假如有两个算法的时间复杂度，分别是log以2为底n的对数和log以10为底n的对数，那么这里如果还记得高中数学的话，应该不难理解<code>以2为底n的对数 = 以2为底10的对数 * 以10为底n的对数</code>。</p>
+<p>而以2为底10的对数是一个常数，在上文已经讲述了我们计算时间复杂度是忽略常数项系数的。<strong>时间复杂度的关键在于数量级。</strong></p>
+<h3 id="2-4-例子"><a href="#2-4-例子" class="headerlink" title="2.4 例子"></a>2.4 例子</h3><p>例子1</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSome</span><span class="params">(<span class="keyword">int</span> N)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> example = <span class="number">10</span>;</span><br><span class="line">    example *= <span class="number">100</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>; i &lt; N; i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>; j &lt; N; j++)&#123;</span><br><span class="line">            example += i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>; i &lt; N; i++)&#123;</span><br><span class="line">        example -= i;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>; i &lt; N; i++)&#123;</span><br><span class="line">        example += i;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上述的时间复杂度是</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">O(<span class="number">2</span> + n^<span class="number">2</span> + n + n)</span><br></pre></td></tr></table></figure>
+
+<p>化简后是</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">O(n^<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+
+<p>例子2</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSome</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> example = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i &lt; n; i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>; j &lt; n; j+j*<span class="number">2</span>)&#123;</span><br><span class="line">            example++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意，时间复杂度主要看操作单元的个数，简单地认为每条Java语句就是一个操作单元，所以时间复杂度就是计算Java语句的执行次数。上面的例子中，双层循环，<strong>外循环执行n次，内循环执行次数待定</strong>。</p>
+<p>内循环局部变量<code>j</code>的取值是等比数列，数列的个数就是循环的次数，只需要最后一个值小于n即可，所以<code>k&lt;log2(n+1)-1</code>，即最大值是<code>logn</code>数量级，在加上外层循环n次，所以该程序的时间复杂度是<code>nlogn</code>。</p>
+<h3 id="2-5-递归算法的时间复杂度分析"><a href="#2-5-递归算法的时间复杂度分析" class="headerlink" title="2.5 递归算法的时间复杂度分析"></a>2.5 递归算法的时间复杂度分析</h3><p><strong>递归算法的时间复杂度本质上是看：递归的次数*每次递归的时间复杂度。</strong></p>
+<blockquote>
+<p>题目：求 x 的 n 次方</p>
+</blockquote>
+<p>这道题最直观的方法是循环， 方法1如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="keyword">int</span> <span class="title">func1</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> result = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n; i++)&#123;</span><br><span class="line">        result *= x;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> x;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>显而易见，该算法的时间复杂度是*O(n)*。</p>
+<p>以递归的思路来解的话，方法2如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="keyword">int</span> <span class="title">func2</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(n==<span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> func2(x, n-<span class="number">1</span>) * x;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>显而易见，该递归算法的时间复杂度仍然是*O(n)*。</p>
+<p>接下来看另一种递归算法（也可以看成是分治法），方法3如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="keyword">int</span> <span class="title">func3</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(n==<span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>(n%<span class="number">2</span> == <span class="number">1</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> func3(x, n/<span class="number">2</span>) * func3(x, n/<span class="number">2</span>) * x;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> func3(x, n/<span class="number">2</span>) * func3(x, n/<span class="number">2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>实际上，该算法的时间复杂度也是*O(n)*。计算如下：</p>
+<p>实际上，该算法可以的执行过程是一个二叉树，并且是满二叉树（以n为16为例），即节点的个数就是操作单元的数量。树的深度<strong>m</strong>和节点个数<strong>S</strong>的关系为<code>S=2^(m+1) - 1</code>，另外<code>m=log2(n) - 1</code>，将m带入之后，<code>s=n-1</code>。可以看到时间复杂度仍然和n是线性关系，即*O(n)*。</p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/DataStructureAndAlgorithm/DSAA_003.png" alt="DSAA_003.png (751×430) (gitee.io)"></p>
+<p>在**func3()**的基础上，可以看到，左子树和右子树完全是一样的操作，所以计算完左子树之后，没必要再重新计算一遍右子树，直接左子树平方即可。因此，方法4如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">func4</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(n==<span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> left = func4(x, n/<span class="number">2</span>);</span><br><span class="line">    <span class="keyword">if</span>(n % <span class="number">2</span> == <span class="number">1</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> left * left * x;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> left * left;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>不难发现，该算法的操作单元数量其实就是二叉树的深度，即<code>log2(n)-1</code>，即算法复杂度是*O(logn)*。</p>
+<h3 id="2-6-空间复杂度"><a href="#2-6-空间复杂度" class="headerlink" title="2.6 空间复杂度"></a>2.6 空间复杂度</h3><p>时间复杂度指的是程序执行的时间长短，那么空间复杂度指的是什么呢？<strong>空间复杂度是对一个算法在运行过程中占用内存空间大小的量度。</strong>利用程序的空间复杂度，可以对程序运行中需要多个内存有个预先估计。</p>
+<p>以下两个问题需要特别注意：</p>
+<blockquote>
+<ol>
+<li><p>空间复杂度是考虑程序（可执行文件）的大小吗？</p>
+<p>很多人都会混淆程序运行时内存大小和程序本身的大小，这里强调一下，<strong>空间复杂度是考虑程序运行时占用内存的大小，而不是可执行文件的大小</strong>。</p>
+</li>
+<li><p>空间复杂度是准确算出程序运行时所占用的内存吗？</p>
+<p><strong>空间复杂度仅仅是对内存占用的预估，并不是实际值，而且除了程序本身，还有很多因素会影响程序真正内存的使用大小</strong>，例如编译器的内存对其，编程语言容器的底层实现等等这些都会影响到程序内存的开销。</p>
+</li>
+</ol>
+</blockquote>
+<p>和时间复杂度不同，时间复杂度是将操作单元作为一个时间单元，而空间复杂度则是将变量作为空间单元。</p>
+<p>例子1如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt; n; i++)&#123;</span><br><span class="line">    j++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这段代码随着n的变化，对内存的占用并不会变化，所以此算法的空间复杂度为一个常量，表示为*O(1)*。</p>
+<p>例子2如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>[] j = <span class="keyword">new</span> <span class="keyword">int</span>[n];</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n; i++)&#123;</span><br><span class="line">    j[i] = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这段代码则随着n的变化，内存开销保持线性增长，即数组随着n的变化会开辟不同长度的内存空间，空间复杂度为*O(n)*。</p>
+<h3 id="2-7-斐波那契数列复杂度分析"><a href="#2-7-斐波那契数列复杂度分析" class="headerlink" title="2.7 斐波那契数列复杂度分析"></a>2.7 斐波那契数列复杂度分析</h3><blockquote>
+<p>斐波那契数列：0，1，1，2，3，5，8，…</p>
+<p>第一项是0，第二项是1，之后的项是前面两项之和。斐波那契数列一般是求前n项和或者求第n项。下面以求解第n项为例。</p>
+</blockquote>
+<p>从斐波那契数列的描述很容易想到最简单的递归算法，方法1如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">fibonacci</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(n&lt;=<span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>(n==<span class="number">1</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> fibonacci(n-<span class="number">1</span>) + finobacci(n-<span class="number">2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这段代码逻辑比较清晰，代码比较简洁，分析一下时间复杂度。<strong>每次递归的时间复杂度为O(1)，主要还是看递归次数。</strong>以二叉树的形式来分析递归过程，每个节点表示递归一次，求解递归次数就是求解二叉树的节点个数。</p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/DataStructureAndAlgorithm/DSAA_004.png" alt="DSAA_004.png (765×577) (gitee.io)"></p>
+<p>可以看到每次递归，一定要需要前一项，那么其二叉树的深度就是n，那么深度为n的二叉树的节点个数最多为<code>2^n-1</code>，所以递归次数为<code>2^n-1</code>，该算法的时间复杂度为*O(2^n)*，耗时还是挺大的。</p>
+<p>从图中可以看出，很多项都被重复计算了，完全可以有优化一下，减少递归次数，即保存一些项，方法2如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">fibonacci</span><span class="params">(<span class="keyword">int</span> first, <span class="keyword">int</span> second, <span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(n &lt;= <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>(n &lt; <span class="number">3</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(n == <span class="number">3</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> first + second;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> fibonacci(second, first + second, n-<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>该算法和非递归算法的逻辑很像，从前两项开始计算，直到计算到指定项。只不过该算法的是用递归来控制项数（<strong>或者认为将前面两项相加，n作为剩余的项数</strong>），所以该算法的时间复杂度和空间复杂度均为*O(n)*。</p>
+<p>非递归方法如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">fibonacci3</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> first = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> second = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> temp;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(n == <span class="number">1</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(n == <span class="number">2</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">3</span>; i&lt;= n; i++)&#123;</span><br><span class="line">                temp = second;</span><br><span class="line">                second += first;</span><br><span class="line">                first = temp;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> second;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>非递归算法的时间复杂度为*O(n)<em>，空间复杂度为</em>O(1)*。</p>
+<p><strong>和时间复杂度一样，递归算法的空间复杂度=每次递归的空间复杂度*递归深度</strong>。因为每次递归所需的空间都被压到调用栈里（这是内存管理里面的数据结构，和算法里的栈原理是一样的），一次递归结束，这个栈就是就是把本次递归的数据弹出去。所以这个栈最大的长度就是递归的深度。此时可以分析这段递归的空间复杂度，从代码中可以看出每次递归所需要的空间大小都是一样的，所以每次递归中需要的空间是一个常量，并不会随着n的变化而变化，每次递归的空间复杂度就是O(1)。</p>
+<h3 id="2-8-二分查找（递归实现）复杂度分析"><a href="#2-8-二分查找（递归实现）复杂度分析" class="headerlink" title="2.8 二分查找（递归实现）复杂度分析"></a>2.8 二分查找（递归实现）复杂度分析</h3><p>代码如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">binarySearch</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="keyword">int</span> goal)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> mid = (l + r) / <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(l &gt; r)&#123;</span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(arr[mid] == goal)&#123;</span><br><span class="line">            <span class="keyword">return</span> mid;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(arr[mid] &lt; goal)&#123;</span><br><span class="line">            <span class="keyword">return</span> binarySearch(arr, mid + <span class="number">1</span>, r, goal);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> binarySearch(arr, l, mid, goal);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，二分查找的过程和二叉树一样，最坏情况下操作单元的数量为树的深度，即时间复杂度是*O(logn)*。</p>
+<p>*<em>另外，传递数组实际上是传递的数组首元素的地址，即每次递归的空间复杂度是</em>O(1)，而递归次数是logn<em>，所以空间复杂度是</em>O(logn)<em>。</em>*</p>
+<h3 id="2-8-内存对齐（待补充…）"><a href="#2-8-内存对齐（待补充…）" class="headerlink" title="2.8 内存对齐（待补充…）"></a>2.8 内存对齐（待补充…）</h3><h2 id="3-数据结构"><a href="#3-数据结构" class="headerlink" title="3. 数据结构"></a>3. 数据结构</h2><p>有了上面的几个指标之后，为了更好地存取数据，设计了多种不同的数据结构。从元素之间的关系上来说，数据结构分为<strong>线性数据结构</strong>和<strong>非线性数据结构</strong>。</p>
+<ul>
+<li><p>线性数据结构</p>
+<p>存在唯一的一个“第一个元素”，存在唯一的一个“最后一个元素”，除了第一个元素之外，其他数据元素均有唯一的“前驱元素”，除了最后一个元素之外，其他数据元素均有唯一的“后继元素”。<strong>简单地说，有首尾元素，除了二者，其余元素均和两个元素相邻</strong>。</p>
+</li>
+<li><p>非线性数据结构</p>
+<p>和线性数据结构对比，可能没有首尾元素的概念，也不一定只有前后两个元素相邻，可能存在多个邻居元素，并且可能没有前驱和后继的概念。</p>
+</li>
+</ul>
+<p>针对两类数据结构，设计了八种基本数据结构，如下所示：</p>
+<table>
+<thead>
+<tr>
+<th align="center">基本数据结构</th>
+<th align="center">类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">数组</td>
+<td align="center">线性</td>
+</tr>
+<tr>
+<td align="center">队列</td>
+<td align="center">线性</td>
+</tr>
+<tr>
+<td align="center">栈</td>
+<td align="center">线性</td>
+</tr>
+<tr>
+<td align="center">链表</td>
+<td align="center">线性</td>
+</tr>
+<tr>
+<td align="center">树</td>
+<td align="center">非线性</td>
+</tr>
+<tr>
+<td align="center">散列表</td>
+<td align="center">非线性</td>
+</tr>
+<tr>
+<td align="center">堆</td>
+<td align="center">非线性</td>
+</tr>
+<tr>
+<td align="center">图</td>
+<td align="center">非线性</td>
+</tr>
+</tbody></table>
+<p>当然这只是最基本的数据结构，这些结构还可以变形。</p>
+<h2 id="4-算法"><a href="#4-算法" class="headerlink" title="4. 算法"></a>4. 算法</h2><p>算法则是解决问题的方法，和高中数学一样，对于某类问题，有着特定的解题思路。那么对于计算机处理数据来说，同样如此。对于不同的数据结构以及数据之间关系，解决问题的方法也不一样。算法主要考虑最优的解题方法，这里的最优可能是空间复杂度，也可能是时间复杂度。</p>
+<p>典型的算法有回溯法、贪心法、分治法、动态规范法等等。。。</p>
+<h2 id="5-备注"><a href="#5-备注" class="headerlink" title="5. 备注"></a>5. 备注</h2><p><em>部分参考<a target="_blank" rel="noopener" href="https://programmercarl.com/">代码随想录 (programmercarl.com)</a>。</em></p>
 
                 
             </div>
@@ -1023,7 +1177,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">38.7k</span>&nbsp;字
+                class="white-color">42k</span>&nbsp;字
             
             
             
