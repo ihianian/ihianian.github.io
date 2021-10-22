@@ -429,9 +429,13 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">
+                                <span class="chip bg-color">数据结构与算法</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -450,21 +454,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-10-16
+                    2021-10-21
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    0
+                    1.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    4 分
                 </div>
                 
 
@@ -484,7 +488,50 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                
+                <p>本文介绍一种新的数据结构——链表。</p>
+<h2 id="1-链表理论基础"><a href="#1-链表理论基础" class="headerlink" title="1. 链表理论基础"></a>1. 链表理论基础</h2><h3 id="1-1-链表"><a href="#1-1-链表" class="headerlink" title="1.1 链表"></a>1.1 链表</h3><p>前面提到的数组、队列和栈等数据结构，各个元素实际在内存空间中是连续存储的，也就是说这种数据结构需要在内存空间中开辟<strong>一块连续的空间</strong>。和剪纸一样，如果总是开辟大块空间，那么就会剩下很多零碎的小空间，内存空间浪费太多，这些小空间该怎么利用起来呢？可以利用零碎的小空间形成的新型数据结构——链表。</p>
+<p>链表，顾名思义，是一条链，也是一张表。链——将若干个单元连接起来，表——连接起来的单元形成一个线性结构，可以逐个访问。</p>
+<p>链表是一种通过指针将节点串联在一起的线性结构，每一个节点由两部分组成，一个是数据域（存放实际数据），一个是指针域（存放下一节点的指针/引用），最后一个节点的指针指向null（空指针，不存储任何东西）。链表的头部节点称为头节点，尾部称为尾节点。</p>
+<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CDataStructureAndAlgorithm%5CDSAA_011.png" alt="image-20211020194729830"></p>
+<h3 id="1-2-链表的操作"><a href="#1-2-链表的操作" class="headerlink" title="1.2 链表的操作"></a>1.2 链表的操作</h3><p>针对链表的操作主要有以下几种：</p>
+<h4 id="1-2-1-删除节点"><a href="#1-2-1-删除节点" class="headerlink" title="1.2.1 删除节点"></a>1.2.1 删除节点</h4><p>将该节点删除，即将其从链上删除。</p>
+<ul>
+<li><p>删除非头尾节点：</p>
+<p>比较直观的做法是将该节点的前一个节点的引用区指向该节点的后一个节点。那么该节点就不会被链访问到。<strong>此时可能会有疑问，实际上该节点仍然存储在内存空间上，只不过不在链上。的确是这样，删除节点指的就是将其从链上删除，并不是指的是从内存空间上删除。如果该节点没有其他引用指向它，那么Java、Python等内存回收机制会自动释放该节点的内存空间；如果是C++等语言，则需要手动释放该内存空间。</strong></p>
+</li>
+<li><p>删除头节点：</p>
+<p>直接将头指针指向当前头节点的下一个节点即可。</p>
+</li>
+<li><p>删除尾节点：</p>
+<p>直接将尾节点的上一个节点指向null即可。</p>
+</li>
+</ul>
+<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CDataStructureAndAlgorithm%5CDSAA_014.png" alt="image-20211021103201903"></p>
+<h4 id="1-2-2-添加节点"><a href="#1-2-2-添加节点" class="headerlink" title="1.2.2 添加节点"></a>1.2.2 添加节点</h4><p>添加节点，也类似。</p>
+<ul>
+<li><p>插入非头尾节点：</p>
+<p>将插入节点的引用区指向插入位置节点，将插入位置上一个节点的引用区指向插入节点。</p>
+</li>
+<li><p>插入头节点：</p>
+<p>将插入节点的引用区指向头结点，将头指针指向插入节点。</p>
+</li>
+<li><p>插入尾节点：</p>
+<p>将尾结点的引用区指向插入节点，将插入节点的引用区指向null。</p>
+</li>
+</ul>
+<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CDataStructureAndAlgorithm%5CDSAA_015.png" alt="image-20211021104154163"></p>
+<h3 id="1-3-链表的类型"><a href="#1-3-链表的类型" class="headerlink" title="1.3 链表的类型"></a>1.3 链表的类型</h3><h4 id="1-3-1-单链表"><a href="#1-3-1-单链表" class="headerlink" title="1.3.1 单链表"></a>1.3.1 单链表</h4><p>链表最基本的类型就是单链表，即上图所示。因为后一个节点的引用存储在前一个节点中，所以只能通过前一个节点来访问后一个节点。</p>
+<h4 id="1-3-2-双链表"><a href="#1-3-2-双链表" class="headerlink" title="1.3.2 双链表"></a>1.3.2 双链表</h4><p>在单链表的基础上，为了更方便的访问节点，可以在节点中增加一块空间，存储前一个节点的引用。这样，引用形成的链就是双向的，既可以向前查询，也可以向后查询。</p>
+<p><img src="C:%5CUsers%5C%E9%9F%A9%E5%81%A5%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20211021095045113.png" alt="image-20211021095045113"></p>
+<h4 id="1-3-3-循环链表"><a href="#1-3-3-循环链表" class="headerlink" title="1.3.3 循环链表"></a>1.3.3 循环链表</h4><p>循环链表，顾名思义，就是链表首尾相连，即尾结点的指针指向头结点，尾结点存储头结点的引用。</p>
+<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CDataStructureAndAlgorithm%5CDSAA_012.png" alt="image-20211021100949453"></p>
+<h3 id="1-4-链表的存储方式"><a href="#1-4-链表的存储方式" class="headerlink" title="1.4 链表的存储方式"></a>1.4 链表的存储方式</h3><p>前面提到过，数组各个元素在内存中是连续分布的，而链表在内存中则不一定。链表是通过指针域的指针链接在内存中各个节点。所以链表中的节点可以不是连续分布的，可以散乱分布在内存中的某地址上，分配机制取决于操作系统的内存管理。</p>
+<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CDataStructureAndAlgorithm%5CDSAA_013.png" alt="image-20211021101451059"></p>
+<p>如上所示，该链表的头节点为2，尾节点为7，各个节点分布在内存不同地址空间上，通过引用串联在一起。</p>
+<h3 id="1-5-链表与数组对比"><a href="#1-5-链表与数组对比" class="headerlink" title="1.5 链表与数组对比"></a>1.5 链表与数组对比</h3><p>从原理上就可以看到，数组可以通过下标索引到任意元素，即查询的时间复杂度为O(1)，而链表只能通过上一个节点索引到当前节点，即只能从头开始遍历，查询的时间复杂度为O(n)。而针对插入删除等操作，需要重新定义数组，并且需要移动元素，时间复杂度为O(n)，而链表则是开辟一个元素空间，将其插入即可，时间复杂度为O(1)。</p>
+<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CDataStructureAndAlgorithm%5CDSAA_016.png" alt="image-20211021105000258"></p>
+<h3 id="1-6-链表的Java实现"><a href="#1-6-链表的Java实现" class="headerlink" title="1.6 链表的Java实现"></a>1.6 链表的Java实现</h3><h2 id="2-链表经典题目"><a href="#2-链表经典题目" class="headerlink" title="2. 链表经典题目"></a>2. 链表经典题目</h2><h2 id="3-备注"><a href="#3-备注" class="headerlink" title="3. 备注"></a>3. 备注</h2><p><em>部分参考<a target="_blank" rel="noopener" href="https://programmercarl.com/">代码随想录 (programmercarl.com)</a>。</em></p>
+
                 
             </div>
             <hr/>
@@ -500,7 +547,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">hianian</a>
+                    <a href="/about" rel="external nofollow noreferrer">浮云</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -523,7 +570,7 @@
                     本博客所有文章除特別声明外，均采用
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     许可协议。转载请注明来源
-                    <a href="/about" target="_blank">hianian</a>
+                    <a href="/about" target="_blank">浮云</a>
                     !
                 </span>
             </div>
@@ -547,7 +594,11 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">
+                                    <span class="chip bg-color">数据结构与算法</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -741,10 +792,18 @@
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
-                            hianian
+                            浮云
                             
                         </span>
                     </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">数据结构与算法</span>
+                    </a>
+                    
                 </div>
                 
             </div>
@@ -778,10 +837,18 @@
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
-                            hianian
+                            浮云
                             
                         </span>
                     </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">数据结构与算法</span>
+                    </a>
+                    
                 </div>
                 
             </div>
@@ -982,7 +1049,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">42k</span>&nbsp;字
+                class="white-color">46.6k</span>&nbsp;字
             
             
             

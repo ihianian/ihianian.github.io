@@ -429,9 +429,13 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">
+                                <span class="chip bg-color">数据结构与算法</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -450,14 +454,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-10-16
+                    2021-10-19
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    0
+                    337
                 </div>
                 
 
@@ -484,7 +488,14 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                
+                <p>介绍完数组，本文介绍另一个数据结构——队列。</p>
+<h2 id="1-队列理论基础"><a href="#1-队列理论基础" class="headerlink" title="1. 队列理论基础"></a>1. 队列理论基础</h2><h3 id="1-1-队列"><a href="#1-1-队列" class="headerlink" title="1.1 队列"></a>1.1 队列</h3><p>数组是一组数据，且可以根据下标来访问元素数据。为了更加严格一点，要求不能根据任意下标来访问数据，只能<strong>从数组的“尾端”访问元素</strong>，只能<strong>从数组的“头部”插入元素</strong>。这种新的数据结构就是<strong>队列</strong>。</p>
+<p>简单地说，队列就是“先进先出”，即先进入队列的数据，最先出去。向队列中插入元素，只能从尾部插入（入队）；访问队列中的元素或者删除队列中的元素，只能从头部元素一个个访问，然后删除（出队）。</p>
+<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CDataStructureAndAlgorithm%5CDSAA_009.png" alt="image-20211019195551239"></p>
+<p>队列这种数据结构还是比较简单的，提供的方法主要有入队、出队、访问元素（不出队）、获取队列长度（元素个数）等等。</p>
+<h3 id="1-2-队列的Java实现"><a href="#1-2-队列的Java实现" class="headerlink" title="1.2 队列的Java实现"></a>1.2 队列的Java实现</h3><p>既然队列是在数组的基础上加了限制，那么可以先用数组实现一下队列；另外栈也是可以实现队列的；同时Java中也提供了队列这种数据结构。</p>
+<h4 id="1-2-1-数组实现队列"><a href="#1-2-1-数组实现队列" class="headerlink" title="1.2.1 数组实现队列"></a>1.2.1 数组实现队列</h4><h4 id="1-2-2-栈实现队列"><a href="#1-2-2-栈实现队列" class="headerlink" title="1.2.2 栈实现队列"></a>1.2.2 栈实现队列</h4><h2 id="2-队列经典题目"><a href="#2-队列经典题目" class="headerlink" title="2. 队列经典题目"></a>2. 队列经典题目</h2><h2 id="3-备注"><a href="#3-备注" class="headerlink" title="3. 备注"></a>3. 备注</h2><p><em>部分参考<a target="_blank" rel="noopener" href="https://programmercarl.com/">代码随想录 (programmercarl.com)</a>。</em></p>
+
                 
             </div>
             <hr/>
@@ -500,7 +511,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">hianian</a>
+                    <a href="/about" rel="external nofollow noreferrer">浮云</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -523,7 +534,7 @@
                     本博客所有文章除特別声明外，均采用
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     许可协议。转载请注明来源
-                    <a href="/about" target="_blank">hianian</a>
+                    <a href="/about" target="_blank">浮云</a>
                     !
                 </span>
             </div>
@@ -547,7 +558,11 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">
+                                    <span class="chip bg-color">数据结构与算法</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -741,10 +756,18 @@
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
-                            hianian
+                            浮云
                             
                         </span>
                     </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">数据结构与算法</span>
+                    </a>
+                    
                 </div>
                 
             </div>
@@ -778,10 +801,18 @@
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
-                            hianian
+                            浮云
                             
                         </span>
                     </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">数据结构与算法</span>
+                    </a>
+                    
                 </div>
                 
             </div>
@@ -982,7 +1013,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">42k</span>&nbsp;字
+                class="white-color">46.6k</span>&nbsp;字
             
             
             
