@@ -454,21 +454,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-11-02
+                    2021-11-09
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    52
+                    2.9k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    11 分
                 </div>
                 
 
@@ -488,8 +488,156 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>程序本质上是对数据的处理，而为了更好的处理数据，设计了很多种数据结构。Java为了方便编程，提供了典型数据结构的实现类。</p>
+                <p>程序本质上是对数据的处理，而为了更好的处理数据，设计了很多种数据结构。Java为了方便编程，提供了典型数据结构的实现类及其扩展类，本文介绍相关的类，统称为集合，<strong>注意，接口以及类后面的尖括号涉及到泛型的知识，暂且记住</strong>。</p>
+<h2 id="1-集合概述"><a href="#1-集合概述" class="headerlink" title="1. 集合概述"></a>1. 集合概述</h2><p>集合实际上就是一个容器，可以用来容纳其他类型的数据，比如说数组其实就是一个集合。</p>
+<p>为什么说集合在开发中使用较多？</p>
+<blockquote>
+<p>集合是一个容器，是一个载体，可以一次容纳多个对象。在实际开发中，假设连接数据库，数据库当中有10条记录，那么假设把这10条记录查询出来，在Java程序中共会将10条数据封装成10个Java对象，然后将10个Java对象放到某一个集合当中，将集合传到前端，然后遍历集合，将一个个数据展现出来。</p>
+</blockquote>
+<p>集合不能直接存储基本数据类型，也不能直接存储Java对象，只能存储Java对象的内存地址，或者说存储的是引用。即使在语法上存储了基本数据类型，底层一定进行了自动装箱操作。集合在Java中本身是一个容器，是一个对象，所以集合也可以存储集合引用。</p>
+<p>Java中每一个不同的集合，实际上对应不同的数据结构。往不同的集合中存储元素，等于将数据放到了不同的数据结构中。不同的数据结构，数据存储方式不同。例如：数组、二叉树、链表、哈希表等等。  <strong>本质上说，集合就是数据结构的具体实现。</strong>所有的集合类和集合接口都在<code>java.util</code>包下。Java中的集合分为两大类：<strong>单个方式存储元素</strong>和<strong>键值对方式存储元素</strong>。</p>
+<h3 id="1-1-单个方式存储元素"><a href="#1-1-单个方式存储元素" class="headerlink" title="1.1 单个方式存储元素"></a>1.1 单个方式存储元素</h3><p>这类集合中的超级父接口是：<code>java.util.Collection</code>，该接口继承了<code>java.lang.Iterable</code>接口，该接口表示可迭代的，可遍历的。Iterable接口中有<code>iterator()</code>方法，负责产生对应集合的<strong>迭代器Iterator对象</strong>，用于<strong>访问集合中的元素</strong>。<strong>继承Iterable的集合都是可迭代的。</strong></p>
+<p>该接口下有很多子接口以及子类，帮助文档中的详细展示如下：</p>
+<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJava%5CJava_advance%5Cadv_006.png" alt="image-20211105160231629"></p>
+<p>该接口下<strong>需要注意</strong>的两个子接口是<strong>List</strong>和<strong>Set</strong>，这两个接口下的实现类用的比较多。</p>
+<h4 id="1-1-1-List"><a href="#1-1-1-List" class="headerlink" title="1.1.1 List"></a>1.1.1 List</h4><p>List集合存储元素的特点是：<strong>有序可重复，存储元素有下标</strong>。</p>
+<p><strong>List接口下面需要注意的类有：ArrayList、LinkedList、Vector、Stack</strong>。</p>
+<ul>
+<li>ArrayList底层采用了数组这种数据结构（非线程安全）；</li>
+<li>LinkedList底层采用了双向链表这种数据结构；</li>
+<li>Vector底层采用了数组这种数据结构（线程安全，效率较低，现在保证线程安全有其他方法，用的较少）；</li>
+<li>Stack就是Java实现的栈数据结构。</li>
+</ul>
+<h4 id="1-1-2-Set"><a href="#1-1-2-Set" class="headerlink" title="1.1.2 Set"></a>1.1.2 Set</h4><blockquote>
+<p>注意，Set中的不可重复，对于Integer类型来说，指的是值不可重复，并不是对象不可重复，即<code>Integer it1 = new Integer(12345)</code>和<code>Integer it2 = new Integer(12345)</code>虽然是两个不同的对象，但是值是一样的，所以存储的是第一个元素，之后再添加相同的元素即使不报错，也没存进去。看了看源码，<strong>和contains一样，似乎底层也是调用的equals方法，通过equals方法来判断是否相等，是否添加。所以根本上还是看是否重写equals方法和hashCode方法，比较内存地址还是值</strong>。</p>
+</blockquote>
+<p>Set集合存储元素的特点是：<strong>无序不可重复，存储元素没有下标</strong>。</p>
+<p><strong>Set接口下面需要注意的类有：HashSet、SortedSet(TreeSet)。</strong></p>
+<ul>
+<li>HashSet底层实际上是HashMap集合，HashMap底层采用了哈希表这种数据结构。</li>
+<li>TreeSet类实现了SortedSet接口，SortedSet接口继承了Set接口。TreeSet底层实际上是TreeMap集合，TreeMap底层采用了二叉树这种数据结构。<strong>注意，SortedSet接口的实现类中元素可以自动排序，这里的排序是数值内容排序。而Set说的无序指的是存储和取出的时候顺序对应不上。</strong></li>
+</ul>
+<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJava%5CJava_advance%5Cadv_007.png" alt="image-20211105171204104"></p>
+<h3 id="1-2-键值对方式存储元素"><a href="#1-2-键值对方式存储元素" class="headerlink" title="1.2 键值对方式存储元素"></a>1.2 键值对方式存储元素</h3><p>这类集合中的超级父接口是：<code>java.util.Map</code>，该接口没有父接口，说明Map和Collection是没有关系的。以键值对方式存储元素，key和value都是存储Java对象的内存地址，<strong>所有的key都是无序不可重复的</strong>。</p>
+<p>该接口下有很多子接口和子类，帮助文档中的详细展示如下：</p>
+<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJava%5CJava_advance%5Cadv_008.png" alt="image-20211105172951667"></p>
+<p>该接口下<strong>需要注意</strong>的类及接口有：**HashMap、Hashtable和SortedMap(TreeMap)**，其中：</p>
+<ul>
+<li>HashMap底层采用了哈希表这种数据结构（非线程安全）；</li>
+<li>Hashtable底层采用了哈希表这种数据结构（线程安全，但是保证线程安全有其他方法，该类效率较低，用的较少）；</li>
+<li>TreeMap实现SortedMap接口，SortedMap接口继承了Map接口。TreeMap底层采用了二叉树这种数据结构。SortedMap集合下的子类，存储元素会自动按照key元素的大小顺序排序。</li>
+</ul>
+<p><strong>补充：Hashtable下有一个Properties子类，该类是线程安全的，要求key和value必须是String类型，不支持其他类型。该类也被称为属性类。</strong></p>
+<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJava%5CJava_advance%5Cadv_009.png" alt="image-20211105175236329"></p>
+<p>当然，其实Collection和Map中还有其他类型的接口和类，只不过上述列举出来的是常用的。上述集合的总体继承结构如下所示：</p>
+<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJava%5CJava_advance%5Cadv_010.png" alt="image-20211105195915178"></p>
+<h2 id="2-Collection及其子类介绍"><a href="#2-Collection及其子类介绍" class="headerlink" title="2. Collection及其子类介绍"></a>2. Collection及其子类介绍</h2><p>没有使用“泛型”之前，<strong>Collection中可以存储Object的所有子类型</strong>；使用了“泛型”之后，Collection中只能存储某个具体的类型。<strong>注意，集合中不能直接存储基本数据类型。</strong></p>
+<p>Collection是所有单个方式存储元素类的父接口，首先要了解该接口中的常用方法。该接口中的方法均为public abstract修饰，所以均省略了修饰符列表。</p>
+<h3 id="2-1-Collection接口中的常用方法"><a href="#2-1-Collection接口中的常用方法" class="headerlink" title="2.1 Collection接口中的常用方法"></a>2.1 Collection接口中的常用方法</h3><table>
+<thead>
+<tr>
+<th>方法名</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>boolean add(Object o)</td>
+<td>向集合中添加元素</td>
+</tr>
+<tr>
+<td>int size()</td>
+<td>获取集合中的元素个数</td>
+</tr>
+<tr>
+<td>void clear()</td>
+<td>移除集合中的所有元素</td>
+</tr>
+<tr>
+<td>boolean contains(Object o)</td>
+<td>判断集合中是否包含元素o</td>
+</tr>
+<tr>
+<td>boolean remove(Object o)</td>
+<td>删除集合中的元素o（只删除1个）</td>
+</tr>
+<tr>
+<td>boolean isEmpty()</td>
+<td>判断集合是否为空</td>
+</tr>
+<tr>
+<td>Object[] toArray()</td>
+<td>将集合转换成Object数组</td>
+</tr>
+<tr>
+<td>Iterator iterator()</td>
+<td>返回该集合的迭代器对象</td>
+</tr>
+</tbody></table>
+<h3 id="2-2-迭代器Iterator"><a href="#2-2-迭代器Iterator" class="headerlink" title="2.2 迭代器Iterator"></a>2.2 迭代器Iterator</h3><p>可以看到，集合中并没有提供遍历集合的方法，但提供了迭代器对象方法。Collection中的<code>Iterator iterator()</code>方法，返回集合的迭代器对象，迭代器主要的作用就是<strong>遍历集合</strong>，这里着重讲解一下，<strong>注意，调用方法获取迭代器的时候，一定要在添加元素之后获取，就是说获取迭代器只能获取当前集合中所包含的元素所形成的迭代器，类似快照</strong>。<strong>注意，集合结构只要发生改变（无论是删除还是添加元素），迭代器必须重新获取</strong>，迭代器常用的方法有如下三个：</p>
+<ul>
+<li><p>booelan hasNext()</p>
+<p>判断迭代器中是否有元素可以迭代，有则返回true。</p>
+</li>
+<li><p>Object next()</p>
+<p>返回迭代的下一个元素。</p>
+</li>
+<li><p>void remove()</p>
+<p><strong>从迭代器指向的Collection中移除</strong>迭代器返回的最后一个元素。</p>
+</li>
+</ul>
+<p>利用迭代器测试ArrayList（有序可重复）和HashSet（无需不可重复）：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.Collection;</span><br><span class="line"><span class="keyword">import</span> java.util.HashSet;</span><br><span class="line"><span class="keyword">import</span> java.util.Iterator;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CollectionTest03</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Collection c = <span class="keyword">new</span> ArrayList();</span><br><span class="line"></span><br><span class="line">        c.add(<span class="number">123</span>);</span><br><span class="line">        c.add(<span class="number">24</span>);</span><br><span class="line">        c.add(<span class="number">35</span>);</span><br><span class="line">        c.add(<span class="number">24</span>);</span><br><span class="line">        c.add(<span class="number">1234</span>);</span><br><span class="line">        c.add(<span class="number">1234</span>);</span><br><span class="line"></span><br><span class="line">        Iterator it = c.iterator();	<span class="comment">// 获取当前上面所有元素形成的迭代器。</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span>(it.hasNext())&#123;</span><br><span class="line">            System.out.println(it.next());  <span class="comment">// 输出顺序和添加顺序一致</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;============&quot;</span>);</span><br><span class="line"></span><br><span class="line">        Collection c2 = <span class="keyword">new</span> HashSet();</span><br><span class="line"></span><br><span class="line">        c2.add(<span class="number">100</span>);</span><br><span class="line">        c2.add(<span class="number">50</span>);</span><br><span class="line">        c2.add(<span class="number">10</span>);</span><br><span class="line">        c2.add(<span class="number">50</span>);</span><br><span class="line">        c2.add(<span class="number">90</span>);</span><br><span class="line">        c2.add(<span class="number">50</span>);</span><br><span class="line">        c2.add(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">        Iterator its = c2.iterator();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span>(its.hasNext())&#123;</span><br><span class="line">            System.out.println(its.next());     <span class="comment">// 输出顺序和添加顺序不一样</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<p>测试不可重复，添加的元素到底是哪一个：<strong>实际上是第一次添加的，后续添加相同的元素，其实没存进去。</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Collection c3 = <span class="keyword">new</span> HashSet();</span><br><span class="line"></span><br><span class="line">Integer ints1 = <span class="keyword">new</span> Integer(<span class="number">12345</span>);</span><br><span class="line">Integer ints2 = <span class="keyword">new</span> Integer(<span class="number">12345</span>);</span><br><span class="line"></span><br><span class="line">System.out.println(ints1 == ints2);</span><br><span class="line"></span><br><span class="line">c3.add(ints1);</span><br><span class="line">c3.add(ints2);</span><br><span class="line"></span><br><span class="line">Iterator its = c3.iterator();</span><br><span class="line"></span><br><span class="line">Object obj = its.next();</span><br><span class="line"></span><br><span class="line">System.out.println(obj == ints1);	<span class="comment">// true</span></span><br><span class="line">System.out.println(obj == ints2);	<span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-contains方法"><a href="#2-3-contains方法" class="headerlink" title="2.3 contains方法"></a>2.3 contains方法</h3><p><strong>注意，contains方法底层调用了参数的equals方法。所以就是比较的是内存地址还是值取决于参数是否重写了equals方法以及hashCode方法，add()方法也是如此，这样构成了HashSet的不重复特性</strong>。测试代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Animal</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String color;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Animal</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Animal</span><span class="params">(String color)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">this</span>.color = color;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object o)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span> == o) <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        <span class="keyword">if</span> (o == <span class="keyword">null</span> || getClass() != o.getClass()) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        Animal animal = (Animal) o;</span><br><span class="line">        <span class="keyword">return</span> Objects.equals(color, animal.color);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Objects.hash(color);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CollectionTest04</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Collection c = <span class="keyword">new</span> HashSet();</span><br><span class="line"></span><br><span class="line">        Animal a1 = <span class="keyword">new</span> Animal(<span class="string">&quot;blue&quot;</span>);</span><br><span class="line">        Animal a2 = <span class="keyword">new</span> Animal(<span class="string">&quot;blue&quot;</span>);</span><br><span class="line"></span><br><span class="line">        c.add(a1);</span><br><span class="line">        </span><br><span class="line">        System.out.println(c.contains(a2));	<span class="comment">// 重写之后，true，重写之前为false。</span></span><br><span class="line">        </span><br><span class="line">        Animal a3 = <span class="keyword">new</span> Animal(<span class="string">&quot;blue&quot;</span>);</span><br><span class="line">        c.add(a3);</span><br><span class="line">        </span><br><span class="line">        System.out.println(c.size());	<span class="comment">// 重写之后，size=1，重写之前为2；</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>所以，存放在集合中的类型，一定要重写equals方法以及hashCode方法。</strong></p>
+<h3 id="2-4-remove方法"><a href="#2-4-remove方法" class="headerlink" title="2.4 remove方法"></a>2.4 remove方法</h3><p><strong>remove方法底层也是调用了参数的equals方法，所以删除某个参数的时候，如果没有从重写equals方法，则比较内存地址删除，如果重写了，则比较内容删除。</strong></p>
+<p><strong>另外，此处验证集合结构发生改变之后，迭代器必须重新获取，否则报错。</strong></p>
+<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJava%5CJava_advance%5Cadv_011.png" alt="image-20211109202015673"></p>
+<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJava%5CJava_advance%5Cadv_012.png" alt="image-20211109202132398"></p>
+<p>因此，<strong>如果想要删除集合中的元素，要么在此操作之后重新获取迭代器，要么就采用迭代器中提供的删除方法（底层实际上通知了集合删除元素，使得迭代器和集合同步删除）</strong>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">Collection c = <span class="keyword">new</span> ArrayList();</span><br><span class="line"></span><br><span class="line">c.add(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">c.add(<span class="string">&quot;world&quot;</span>);</span><br><span class="line">c.add(<span class="number">123</span>);</span><br><span class="line">c.add(<span class="number">3.14</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 方法1，删除操作之后重新获取迭代器</span></span><br><span class="line">Iterator it = c.iterator();</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span>(it.hasNext())&#123;</span><br><span class="line">    Object o = it.next();</span><br><span class="line">    System.out.println(o);</span><br><span class="line">    c.remove(o);</span><br><span class="line">    it = c.iterator();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">System.out.println(c.size());</span><br><span class="line"></span><br><span class="line"><span class="comment">// 方法2，采用迭代器提供的删除方法，删除迭代器当前指向的元素</span></span><br><span class="line">it = c.iterator();</span><br><span class="line"><span class="keyword">while</span>(it.hasNext())&#123;</span><br><span class="line">    Object o = it.next();</span><br><span class="line">    System.out.println(o);</span><br><span class="line">    it.remove();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">System.out.println(c.size());</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-5-List"><a href="#2-5-List" class="headerlink" title="2.5 List"></a>2.5 List</h3><p>讲解了Collection典型方法，下面讲解一下<strong>子接口List特有方法</strong>，List接口也有上述Collection中的方法，这里不再赘述。</p>
+<p>List集合存储元素特点：<strong>有序可重复</strong>。有序意味着List集合中的<strong>元素有下标</strong>，所以可以通过下标来获取元素，这样就不需要迭代器来遍历了。可重复意味着可以重复存储相同的元素。List特有方法如下所示（<strong>注意，E指的是泛型，目前可以看成是Object</strong>）：</p>
+<table>
+<thead>
+<tr>
+<th>方法名</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>void add(int index, E element)</td>
+<td>在指定index处插入元素element（效率较低）</td>
+</tr>
+<tr>
+<td>E get(int index)</td>
+<td></td>
+</tr>
+<tr>
+<td>int indexOf(Object o)</td>
+<td></td>
+</tr>
+<tr>
+<td>int lastIndexOf(Object o)</td>
+<td></td>
+</tr>
+<tr>
+<td>E remove(int index)</td>
+<td></td>
+</tr>
+<tr>
+<td>E set(int index, E element)</td>
+<td></td>
+</tr>
+</tbody></table>
+<h4 id="2-5-1-ArrayList"><a href="#2-5-1-ArrayList" class="headerlink" title="2.5.1 ArrayList"></a>2.5.1 ArrayList</h4><h4 id="2-5-2-LinkedList"><a href="#2-5-2-LinkedList" class="headerlink" title="2.5.2 LinkedList"></a>2.5.2 LinkedList</h4><h4 id="2-5-3-Vector"><a href="#2-5-3-Vector" class="headerlink" title="2.5.3 Vector"></a>2.5.3 Vector</h4><h3 id="2-6-Set"><a href="#2-6-Set" class="headerlink" title="2.6 Set"></a>2.6 Set</h3><p>Set中的HashSet和TreeSet底层都是Map中的HashMap和TreeMap，所以这里就不再讲解Set相关知识，简单描述一下即可。</p>
+<h4 id="2-6-1-HashSet"><a href="#2-6-1-HashSet" class="headerlink" title="2.6.1 HashSet"></a>2.6.1 HashSet</h4><h4 id="2-6-2-TreeSet"><a href="#2-6-2-TreeSet" class="headerlink" title="2.6.2 TreeSet"></a>2.6.2 TreeSet</h4><h2 id="3-Map及其子类介绍"><a href="#3-Map及其子类介绍" class="headerlink" title="3. Map及其子类介绍"></a>3. Map及其子类介绍</h2>
                 
             </div>
             <hr/>
@@ -1007,7 +1155,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">60.2k</span>&nbsp;字
+                class="white-color">69k</span>&nbsp;字
             
             
             
