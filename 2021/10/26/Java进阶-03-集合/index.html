@@ -461,14 +461,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.9k
+                    3.3k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    11 分
+                    12 分
                 </div>
                 
 
@@ -508,6 +508,7 @@
 <li>Vector底层采用了数组这种数据结构（线程安全，效率较低，现在保证线程安全有其他方法，用的较少）；</li>
 <li>Stack就是Java实现的栈数据结构。</li>
 </ul>
+<p>可以将ArrayList和LinkedList分别看做是数组和链表，只不过二者封装了一些常用的方法。</p>
 <h4 id="1-1-2-Set"><a href="#1-1-2-Set" class="headerlink" title="1.1.2 Set"></a>1.1.2 Set</h4><blockquote>
 <p>注意，Set中的不可重复，对于Integer类型来说，指的是值不可重复，并不是对象不可重复，即<code>Integer it1 = new Integer(12345)</code>和<code>Integer it2 = new Integer(12345)</code>虽然是两个不同的对象，但是值是一样的，所以存储的是第一个元素，之后再添加相同的元素即使不报错，也没存进去。看了看源码，<strong>和contains一样，似乎底层也是调用的equals方法，通过equals方法来判断是否相等，是否添加。所以根本上还是看是否重写equals方法和hashCode方法，比较内存地址还是值</strong>。</p>
 </blockquote>
@@ -617,26 +618,35 @@
 </tr>
 <tr>
 <td>E get(int index)</td>
-<td></td>
+<td>获取指定index上的元素</td>
 </tr>
 <tr>
 <td>int indexOf(Object o)</td>
-<td></td>
+<td>获取元素o在List中第一次出现的index</td>
 </tr>
 <tr>
 <td>int lastIndexOf(Object o)</td>
-<td></td>
+<td>获取元素o在List中最后一次出现的index</td>
 </tr>
 <tr>
 <td>E remove(int index)</td>
-<td></td>
+<td>移除指定index上的元素，并返回该元素</td>
 </tr>
 <tr>
 <td>E set(int index, E element)</td>
-<td></td>
+<td>修改指定index处的元素为element</td>
 </tr>
 </tbody></table>
-<h4 id="2-5-1-ArrayList"><a href="#2-5-1-ArrayList" class="headerlink" title="2.5.1 ArrayList"></a>2.5.1 ArrayList</h4><h4 id="2-5-2-LinkedList"><a href="#2-5-2-LinkedList" class="headerlink" title="2.5.2 LinkedList"></a>2.5.2 LinkedList</h4><h4 id="2-5-3-Vector"><a href="#2-5-3-Vector" class="headerlink" title="2.5.3 Vector"></a>2.5.3 Vector</h4><h3 id="2-6-Set"><a href="#2-6-Set" class="headerlink" title="2.6 Set"></a>2.6 Set</h3><p>Set中的HashSet和TreeSet底层都是Map中的HashMap和TreeMap，所以这里就不再讲解Set相关知识，简单描述一下即可。</p>
+<h4 id="2-5-1-ArrayList（用的较多）"><a href="#2-5-1-ArrayList（用的较多）" class="headerlink" title="2.5.1 ArrayList（用的较多）"></a>2.5.1 ArrayList（用的较多）</h4><p>ArrayList集合底层是一个Object[] 数组，默认初始化容量是10（<strong>底层先创建了一个长度为0的数组，当添加第一个元素的时候，初始话容量为10</strong>），也可以手动设置容量。</p>
+<p>ArrayList会自动扩容，增长当前容量的一半，即扩容到之前的1.5倍。<strong>数组扩容效率比较低，建议在使用ArrayList集合的时候预估计元素的个数，给定一个初始化容量</strong></p>
+<blockquote>
+<p>这么多集合中，哪个用的比较多？</p>
+<p>回答：ArrayList，因为平时使用过程中，经常向数组末尾添加元素，检索次数较多。插入删除较少，所以采用数组结构的ArrayList集合使用的比较多。</p>
+</blockquote>
+<p><strong>ArrayList集合在创建的时候，可以将某个集合传入构造方法，即将该集合转换成ArrayList类型集合</strong>。</p>
+<p>常用的方法基本上就是Collection和List接口中的方法，这里不再赘述，<strong>非线程安全</strong>。</p>
+<h4 id="2-5-2-LinkedList"><a href="#2-5-2-LinkedList" class="headerlink" title="2.5.2 LinkedList"></a>2.5.2 LinkedList</h4><p>LinkedList集合底层是链表，</p>
+<h4 id="2-5-3-Vector"><a href="#2-5-3-Vector" class="headerlink" title="2.5.3 Vector"></a>2.5.3 Vector</h4><h3 id="2-6-Set"><a href="#2-6-Set" class="headerlink" title="2.6 Set"></a>2.6 Set</h3><p>Set中的HashSet和TreeSet底层都是Map中的HashMap和TreeMap，所以这里就不再讲解Set相关知识，简单描述一下即可。</p>
 <h4 id="2-6-1-HashSet"><a href="#2-6-1-HashSet" class="headerlink" title="2.6.1 HashSet"></a>2.6.1 HashSet</h4><h4 id="2-6-2-TreeSet"><a href="#2-6-2-TreeSet" class="headerlink" title="2.6.2 TreeSet"></a>2.6.2 TreeSet</h4><h2 id="3-Map及其子类介绍"><a href="#3-Map及其子类介绍" class="headerlink" title="3. Map及其子类介绍"></a>3. Map及其子类介绍</h2>
                 
             </div>
@@ -1155,7 +1165,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">69.1k</span>&nbsp;字
+                class="white-color">69.5k</span>&nbsp;字
             
             
             
