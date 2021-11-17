@@ -454,21 +454,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-11-02
+                    2021-11-16
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    7.1k
+                    7.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    29 分
+                    30 分
                 </div>
                 
 
@@ -652,6 +652,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object obj)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> (<span class="keyword">this</span> == obj);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>可以看到，源码方法的实现默认是用双等号，比较对象（引用数据类型）的内存地址是否相等。<strong>一般情况下，我们判断对象是否相等指的是其变量的值是否相等，并不是判断内存地址，所以Object中的equals()方法无法满足要求，一般情况下子类需要重写该方法，即自定义对象相等的判断标准。</strong></p>
+<p><strong>注意，为了后续哈希表以及其他数据结构中的需要，如果一个类的equals方法重写了，那么hashCode()方法必须重写。并且equals方法返回如果是true，hashCode()方法返回的值必须一样。</strong></p>
 <h4 id="4-2-3-finalize"><a href="#4-2-3-finalize" class="headerlink" title="4.2.3 finalize()"></a>4.2.3 finalize()</h4><p>源码如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">finalize</span><span class="params">()</span> <span class="keyword">throws</span> Throwable </span>&#123; &#125;</span><br></pre></td></tr></table></figure>
 
@@ -1300,7 +1301,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">69.5k</span>&nbsp;字
+                class="white-color">75k</span>&nbsp;字
             
             
             
