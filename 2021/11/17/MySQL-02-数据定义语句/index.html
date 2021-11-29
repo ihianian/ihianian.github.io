@@ -454,21 +454,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-11-17
+                    2021-11-29
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    0
+                    1.5k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    5 分
                 </div>
                 
 
@@ -488,7 +488,202 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>。。。</p>
+                <p>对于如何登录数据库、如何选择数据库以及如何设置权限等问题暂时先不考虑。先假定已经登录了数据库，接下来本文介绍数据定义语言，即DDL。</p>
+<h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h2><p>数据库管理系统顾名思义就是管理数据库，那么在连接数据库之后，对数据库怎么管理呢？管理方法其实也很简单，无非就是数据库的创建和删除，数据表的创建和删除，数据的创建和删除等等。类似计算机网络自定向下的方法，本文首先介绍数据库结构层面的操作：DDL。</p>
+<p>数据定义语言主要包括数据库的创建删除、表的创建删除、字段的创建删除及其附属SQL语句等等。</p>
+<h2 id="2-DDL"><a href="#2-DDL" class="headerlink" title="2. DDL"></a>2. DDL</h2><p>注意，数据库管理系统包括多个数据库，而数据库中有多个数据表。数据表的相关操作在语法上已经指定了所操作的数据表，但是没有指明是哪个数据库，所以在进行数据表的相关操作之前，需要提前指定数据库（<code>use 数据库名;</code>），即后续数据表的操作都默认是在指定数据库下的表中。</p>
+<h3 id="2-1-数据库方面的DDL"><a href="#2-1-数据库方面的DDL" class="headerlink" title="2.1 数据库方面的DDL"></a>2.1 数据库方面的DDL</h3><p>主要的数据库方面的SQL语句如下所示：</p>
+<table>
+<thead>
+<tr>
+<th>SQL语句</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>show databases;</code></td>
+<td>显示所有的数据库（默认自带4个）</td>
+</tr>
+<tr>
+<td><code>create database 数据库名;</code></td>
+<td>创建数据库</td>
+</tr>
+<tr>
+<td><code>drop database 数据库名;</code></td>
+<td>删除数据库</td>
+</tr>
+<tr>
+<td><code>use 数据库名;</code></td>
+<td>选择使用指定的数据库</td>
+</tr>
+<tr>
+<td><code>select database();</code></td>
+<td>查看当前使用的数据库</td>
+</tr>
+<tr>
+<td><code>show create database 数据库名;</code></td>
+<td>显示创建数据库时的SQL语句</td>
+</tr>
+</tbody></table>
+<h3 id="2-2-数据表方面的DDL"><a href="#2-2-数据表方面的DDL" class="headerlink" title="2.2 数据表方面的DDL"></a>2.2 数据表方面的DDL</h3><p>主要的数据表方面的SQL语句如下所示：</p>
+<table>
+<thead>
+<tr>
+<th>SQL语句</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>show tables;</code></td>
+<td>显示当前使用的数据库下所有的表</td>
+</tr>
+<tr>
+<td><code>desc 表名;</code></td>
+<td>显示该表的所有字段以及数据类型、主键等信息</td>
+</tr>
+<tr>
+<td><code>drop table 表名;</code></td>
+<td>删除表（如果表不存在会报错）</td>
+</tr>
+<tr>
+<td><code>drop table if exists 表名;</code></td>
+<td>删除表（如果表不存在不会报错）</td>
+</tr>
+<tr>
+<td><code>show create table 表名;</code></td>
+<td>显示创建数据表时的SQL语句</td>
+</tr>
+</tbody></table>
+<p>由于<strong>创建表的语法</strong>比较冗长，所以单独表示出来，语法如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">create table 表名(</span><br><span class="line">	字段名1 数据类型 [其他关键字],</span><br><span class="line">    字段名2 数据类型 [其他关键字],</span><br><span class="line">    ...</span><br><span class="line">    字段名n 数据类型 [其他关键字]</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>其中（<strong>注意，如果有中文需要设置字符编码格式</strong>）：</p>
+<ul>
+<li>表名建议以**t_<strong>或者</strong>tbl_**开始，可读性强，见名知意；</li>
+<li>字段名见名知意；</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">create table tbl_student(</span><br><span class="line">	no int,</span><br><span class="line">    name varchar(10),</span><br><span class="line">    age int,</span><br><span class="line">    sex enum(&#x27;男&#x27;, &#x27;女&#x27;),</span><br><span class="line">    email varchar(255)</span><br><span class="line">)charset=utf8;</span><br></pre></td></tr></table></figure>
+
+<p>下图是上表的描述信息：</p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/MySQL/mysql_03.png" alt="mysql_03.png (569×265) (gitee.io)"></p>
+<h3 id="2-3-修改表方面的DDL"><a href="#2-3-修改表方面的DDL" class="headerlink" title="2.3 修改表方面的DDL"></a>2.3 修改表方面的DDL</h3><p>修改表指的是修改表的结构，就是对字段的添加、删除和修改等等。<strong>注意，在实际的开发过程中，需求一旦确定之后，表一旦设计好之后，很少进行对表结构的修改，因为在开发进行的过程中，修改表结构成本比较高，这个责任应该由设计人员来承担。所以修改语句只需要了解即可。</strong></p>
+<table>
+<thead>
+<tr>
+<th>SQL语句</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>alter table 表名 add 字段名 数据类型;</code></td>
+<td>向指向表中增加字段</td>
+</tr>
+<tr>
+<td><code>alter table 表名 drop 字段名;</code></td>
+<td>删除字段</td>
+</tr>
+<tr>
+<td><code>alter table 表名 change 原始字段名 修改字段名 数据类型</code></td>
+<td>修改字段名</td>
+</tr>
+<tr>
+<td><code>alter teble 表名 modify 字段名 属性;</code></td>
+<td>修改字段属性</td>
+</tr>
+</tbody></table>
+<h3 id="2-4-字段的数据类型"><a href="#2-4-字段的数据类型" class="headerlink" title="2.4 字段的数据类型"></a>2.4 字段的数据类型</h3><p>和程序一样，既然是对数据的处理，那么就需要规定数据的类型。MySQL规定了很多种数据类型，只需要掌握一些常见的数据类型即可。</p>
+<table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th align="center">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>varchar(n)</td>
+<td align="center">可变长度的字符串，存储数据的长度最长为n，动态分配空间，速度慢，n最长为255。</td>
+</tr>
+<tr>
+<td>char(n)</td>
+<td align="center">定长字符串，直接分配长度为n的空间，可能导致空间浪费，速度快，n最长为255。</td>
+</tr>
+<tr>
+<td>int(n)</td>
+<td align="center">数字中的整数型，等同于Java中的int，最长为11位（默认），n表示建议长度。</td>
+</tr>
+<tr>
+<td>bigint</td>
+<td align="center">数字中的长整型，等同于Java中的long。</td>
+</tr>
+<tr>
+<td>float</td>
+<td align="center">单精度浮点型数据</td>
+</tr>
+<tr>
+<td>double</td>
+<td align="center">双精度浮点型数据</td>
+</tr>
+<tr>
+<td>date</td>
+<td align="center">短日期类型（年月日）</td>
+</tr>
+<tr>
+<td>datetime</td>
+<td align="center">长日期类型（年月日时分秒）</td>
+</tr>
+<tr>
+<td>enum</td>
+<td align="center">枚举类型</td>
+</tr>
+<tr>
+<td>clob（Character Large OBject）</td>
+<td align="center">字符大对象，最多可存储4G的字符串，比如存储一篇文章。（<strong>实际上MySQL用text表示该类型</strong>）</td>
+</tr>
+<tr>
+<td>blob（Binary Large OBject）</td>
+<td align="center">二进制大对象，专门用来存储图片、声音、视频等流媒体数据。</td>
+</tr>
+</tbody></table>
+<p><strong>注意：</strong></p>
+<ul>
+<li>varchar和char我们应该怎么选择？<ul>
+<li>性别字段，因为性别字段都是固定长度的字符串，所以选择char或者枚举类型。</li>
+<li>姓名字段，因为每一个人的名字长度不同，所以选择varchar。</li>
+</ul>
+</li>
+<li>往blob类型字段中插入数据的时候，例如插入一个图片、视频等，需要使用 IO流 才行。</li>
+<li><strong>注意，在测试过程中，发现 “int后面加数字表示数字的位数” 这种方法将要弃用。</strong></li>
+</ul>
+<h2 id="3-简单案例"><a href="#3-简单案例" class="headerlink" title="3. 简单案例"></a>3. 简单案例</h2><h3 id="3-1-案例1"><a href="#3-1-案例1" class="headerlink" title="3.1 案例1"></a>3.1 案例1</h3><blockquote>
+<p>一张表 <strong>t_move</strong>，电影表，专门存储电影信息。字段如下：</p>
+<ul>
+<li>no（bigint）：编号</li>
+<li>name（varchar）：名字</li>
+<li>history（clob）：故事情节</li>
+<li>playtime（date）：上映日期</li>
+<li>time（double）：时长</li>
+<li>image（blob）：海报</li>
+<li>type（char）：电影类型</li>
+</ul>
+<p><strong>注意，MySQL中用text类型表示clob。</strong></p>
+</blockquote>
+<p>SQL语句如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">create table t_movie(</span><br><span class="line">	no bigint,</span><br><span class="line">    name varchar(20),</span><br><span class="line">    history text,</span><br><span class="line">    playtime date,</span><br><span class="line">    time double,</span><br><span class="line">    image blob,</span><br><span class="line">    type char</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/MySQL/mysql_04.png" alt="mysql_04.png (542×259) (gitee.io)"></p>
+<h3 id="3-2-案例2"><a href="#3-2-案例2" class="headerlink" title="3.2 案例2"></a>3.2 案例2</h3><blockquote>
+<p>一张学生表 <strong>t_student</strong>，专门存储学生信息。字段如下：</p>
+<ul>
+<li>no（bignit）：学号</li>
+<li>name（varchar(32)）：名字</li>
+<li>age（int(3)）：年龄</li>
+<li>email（varchar(255)）：邮箱地址</li>
+</ul>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">create table t_student(</span><br><span class="line">	no bigint,</span><br><span class="line">    name varchar(32),</span><br><span class="line">    age int(3),</span><br><span class="line">    email varchar(255)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/MySQL/mysql_05.png" alt="mysql_05.png (532×201) (gitee.io)"></p>
+<h2 id="4-备注"><a href="#4-备注" class="headerlink" title="4. 备注"></a>4. 备注</h2><p><em>参考B站《动力节点》。</em></p>
 
                 
             </div>
@@ -1007,7 +1202,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">75k</span>&nbsp;字
+                class="white-color">81.7k</span>&nbsp;字
             
             
             
