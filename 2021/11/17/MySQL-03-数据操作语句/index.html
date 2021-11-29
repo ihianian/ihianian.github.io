@@ -454,21 +454,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-11-26
+                    2021-11-29
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    84
+                    862
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    3 分
                 </div>
                 
 
@@ -489,8 +489,39 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>前面定义好了数据库以及数据表，接下来就是存储数据了。</p>
-<h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h2><p>定义好数据结构，接下来就是对数据的一些操作。比如数据的插入、删除以及更新的等等，这些SQL语句被称为数据操作语句。</p>
-<h2 id="2-DML"><a href="#2-DML" class="headerlink" title="2. DML"></a>2. DML</h2><h2 id="3-案例"><a href="#3-案例" class="headerlink" title="3. 案例"></a>3. 案例</h2><h2 id="4-备注"><a href="#4-备注" class="headerlink" title="4. 备注"></a>4. 备注</h2>
+<h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h2><p>定义好数据结构，接下来就是对数据的一些操作。比如数据的插入、删除以及更新的等等，这些SQL语句被称为数据操作语句。<strong>先假设最基本的权限设置，对于字段非空、主键外键等限制先不考虑。</strong></p>
+<h2 id="2-DML"><a href="#2-DML" class="headerlink" title="2. DML"></a>2. DML</h2><p>DML语句主要有插入、修改和删除三种。</p>
+<h3 id="2-1-插入语句"><a href="#2-1-插入语句" class="headerlink" title="2.1 插入语句"></a>2.1 插入语句</h3><p>上一篇文章提到，<strong>数据表是由一条条的数据组成，而数据则是由一个个字段组成</strong>。那么插入数据的时候，就需要规定好在<strong>哪个表</strong>插入，插入的数据是由<strong>哪几个字段</strong>组成（在字段允许非空的情况下），以及<strong>字段的具体值</strong>是什么。语法结构如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">insert into 表名(字段名1, 字段名2, 字段名3, ...) values (值1, 值2, 值3, ...)[, (值1, 值2, 值3, ...), (值1, 值2, 值3, ...), ...];</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>注意，值和字段名要一一对应：<strong>位置对应</strong>，<strong>数据类型对应</strong>。字段名可以不选取全部，未选中字段插入后即为默认值。</li>
+<li>另外，<strong>字段名可以省略不写，默认插入的是全部字段，所以values中必须要有全部字段的值。</strong></li>
+<li><strong>注意，MySQL中的字符串用单引号括起来，也可以用双引号括起来。</strong></li>
+</ul>
+<p>以t_student表格为例，该表有4个字段，分别插入两次数据，每次插入一条数据，其中第二次省略了<code>email</code>字段，结果显示设为默认值null。<strong>其中查询语句见后续文章</strong>。</p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/MySQL/mysql_06.png" alt="mysql_06.png (840×677) (gitee.io)"></p>
+<h4 id="2-1-1-插入日期类型数据"><a href="#2-1-1-插入日期类型数据" class="headerlink" title="2.1.1 插入日期类型数据"></a>2.1.1 插入日期类型数据</h4><p>除了一些常见的数据类型数据，还有日期类型，日期类型有短日期（年月日）和长日期（年月日时分秒）两种类型。MySQL提供了字符串转换成日期类型数据的函数**str_to_date()**，在插入数据的时候需要提前将字符串数据转换成日期数据。简单插入语句如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">insert into t_user(id, name, birth) values (1601, &#x27;zhangSan&#x27;, str_to_date(&#x27;1997-05-20&#x27;, &#x27;%Y-%m-%d&#x27;));</span><br><span class="line"></span><br><span class="line">// 短日期类型也可以不用类型转换</span><br><span class="line">insert into t_user(id, name, birth) values (1602, &#x27;liSi&#x27;, &#x27;1998-05-20&#x27;);</span><br><span class="line"></span><br><span class="line">insert into t_user(id, name, birth) values (1603, &#x27;zhangSan&#x27;, str_to_date(&#x27;1997-05-20 15:00:00&#x27;, &#x27;%Y-%m-%d %H:%i:%s&#x27;));</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意，now()函数可以获取系统的当前时间，即长日期类型，不需要类型转换。</strong></p>
+<h3 id="2-2-修改语句"><a href="#2-2-修改语句" class="headerlink" title="2.2 修改语句"></a>2.2 修改语句</h3><p>数据不是一成不变的，想要修改已有的数据就需要用到修改语句。语法结构如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">update 表名 set 字段名1=值1[, 字段名2=值2, ...] where 条件(用于指明修改哪条/些记录);</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意，如果没有条件限制，则会默认修改全部数据。</strong>简单案例如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">update t_student set no=2 where name=&#x27;liSi&#x27;;</span><br><span class="line"></span><br><span class="line">// 这里注意，赋值等号和判断等号是一样的。</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/MySQL/mysql_07.png" alt="mysql_07.png (539×301) (gitee.io)"></p>
+<h3 id="2-4-删除语句"><a href="#2-4-删除语句" class="headerlink" title="2.4 删除语句"></a>2.4 删除语句</h3><p>有时候需要删除某些数据，这时候就要用到删除语句。语法结构如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">delete from 表名 where 条件;</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意，如果没有条件，则会删除全部数据。<code>不是删除整张表</code>。</strong></p>
+<p>简单案例如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">delete from t_student where no=2;</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/MySQL/mysql_08.png" alt="mysql_08.png (749×541) (gitee.io)"></p>
+<h2 id="3-备注"><a href="#3-备注" class="headerlink" title="3. 备注"></a>3. 备注</h2><p><em>参考B站《动力节点》。</em></p>
+
                 
             </div>
             <hr/>
@@ -1008,7 +1039,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">81.7k</span>&nbsp;字
+                class="white-color">82.6k</span>&nbsp;字
             
             
             
