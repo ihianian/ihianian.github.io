@@ -454,21 +454,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-11-29
+                    2021-12-03
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    80
+                    7.3k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    27 分
                 </div>
                 
 
@@ -489,7 +489,545 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>前面讲解了数据库以及数据表的结构相关的DDL，数据表中的数据相关的DML。有了数据库和数据表，并且有了数据，接下来就是数据的读取（查询语句，DQL）了。</p>
-<h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h2><h2 id="2-DQL"><a href="#2-DQL" class="headerlink" title="2. DQL"></a>2. DQL</h2><h2 id="3-案例"><a href="#3-案例" class="headerlink" title="3. 案例"></a>3. 案例</h2><h2 id="4-备注"><a href="#4-备注" class="headerlink" title="4. 备注"></a>4. 备注</h2><p><em>参考B站《动力节点》。</em></p>
+<h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h2><p>数据查询语句DQL负责<strong>根据条件查询数据库</strong>并<strong>返回想要的结果</strong>。对于条件，可以根据一些关键字设置不同的条件进行查询；对于返回值，可以利用一些函数对满足条件的结果进行处理，并返回给客户端。</p>
+<h2 id="2-DQL"><a href="#2-DQL" class="headerlink" title="2. DQL"></a>2. DQL</h2><p>除了上面的条件查询以及对返回结果操作的函数意外，也可以从另一个角度分类：数据表由一条条数据组成，数据表也由一个个字段组成。所以可以从横纵两个维度分别查询以及组合查询。<strong>无论哪种解析，都有以下几种分类：</strong></p>
+<h3 id="2-1-简单查询"><a href="#2-1-简单查询" class="headerlink" title="2.1 简单查询"></a>2.1 简单查询</h3><p>这种查询语句没有什么条件限制，简单的查询全部数据、某些字段、对结果进行简单处理等等。具体查询语句如下所示：</p>
+<h4 id="2-1-1-简单查询"><a href="#2-1-1-简单查询" class="headerlink" title="2.1.1 简单查询"></a>2.1.1 简单查询</h4><p>语法1结构如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from 表名;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这种查询方法是将表中的数据全部查询并输出，其中<strong>星号表示全部字段</strong>。</p>
+<p><strong>注意，这种方法仅仅适合自己查看，并不适合在程序中使用，因为数据库会先把星号转化成所有的字段，然后再执行该语句。</strong></p>
+<p>该方法的缺点是效率低，可读性差。<strong>在实际开发中，建议把星号换成全部字段，省去了数据库将其转换的过程。</strong></p>
+</blockquote>
+<p>语法2结构如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select 字段名1[, 字段名2, ...] from 表名;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>查询表中指定的字段名，输出结果为该字段的所有数据。<strong>输出的字段顺序按照SQL语句中字段名的书写顺序排列。</strong></p>
+</blockquote>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/MySQL/mysql_09.png" alt="mysql_09.png (496×385) (gitee.io)"></p>
+<h4 id="2-1-2-起别名"><a href="#2-1-2-起别名" class="headerlink" title="2.1.2 起别名"></a>2.1.2 起别名</h4><p>这种语句就是上面提到的对查询结果进一步操作。有时候表中的字段并不是易读，可以对返回结果进行操作，比如对字段起别名。语法结构如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select 字段名 as 别名, [字段名 as 别名, ...] from 表名;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这种是将显示结果中的字段名换成别名，并不会对数据库中的字段名有影响，<strong>也可以直接将 as 关键字省略，字段名和别名之间用空格隔开即可</strong>。</p>
+<p>注意，别名可以用单引号或双引号括起来，这样别名中就可以有任意字符了，比如空格之类。<strong>注意，单引号括起来的是字符串，双引号只能在mysql中使用，在Oracle中不被认可，所以尽量用单引号来表示</strong>。</p>
+</blockquote>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/MySQL/mysql_10.png" alt="mysql_10.png (751×207) (gitee.io)"></p>
+<h4 id="2-1-3-查询并计算"><a href="#2-1-3-查询并计算" class="headerlink" title="2.1.3 查询并计算"></a>2.1.3 查询并计算</h4><p>这种语句也是上面提到的对查询结果进一步操作。有时候表中的数据不满足要求，可以对结果进行一些数学运算，比如表中存储的是月薪，而我们需要的是年薪，这时候可以<strong>在SQL语句中字段的后面加上数学表达式</strong>。语法结构如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select 字段名 数学表达式 from 表名;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>同理，这种语句仅仅是对查询结果进行运算，并不会修改原始数据库中的内容。</p>
+</blockquote>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/MySQL/mysql_11.png" alt="mysql_11.png (474×212) (gitee.io)"></p>
+<h3 id="2-2-条件查询"><a href="#2-2-条件查询" class="headerlink" title="2.2 条件查询"></a>2.2 条件查询</h3><p>上面的简单查询仅仅是对原始数据简单查询，肯定不会满足日常要求，比如查询所有姓名为zhangSan的学生的相关信息，这时候需要增加一些条件语句来进行筛选，关键字<strong>where</strong>。语法结构如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select 字段名s from 表名 where 条件;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>将满足条件的指定字段下的数据显示出来。这里的条件主要是限制一些<strong>数值</strong>以及<strong>字符串</strong>等等。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th align="center">条件</th>
+<th align="center">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">=</td>
+<td align="center">等于</td>
+</tr>
+<tr>
+<td align="center">&lt;&gt;或!=</td>
+<td align="center">不等于</td>
+</tr>
+<tr>
+<td align="center">&lt;</td>
+<td align="center">小于</td>
+</tr>
+<tr>
+<td align="center">&lt;=</td>
+<td align="center">小于等于</td>
+</tr>
+<tr>
+<td align="center">&gt;</td>
+<td align="center">大于</td>
+</tr>
+<tr>
+<td align="center">&gt;=</td>
+<td align="center">大于等于</td>
+</tr>
+<tr>
+<td align="center">between … and …</td>
+<td align="center">两个值之间（闭区间）</td>
+</tr>
+<tr>
+<td align="center">&gt;= and &lt;=</td>
+<td align="center">两个值之间</td>
+</tr>
+<tr>
+<td align="center">is null</td>
+<td align="center">是null</td>
+</tr>
+<tr>
+<td align="center">is not null</td>
+<td align="center">不是null</td>
+</tr>
+</tbody></table>
+<p>条件语句中可以出现一些关键字，用于对条件进行限制。</p>
+<table>
+<thead>
+<tr>
+<th align="center">关键字</th>
+<th align="center">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">and</td>
+<td align="center">并且</td>
+</tr>
+<tr>
+<td align="center">or</td>
+<td align="center">或者</td>
+</tr>
+<tr>
+<td align="center">in</td>
+<td align="center">包含，相当于多个or</td>
+</tr>
+<tr>
+<td align="center">not</td>
+<td align="center">取非，主要用在 is 或 in 中</td>
+</tr>
+<tr>
+<td align="center">like</td>
+<td align="center">模糊查询，支持 % 和 下划线</td>
+</tr>
+<tr>
+<td align="center">%</td>
+<td align="center">匹配任意个字符</td>
+</tr>
+<tr>
+<td align="center">下划线</td>
+<td align="center">一个下划线匹配一个字符</td>
+</tr>
+</tbody></table>
+<ul>
+<li><p><strong>注意，在判断是否为null的时候，应该用 is 或者 is not，不能用 = 来判断，因为null不是一个值，代表什么也没有，所有不能用 = 来衡量。</strong></p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/MySQL/mysql_12.png" alt="mysql_12.png (658×506) (gitee.io)"></p>
+</li>
+<li><p><strong>在所有的数据库中，只要有null参与的数学运算，最终结果都是null。</strong></p>
+</li>
+<li><p>注意，当 and 和 or 一起出现的时候，会有优先级的问题。</p>
+<blockquote>
+<p><strong>and</strong>的优先级比<strong>or</strong>高。此时如果 and 和 or 一起出现，并且优先级需要额外限制，那么可以用<strong>括号</strong>来保证优先级。<strong>注意，区分下面两个语句以及对应结果的区别。</strong></p>
+<p><code>select id, ip from a where dns=&#39;www.a.shifen.com&#39; and area=&#39;221.11.1.67&#39; or area=&#39;61.132.163.68&#39;;</code></p>
+<p><code>select id, ip from a where dns=&#39;www.a.shifen.com&#39; and (area=&#39;221.11.1.67&#39; or area=&#39;61.132.163.68&#39;;</code></p>
+</blockquote>
+</li>
+<li><p>in 关键字指的是某种集合。比如<code>select id, ip from a where dns in (&#39;www.a.shifen.com&#39;, &#39;www.b.shifen.com&#39;);</code>，这个语句是找出dns字段中是’<a target="_blank" rel="noopener" href="http://www.a.shifen.com&/#39;%E6%88%96&#39;www.b.shifen.com&#39;%E7%9A%84%E8%AE%B0%E5%BD%95%EF%BC%8C%E5%8D%B3">www.a.shifen.com&#39;或&#39;www.b.shifen.com&#39;的记录，即</a> in 后面跟的是集合，不是区间。<strong>not in</strong>同理，指的是不在后面的集合中的记录。</p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/MySQL/mysql_13.png" alt="mysql_13.png (644×434) (gitee.io)"></p>
+</li>
+<li><p>like 关键字指的是模糊查询，类似正则表达式。</p>
+<blockquote>
+<p>比如找出字符串中含有字母<strong>a</strong>的，语句如下：<code>select dns from a where dns like &#39;%a%&#39;;</code>，因为%表示任意个字符，所以可以这样写，中间夹一个a即可。</p>
+<p>比如找出字符串中倒数第二个字母是<strong>o</strong>的，语句如下：<code>select dns from a where dns like &#39;%o_&#39;;</code>，因为下划线表示一个字符，所以倒数第二个字符指定要找的即可。</p>
+</blockquote>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/MySQL/mysql_14.png" alt="mysql_14.png (542×633) (gitee.io)"></p>
+</li>
+</ul>
+<h3 id="2-3-排序"><a href="#2-3-排序" class="headerlink" title="2.3 排序"></a>2.3 排序</h3><p>有时候需要对结果进行排序显示，这时候可以用排序关键字<strong>order</strong>。</p>
+<h4 id="2-3-1-简单排序"><a href="#2-3-1-简单排序" class="headerlink" title="2.3.1 简单排序"></a>2.3.1 简单排序</h4><p>即仅仅根据某个字段的数据进行排序。语法结构如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select 字段名s from 表名 order by 字段名;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>按照指定的字段名对筛选出来的数据进行升序排列。如果需要降序排列，可以在后面加上关键字<strong>desc</strong>。另外关键字<strong>asc</strong>表示升序。</p>
+<p><strong>其中，字段名也可以用字段的位置来代替，如下所示：</strong></p>
+<p><code>select 字段名s from 表名 order by 2 </code>，表示按照表中第二个字段对筛选出来的书序进行升序排列，但这种用字段位置的方法不推荐使用。</p>
+</blockquote>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/MySQL/mysql_15.png" alt="mysql_15.png (539×704) (gitee.io)"></p>
+<h4 id="2-3-2-多字段排序"><a href="#2-3-2-多字段排序" class="headerlink" title="2.3.2 多字段排序"></a>2.3.2 多字段排序</h4><p>除了按照单个字段进行排序，SQL语句也支持多字段排序。比如高考的时候，先按照总分排序，总分相同的情况下按照语文成绩排序，如果语文成绩也相同，则按照数学成绩排序等等。语法结构如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select 字段名s from 表名 order by 字段名1 asc/desc[, 字段名2 asc/desc, ...];</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这就是多字段排序，排序顺序按照字段的给出顺序排序。先按照字段1进行排序，如果相同，则按照字段2进行排序等等。</p>
+</blockquote>
+<h3 id="2-4-分组查询"><a href="#2-4-分组查询" class="headerlink" title="2.4 分组查询"></a>2.4 分组查询</h3><p>在介绍分组查询之间，先简单介绍一下MySQL提供的内置函数，主要分为数据处理函数和分组处理函数两种。</p>
+<h4 id="2-4-1-数据处理函数"><a href="#2-4-1-数据处理函数" class="headerlink" title="2.4.1 数据处理函数"></a>2.4.1 数据处理函数</h4><blockquote>
+<p>数据处理函数又被称为单行处理函数，即每次是一行一行的处理，一个输入对应一个输出。</p>
+<p>和单行处理函数相对的是多行处理函数，一次处理多行数据，输出一个结果，即多个输入对应一个输出，比如求和函数，就是输入多行，最终只输出一个结果。</p>
+</blockquote>
+<p>单行处理函数如下表所示：</p>
+<table>
+<thead>
+<tr>
+<th align="left">函数名</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">lower()</td>
+<td>转换成小写</td>
+</tr>
+<tr>
+<td align="left">upper()</td>
+<td>转换成大写</td>
+</tr>
+<tr>
+<td align="left">substr()</td>
+<td>取子串</td>
+</tr>
+<tr>
+<td align="left">length()</td>
+<td>取长度</td>
+</tr>
+<tr>
+<td align="left">trim()</td>
+<td>去空格</td>
+</tr>
+<tr>
+<td align="left">str_to_date()</td>
+<td>将字符串转换成日期</td>
+</tr>
+<tr>
+<td align="left">date_format()</td>
+<td>格式化日期</td>
+</tr>
+<tr>
+<td align="left">format()</td>
+<td>数字格式化</td>
+</tr>
+<tr>
+<td align="left">round()</td>
+<td>四舍五入</td>
+</tr>
+<tr>
+<td align="left">rand()</td>
+<td>生成随机数</td>
+</tr>
+<tr>
+<td align="left">concat()</td>
+<td>字符串拼接</td>
+</tr>
+<tr>
+<td align="left">ifnull()</td>
+<td>将null转换成一个具体值</td>
+</tr>
+<tr>
+<td align="left">case … when … then … else … end</td>
+<td>判断case后的情况，如果是when，那么then，否则 else。</td>
+</tr>
+</tbody></table>
+<ol>
+<li><p>lower()</p>
+<blockquote>
+<p>将字符串转换成小写，注意依然是将查询的结果进行转换，并不是改变数据库中的数值。例子如下所示：</p>
+<p><code>select lower(name) from t_student;</code></p>
+<p>注意，这里其实就是单行处理函数，将查询中的每一行都输入到函数中，得到的结果仍然是原始行数的数据。</p>
+</blockquote>
+</li>
+<li><p>upper()</p>
+<blockquote>
+<p>将字符串转换成大写，同上。</p>
+</blockquote>
+</li>
+<li><p>substr(字符串, 起始下标, 截取长度)</p>
+<blockquote>
+<p>将指定字符串从指定位置处开始截取指定长度的子串并返回。<strong>注意，下标是从1开始。</strong>例子如下所示：</p>
+<p><code>select substr(name, 4, 8) from t_student;</code></p>
+<p>将 name 字段中的数据从下标4开始截取，截取长度为8。</p>
+</blockquote>
+</li>
+<li><p>length()</p>
+<blockquote>
+<p>获取指定字符串的长度。例子如下所示：</p>
+<p><code>select length(name) from t_student;</code></p>
+<p>获取 name 字段的长度。</p>
+</blockquote>
+</li>
+<li><p>trim()</p>
+<blockquote>
+<p>去掉字符串两边的空格，有时候，可能手动输入会输错，多了空格，这时候可以用 trim() 函数去掉空格。</p>
+<p><code>select trim(email) from t_student where no=5;</code></p>
+<p><code>select no, name from t_student where trim(email) = &#39;liSi@mysql.com&#39;;</code></p>
+</blockquote>
+</li>
+<li><p>ifnull()</p>
+<blockquote>
+<p>因为只要有null参与数学运算，那么最终结果就是null。为了避免这种情况，就需要使用ifnull函数。</p>
+<p><code>select id, (sal + ifnull(comm, 0)) * 12 from student;</code></p>
+<p>上面的例子就是从studnet表中，选择 id，并根据月薪以及补助comm计算年薪。但是补助comm有时候是null，这是就需要将null转换成 0来对待。</p>
+</blockquote>
+</li>
+<li><p>case … when … then[ … when … then …] … else … end</p>
+<blockquote>
+<p>该语句类似 if else 语句和 switch 语句。</p>
+<p><code>select name, job, (case job when &#39;MANAGER&#39; then sal*1.1 when &#39;SALESMAN&#39; then sal*1.5 else sal end) as newsal from student;</code></p>
+<p>上面的语句就是，选择 name, job, sal。但是如果 job 是MANAGER的时候，工资 sal 上调10%，job是SALESMAN的时候，工资上调50%，其余情况不变。</p>
+<p><strong>注意，实际上这个语句是有返回值的，所以作为 select 后中的字段出现。</strong></p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/MySQL/mysql_16.png" alt="mysql_16.png (843×551) (gitee.io)"></p>
+</blockquote>
+</li>
+</ol>
+<h4 id="2-4-2-分组处理函数"><a href="#2-4-2-分组处理函数" class="headerlink" title="2.4.2 分组处理函数"></a>2.4.2 分组处理函数</h4><p>正如前面提到的那样，分组处理函数又叫多处理函数，输入多行，最终输出一行。<strong>注意，分组函数在使用的时候，必须先进行分组再使用。即必须为其指定多个输入，也就是先分组，如果没有对数据进行分组，那么整张表就是一个组，输入到函数中。</strong></p>
+<p>分组采用的关键字是<strong>group by</strong>，功能是按照指定的字段对其他字段数据分组。如果group by不写，实际上也是有的，结果是将整张表作为一组。多行处理函数如下所示：</p>
+<table>
+<thead>
+<tr>
+<th>函数名</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>count</td>
+<td>计数</td>
+</tr>
+<tr>
+<td>sum</td>
+<td>求和</td>
+</tr>
+<tr>
+<td>avg</td>
+<td>求平均值</td>
+</tr>
+<tr>
+<td>max</td>
+<td>求最大值</td>
+</tr>
+<tr>
+<td>min</td>
+<td>求最小值</td>
+</tr>
+</tbody></table>
+<p><strong>注意</strong>：</p>
+<ol>
+<li><p>分组函数可以自动忽略null，不需要提前对null进行处理。</p>
+</li>
+<li><p>分组函数中，count(*)和coun(具体字段)有什么区别？</p>
+<blockquote>
+<p>**count(具体字段)**：统计的是该字段下不是null的记录的个数，以具体字段为基本单位进行统计。</p>
+<p><strong>count(*)<strong>：统计的是整个表中所有的记录总数，即星号表示的是一条记录，以记录为基本单位进行统计。</strong>null也统计进去</strong>。</p>
+</blockquote>
+</li>
+<li><p>分组函数不能直接使用在where子句中。</p>
+<blockquote>
+<p>比如，找出比最低薪资高的员工信息，比较直观的写法是：</p>
+<p><strong>select ename, sal from emp where sal &gt; min(sal);</strong></p>
+<p>表面上没问题，但是这样是错误的，分组函数不能直接使用在where子句中。（<strong>具体原因见分组查询小节</strong>）</p>
+<p><strong>因为分组函数必须是先分组再使用，此时在语法上来说，where在执行的时候，还没有分组，或者说 group by 没执行。</strong></p>
+<p>而类似 <strong>select sum(sal) from emp;</strong> 这种语句，因为在语法上来说，select执行的时候，group by已经执行完了，就是说已经存在分组了，所以分组函数可以使用。</p>
+<p><strong>可参考各个关键字的执行顺序。</strong></p>
+</blockquote>
+</li>
+<li><p>所有的分组函数可以组合起来一起使用。</p>
+<blockquote>
+<p><code>select sum(sal), min(sal), max(sal), avg(sal), count(8) from emp;</code></p>
+</blockquote>
+</li>
+</ol>
+<h4 id="2-4-3-分组查询"><a href="#2-4-3-分组查询" class="headerlink" title="2.4.3 分组查询"></a>2.4.3 分组查询</h4><p>在实际的应用中，可能有这样的需求：需要先进行分组，燃火对每一组的数据进行操作，比如一张表中的数据是某个年级的学生成绩，此时要统计每个班级的平均成绩等等，这个时候需要对数据进行分组。语法结构如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select 字段名s from 表名 group by 字段名;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>即通过<strong>group by</strong>后面的字段对数据进行分组，对于分组之后的数据可以考虑用分组处理函数进一步处理。<strong>而且，必须要用分组处理函数进行处理，因为如果不用函数处理的话，分组后的数据没办法显示。</strong></p>
+<p><strong>另外，如果不写 group by 而直接采用分组函数的话，其实默认是将整个表分组后作为一个组输入进去了。比如 select count(*) from t_student;</strong></p>
+</blockquote>
+<p><strong>注意，在分组查询中，在一条select语句当中，如果有group by的话，select后面只能跟：参加分组的字段，以及分组函数，其他的一律不能跟，即使跟的话，也没有什么意义，或者报错。</strong></p>
+<p><strong>注意，即使没有group by，实际上仍然是有的，只不过这是将整个数据表分为一组，仍然是在where之后默认执行。所以无论什么时候，分组函数只能应用在where之后，不能应用在where中。</strong></p>
+<p>另外，和多字段排序一样，也可以多字段分组。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select 字段名s from 表名 group by 字段1, 字段2;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这种是先根据字段1进行分组，然后在分组后的每个组中再根据字段2进行分组。</p>
+</blockquote>
+<h4 id="2-4-4-分组后过滤"><a href="#2-4-4-分组后过滤" class="headerlink" title="2.4.4 分组后过滤"></a>2.4.4 分组后过滤</h4><p>我们知道，where条件是对分组前的数据进行处理的，那么如果想对分组后的数据进一步处理该怎么操作呢？可以采用<strong>having</strong>子句对分组后的数据进一步处理，<strong>就是说，having关键字不能单独使用，必须和group by 联合使用，不能代替where。</strong>语法结构如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select 字段名s from 表名 group by 字段名 having 条件;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>将指定表中的数据按照字段名进行分组，对分组后的数据按照having条件进行筛选，最终显示出指定的字段名s相关的数据、</p>
+</blockquote>
+<p>但是在某些题目的条件下，having效率可能比较低，所以能用where条件提前过过滤掉的尽量用where提前过滤掉。</p>
+<p>简单例子如下所示：</p>
+<blockquote>
+<p>要求显示各部门最高薪资大于3000的员工信息。</p>
+<ul>
+<li><p>方法1：先对部门进行分组，然后求最大值，接着对最大值进一步筛选大于3000的。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select deptno, max(sal) from emp group by deptno having max(sal) &gt; 3000;</span><br></pre></td></tr></table></figure></li>
+<li><p>先对薪资进行过滤，将小于3000的全部去掉，然后对部分进行分组，取最大值，此时最大值一定大于3000，所以不必要再having判断。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select deptno, max(sal) from emp where sal &gt; 3000 group by deptno;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>可以明显看出，方法1对小于3000的其实也进行分组了，最终却把他们过滤掉，这明显造成了效率低下。方法2直接先过滤掉没用的数据，再进行分组，效率比较高，所以<strong>能用where过滤的，就先用where提前过滤。</strong></p>
+<p><strong>优化策略：where和 having，优先选择 where，where实在完成不了的，再选择having。</strong></p>
+</blockquote>
+<h3 id="2-5-limit关键字"><a href="#2-5-limit关键字" class="headerlink" title="2.5 limit关键字"></a>2.5 limit关键字</h3><p>limit关键字是取查询结果集中的一部分，通常使用在分页查询中。比如百度默认一页显示10条记录，分页的作用是为了提高用户的体验，因为一次全部都显示出来用户体验差。语法结构如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select 字段名s from 表名 limit 起始下标, 长度;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>将显示结果，从起始下标开始（省略，则默认从0开始），截取长度个数据记录，显示出来。</p>
+</blockquote>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/MySQL/mysql_17.png" alt="mysql_17.png (530×505) (gitee.io)"></p>
+<p><strong>注意，mysql当中 limit 在 order by 之后执行！！！</strong></p>
+<h3 id="2-6-关键字总结"><a href="#2-6-关键字总结" class="headerlink" title="2.6 关键字总结"></a>2.6 关键字总结</h3><p>简单查询的关键字有<strong>seelct</strong>、<strong>from</strong>，条件查询的关键字有<strong>where</strong>，排序的关键字有<strong>order by</strong>，分组查询的关键字有<strong>group by</strong>、<strong>having</strong>，限制显示结果的数量的关键字有<strong>limit</strong>。那么这些关键字可以可以一起使用呢？其执行顺序又是怎么样的呢？<strong>这些关键字是可以一起使用的，如下所示：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">select</span><br><span class="line">	...</span><br><span class="line">from</span><br><span class="line">	...</span><br><span class="line">where</span><br><span class="line">	...</span><br><span class="line">group by</span><br><span class="line">	...</span><br><span class="line">having</span><br><span class="line">	...</span><br><span class="line">order by</span><br><span class="line">	...</span><br><span class="line">limit</span><br><span class="line">	...</span><br></pre></td></tr></table></figure>
+
+<p>上面是关键字的书写顺序，不能颠倒。执行顺序如下所示：</p>
+<ol>
+<li>from</li>
+<li>where</li>
+<li>group by</li>
+<li>having</li>
+<li>select</li>
+<li>order by</li>
+<li>limit</li>
+</ol>
+<blockquote>
+<p>即<strong>先确定操作的表</strong>，然后<strong>根据where条件过滤一遍数据</strong>，之后<strong>按照group by进行分组</strong>，接着<strong>根据having条件对分组后的数据过滤</strong>，之后<strong>根据select字段选取对应的数据</strong>，然后<strong>按照order by对选取后的数据进行排序</strong>，之后对<strong>排序后的结果用limit限制输出的记录条数</strong>。</p>
+<p><strong>注意，先执行select，再执行order by，所以order by 后面跟的字段可以是select中的，包括别名。</strong></p>
+</blockquote>
+<h3 id="2-7-去除重复记录"><a href="#2-7-去除重复记录" class="headerlink" title="2.7 去除重复记录"></a>2.7 去除重复记录</h3><p>有时候对于同一个字段中可能存在重复的数据，那么在输出的时候可能会需要去重，这时候需要用到<strong>distinct</strong>关键字。简单例子如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select distinct ip from a;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>对 <strong>ip</strong> 字段数据去重。</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select distinct ip, dns from a;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>对 ip, dns 两个字段去重。</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select count(distinct ip) from a;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>distinct可以和分组处理函数一起使用。统计不重复的 ip 个数。</p>
+</blockquote>
+<h3 id="2-7-连接查询"><a href="#2-7-连接查询" class="headerlink" title="2.7 连接查询"></a>2.7 连接查询</h3><p><strong>从一张表中查询数据称为单表查询。有时候我们需要的数据在两张表中分别存储，比如一张表保存了姓名和身份证号，另一张表保存了身份证号和地址，需求是查询姓名和地址信息，那么此时就需要联合两张表查询，即连接查询。</strong>语法结构如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select 字段名s from 表1, 表2, ... [where ...]</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>在表1和表2中查询（满足条件的）指定的字段名s。<strong>当两张表进行连接查询，而且没有任何条件的时候，最终查询结果条数是两张表条数的乘积，这种现象被称为：笛卡尔积现象。</strong></p>
+<p>换句话说，当两张表在连接的时候，首先从表A中选取一条记录，然后去匹配另一张表B的所有记录，因为这里没有条件限制，所以认为是满足条件的，即将二者组合起来。简单例子如下所示：</p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/MySQL/mysql_18.png" alt="mysql_18.png (891×971) (gitee.io)"></p>
+<p><strong>注意，连接查询在匹配条件的时候，就是按照上述表述逐条匹配的。尽管限制条件后匹配的结果条数变少了。但匹配次数没变。</strong></p>
+<p>也可以指明具体表的字段，对表起别名等等，简单例子如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select emp.ename, dept.name from emp, dept where emp.deptno = dept.deptno;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select e.ename, d.name from emp as e, dept as d where e.deptno = d.deptno;</span><br></pre></td></tr></table></figure>
+
+<p><strong>起别名可以更方便操作。建议在操作的时候，在select后面的字段中，也要加上表的名字，起别名，提高效率。</strong></p>
+<p>注意，因为笛卡尔积现象的存在，所以表的连接越多，效率较越低，比如三张表，分别有10条记录，那么在连接查询的时候，匹配次数是10*10*10。<strong>所以，减少表的连接次数，也可以提升效率。</strong></p>
+</blockquote>
+<p>根据语法的年代分类，连接查询有以下两类：</p>
+<ul>
+<li>SQL92：1992年出现的语法；</li>
+<li>SQL99：1999年出现的语法（主要）。</li>
+</ul>
+<p>根据表连接的方式分类，连接查询有以下三类：</p>
+<ul>
+<li>内连接<ul>
+<li>等值连接</li>
+<li>非等值连接</li>
+<li>自连接</li>
+</ul>
+</li>
+<li>外连接<ul>
+<li>左外连接（左连接）</li>
+<li>右外连接（右连接）</li>
+<li>全连接</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-7-1-内连接"><a href="#2-7-1-内连接" class="headerlink" title="2.7.1 内连接"></a>2.7.1 内连接</h4><p>内连接是将<strong>完全匹配条件</strong>的数据查询出来。</p>
+<h5 id="2-7-1-1-等值连接"><a href="#2-7-1-1-等值连接" class="headerlink" title="2.7.1.1 等值连接"></a>2.7.1.1 等值连接</h5><p>等值连接，即连接的条件是等量关系。</p>
+<p>例子：查询每个员工所在部门名称，显示员工名和部门名？</p>
+<blockquote>
+<p>和上面的类似，就是将 emp 表和 dept 表进行连接，条件是<code>emp.depno = dept.deptno</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># SQL 92 语法</span><br><span class="line">select e.name, d.name from emp as e, dname as d where e.deptno = d.deptno;</span><br><span class="line"></span><br><span class="line"># SQL 99 语法</span><br><span class="line">select e.name, d.name from emp as e join dname as d on e.deptno = d.deptno;</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意，虽然 SQL99 语法看起来比 SQL92 语法更加复杂了，但是实际上是将 SQL92 语法中将 where 中的 连接条件和 过滤条件 分离了。</strong></p>
+<p><strong>即上述的条件和 where 条件无关，此时如果想要对连接后的结果进一步过滤，可以添加 where 条件。而如果采用SQL92语法的话，两个条件就会混淆，所以建议采用SQL99语句。</strong></p>
+<ul>
+<li><p>SQL92的缺点：结构不清晰，表的连接条件和后期进一步筛选的条件都放在了where中；</p>
+</li>
+<li><p>SQL99的优点：表连接的条件是独立的，放在on中，连接之后，如果还需要进一步筛选，再往后添加where条件即可。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select ... from a (inner) join b on a和b的连接条件 where 筛选条件;</span><br></pre></td></tr></table></figure>
+
+<p>其中 inner表示内连接，可以省略，默认是内连接。表示将 a 和 b 按照连接条件连接，然后对结果按照筛选条件筛选，最后选择指定字段。</p>
+</li>
+</ul>
+</blockquote>
+<h5 id="2-7-1-2-非等值连接"><a href="#2-7-1-2-非等值连接" class="headerlink" title="2.7.1.2 非等值连接"></a>2.7.1.2 非等值连接</h5><p>非等值连接指的是连接条件不是等量的。</p>
+<p>例子：找出每个员工的薪资等级，要求显示员工名、薪资、薪资等级？（注意薪资等级有一个薪资范围）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select e.name, e.sal, s.grade from emp as e join salgrade as s on e.sal between s.losal and s.hisal;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>即，将 emp 和 salgrade 两张表连接起来，连接条件是emp表中的sal字段等级在 salgrade 表中的 losal 和 hisal 范围之间。</p>
+</blockquote>
+<h5 id="2-7-1-3-自连接"><a href="#2-7-1-3-自连接" class="headerlink" title="2.7.1.3 自连接"></a>2.7.1.3 自连接</h5><blockquote>
+<p>顾名思义，就是<strong>自己和自己连接，即将一张表看成两张表</strong>。</p>
+<p>例子：查询员工的上级领导，要求显示员工名和对应的领导名？（注意，该表中，一条记录中有员工编号，员工姓名和员工的领导的编号，这里领导的编号其实就是其他员工的编号，所以需要自连接。）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select e.name as emplo, em.name as emploer from emp as e join emp as em on e.mgr = em.empno;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h4 id="2-7-2-外连接"><a href="#2-7-2-外连接" class="headerlink" title="2.7.2 外连接"></a>2.7.2 外连接</h4><p>外连接是除了严格匹配条件之外还将一些没有匹配条件的数据也表示出来。比如A表和B表进行内连接，就是将A表和B表中按照连接条件进行匹配。但是此时，可能有需求是将 B表中没有匹配的记录也显示出来，如下图所示，dname中的所有记录都显示出来，但是最后一个OPERATIONS没有匹配A表中的记录，所以是NULL。语法如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select e.ename, d.dname from emp as e right join dept as d on e.deptno, d.deptno;</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意，外连接和内连接在语法上的区别是，join前面有关键字，right表示将 join 右边的关键字看成主表，也就是最终显示结果中，右边表中的字段的值全部显示，捎带着关联查询左边的表。</strong></p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/MySQL/mysql_19.png" alt="mysql_19.png (350×536) (gitee.io)"></p>
+<p><strong>同理，有了right，就有left，将join左边的关键字看成主表，称为左外连接，左连接。并且，任何一个左连接都有右连接的写法，任何一个右连接都有左连接的写法，即 from A right join B 和 from B left join A是等价的。</strong></p>
+<p><strong>另外，有了左连接、右连接，还有全连接，就是说两张表都是主表。就是说两个表的内容都显示出来，另一张表没有对应内容，就用null表示。</strong></p>
+<p><strong>注意，外连接 join 前面其实也是有一个 outer 关键字的，可以省略，因为有了right 以及 left。带着可读性强。</strong></p>
+<p>可以看出，外连接其实两张表示有了主次关系了，而内连接则是平等的。</p>
+<h4 id="2-7-4-连接总结"><a href="#2-7-4-连接总结" class="headerlink" title="2.7.4 连接总结"></a>2.7.4 连接总结</h4><p>主要有内连接和外连接之分，内连接可以省略inner，外连接可以省略outer，但必须加上left、right。语法结构如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">select</span><br><span class="line">	...</span><br><span class="line">from</span><br><span class="line">	a</span><br><span class="line">[right, left]join</span><br><span class="line">	b</span><br><span class="line">on</span><br><span class="line">	a 和 b 的连接条件</span><br><span class="line">[right, left]join</span><br><span class="line">	c</span><br><span class="line">on</span><br><span class="line">	a 和 c 的连接条件</span><br><span class="line">[right, left]join</span><br><span class="line">	...</span><br><span class="line">on</span><br><span class="line">	...</span><br></pre></td></tr></table></figure>
+
+<p>其实就是跟多个 **join … on …**，其中每个 join 都可以单独设置内、（左、右）外连接，这些可以混合出现。</p>
+<h3 id="2-8-子查询"><a href="#2-8-子查询" class="headerlink" title="2.8 子查询"></a>2.8 子查询</h3><p>除了上述的简单查询和连接查询，有时候这些查询仍然不满足需求，此时可以进行子查询。即将查询结果作为新的一张表再次对结果进行查询，也就是selct嵌套。</p>
+<p><strong>select语句中嵌套select语句，被嵌套的 select 语句称为子查询。其实就是将select子查询的结果作为关键字的输入。</strong></p>
+<p>select查询可以出现在以下位置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select</span><br><span class="line">	...(select)...</span><br><span class="line">from</span><br><span class="line">	...(select)...</span><br><span class="line">where</span><br><span class="line">	...(select)...</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-8-1-where子句中的子查询"><a href="#2-8-1-where子句中的子查询" class="headerlink" title="2.8.1 where子句中的子查询"></a>2.8.1 where子句中的子查询</h4><p>即先筛选一遍，然后将筛选结果作为where条件。</p>
+<p>例子：找出比最低工资高的员工姓名和工资？</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select name, sal from from emp where sal &gt; (select min(sal) from emp);</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>即先要找出最低工资，然后再找出员工姓名和工资。</p>
+</blockquote>
+<h4 id="2-8-2-from子句中的子查询"><a href="#2-8-2-from子句中的子查询" class="headerlink" title="2.8.2 from子句中的子查询"></a>2.8.2 from子句中的子查询</h4><p>即先查询一遍，然后将筛选结果作为再次查询的表。</p>
+<p>例子：找出每个岗位的平均薪资的薪资等级？</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select a.job, b.grade from (select job, avg(sal) as sal_avg from emp group by job) as a join salgrade as b on a.sal_avg between b.losal and b.hisal; </span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>即先筛选出工作以及平均薪资，然后和另一张等级表连接查询。</p>
+</blockquote>
+<h4 id="2-8-3-select子句中的子查询"><a href="#2-8-3-select子句中的子查询" class="headerlink" title="2.8.3 select子句中的子查询"></a>2.8.3 select子句中的子查询</h4><p>例子：找出每个员工的部门名称，要求显示员工名，部门名？</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select e.ename, d.dname from emp as e join dept as d on e.deptno = d.deptno;</span><br><span class="line"></span><br><span class="line">select e.ename, (select d.dname from dept as d where e.deptno = d.deptno) as dname from emp as e;</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意，对于select后面的子查询来说，这个子查询只能一次返回一条结果，多于1条就报错。</strong></p>
+<h3 id="2-9-union合并查询结果集"><a href="#2-9-union合并查询结果集" class="headerlink" title="2.9 union合并查询结果集"></a>2.9 union合并查询结果集</h3><p>例子：查询工作岗位是MANAGEER和SALESMAN的员工？</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select ename, job from emp where job = &#x27;MANAGER&#x27; or job = &#x27;SALESMAN&#x27;;</span><br><span class="line">select ename, job from emp where job in (&#x27;MANAGER&#x27;, &#x27;SALESMAN&#x27;);</span><br></pre></td></tr></table></figure>
+
+<p>上面是两种最直观的方法。那么应用union关键字，还有一种比较“看起来复杂”的方法，就是执行两次简单查询，之后通过关键字 union 将结果合并。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select ename, job from emp where job = &#x27;MANAGER&#x27;</span><br><span class="line">union</span><br><span class="line">select ename, job from emp where job = &#x27;SALESMAN&#x27;;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>注意，其实union的效率要高一些。对于表连接来说，每连接一次新表，则匹配的次数满足笛卡尔积，成倍的翻。但是union可以减少匹配的次数，在减少匹配次数的情况下，还可以完成两个结果集的拼接。</strong></p>
+<p>比如， a 连接 b 连接 c：（采用正常的表连接操作）</p>
+<ul>
+<li>a：10条记录</li>
+<li>b：10条记录</li>
+<li>c：10条记录</li>
+<li>那么最终的匹配次数就是1000次。</li>
+</ul>
+<p>而如果采用合并查询union呢？</p>
+<ul>
+<li>a 和 b 连接：匹配次数是100次</li>
+<li>a 和 c 连接：匹配次数是100次</li>
+<li>那么最终的匹配次数就是100 + 100次。</li>
+</ul>
+</blockquote>
+<p><strong>注意，union在进行结果集合并的时候，要求两个结果集的列数相同。要求合并时列和列的数据类型要一致（mysql允许不一致，Oracle要求一致。）</strong></p>
+<h2 id="3-备注"><a href="#3-备注" class="headerlink" title="3. 备注"></a>3. 备注</h2><p><em>参考B站《动力节点》。</em></p>
 
                 
             </div>
@@ -1008,7 +1546,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">82.6k</span>&nbsp;字
+                class="white-color">90.2k</span>&nbsp;字
             
             
             

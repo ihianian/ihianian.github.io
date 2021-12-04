@@ -454,14 +454,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-11-17
+                    2021-12-03
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    0
+                    453
                 </div>
                 
 
@@ -488,7 +488,22 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>。。。</p>
+                <p>前面几篇文章介绍了数据库相关的增删改查等基本操作。本文介绍一些其他的关键知识点，比如约束、事务等等，以及数据库的权限和远程访问等问题。</p>
+<h2 id="1-约束"><a href="#1-约束" class="headerlink" title="1. 约束"></a>1. 约束</h2><p>有时候我们需要对表中的字段作一些限制，比如该字段的数据不能为空、该字段代表着这条数据、该字段的值默认自动增长等等。这些所做的限制就是约束（Constraint），在创建表的时候，我们可以<strong>给表中的字段加上一些约束来保证这个表中数据的完整性、有效性</strong>。</p>
+<p>约束主要有以下几种：</p>
+<ul>
+<li>非空约束：not null</li>
+<li>唯一性约束：unique</li>
+<li>主键约束：primary key（PK）</li>
+<li>外键约束：foreign key（FK）</li>
+<li>检查约束：check</li>
+</ul>
+<h3 id="1-1-非空约束"><a href="#1-1-非空约束" class="headerlink" title="1.1 非空约束"></a>1.1 非空约束</h3><p>非空约束顾名思议，约束字段的取值不能为空，即不能为NULL。创建表的时候直接在要约束的字段后面加上not null即可，之后如果插入数据的时候，该字段没有给值（并且没有默认值），就插入失败。</p>
+<p>简单例子如下所示：</p>
+<h3 id="1-2-唯一性约束"><a href="#1-2-唯一性约束" class="headerlink" title="1.2 唯一性约束"></a>1.2 唯一性约束</h3><p>唯一性约束顾名思义，约束字段的值不能重复，但是可以为NULL，并且可以有多个NULL，NULL不是重复。<strong>如果插入的时候是重复的，则会报错。</strong></p>
+<p>简单例子如下所示：</p>
+<h3 id="1-3-主键约束"><a href="#1-3-主键约束" class="headerlink" title="1.3 主键约束"></a>1.3 主键约束</h3><p>主键约束，这个约束实际上是非空约束和唯一性约束的结合，<strong>并且</strong>。</p>
+<h3 id="1-4-外键约束"><a href="#1-4-外键约束" class="headerlink" title="1.4 外键约束"></a>1.4 外键约束</h3><h3 id="1-5-检查约束"><a href="#1-5-检查约束" class="headerlink" title="1.5 检查约束"></a>1.5 检查约束</h3><h2 id="2-存储引擎"><a href="#2-存储引擎" class="headerlink" title="2. 存储引擎"></a>2. 存储引擎</h2><h2 id="3-事务"><a href="#3-事务" class="headerlink" title="3. 事务"></a>3. 事务</h2><h2 id="4-索引"><a href="#4-索引" class="headerlink" title="4. 索引"></a>4. 索引</h2><h2 id="5-视图"><a href="#5-视图" class="headerlink" title="5. 视图"></a>5. 视图</h2><h2 id="6-权限问题"><a href="#6-权限问题" class="headerlink" title="6. 权限问题"></a>6. 权限问题</h2><h2 id="7-数据库设计的三范式"><a href="#7-数据库设计的三范式" class="headerlink" title="7. 数据库设计的三范式"></a>7. 数据库设计的三范式</h2><h2 id="8-备注"><a href="#8-备注" class="headerlink" title="8. 备注"></a>8. 备注</h2><p><em>参考B站《动力节点》。</em></p>
 
                 
             </div>
@@ -1007,7 +1022,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">82.6k</span>&nbsp;字
+                class="white-color">90.2k</span>&nbsp;字
             
             
             
