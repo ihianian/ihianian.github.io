@@ -454,21 +454,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-12-03
+                    2021-12-07
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    453
+                    8.4k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    29 分
                 </div>
                 
 
@@ -498,12 +498,421 @@
 <li>外键约束：foreign key（FK）</li>
 <li>检查约束：check</li>
 </ul>
-<h3 id="1-1-非空约束"><a href="#1-1-非空约束" class="headerlink" title="1.1 非空约束"></a>1.1 非空约束</h3><p>非空约束顾名思议，约束字段的取值不能为空，即不能为NULL。创建表的时候直接在要约束的字段后面加上not null即可，之后如果插入数据的时候，该字段没有给值（并且没有默认值），就插入失败。</p>
+<h3 id="1-1-非空约束"><a href="#1-1-非空约束" class="headerlink" title="1.1 非空约束"></a>1.1 非空约束</h3><p>非空约束顾名思议，约束字段的取值不能为空，即不能为NULL。创建表的时候直接在要约束的字段后面加上<code>not null</code>即可，之后如果插入数据的时候，该字段没有给值（并且没有默认值），就插入失败。语法结构如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">drop table if exists t_vip;</span><br><span class="line">create table t_vip(</span><br><span class="line">	id int,</span><br><span class="line"> 	name varchar(10) not null</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
 <p>简单例子如下所示：</p>
-<h3 id="1-2-唯一性约束"><a href="#1-2-唯一性约束" class="headerlink" title="1.2 唯一性约束"></a>1.2 唯一性约束</h3><p>唯一性约束顾名思义，约束字段的值不能重复，但是可以为NULL，并且可以有多个NULL，NULL不是重复。<strong>如果插入的时候是重复的，则会报错。</strong></p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/MySQL/mysql_20.png" alt="mysql_20.png (614×527) (gitee.io)"></p>
+<p>注意，该表中<code>no</code>字段是not NULL，并且没有设置默认值，所以插入的时候必须指明该字段的值；而<code>name</code>字段是not NULL，但设置了默认值’q’（所以插入的时候可以不写）。</p>
+<h3 id="1-2-唯一性约束"><a href="#1-2-唯一性约束" class="headerlink" title="1.2 唯一性约束"></a>1.2 唯一性约束</h3><p>唯一性约束顾名思义，约束字段的值不能重复（列级约束），在字段后面用关键字<strong>unique</strong>指明。但是可以为NULL，并且可以有多个NULL，NULL不是重复。<strong>如果插入的时候是重复的，则会报错。</strong>语法结构如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">drop table if exists t_vip;</span><br><span class="line">create table t_vip(</span><br><span class="line">	id int unique,</span><br><span class="line"> name varchar(10)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">// 或者</span><br><span class="line">create table t_vip(</span><br><span class="line">	id int,</span><br><span class="line"> name varchar(10),</span><br><span class="line"> unique(id)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
 <p>简单例子如下所示：</p>
-<h3 id="1-3-主键约束"><a href="#1-3-主键约束" class="headerlink" title="1.3 主键约束"></a>1.3 主键约束</h3><p>主键约束，这个约束实际上是非空约束和唯一性约束的结合，<strong>并且</strong>。</p>
-<h3 id="1-4-外键约束"><a href="#1-4-外键约束" class="headerlink" title="1.4 外键约束"></a>1.4 外键约束</h3><h3 id="1-5-检查约束"><a href="#1-5-检查约束" class="headerlink" title="1.5 检查约束"></a>1.5 检查约束</h3><h2 id="2-存储引擎"><a href="#2-存储引擎" class="headerlink" title="2. 存储引擎"></a>2. 存储引擎</h2><h2 id="3-事务"><a href="#3-事务" class="headerlink" title="3. 事务"></a>3. 事务</h2><h2 id="4-索引"><a href="#4-索引" class="headerlink" title="4. 索引"></a>4. 索引</h2><h2 id="5-视图"><a href="#5-视图" class="headerlink" title="5. 视图"></a>5. 视图</h2><h2 id="6-权限问题"><a href="#6-权限问题" class="headerlink" title="6. 权限问题"></a>6. 权限问题</h2><h2 id="7-数据库设计的三范式"><a href="#7-数据库设计的三范式" class="headerlink" title="7. 数据库设计的三范式"></a>7. 数据库设计的三范式</h2><h2 id="8-备注"><a href="#8-备注" class="headerlink" title="8. 备注"></a>8. 备注</h2><p><em>参考B站《动力节点》。</em></p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/MySQL/mysql_21.png" alt="mysql_21.png (544×304) (gitee.io)"></p>
+<p><strong>另外，唯一性约束可以对多个字段联合起来约束唯一性，意义是二者合起来不能重复，但是其中单独一个可以重复（表级约束）。</strong>语法结构如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">create table t_vip(</span><br><span class="line"> id int,</span><br><span class="line"> name varchar(10),</span><br><span class="line"> unique(id, name)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3-主键约束"><a href="#1-3-主键约束" class="headerlink" title="1.3 主键约束"></a>1.3 主键约束</h3><p>主键约束，<strong>主键约束实际上是非空约束和唯一性约束的结合</strong>，当某个字段设置为这两个的时候，会自动标记为主键约束。语法结构如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">drop table if exists t_vip;</span><br><span class="line">create table t_vip(</span><br><span class="line">	id int unique not null,</span><br><span class="line"> 	name varchar(10)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/MySQL/mysql_22.png" alt="mysql_22.png (570×358) (gitee.io)"></p>
+<h4 id="1-3-1-相关术语"><a href="#1-3-1-相关术语" class="headerlink" title="1.3.1 相关术语"></a>1.3.1 相关术语</h4><ul>
+<li>主键约束：一种约束。</li>
+<li>主键字段：添加了主键约束的字段。</li>
+<li>主键值：主键字段中的每一个值。</li>
+</ul>
+<h4 id="1-3-2-主键的作用"><a href="#1-3-2-主键的作用" class="headerlink" title="1.3.2 主键的作用"></a>1.3.2 主键的作用</h4><p>前面提到过，主键实际上是非空约束和唯一性约束的结合，那么该字段中的每个值都是唯一的，且都是有效的，那么该字段值实际上可以代表了其所在的记录。</p>
+<p><strong>主键值是每一行记录的唯一表示，主键值是每一行记录的身份证号。</strong></p>
+<p><strong>任何一张表，都应该有主键。主键的特征：not null + unique（主键值不能是null，也不能重复）</strong></p>
+<p><strong>一张表，主键约束只能添加一个。主键值建议采用 int、bigint、char等类型，不建议采用varchar，主键值一般是定长的。</strong></p>
+<h4 id="1-3-3-单一主键"><a href="#1-3-3-单一主键" class="headerlink" title="1.3.3 单一主键"></a>1.3.3 单一主键</h4><p>单一主键就是主键修饰的字段只有一个。语法结构如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">drop table if exists t_vip;</span><br><span class="line">create table t_vip(</span><br><span class="line">	id int primary key,</span><br><span class="line">    name varchar(10)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">// 或者 使用表级约束</span><br><span class="line">create table t_vip(</span><br><span class="line">	id int,</span><br><span class="line">    name varchar(10),</span><br><span class="line">    primary key(id)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/MySQL/mysql_23.png" alt="mysql_23.png (688×319) (gitee.io)"></p>
+<h4 id="1-3-4-复合主键"><a href="#1-3-4-复合主键" class="headerlink" title="1.3.4 复合主键"></a>1.3.4 复合主键</h4><p>复合主键指的是主键修饰的字段有多个，即多个字段联合起来作主键。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">create table t_vip(</span><br><span class="line">	id int,</span><br><span class="line">    name varchar(10),</span><br><span class="line">    primary key(id, name)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-3-5-补充"><a href="#1-3-5-补充" class="headerlink" title="1.3.5 补充"></a>1.3.5 补充</h4><p>主键除了单一主键和复合主键之外，还可以分为自然主键和业务主键。</p>
+<ul>
+<li>自然主键：主键值是一个自然数，和业务没关系。</li>
+<li>业务主键：主键值和业务紧密关联，例如拿银行卡账号做主键。</li>
+</ul>
+<p>在实际开发中，自然主键使用比较多，因为主键只要做到不重复就行，不需要有意义。业务主键不好，因为主键一旦和业务挂钩，那么当业务发生变动的时候，可能会影响到主键值，所以业务主键不建议使用，尽量使用自然主键。</p>
+<p>在mysql当中，有一种机制，可以帮助我们自动维护一个主键值。<strong>auto_increment</strong>，从1开始自动增加，插入的时候，可以不用插入该数据，不需要我们来维护。<strong>注意，既然自增了，那么主键只能是数字类型。</strong></p>
+<p>语法结构如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">drop table if exists t_vip;</span><br><span class="line">create table t_vip(</span><br><span class="line">	id int primary key auto_increment,</span><br><span class="line">    name varchar(10)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/MySQL/mysql_25.png" alt="mysql_25.png (650×475) (gitee.io)"></p>
+<p><strong>注意，此时插入全部字段的时候，如果省略表名后的字段，虽然自增，但是也不行，所以，必须写上表名的字段</strong>，如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">insert into t_vips values (&#x27;王五&#x27;), (&#x27;赵柳&#x27;);	// 这样是不对的</span><br><span class="line"></span><br><span class="line">insert into t_vips(name) values (&#x27;王五&#x27;), (&#x27;赵柳&#x27;);		// 这样才可以</span><br></pre></td></tr></table></figure>
+
+<p><strong>待解决，auto_increment可以修饰哪些字段，主键、unique标识的。</strong></p>
+<p><strong>待解决，auto_increment之后，即使插入失败的语句，其实系统也是自动自增的，当插入成功之后，其实已经跳过了失败的自增的数值了。如下所示：</strong></p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/MySQL/mysql_24.png" alt="mysql_24.png (1214×553) (gitee.io)"></p>
+<h3 id="1-4-外键约束"><a href="#1-4-外键约束" class="headerlink" title="1.4 外键约束"></a>1.4 外键约束</h3><p>外键是一张表的主键在另一张表的字段。</p>
+<h4 id="1-4-1相关术语"><a href="#1-4-1相关术语" class="headerlink" title="1.4.1相关术语"></a>1.4.1相关术语</h4><ul>
+<li>外键约束：一种约束。</li>
+<li>外键字段：外键修饰的字段。</li>
+<li>外键值：外键字段中的每一个值。</li>
+</ul>
+<h4 id="1-4-2-相关案例"><a href="#1-4-2-相关案例" class="headerlink" title="1.4.2 相关案例"></a>1.4.2 相关案例</h4><p>业务背景：请设计数据表，来表述“班级和学生”的信息？</p>
+<ul>
+<li><p>第一种方案：班级和学生存储在一张表中</p>
+<p>这种方案，同一个班级中的学生的班级都是一样的，这样，该班级中的每条学生记录其实是重复存储了班级信息，造成了空间浪费，类似<strong>静态变量和类的关系</strong></p>
+</li>
+<li><p>第二种方案：班级一张表，学生一张表。</p>
+<p>在班级表中存储班级的信息，这样，一个班级就只有一条记录。此时就只需要将学生和班级信息对应起来即可。但是<strong>二者怎么连接起来呢？</strong>，就是在学生表的对应记录里面也存储一份班级表的主键值，此时存储的另一张表的主键在该表中就称为外键（其实也不一定是主键，只要具有唯一性即可）。</p>
+<p><strong>换句话说，外键仍然是手写的，那么就有可能写错，此时可以添加外键约束，这样，系统就会检查是否是那个表中的主键。</strong></p>
+</li>
+</ul>
+<p><strong>注意，用了外键约束，两张表就有了父子关系了，有外键的表称为子表，被引用的表称为父表。所以：</strong></p>
+<ul>
+<li>删除表的顺序：先删子表，再删父表。</li>
+<li>创建表的顺序：先建父表，再建子表。</li>
+<li>删除数据的顺序：先删子，再删父。</li>
+<li>插入数据的顺序：先插父，再插子。</li>
+</ul>
+<p>语法结构如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">// 父表</span><br><span class="line">create table t_class(</span><br><span class="line">	classno int primary key,</span><br><span class="line">    classname varchar(20)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">// 子表, 表级约束</span><br><span class="line">create table t_student(</span><br><span class="line">	no int primary key auto_increment,</span><br><span class="line">    name varchar(10),</span><br><span class="line">    cno int,</span><br><span class="line">    foreign key(cno) references t_class(classno)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">// 或者，子表，列级约束（似乎没有这个语法，测试不成功）</span><br><span class="line">create table t_student(</span><br><span class="line">	no int primary key auto_increment,</span><br><span class="line">    name varchar(10),</span><br><span class="line">    cno int foreign key references t_class(classno),</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p><strong>思考：子表中的外键引用的父表中的某个字段，被引用的这个字段必须是主键吗？</strong></p>
+<blockquote>
+<p><strong>不一定是主键，但至少要具有唯一性，即具有unique约束。因为如果不具有唯一性，那么在子表中引用外键的时候，就不知道引用的是父表中的哪条记录了。</strong></p>
+</blockquote>
+<p><strong>思考：外键可以为NULL吗？</strong></p>
+<blockquote>
+<p>外键值可以为NULL。<strong>注意，是外键值可以为NULL，就是在插入的时候，可以不写外键的值。</strong></p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/MySQL/mysql_26.png" alt="mysql_26.png (526×461) (gitee.io)"></p>
+</blockquote>
+<h3 id="1-5-检查约束"><a href="#1-5-检查约束" class="headerlink" title="1.5 检查约束"></a>1.5 检查约束</h3><p>检查约束指的是在数据列上设置一些过滤条件，当过滤条件满足的时候才可以进行保存，如果不满足则出现错误，采用关键字<strong>check</strong>。这种约束相当于提前规定了存储数据的条件，存储在表中的数据必须满足规定的条件，避免了数据的无效性。</p>
+<h2 id="2-存储引擎"><a href="#2-存储引擎" class="headerlink" title="2. 存储引擎"></a>2. 存储引擎</h2><p>存储引擎是MySQL中特有的一个术语，大部分数据库中没有（Oracle中有，但是不叫这个名字），实际上，<strong>存储引擎是一个表存储、组织数据的方式，不同的存储引擎，表存储数据的方式不同</strong>。数据库中的各表均被（在创建表时）指定的存储引擎来处理。</p>
+<p>服务器可用的引擎依赖以下元素：</p>
+<ul>
+<li>MySQL版本</li>
+<li>服务器在开发时的配置</li>
+<li>启动选项</li>
+<li>为了解当前服务器中有哪些存储引擎可用，可使用 <strong>show engines</strong>或者<strong>show engines \G</strong>语句。</li>
+</ul>
+<h3 id="2-1-添加指定存储引擎？"><a href="#2-1-添加指定存储引擎？" class="headerlink" title="2.1 添加指定存储引擎？"></a>2.1 添加指定存储引擎？</h3><p>可以先用<strong>show create table 表名</strong>查看一下创建表时的<strong>“完整”sql建表语句</strong>（一些默认值，虽然手动没有给出，但是MySQL执行的时候会自动给出）。可以看到系统默认指定的存储引擎是InnoDB，字符集是latinl。</p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/MySQL/mysql_27.png" alt="mysql_27.png (639×359) (gitee.io)"></p>
+<p>因此，可以在建表语句后添加<strong>engine=存储引擎名</strong>来指定该表的存储引擎以及其他选项等等。语法结构如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">create table t_product(</span><br><span class="line">	...</span><br><span class="line">)engine = InnoDB;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-MySQL支持的存储引擎"><a href="#2-2-MySQL支持的存储引擎" class="headerlink" title="2.2 MySQL支持的存储引擎"></a>2.2 MySQL支持的存储引擎</h3><p>MySQL一共支持九大存储引擎，不同的版本支持的不同。</p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/MySQL/mysql_33.png" alt="mysql_33.png (1341×350) (gitee.io)"></p>
+<p>常用的存储引擎有：</p>
+<ul>
+<li><p>MyISAM存储引擎：</p>
+<blockquote>
+<p>它管理的表具有以下三个特征：</p>
+<ol>
+<li><p>采用三个文件表示每张表：</p>
+<ol>
+<li>格式文件：存储表结构的定义。</li>
+<li>数据文件：存储表行的内容。</li>
+<li>索引文件：存储表上索引，索引即类似一本书的目录，在查找的时候缩小扫描范围，提高查询效率。</li>
+</ol>
+<p><strong>补充，对于一张表来说，只要是主键，或者有unique约束的字段，会自动创建索引。</strong></p>
+</li>
+<li><p>灵活的 AUTO_INCREMENT字段处理。</p>
+</li>
+<li><p>可被转换为压缩、只读来节省空间（优点）。</p>
+</li>
+</ol>
+</blockquote>
+</li>
+<li><p>InnoDB存储引擎：</p>
+<blockquote>
+<p>默认的存储引擎，是一个重量级的存储引擎，支持事务，支持数据库崩溃后自动恢复机制，主要特点是<strong>非常安全</strong>。具有以下几个特征：</p>
+<ul>
+<li>每个InnoDB表在数据库目录中以 <strong>.frm</strong> 格式文件存储。</li>
+<li>InnoDB表空间 tablespace 被用于存储表的内容。（表空间是一个逻辑名称，索引和内容都存放在表空间中）</li>
+<li>提供一组用来记录事务性活动的日志文件。</li>
+<li>用 COMMIT(提交)、SAVEPOINT 及 ROLLBACK(回滚) 支持事务处理。</li>
+<li>提供全 ACID 兼容。</li>
+<li>在 MySQL服务器崩溃后提供自动恢复。</li>
+<li>多版本(MVCC) 和行级锁定。</li>
+<li>支持外键及引用的完整性，包括级联删除和更新。</li>
+</ul>
+<p>InnoDB最大的特点就是支持事务，以保证数据的安全。但是效率不是很高，并且也不能压缩。不能转换为只读，不能很好的节省存储空间。</p>
+</blockquote>
+</li>
+<li><p>MEMORY存储引擎</p>
+<blockquote>
+<p>使用MEMORY存储引擎的表，其数据存储在内存中（一断电，数据就消失了），且行的长度固定，这两个特点使得 MEMORY 存储引擎非常快。</p>
+<p>MEMORY存储引擎管理的表具有以下特征：</p>
+<ul>
+<li>在数据库目录内，每个表均以 .frm 格式的文件表示。</li>
+<li>表数据及索引被存储在内存中。（目的就是快，查询快！）</li>
+<li>表级锁机制。</li>
+<li>不能包含 TEXT 和 BLOB 字段。</li>
+</ul>
+<p>MEMORY存储引擎以前被称为 HEAP引擎（堆引擎）。</p>
+<p>MEMORY引擎优点：<strong>查询效率是最高</strong>的。</p>
+<p>MEMORY引擎缺点：不安全，关机之后数据消失。因为数据和索引都是在内存当中。</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="3-事务"><a href="#3-事务" class="headerlink" title="3. 事务"></a>3. 事务</h2><p>一个事务其实就是一个完整的业务逻辑。那么什么是一个完整的业务逻辑呢？</p>
+<blockquote>
+<p>假设转账，从A账户向B账户中转账10000。</p>
+<ol>
+<li>将A账户的钱减去10000；（update语句）</li>
+<li>将B账户的钱加上10000；（update语句）</li>
+</ol>
+<p>这就是一个完整的业务逻辑。以上的操作是一个最小的工作单元，要么同时成功，要么同时失败，不可再分。<strong>否则转账的金额就会不对等，这是不安全的</strong>。</p>
+</blockquote>
+<p>实际上，只有DML语句（insert、delete、update）才会有事务这个概念，因为只有这三个操作是涉及到数据的增删改，那么就一定要考虑安全问题。</p>
+<p>假设所有的业务，只要一条DML语句就完成，还有必要存在事务机制吗？</p>
+<blockquote>
+<p>正是因为做某件事的时候，需要多条DML语句共同联合起来才能完成，所以需要事务的存在。如果任何一件复杂的事儿都能一条DML语句搞定，那么事务则没有存在的价值了。</p>
+</blockquote>
+<p><strong>本质上，一个事务其实就是多条DML语句同时成功，或者同时失败。所以，如果其中一条或几条语句失败，那么其他成功的语句就必须回退。</strong></p>
+<h3 id="3-1-事务是如何实现的？"><a href="#3-1-事务是如何实现的？" class="headerlink" title="3.1 事务是如何实现的？"></a>3.1 事务是如何实现的？</h3><p>事务涉及到数据的存储，所以和具体的存储引擎有关。以InnoDB存储引擎为例，它提供一组用来记录事务性活动的日志文件。</p>
+<p>在事务的执行过程中，每一条DML的操作都会记录到 “事务性活动的日志文件”中，在事务的执行过程中，我们可以<strong>提交事务</strong>，也可以<strong>回滚事务</strong>。</p>
+<ul>
+<li><p>提交事务</p>
+<blockquote>
+<p>清空事务性活动的日志文件，将数据全部彻底持久化到数据库表中。</p>
+<p><strong>提交事务标志着，事务的结束，并且是一种全部成功的结束。</strong></p>
+<p>提交事务需要：<code>commit;</code> 语句</p>
+</blockquote>
+</li>
+<li><p>回滚事务</p>
+<blockquote>
+<p>将之前所有的DML操作全部撤销，并且清空事务性活动的日志文件。</p>
+<p><strong>回滚事务标志着，事务的结束，并且是一种全部失败的结束。</strong></p>
+<p>回滚事务需要：<code>rollback;</code> 语句</p>
+<p>注意，回滚永远都是只能回滚到上一次的提交点！</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="3-2-事务的提交与回滚"><a href="#3-2-事务的提交与回滚" class="headerlink" title="3.2 事务的提交与回滚"></a>3.2 事务的提交与回滚</h3><p><strong>默认情况下，MySQL是自动提交事务的</strong>。自动提交即每执行一条DML语句，则提交一次。而因为回滚是只能回滚到上一次的提交点，所以默认情况下，回滚是没有效果的，因为上一次的提交点，就是上一条语句执行之后的结果。</p>
+<p>这种自动提交实际上是不符合我们的开发习惯，因为一个业务通常是需要多条DML语句共同执行才能完成的，为了保证数据的安全，必须要求同时成功之后再提交。所以不能执行一条就提交一条。</p>
+<p>怎么将 MySQL 的自动提交机制关闭掉呢 ？</p>
+<blockquote>
+<p>先执行这个命令：<code>start transaction; </code>(开启事务)</p>
+<p>需要回滚的时候，执行 rollback; 语句即可。此时就可以回滚到上一次提交结束的位置。需要提交的时候，执行 commit; 语句即可。</p>
+<p>但是 执行 rollback 或者 commit 之后，就会自动回到系统的默认提交状态。所以，<strong>每执行一次回滚或提交，都要重新开启事务</strong>。</p>
+</blockquote>
+<h3 id="3-3-事务的四个特性"><a href="#3-3-事务的四个特性" class="headerlink" title="3.3 事务的四个特性"></a>3.3 事务的四个特性</h3><ul>
+<li><p><strong>A</strong>，即Atom的缩写，原子性。</p>
+<blockquote>
+<p>说明事务是最小的工作单元，不可再分。</p>
+</blockquote>
+</li>
+<li><p><strong>C</strong>，即Consistency的缩写，一致性。</p>
+<blockquote>
+<p>所有事务要求，在同一个事务当中，所有操作必须同时成功，或者同时失败。以保证数据的一致性。</p>
+<p>事务的执行不能破坏数据库数据的完整性和一致性，一个事务在执行之前和执行之后，数据库都必须处于一致性状态。</p>
+</blockquote>
+</li>
+<li><p><strong>I</strong>，即Isolation的缩写，隔离性。</p>
+<blockquote>
+<p>A事务和B事务之间，具有一定的隔离。</p>
+<p>事务的隔离性是指在并发环境中，并发的事务是相互隔离的，一个事务的执行不能不被其他事务干扰。不同的事务并发操作相同的数据时，每个事务都有各自完成的数据空间，即一个事务内部的操作及使用的数据对其他并发事务是隔离的，并发执行的各个事务之间不能相互干扰。</p>
+</blockquote>
+</li>
+<li><p><strong>D</strong>，即Durability的缩写，持久性。</p>
+<blockquote>
+<p>事务最终结束的一个保障。事务提交，就相当于将没有保存到硬盘上的数据保存到硬盘上，就是将事务对数据库中的对应数据的状态的变更永久保存到数据库中，这种变更是持久的。</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="3-4-事务的隔离性"><a href="#3-4-事务的隔离性" class="headerlink" title="3.4 事务的隔离性"></a>3.4 事务的隔离性</h3><p>事务具有隔离性，两个事务之间的数据是不相同的。但是事务的隔离级别有四个级别：</p>
+<ol>
+<li><p>读未提交：read uncommitted（最低的隔离级别）</p>
+<blockquote>
+<p>事务A可以读取到事务B未提交的数据。</p>
+<p>换句话说，就是那个数据还没有提交，就是说，这个数据随时可改，即读到了脏数据。</p>
+<p>这种隔离级别一般都是理论上的，大多数的数据库隔离级别都是二挡起步。</p>
+<p><code>没有提交就能读到。</code></p>
+</blockquote>
+</li>
+<li><p>读已提交：read committed</p>
+<blockquote>
+<p>事务A只能读取到事务B提交之后的数据。这种隔离级别解决了读脏数据的现象，就是说，读到的数据保证了是不能“修改的数据”，不是“中间过程的数据”。</p>
+<p>但是这种隔离级别存在不可重复读取数据。</p>
+<p><strong>不可重复读取数据：在事务开启之后，第一次读到的数据是3条，当前事务还没有结束，可能第二次再读取的时候，该事物又写入了数据，读到的数据是4条。3不等于4，较短时间内，不同次读取的数据条数不一样，称为不可重读读取。</strong></p>
+<p>就是说，这其实是在操作同一个数据库表的基础上来说的，比如事务A是读数据，而事务B是写数据，那么事务B每时每刻都在写数据，此时就是事务A每时每刻读取的数据条数不一样。</p>
+<p>这种隔离级别是比较真实的数据，每一次读到的数据是绝对的真实。</p>
+<p>Oracle数据库默认的隔离级别是：读已提交。</p>
+<p><code>提交了才能读到。</code></p>
+</blockquote>
+</li>
+<li><p>可重复读：repeatable read</p>
+<blockquote>
+<p>事务A开启之后，不管是多久，每一次在事务A中读取到的数据都是一致的。即使事务B将数据已经修改，并且提交了，事务A读取到的数据还是没有发生改变，这就是可重复读。</p>
+<p>可重复读解决了不可重复读问题。</p>
+<p>可重复读存在的问题：可能出现幻影读。就是每一次读取到的数据都是幻想，不够真实。其实就是说，读取到的数据不是最新的数据，是之前保留的数据。</p>
+<blockquote>
+<p>比如，银行总账时，数据量比较大，select语句需要从 1点执行到3点。那么在此之间，肯定会有人存钱和取钱，那么此时这些数据就会干扰select，因此，就让select读到的数据是1点时刻的数据，事务未开始的数据。</p>
+<p>就是说，有滞后性。有点类似，疫情时发布的数据，写了<strong>截止到某时某刻的情况。</strong></p>
+</blockquote>
+<p>MySQL默认的事务隔离级别就是这个。（<strong>可以手动修改数据库的隔离级别</strong>）</p>
+<p><code>提交之后也读不到。读到的是当前事务最开始的时候的，不是最新的，是事务刚开始的数据，所以称为幻读。</code></p>
+</blockquote>
+</li>
+<li><p>序列化/串行化：serializable（最高的隔离级别）</p>
+<blockquote>
+<p>每一次读取到的数据都是真实的，并且效率是最低的。</p>
+<p>这是最高隔离级别，效率最低，解决了所有的问题。这种隔离级别表示事务排队，不能并发。就是说，一个事务在执行的时候，其他的事务不能执行。类似线程同步（事务同步）。</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="3-5-验证事务的隔离级别"><a href="#3-5-验证事务的隔离级别" class="headerlink" title="3.5 验证事务的隔离级别"></a>3.5 验证事务的隔离级别</h3><p>查看数据库的隔离级别：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">select @@transaction_isolation;</span><br><span class="line"></span><br><span class="line">// 旧版本是</span><br><span class="line">select @@tx_isolation;</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/MySQL/mysql_32.png" alt="mysql_32.png (413×174) (gitee.io)"></p>
+<p>手动修改数据库的隔离级别。（<strong>注意，修改后需要重新进入再次查看，看看是否修改成功。</strong>）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">set [global] transaction isolation level 隔离级别名;</span><br><span class="line"></span><br><span class="line">// 比如 设置 读未提交 隔离权限。</span><br><span class="line">set global transaction isolation level read uncommitted;</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意，验证这些隔离级别需要有两个事务，这时，可以打开两个终端分别连接数据库。然后设置对应的隔离级别。</strong></p>
+<ol>
+<li>在第一个隔离级别中，注意，一个窗口 设置 start transaction之后，插入数据，不提交（虽然默认隔离级别下，在本窗口可以查看到，但是，这其实是在一个事务下，不构成反例）；在另一个窗口，可以读取到未提交的数据。</li>
+<li>第二个隔离级别，操作和第一个类似，只不过是查不到之后，需要提交一下，再次查看，可以读取到数据。</li>
+<li>第三个隔离级别，可重复读。两个事务A和B，A开启事务，读数据。B开启事务，插入数据，之后B提交结束。但是此时A读数据，依然是A开始事务时读到的数据，即可重复读。</li>
+<li>第四个隔离级别，序列化。两个事务A和B，A开启事务，写入数据。B开启事务，读数据，因为是序列化，所以B事务进入了等待状态。直到A事务提交结束，B事务才会执行。</li>
+</ol>
+<h2 id="4-索引"><a href="#4-索引" class="headerlink" title="4. 索引"></a>4. 索引</h2><h3 id="4-1-索引概述"><a href="#4-1-索引概述" class="headerlink" title="4.1 索引概述"></a>4.1 索引概述</h3><p><strong>索引相当于一本书的目录，是为了缩小扫描范围而存在的一种机制</strong>。索引是在数据库表的字段上添加的，是为了提高查询效率存在的一种机制。一张表的一个字段可以添加一个索引，当然，多个字段联合起来也可以添加索引。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from t_user where name = &#x27;jack&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p>上面的这条语句会从t_user表中的 name 字段扫描，因为指明了name字段。然后如果name字段中的数据有索引，那么就根据索引进行匹配 jack，如果没有，那么就会进行全扫描（全部数据扫描，不是全字段扫描），将 name 字段上的每个值都比对一遍，效率比较低。</p>
+<p><strong>注意：</strong></p>
+<blockquote>
+<ol>
+<li><strong>在任何数据库当中主键上都会自动添加索引对象，在MySQL中，一个字段上如果有unique约束的话，也会自动创建索引。</strong></li>
+<li><strong>在任何数据库当中，任何一张表的任何一条记录在硬盘存储上都有一个硬盘的物理存储编号。即物理地址。</strong></li>
+<li><strong>在MySQL当中，索引是一个单独的对象，不同的存储引擎以不同的形式存在，在MyISAM存储引擎中，索引存储在一个 .MYI文件中。在InnoDB存储引擎中，索引存储在一个逻辑名称叫做tablespace的当中。在MEMORY当中，索引被存储在内存中。不管索引存储在哪里，索引对象在mysql当中都是一个树的形式存在（自平衡二叉树）</strong></li>
+</ol>
+</blockquote>
+<p>例子如下：id是主键，其索引对象如下图所示。</p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/MySQL/mysql_29.png" alt="mysql_29.png (1184×320) (gitee.io)"></p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/MySQL/mysql_30.png" alt="mysql_30.png (1101×666) (gitee.io)"></p>
+<h3 id="4-2-索引的创建和删除"><a href="#4-2-索引的创建和删除" class="headerlink" title="4.2 索引的创建和删除"></a>4.2 索引的创建和删除</h3><p>除了上述在unique约束的字段上自动创建索引，什么时候会考虑给字段添加索引呢？</p>
+<ol>
+<li><strong>数据量庞大</strong>（到底多少算庞大，这个需要测试，因为每个硬件环境不同）。</li>
+<li>该字段经常出现在where的后面，以条件的形式存在，也就是<strong>这个字段经常被扫描</strong>。</li>
+<li><strong>该字段有很少的DML（insert、delete、update）操作</strong>，因为DML操作后，索引需要重新排序（比如二叉树）。</li>
+</ol>
+<p><strong>注意，建议不要随意添加索引，因为索引也是需要维护的，太多的haul反而会降低系统的性能，建议通过主键查询，通过unique约束的字段进行查询，效率是比较高的。</strong></p>
+<p>创建语法结构如下所示;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 给某个表中的某个字段添加索引，起名索引名。</span><br><span class="line">create index 索引名 on 表名(字段名);</span><br></pre></td></tr></table></figure>
+
+<p>删除语法结构如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 删除索引，将某个表中的某个索引删除。</span><br><span class="line">drop index 索引名 on 表名;</span><br></pre></td></tr></table></figure>
+
+<p><strong>在mysql中，怎么查看一个SQL语句是否使用了索引进行检索？</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">explain SQL语句;</span><br></pre></td></tr></table></figure>
+
+<p>如下图所示，具体字段的解释见参考链接：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/xuanzhi201111/p/4175635.html">MySQL Explain详解 - GoogSQL - 博客园 (cnblogs.com)</a></p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/MySQL/mysql_31.png" alt="mysql_31.png (1200×755) (gitee.io)"></p>
+<h3 id="4-3-索引失效"><a href="#4-3-索引失效" class="headerlink" title="4.3 索引失效"></a>4.3 索引失效</h3><p><strong>索引也会有失效的时候，这里的失效不是全部失效，而是有些条件下索引不管用了</strong>。</p>
+<ol>
+<li><p>开头模糊匹配，name即使添加了索引，也不会走索引，因为模糊匹配当中，以%开头了，无法使用索引检索。尽量避免模糊查询的时候，以%开始。这是一种优化的策略。（<strong>但是不知道什么原因，我这里用了模糊查询仍然走的是索引。</strong>）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from t_vip where name like &#x27;%T&#x27;;</span><br></pre></td></tr></table></figure></li>
+<li><p>使用or的时候会失效，如果使用or，那么要求两边的条件字段都要有索引，才会走索引。如果其中一侧没有索引，那么另一侧字段上的索引，也会失效。所以这就是为什么不建议使用or的原因。（SQL优化策略）union不会让索引失效。</p>
+</li>
+<li><p>使用复合索引的时候，没有使用左侧的列查找，索引失效。</p>
+<blockquote>
+<p>复合索引就是，两个字段或者更多的字段联合起来添加一个索引，叫做复合索引。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create index age_job_index on t_vip(age, job);</span><br></pre></td></tr></table></figure>
+
+<p>在此情况下，如果 查找的条件中 没有使用 age，则不会走索引。</p>
+</blockquote>
+</li>
+<li><p>where当中，索引列参加了运算，索引失效。比如查找 age 是整数的记录，那么此时就不会走索引，因为进行了运算。</p>
+</li>
+<li><p>where当中，索引列使用了(分组)函数，比如 <code>select * from emp where lower(ename) = &#39;smith&#39;;</code></p>
+</li>
+</ol>
+<h3 id="4-4-索引分类"><a href="#4-4-索引分类" class="headerlink" title="4.4 索引分类"></a>4.4 索引分类</h3><p>索引是各种数据库进行优化的重要手段，优化的时候优先考虑的因素就是索引。索引在数据库中有很多类。</p>
+<ol>
+<li><p>单一索引：一个字段上添加索引</p>
+</li>
+<li><p>复合索引：两个字段或者更多的字段上添加索引</p>
+</li>
+<li><p>主键索引：主键上添加索引。</p>
+</li>
+<li><p>唯一性索引：具有unique约束的字段上添加索引</p>
+</li>
+<li><p>…</p>
+</li>
+</ol>
+<p>注意：唯一性比较弱的字段上添加索引用处不大。</p>
+<h2 id="5-视图"><a href="#5-视图" class="headerlink" title="5. 视图"></a>5. 视图</h2><blockquote>
+<p>视图就是站在不同的角度去看待同一份数据，这里的不同角度指的是不同DQL的返回结果。</p>
+</blockquote>
+<h3 id="5-1-视图的创建和删除"><a href="#5-1-视图的创建和删除" class="headerlink" title="5.1 视图的创建和删除"></a>5.1 视图的创建和删除</h3><p>语法结构如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 创建视图</span><br><span class="line">create view 视图名 as DQL语句;</span><br><span class="line"></span><br><span class="line">// 删除视图</span><br><span class="line">drop view 视图名;</span><br><span class="line"></span><br><span class="line">// 例如</span><br><span class="line">create view emp_view as select * from emp;</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-2-视图的作用"><a href="#5-2-视图的作用" class="headerlink" title="5.2 视图的作用"></a>5.2 视图的作用</h3><p><strong>可以面向视图对象进行数据的增删改查，对视图对象的增删改查会导致原表被操作。</strong></p>
+<p>视图的特点：通过对视图的操作，会影响到原表数据；对原表操作也会影响到视图表数据。</p>
+<p>视图对象在实际开发中的作用？</p>
+<blockquote>
+<p>视图其实是用来简化SQL语句的，比如很多次的操作都用到哪个DQL语句，这时候可以提前用该语句创建一个视图，然后每次都对该视图进行操作，这样就大大简化了SQL语句。<strong>尤其是对多张表关联创建视图，相当于创建了一个快捷方式，或者一个引用</strong>。</p>
+</blockquote>
+<p>假设有一条非常复杂的SQL语句，而这条SQL语句需要在不同的位置上反复使用。每一次使用这个SQL语句的时候都需要重新编写，很长，很麻烦，怎么办？</p>
+<blockquote>
+<p>可以把这条复杂的SQL语句以视图对象的形式创建。在需要编写这条SQL语句的位置直接使用视图对象，可以大大简化开发，并且利于后期的维护，以为修改的时候也只需要修改一个位置就行，只需要修改视图对象所映射的SQL语句。</p>
+</blockquote>
+<p>视图对象也是一个文件，在数据库当中也是以一个表的形式存在的。<strong>简单的说，视图就是对SQL语句进行了封装，起了一个别名。</strong></p>
+<p><strong>提醒：视图对应的语句只能是DQL语句，但是视图对象创建完成之后，可以对视图进行增删改查操作。增删改查又叫做CRUD操作，Create（增），Retrieve（查），Update（改），Delete（删）。</strong></p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/MySQL/mysql_28.png" alt="mysql_28.png (680×659) (gitee.io)"></p>
+<h2 id="6-权限问题"><a href="#6-权限问题" class="headerlink" title="6. 权限问题"></a>6. 权限问题</h2><p>前面提到数据库是B/S架构。在服务器端，可以给不同的用户设置不同的权限，比如某些用户只能访问特定的数据库，某些用户只能读取特定的数据库，某些用户对数据库有全部的权限等等。</p>
+<p>和Linux一样，数据库有一个管理员root，即DataBase Administrator，具有最高的权限。</p>
+<ol>
+<li><p>新建用户</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 创建新用户，指定用户名，密码。</span><br><span class="line">create user username identified by &#x27;password&#x27;;</span><br></pre></td></tr></table></figure></li>
+<li><p>给用户授权</p>
+<blockquote>
+<p>新建用户后，初始状态，只能看到 <code>information_schema</code> 一个数据库。<strong>grant</strong></p>
+</blockquote>
+</li>
+<li><p>撤销权限</p>
+<blockquote>
+<p>如果想收回某个用户的权利，可以撤销。<strong>revoke</strong></p>
+</blockquote>
+</li>
+<li><p>数据的导入导出（数据备份，重点）</p>
+<blockquote>
+<ol>
+<li><p>数据的导出</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 注意，不是在mysql终端中，而是在DOS命令行窗口中。</span><br><span class="line">mysqldump 要导出的数据库名 &gt; 导出文件的绝对路径 -u用户名 -r密码;</span><br><span class="line"></span><br><span class="line">// 或者只导出一张表</span><br><span class="line">mysqldump 导出表所在的数据库名 要导出的表名 &gt; 导出文件的绝对路径 -u用户名 -r密码;</span><br></pre></td></tr></table></figure></li>
+<li><p>数据的导入</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 注意，是在mysql终端中执行。导入数据，必须是进入数据库之后导入。</span><br><span class="line">source 导入的数据文件绝对路径;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p><strong>可以看到，其实导出的也是一批SQL语句。</strong></p>
+</blockquote>
+<p>具体的命令详解参考网上教程，由于用到的比较少，这里不再展开叙述。</p>
+</li>
+</ol>
+<h2 id="7-数据库设计的三范式"><a href="#7-数据库设计的三范式" class="headerlink" title="7. 数据库设计的三范式"></a>7. 数据库设计的三范式</h2><h3 id="7-1-设计范式"><a href="#7-1-设计范式" class="headerlink" title="7.1 设计范式"></a>7.1 设计范式</h3><p>数据库的设计范式指的是如何进行数据表的设计。典型的范式主要有以下三种：</p>
+<ol>
+<li><p>第一范式</p>
+<p>要求任何一张表必须<strong>有主键</strong>，每一个<strong>字段原子性不可再分</strong>。</p>
+</li>
+<li><p>第二范式</p>
+<p>建立在第一范式的基础之上，要求所有非主键字段完全依赖主键，不要产生部分依赖。</p>
+</li>
+<li><p>第三范式</p>
+<p>建立在第二范式的基础之上，要求所有非主键字段直接依赖主键，不要产生传递依赖。</p>
+</li>
+</ol>
+<p>注意：设计数据库表的时候，按照以上的范式进行，可以避免表中数据的冗余、空间的浪费。</p>
+<h3 id="7-2-第一范式"><a href="#7-2-第一范式" class="headerlink" title="7.2 第一范式"></a>7.2 第一范式</h3><p>最核心、最重要的范式，所有表的设计都需要满足。必须有主键，并且每一个字段都是原子性不可再分。</p>
+<h3 id="7-3-第二范式"><a href="#7-3-第二范式" class="headerlink" title="7.3 第二范式"></a>7.3 第二范式</h3><ol>
+<li>完全依赖主键指的是：某个字段完全依赖主键，就是依赖主键中的任何字段。</li>
+<li>部分依赖主键指的是：某个字段部分依赖主键，就是依赖主键中的部分字段。</li>
+</ol>
+<p>假如一张表中的主键是复合主键（学生编号+教师编号），那么学生字段就是部分依赖主键，即只依赖主键中的学生字段；教师字段也是部分依赖主键中的教师编号。</p>
+<p>产生部分依赖的缺点：数据冗余了，空间浪费了。</p>
+<p>解决部分依赖的方法是：使用多张表，将主键分开，将数据分开。</p>
+<h3 id="7-3-第三范式"><a href="#7-3-第三范式" class="headerlink" title="7.3 第三范式"></a>7.3 第三范式</h3><p>传递依赖指的是：某个字段A直接依赖字段B，而B直接依赖字段C，此时A传递依赖C。</p>
+<h3 id="7-4-注意"><a href="#7-4-注意" class="headerlink" title="7.4 注意"></a>7.4 注意</h3><p>数据库设计三范式是理论上的，实践和理论有的时候有偏差。</p>
+<p>最终的目的都是为了满足客户的需求，有的时候会拿冗余换执行速度。因为在SQL当中，表和表之间连接次数越多，效率越低（笛卡尔积）。</p>
+<p>有的时候，可能存在冗余，但是为了减少表的连接次数，这样做也是合理的，并且对于开发人员来说，SQL语句的编写难度也会降低。</p>
+<h2 id="8-备注"><a href="#8-备注" class="headerlink" title="8. 备注"></a>8. 备注</h2><p><em>参考B站《动力节点》。</em></p>
 
                 
             </div>
@@ -1022,7 +1431,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">90.2k</span>&nbsp;字
+                class="white-color">98.2k</span>&nbsp;字
             
             
             
