@@ -454,21 +454,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-12-17
+                    2021-12-21
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    202
+                    4k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    16 分
                 </div>
                 
 
@@ -489,12 +489,228 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>本文介绍Web前端中的HTML相关知识。</p>
-<h2 id="1-HTML概述"><a href="#1-HTML概述" class="headerlink" title="1. HTML概述"></a>1. HTML概述</h2><p>HTML全称为<strong>Hyper Text Markup Language（超文本标记语言）</strong>，由大量的标签组成，每一个标签都有开始标签和结束标签，结束标签就是开始标签加斜杠组成。例如：</p>
+<h2 id="1-HTML概述"><a href="#1-HTML概述" class="headerlink" title="1. HTML概述"></a>1. HTML概述</h2><p>HTML全称为<strong>Hyper Text Markup Language（超文本标记语言）</strong>，由大量的标签组成，每一个标签都有开始标签和结束标签，结束标签就是开始标签加斜杠组成（当然也有一些单独的标签，称为独目标签）。例如：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;标签&gt;</span><br><span class="line">    &lt;标签&gt;</span><br><span class="line">        &lt;标签 属性名=&quot;属性值&quot; 属性名=&quot;属性值&quot;&gt;内容&lt;/标签&gt;</span><br><span class="line">    &lt;/标签&gt;</span><br><span class="line">&lt;/标签&gt;</span><br></pre></td></tr></table></figure>
 
 <p>超文本指的是：流媒体、图片、声音、音频等等。</p>
 <p>HTML开发的时候使用普通的文本编辑器就行，创建的文本扩展名是<code>.html</code>或者<code>.htm</code>。直接采用浏览器打开HTML文件就是运行。</p>
-<p>HTML是W3C组织制定的，任何浏览器厂商必须按照这个规定制造。</p>
+<p>HTML是W3C组织（世界万维网联盟）制定的规范，每个浏览器生产厂家都会遵守规范。HTML程序员也会按照这个规范去写代码。HTML规范目前最高版本是HTML5.0。无论哪个版本，其基础语法是一样的。<strong>所谓的w3school和w3cschool都和W3C组织没有任何关系，只是为了方便国内web前端程序员的开发，提供了大量的帮助文档。</strong></p>
+<h2 id="2-简单例子"><a href="#2-简单例子" class="headerlink" title="2. 简单例子"></a>2. 简单例子</h2><p>简单例子如下所示：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">title</span>&gt;</span>网页的标题<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">        网页的主题内容，欢迎学习HTML！</span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 这是html的注释 --&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>以<code>.html</code>或者<code>.htm</code>扩展名格式保存，然后用浏览器打开即可显示生成的网页。<strong>第一行的doctype标签表示这是html5，没有则表示html4。</strong></p>
+<p><strong>注意，html标签不区分大小写，语法松散不严格。建议按照标准来。</strong></p>
+<h2 id="3-结构"><a href="#3-结构" class="headerlink" title="3. 结构"></a>3. 结构</h2><p>由上面的例子可以看到，HTML的基本框架主要由三个标签组成：</p>
+<ul>
+<li>根标签：<strong>&lt;html&gt;&lt;/html&gt;</strong></li>
+<li>头标签：<strong>&lt;head&gt;&lt;/head&gt;</strong></li>
+<li>身体标签：<strong>&lt;body&gt;&lt;/body&gt;</strong></li>
+</ul>
+<p>其中根标签在最外层，头标签和身体标签嵌套在根标签里面，头标签和身体标签是平级关系。<strong>除此之外，还有一些附加的标签。</strong></p>
+<h2 id="4-HTML的基本标签"><a href="#4-HTML的基本标签" class="headerlink" title="4. HTML的基本标签"></a>4. HTML的基本标签</h2><table>
+<thead>
+<tr>
+<th>标签名</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&lt;p&gt;&lt;/p&gt;</td>
+<td>段落标签，标签包含的内容形成一个段落。</td>
+</tr>
+<tr>
+<td>&lt;h1&gt;&lt;/h1&gt;</td>
+<td>标题字，即对包含内容的字体大小进行设置。1~6号标题。</td>
+</tr>
+<tr>
+<td>&lt;br&gt;</td>
+<td>换行，使该标签两侧的内容不在同一行。</td>
+</tr>
+<tr>
+<td>&lt;hr&gt;</td>
+<td>水平线，网页显示一条线。</td>
+</tr>
+<tr>
+<td>&lt;pre&gt;&lt;/pre&gt;</td>
+<td>预留格式，对标签包含的内容，原封不动的显示在网页中，包括换行等等。</td>
+</tr>
+<tr>
+<td>&lt;del&gt;&lt;/del&gt;</td>
+<td>删除字，标签中的内容中间带横线。</td>
+</tr>
+<tr>
+<td>&lt;ins&gt;&lt;/ins&gt;</td>
+<td>插入字，内容带下划线。</td>
+</tr>
+<tr>
+<td>&lt;b&gt;&lt;/b&gt;</td>
+<td>粗体字</td>
+</tr>
+<tr>
+<td>&lt;i&gt;&lt;/i&gt;</td>
+<td>斜体字</td>
+</tr>
+<tr>
+<td>a&lt;sup&gt;b&lt;/sup&gt;</td>
+<td>a的右上角显示b</td>
+</tr>
+<tr>
+<td>a&lt;sub&gt;b&lt;/sub&gt;</td>
+<td>a的右下角显示b</td>
+</tr>
+<tr>
+<td>&lt;font&gt;&lt;/font&gt;</td>
+<td>字体标签，对标签包含的内容的字体进行设置，比如颜色大小等等。</td>
+</tr>
+<tr>
+<td>&lt;meta charst=”utf-8”&gt;</td>
+<td>告诉浏览器，以utf-8形式的字符编码集打开该文件。<strong>注意，并不是设置该文件的字符编码方式。</strong></td>
+</tr>
+</tbody></table>
+<h2 id="5-实体符"><a href="#5-实体符" class="headerlink" title="5. 实体符"></a>5. 实体符</h2><p>对于大于号，小于号等这种和标签冲突（一样，会被当做标签，类似保留字）的符号，可以采用特殊的实体符来表示。<strong>实体符号以 &amp; 开始，以 ; 结束</strong>。</p>
+<table>
+<thead>
+<tr>
+<th>实体符</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&amp;lt;</td>
+<td>小于号</td>
+</tr>
+<tr>
+<td>&amp;gt;</td>
+<td>大于号</td>
+</tr>
+<tr>
+<td>&amp;nbsp;</td>
+<td>空格</td>
+</tr>
+</tbody></table>
+<h2 id="6-表格"><a href="#6-表格" class="headerlink" title="6. 表格"></a>6. 表格</h2><ul>
+<li>表格采用&lt;table&gt;&lt;/table&gt;标签，</li>
+<li>表格中有若干行，行采用&lt;tr&gt;&lt;/tr&gt;标签，</li>
+<li>行中有若干个单元格（列），单元格采用&lt;td&gt;&lt;/td&gt;标签。</li>
+<li>对于表格的第一行，一般是列标题，可以采用&lt;th&gt;&lt;/th&gt;标签，自动加粗居中。</li>
+</ul>
+<p>表格可以设置边框的宽度，默认是0，即不显示边框；也可以设置表格的宽度高度等等。表格、行以及单元格都可以设置对其方式，三行三列的表格如下所示：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">table</span> <span class="attr">border</span>=<span class="string">&quot;1px&quot;</span> <span class="attr">width</span>=<span class="string">&quot;300px&quot;</span> <span class="attr">height</span>=<span class="string">&quot;150px&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tr</span> <span class="attr">align</span>=<span class="string">&quot;center&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>a<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>b<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>c<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span> <span class="attr">align</span>=<span class="string">&quot;center&quot;</span>&gt;</span>d<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>e<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>f<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>z<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>x<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>c<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>效果如下所示：</p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/html/html_02.png" alt="html_02.png (321×174) (gitee.io)"></p>
+<h3 id="6-1-单元格合并"><a href="#6-1-单元格合并" class="headerlink" title="6.1 单元格合并"></a>6.1 单元格合并</h3><p>有时候，表格中的单元格并不是那么规整，有的单元格可能跨两行，有的可能跨两列。那么这种表格怎么设置呢？效果如下所示：</p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/html/html_01.png" alt="html_01.png (309×161) (gitee.io)"></p>
+<p>可以这样认为，这种效果是：单元格f将单元格c合并了，可以这样实现：<strong>不再写c单元格，在f单元格的基础上，修改其属性 <code>rowsapn=&quot;2&quot;</code>，也就是该单元格跨两行。</strong>对于列也是如此，不再写被合并的单元格，而是修改合并单元格的属性<code>colspan=&quot;n&quot;</code>，该单元格跨n列。</p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/html/html_03.png" alt="html_03.png (321×168) (gitee.io)"></p>
+<h3 id="6-2-表格结构"><a href="#6-2-表格结构" class="headerlink" title="6.2 表格结构"></a>6.2 表格结构</h3><p>表格除了上述部分，也分为head、body、foot三部分。分别用标签&lt;thead&gt;、&lt;tbody&gt;、&lt;tfoot&gt;表示。这三类标签不是table所必须的，只是这样说便于后去JS代码的编写。</p>
+<p><strong>本质上，表格还是由若干个行组成，每行由若干个单元格组成。</strong>只不过&lt;thead&gt;、&lt;tbody&gt;、&lt;tfoot&gt;将这些行划分成若干部分，后续操作比较方便。简单例子如下所示：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">table</span> <span class="attr">border</span>=<span class="string">&quot;1px&quot;</span> <span class="attr">width</span>=<span class="string">&quot;300px&quot;</span> <span class="attr">height</span>=<span class="string">&quot;150px&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">thead</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tr</span> <span class="attr">align</span>=<span class="string">&quot;center&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span>a<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span>b<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span>c<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">thead</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tbody</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span>d<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span>e<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span>f<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span>z<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span>x<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span>c<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tbody</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tfoot</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span>z<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span>x<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span>c<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tfoot</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="7-body的一些属性"><a href="#7-body的一些属性" class="headerlink" title="7. body的一些属性"></a>7. body的一些属性</h2><table>
+<thead>
+<tr>
+<th>属性名</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>bgcolor</td>
+<td>设置背景颜色</td>
+</tr>
+<tr>
+<td>background</td>
+<td>设置背景图片</td>
+</tr>
+</tbody></table>
+<h2 id="8-图片和超链接"><a href="#8-图片和超链接" class="headerlink" title="8. 图片和超链接"></a>8. 图片和超链接</h2><h3 id="8-1-图片"><a href="#8-1-图片" class="headerlink" title="8.1 图片"></a>8.1 图片</h3><p>图片的标签为<code>&lt;img src=&quot;路径&quot; width=&quot;&quot; height=&quot;&quot; title=&quot;&quot; alt=&quot;&quot; /&gt;</code>，注意可以仅仅设置图片的宽度（高度会进行等比例缩放），如果宽度和高度一起设置的话，容易改变图片原始的比例。其中title表示鼠标悬停时显示的信息，alt表示图片加载失败显示的信息。</p>
+<p><strong>注意，如果标签成对，而标签并不包含内容的话，可以省略后面的结束标签，在开始标签后面加上斜杠。</strong></p>
+<h3 id="8-2-超链接"><a href="#8-2-超链接" class="headerlink" title="8.2 超链接"></a>8.2 超链接</h3><p>超链接的标签为<code>&lt;a href=&quot;url&quot;&gt;内容&lt;/a&gt;</code>，href是hot refreence的意思，即热引用。</p>
+<p><strong>超链接中有一个target属性，可取值</strong>：</p>
+<ul>
+<li>_blank：新开一个窗口</li>
+<li>_self：在当前窗口跳转连接</li>
+<li>_top：顶级窗口</li>
+<li>_parent：父窗口</li>
+</ul>
+<p><strong>超链接的作用：通过超链接可以从浏览器向服务器发送请求。浏览器向服务器发送数据（请求：request），服务器向浏览器发送数据（响应：response）。B/S结构的系统，每一个请求都会对应一个响应。</strong></p>
+<p>用户点击超链接和用户在浏览器地址上直接输入URL，本质上没什么区别，都是向服务器发送请求。</p>
+<h2 id="9-列表"><a href="#9-列表" class="headerlink" title="9. 列表"></a>9. 列表</h2><p>列表分为有序列表和无序列表</p>
+<p>无序列表用&lt;/ul&gt;&lt;/ul&gt;标签表示，用&lt;li&gt;&lt;/li&gt;表示列表项，无序列表可以嵌套，即每一个列表项可以是一个无序列表。&lt;ul&gt;有一个属性<code>type</code>，规定了列表前面的形状，有<code>circle</code>、<code>square</code>、<code>disc</code>。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">type</span>=<span class="string">&quot;circle&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>中国</span><br><span class="line">        <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span>&gt;</span>北京<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span>&gt;</span>天津<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span>&gt;</span>上海<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>美国<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>日本<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>无序列表用&lt;ol&gt;&lt;/ol&gt;标签表示，用&lt;li&gt;&lt;/li&gt;表示列表项，同样可以嵌套，同样有type类型，设置具体的列表表示形式。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ol</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>水果</span><br><span class="line">        <span class="tag">&lt;<span class="name">ol</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span>&gt;</span>苹果<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span>&gt;</span>西瓜<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span>&gt;</span>桃子<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">ol</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>蔬菜<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>甜点<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ol</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="10-表单（重要）"><a href="#10-表单（重要）" class="headerlink" title="10. 表单（重要）"></a>10. 表单（重要）</h2><p>表单一个重要作用就是收集信息，将一组信息打包传送（提交）给服务端，一个网页中可以有多个表单。<strong>所以，表单至少有两个重点，一个是信息的收集，一个是提交的方式以及提交的地址。</strong></p>
+<ul>
+<li>数据收集：form标签内的各种静态输入框均可。</li>
+<li>提交的方式以及提交的地址：<ul>
+<li>地址填写在action属性中，<strong>action属性和超链接中的href属性一样，都可以向服务器发送请求（request），页面转向该url，并且附加提交的数据。</strong></li>
+<li>提交的方式在method属性中，有get和post两种方式，默认是get方式。采用get方式，提交的时候，表单的信息会显示在浏览器地址栏中；采用post方式，提交的时候，表单的信息不会显示在地址栏中。<strong>当用户提交的信息中有敏感信息，建议采用post方式提交。</strong>二者提交的信息格式是一样的，只不过post不会显示在地址栏中。</li>
+</ul>
+</li>
+</ul>
+<p>表单的语法结构如下所示：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;http://127.0.0.1:8080/jd/login&quot;</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">&lt;!-- 只提交带有name属性的标签中的值，下面 备注输入框中，没有naem属性，不会被提交 --&gt;</span></span><br><span class="line">    用户名：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;username&quot;</span> /&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    密码：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;password&quot;</span> <span class="attr">name</span>=<span class="string">&quot;userpwd&quot;</span> /&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    备注：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> /&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- submit类型的input输入框，则是具有提交功能的按钮，点击按钮则直接提交到action的连接中 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span>, <span class="attr">value</span>=<span class="string">&quot;按钮显示的内容&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>注意，表单是以什么格式提交数据给服务器的？</strong></p>
+<blockquote>
+<p>运行上述网页后，浏览器中的url是：<a target="_blank" rel="noopener" href="http://127.0.0.1:8080/jd/login?username=qwer&amp;userpwd=asdf">http://127.0.0.1:8080/jd/login?username=qwer&amp;userpwd=asdf</a></p>
+<p>所以，表单提交的格式是：</p>
+<p><strong>action?name=value&amp;name=value&amp;name=value…</strong></p>
+<p>也就是将<strong>具有name属性的字标签以及name属性值</strong>拼接在一起提交到服务器上。<strong>这是HTTP协议规定的，必须以这种格式提交给服务器。所以，如果想要提交该数据，那么所在子标签必须写上name属性值，否则不满足要求，也就不会提交该数据。</strong></p>
+</blockquote>
+<h3 id="10-1-案例：用户注册表单的实现"><a href="#10-1-案例：用户注册表单的实现" class="headerlink" title="10.1 案例：用户注册表单的实现"></a>10.1 案例：用户注册表单的实现</h3><blockquote>
+<p>用户注册表单，需要以下信息：</p>
+<ul>
+<li><p>用户名（<strong>text文本框，可以设置maxlength、readonly和disabled属性</strong>）</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;username&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>密码（<strong>password文本框</strong>）</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;password&quot;</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>确认密码（<strong>password文本框</strong>）</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;password&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>注意，这里不用写 value，因为确认密码直接本地确认即可，没必要发送到服务器端确认。</strong></p>
+</li>
+<li><p>性别（<strong>radio单选框，注意，多个子项的 name 值必须一样。value必须手动指定。增加 checked 属性表示默认值</strong>）</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;radio&quot;</span> <span class="attr">name</span>=<span class="string">&quot;gender&quot;</span> <span class="attr">value</span>=<span class="string">&quot;1&quot;</span> /&gt;</span>男</span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;radio&quot;</span> <span class="attr">name</span>=<span class="string">&quot;gender&quot;</span> <span class="attr">value</span>=<span class="string">&quot;0&quot;</span> <span class="attr">checked</span>/&gt;</span>女</span><br></pre></td></tr></table></figure></li>
+<li><p>兴趣爱好（<strong>checkbox复选框，子项的 name 值必须一样，value必须手动指定。</strong>）</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span> <span class="attr">name</span>=<span class="string">&quot;interest&quot;</span> <span class="attr">value</span>=<span class="string">&quot;smoke&quot;</span> /&gt;</span>抽烟</span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span> <span class="attr">name</span>=<span class="string">&quot;interest&quot;</span> <span class="attr">value</span>=<span class="string">&quot;drink&quot;</span> /&gt;</span>喝酒</span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span> <span class="attr">name</span>=<span class="string">&quot;interest&quot;</span> <span class="attr">value</span>=<span class="string">&quot;firehair&quot;</span> /&gt;</span>烫头</span><br></pre></td></tr></table></figure></li>
+<li><p>学历（<strong>select下拉框，selected属性默认值</strong>）</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">name</span>=<span class="string">&quot;grade&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;gz&quot;</span>&gt;</span>高中<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;dz&quot;</span>&gt;</span>大专<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;bk&quot;</span> <span class="attr">selected</span>&gt;</span>本科<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;ss&quot;</span>&gt;</span>硕士<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>其中，设置multiple属性值为multiple，可将下拉框变为多选框。size属性设置显示的条目数量。</p>
+</li>
+<li><p>简介（<strong>textarea文本域，rows指明行数，cols指明列数</strong>）</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">textarea</span> <span class="attr">rows</span>=<span class="string">&quot;10&quot;</span> <span class="attr">cols</span>=<span class="string">&quot;10&quot;</span> <span class="attr">name</span>=<span class="string">&quot;introduce&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">textarea</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</blockquote>
+<p>将上面的内容编写在表单（默认get方式提交）中，这样发送的表单的内容如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://127.0.0.1:8080/tb/login?username=asdf&amp;password=qwer&amp;gender=1&amp;interest=smoke&amp;interest=drink&amp;interest=firehair&amp;grade=ss&amp;introduce=这是一个文本域，可以填写很多内容</span><br></pre></td></tr></table></figure>
+
+<p>采用post方式提交，地址栏的信息如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://127.0.0.1:8080/tb/login</span><br></pre></td></tr></table></figure>
+
+<p><strong>既然如此，那么其实超链接也是可以提交数据给服务器的，只要构造上述get方式的地址栏相关信息，实际上也是可以提交的。但是缺点就是超链接中的信息是写死的，并且不安全，即只能是get请求。</strong></p>
+<h2 id="11-典型控件"><a href="#11-典型控件" class="headerlink" title="11. 典型控件"></a>11. 典型控件</h2><h3 id="11-1-file控件"><a href="#11-1-file控件" class="headerlink" title="11.1 file控件"></a>11.1 file控件</h3><p>该控件主要用于文件上传，语法结构如下所示：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;file&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="11-2-hidden控件"><a href="#11-2-hidden控件" class="headerlink" title="11.2 hidden控件"></a>11.2 hidden控件</h3><p>该控件主要用于<strong>隐式提交数据</strong>，就是提交默认值。该控件在网页上看不到，但是表单提交的时候会自动提交给服务器，<strong>所以在写该控件的时候，必须写上name属性和value属性</strong>，语法结构如下所示：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;hidden&quot;</span> <span class="attr">name</span>=<span class="string">“111”</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="12-id属性"><a href="#12-id属性" class="headerlink" title="12. id属性"></a>12. id属性</h2><p>在HTML文档中，任何元素（节点）都有id属性，id属性是该节点的唯一表示，相当于身份证号，所以在同一个HTML文档中id值不能重复。</p>
+<p>但是，表单提交数据的时候，只和name有关，和id无关。</p>
+<p><strong>id的作用？</strong></p>
+<blockquote>
+<p>id属性的存在，是为了更方便的获取这个元素。JavaScript可以对HTML文档中的任意节点进行增删改，那么增删改之前需要先拿到这个节点，通常我们通过id来拿节点对象。</p>
+</blockquote>
+<h2 id="13-div和span标签"><a href="#13-div和span标签" class="headerlink" title="13. div和span标签"></a>13. div和span标签</h2><p>div和span标签都可以成为“图层”，图层的作用是为了保证页面可以灵活的布局。最开始的网页是采用table进行布局的，但是table不灵活，太死板。现代的网页开发中div布局使用最多，几乎很少使用table进行布局了。</p>
+<p>这个图层盒子，通过盒子的左上角顶点坐标来定位，因为定位可以定位到任意位置，可以嵌套，所以图层的布局就比较方便。<strong>默认情况下div独占一行，span不会独占一行</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="14-总结"><a href="#14-总结" class="headerlink" title="14. 总结"></a>14. 总结</h2><p>可以看到，其实整个HTML文档相当于一棵树，根节点是HTML标签，然后有两个子标签以及若干个后代标签。这棵树被称为<strong>DOM树</strong>，也就是document的缩写。Javascript主要是对这棵DOM树上的节点进行增删改的。</p>
+<h2 id="15-备注"><a href="#15-备注" class="headerlink" title="15. 备注"></a>15. 备注</h2><p><em>参考B站《动力节点》。</em></p>
 
                 
             </div>
@@ -1013,7 +1229,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">107.6k</span>&nbsp;字
+                class="white-color">111.3k</span>&nbsp;字
             
             
             
