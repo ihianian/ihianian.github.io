@@ -454,21 +454,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-12-17
+                    2022-01-01
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    13
+                    2.3k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    7 分
                 </div>
                 
 
@@ -488,7 +488,86 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>本文介绍B/S架构的通信原理。</p>
+                <p>由于互联网的存在，使得计算机之间的交互非常方便，提供服务的主机称为服务器，访问服务的主机称为客户端。现有的服务架构主要有C/S和B/S架构两种。Java主要用于B/S架构中的服务端开发，即编写提供服务的服务器端代码。前面几篇文章介绍了B/S架构中的浏览器前端的相关服务，前端主要是给用户提供交互界面，然后通过网络将交互信息传送给服务端，因此本篇文章讲解网络的通信原理。网络原理可参考后续的计算机网络部分，这里简单概述应用层的相关内容。</p>
+<p>本文介绍B/S架构的通信原理。</p>
+<h2 id="1-互联网通信"><a href="#1-互联网通信" class="headerlink" title="1. 互联网通信"></a>1. 互联网通信</h2><p>简单地说，互联网通信指的是两台计算机之间通过网络实现数据传输行为，这里的数据可以是文件，也可以是其他信息等等，这就是互联网通信。通信的两端称为客户端和服务端，广义上说，客户端主要是用来请求数据，服务端主要是用来提供数据。</p>
+<p>计算机本身并不具备请求数据和提供数据的能力，它只提供了网络端口（类似于楼盘底层的商铺房），如果想要它提供某种服务（接收某种类型的数据请求，并提供某种对应的回应），就需要在端口上监听该类型的数据请求，并能够对此做出相应（不恰当的例子，比如该商铺房被某商家承包，用于出售煎饼果子）；请求服务也类似，必须能够发送某种类型的请求，以及接受相应的服务。</p>
+<p>计算机要想提供某种服务，就要安装对应的软件，该软件底层会监听端口并提供服务。这里安装的软件称为通信模型。通信模型主要有两种，就是前面提到的C/S和B/S模型。</p>
+<ol>
+<li><p>C/S模型</p>
+<p>C/S模型分为C和S两部分：</p>
+<ol>
+<li>C指的是client software，客户端软件。客户端软件专门安装在客户端计算机上，帮助客户端向指定服务端计算机发送请求，索要资源文件，帮助客户端计算机将服务端计算机发送过来的<strong>二进制数据</strong>解析为文字、数字、图片、视频、命令等等（网络传输数据只能先将数据转换成特定的格式，然后再转换回来）。</li>
+<li>S指的是server software，服务器软件。服务器软件专门安装在服务端计算机上，服务器软件（简称服务器）用于接收<strong>来自特定的客户端软件发送的请求</strong>。服务器软件在接收到请求之后自动的在服务端计算机上定位被访问的资源文件。服务器软件自动将定位到的资源文件解析成二进制数据，通过网络发送回发起请求的客户端软件上。</li>
+<li>适用场景：C/S通信模型普遍用于个人娱乐市场，比如微信、淘宝、京东以及大型网络游戏等等。<strong>大型企业办公领域相对较少。</strong></li>
+<li>优点：<ol>
+<li>安全性较高，单独的软件，只接收合法（特定）的请求和响应。</li>
+<li>降低服务器端计算机的工作压力。</li>
+</ol>
+</li>
+<li>缺点：<ol>
+<li>增加客户获得服务的成本，客户需要安装软件，时不时地更新软件。并且对CPU、内存和硬盘等硬件有要求。</li>
+<li>更新较为繁琐。</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>B/S模型</p>
+<p>B/S模型分为B和S两部分：</p>
+<ol>
+<li>B指的是browser ，浏览器。浏览器安装在客户端计算机软件，可以向任意的服务器发送请求，索要资源文件。可以将服务器所返回的二进制数据解析为文字、数字、图片、视频、命令等等（网络传输数据只能先将数据转换成特定的格式，然后再转换回来）。</li>
+<li>S指的是server software，服务器软件。服务器软件专门安装在服务端计算机上，可以接收任意浏览器发送请求，自动地在服务端计算机上定位被访问的资源文件，自动的将定位的资源文件内容以二进制的形式发送回发起请求的浏览器上。</li>
+<li>适用场景：既适用于个人娱乐市场，又广泛适用于企业的日常活动中。</li>
+<li>优点：<ol>
+<li>不会增加用户获得资源的成本，因为大部分内容都是服务端提供的服务，对客户端浏览器要求不高，只负责解析内容即可。</li>
+<li>几乎不需要更新浏览器。</li>
+</ol>
+</li>
+<li>缺点：<ol>
+<li>几乎无法有效的对服务端计算机资源文件进行保护，不安全，因为服务器接收任何客户端发起的请求，并不是特定的请求。</li>
+<li>服务端计算机的压力较大，一切内容都是服务器端形成，然后再传输，客户端浏览器的渲染较为有限。</li>
+</ol>
+</li>
+<li>可以看到，实际上B/S模型就是特殊的C/S模型，只不过这个B可以自定义服务器端的IP地址，对客户端的硬件要求不高，但是一定程度上客户的体验没有C/S好。</li>
+</ol>
+</li>
+</ol>
+<h2 id="2-共享资源文件"><a href="#2-共享资源文件" class="headerlink" title="2. 共享资源文件"></a>2. 共享资源文件</h2><p>可以通过网络进行传输的文件都被称为共享资源文件。所有的文件内容都可以通过网络传输，所有文件都是共享资源文件。Http服务器对于共享资源文件分类（Http服务器见后续的文章介绍）：</p>
+<ul>
+<li>静态资源文件</li>
+<li>动态资源文件</li>
+</ul>
+<h3 id="2-1-静态资源文件"><a href="#2-1-静态资源文件" class="headerlink" title="2.1 静态资源文件"></a>2.1 静态资源文件</h3><p>如果文件内容是固定的，这种文件可以被称为静态资源文件。常见的有文档、照片、视频等等。</p>
+<p>另外，如果文件存放的不是内容而是命令，<strong>这些命令只能在浏览器编译与执行</strong>，这种文件也可以被称为静态资源文件。常见的有<code>.html</code>文件、<code>.css</code>文件、<code>.js</code>文件。</p>
+<h3 id="2-2-动态资源文件"><a href="#2-2-动态资源文件" class="headerlink" title="2.2 动态资源文件"></a>2.2 动态资源文件</h3><p>如果文件存放的命令，<strong>不能在浏览器编译与执行，只能在服务端计算机编译执行</strong>，这样的文件可以被称为动态资源文件。常见的有<code>.class</code>文件。</p>
+<h3 id="2-3-服务器调用资源文件"><a href="#2-3-服务器调用资源文件" class="headerlink" title="2.3 服务器调用资源文件"></a>2.3 服务器调用资源文件</h3><p>前面提到过，在接收到客户端的请求后，服务端会定位到请求的资源文件，然后再将文件传输给客户端。<strong>静态和动态资源文件，二者在服务器端被操作的时候有区别。</strong></p>
+<ul>
+<li>静态文件被索要时，<strong>Http服务器直接通过输出流将静态文件中的内容或命令以二进制形式推送给发起请求的浏览器</strong>。</li>
+<li>动态文件被索要时，因为只能在服务端编译执行，而浏览器端不会，所以只能是在服务端执行完毕后。所以当动态文件被索要时，<strong>Http服务器</strong>需要创建当前<code>.class</code>文件的实例对象，<strong>通过实例对象调用对应的方法处理用户请求，比如创建计算器对象，计算两数之和，只需要接收浏览器传过来的两个参数即可，然后计算完毕后通过输出流以二进制形式返回浏览器计算结果</strong>。</li>
+<li>简单地说，如果浏览器能够处理文件，服务器则直接将文件全部返回给浏览器，如果不能处理，服务器则首先自己处理，然后将处理结果返回给浏览器。</li>
+</ul>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/network/network_001.png" alt="network_001.png (1882×707) (gitee.io)"></p>
+<h2 id="3-开发人员职责"><a href="#3-开发人员职责" class="headerlink" title="3. 开发人员职责"></a>3. 开发人员职责</h2><p>注意，前面提到了，接收到浏览器的请求之后，Http服务器会自动调用静态或执行动态文件，那么开发人员需要做些什么呢？主要有以下职责：</p>
+<ol>
+<li><p>控制浏览器行为。</p>
+<ol>
+<li>控制浏览器<strong>发送的请求地址</strong>（即向哪个服务器发送请求，HTML的地址栏以及表单等等）；</li>
+<li>控制浏览器<strong>发送请求的方式</strong>（表单get、post等等）；</li>
+<li>控制浏览器<strong>发送请求时携带的参数</strong>（表单）；</li>
+<li>控制浏览器<strong>接收结果的行为</strong>；<ol>
+<li>控制浏览器采用对应的编译器将接收到的二进制数据解析为文件、视频、图片和命令；</li>
+<li>控制浏览器将解析内容或命令进行执行与展示（全局刷新展示以及局部刷新展示<strong>AJAX</strong>）；</li>
+<li>控制用户与浏览器之间的交流（<strong>JS</strong>以及其升级版<strong>JQuery</strong>）</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>开发动态资源文件来解决用户请求。</p>
+<p>至于服务器中的静态资源文件，文档图片以及视频等等这是特定生成的，<code>.html</code>文件、<code>.css</code>文件、<code>.js</code>文件则需要前端工程师来编写；而动态资源文件<code>.class</code>文件则需要Java程序员来编写。</p>
+</li>
+</ol>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/network/network_002.png" alt="network_002.png (1878×738) (gitee.io)"></p>
+<h2 id="4-备注"><a href="#4-备注" class="headerlink" title="4. 备注"></a>4. 备注</h2><p><em>参考B站《动力节点》。</em></p>
 
                 
             </div>
@@ -724,18 +803,17 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/12/16/JavaWeb-05-BS%E6%9E%B6%E6%9E%84%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/">
+                <a href="/2022/01/01/JavaWeb-06-HTTP%E5%8D%8F%E8%AE%AE%E4%B8%8ETomcat%E6%9C%8D%E5%8A%A1%E5%99%A8/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="JavaWeb_05_BS架构通信原理">
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="JavaWeb_06_HTTP协议与Tomcat服务器">
                         
-                        <span class="card-title">JavaWeb_05_BS架构通信原理</span>
+                        <span class="card-title">JavaWeb_06_HTTP协议与Tomcat服务器</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -745,25 +823,16 @@
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-12-16
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-01-01
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
-                            浮云
+                            hianian
                             
                         </span>
                     </div>
-                </div>
-
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/JavaWeb/">
-                        <span class="chip bg-color">JavaWeb</span>
-                    </a>
-                    
                 </div>
                 
             </div>
@@ -1000,7 +1069,7 @@
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2021</span>
+                <span id="year">2021-2022</span>
             
             <span id="year">2021</span>
             <a href="/about" target="_blank">hianian</a>
@@ -1009,7 +1078,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">126.9k</span>&nbsp;字
+                class="white-color">129.2k</span>&nbsp;字
             
             
             
