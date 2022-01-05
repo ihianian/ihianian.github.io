@@ -454,21 +454,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-01-01
+                    2022-01-05
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.3k
+                    3.1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    7 分
+                    10 分
                 </div>
                 
 
@@ -532,14 +532,51 @@
 </ol>
 </li>
 </ol>
+<p>一个WEB系统大致的通信步骤如下所示：</p>
+<ol>
+<li>用户输入网址URL；</li>
+<li>域名解析器进行域名解析，获得IP地址；</li>
+<li>浏览器软件在网络中搜索该IP地址的主机，直到找到这台主机；</li>
+<li>找到这台主机后，根据URL中的端口定位到主机上的服务器软件；</li>
+<li>服务器软件得知URL中想要的资源文件名；</li>
+<li>服务器软件在自身主机中开始搜寻资源文件，然后将内容返回给浏览器；</li>
+<li>浏览器接收到来自服务器的代码（HTML、CSS、JS等等）；</li>
+<li>浏览器进行编译渲染，执行代码，展示结果。</li>
+</ol>
 <h2 id="2-共享资源文件"><a href="#2-共享资源文件" class="headerlink" title="2. 共享资源文件"></a>2. 共享资源文件</h2><p>可以通过网络进行传输的文件都被称为共享资源文件。所有的文件内容都可以通过网络传输，所有文件都是共享资源文件。Http服务器对于共享资源文件分类（Http服务器见后续的文章介绍）：</p>
 <ul>
 <li>静态资源文件</li>
 <li>动态资源文件</li>
 </ul>
 <h3 id="2-1-静态资源文件"><a href="#2-1-静态资源文件" class="headerlink" title="2.1 静态资源文件"></a>2.1 静态资源文件</h3><p>如果文件内容是固定的，这种文件可以被称为静态资源文件。常见的有文档、照片、视频等等。</p>
-<p>另外，如果文件存放的不是内容而是命令，<strong>这些命令只能在浏览器编译与执行</strong>，这种文件也可以被称为静态资源文件。常见的有<code>.html</code>文件、<code>.css</code>文件、<code>.js</code>文件。</p>
-<h3 id="2-2-动态资源文件"><a href="#2-2-动态资源文件" class="headerlink" title="2.2 动态资源文件"></a>2.2 动态资源文件</h3><p>如果文件存放的命令，<strong>不能在浏览器编译与执行，只能在服务端计算机编译执行</strong>，这样的文件可以被称为动态资源文件。常见的有<code>.class</code>文件。</p>
+<p>另外，如果文件存放的不是内容而是命令，<strong>这些命令只能在浏览器编译与执行</strong>，这种文件也可以被称为静态资源文件。常见的有静态<code>.html</code>文件、<code>.css</code>文件、<code>.js</code>文件。即网页内容是写死在HTML文档中的。</p>
+<h3 id="2-2-动态资源文件"><a href="#2-2-动态资源文件" class="headerlink" title="2.2 动态资源文件"></a>2.2 动态资源文件</h3><p>如果文件存放的命令，<strong>不能在浏览器编译与执行，只能在服务端计算机编译执行</strong>，这样的文件可以被称为动态资源文件。常见的有<code>.class</code>文件。网页中的内容需要Java程序来进行控制，比如需要查询数据库，显示具体的呢日用，这种就是动态网页技术，动态网页技术并不是说页面中有flash动画，而是说页面中的数据是动态的，根据数据库中数据的变化而变化。</p>
+<p><strong>静态资源文件可以直接在URL中表示，即请求调用某个静态资源文件，那么动态资源文件（Java程序）怎么请求呢？路径该怎么写呢？</strong></p>
+<p><strong>对于一个动态的Web应用来说，一个请求和响应的过程中有多少个角色参数，角色和角色之间有多少个协议？</strong></p>
+<ul>
+<li>有哪些角色？<ul>
+<li>浏览器软件的开发团队（谷歌、火狐）</li>
+<li>WEB Server的开发团队（Tomcat、JBoss、WebLogic）</li>
+<li>DB Server的开发团队（Oracle、MySQL）</li>
+<li><strong>webapp的开发团队</strong><ul>
+<li><strong>webapp就是网络项目，网络应用。为了方便地程序移植，即webapp的相关程序可以在任意一个WEB Server上应用，所以Java指定了一些规范，即制定了一些接口，使得WEB Server的厂商在开发服务器的时候遵守了这些规范（比如Servlet），那么我们只需要学习Java中的这些接口即可，学会调用这些接口，程序就具有了可移植性</strong>。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>角色和角色之间需要遵守哪些规范和协议？<ul>
+<li>webapp的开发团队 和 WEB Server的开发团队 之间有一套规范：JavaEE规范之Servlet规范。<ul>
+<li>Servlet规范的作用：<strong>WEB Server 和 webapp解耦合</strong>。属于JavaEE规范，所以在Java SE的帮助文档中没有该接口的信息。<code>javax.servlet</code>包下。</li>
+</ul>
+</li>
+<li>浏览器的开发团队 和 WEB Server的开发团队 之间有一套传输协议：HTTP。</li>
+<li>webapp的开发团队 和 DB Server的开发团队 之间有一套 JDBC 规范。</li>
+</ul>
+</li>
+</ul>
+<p>角色之间的通信以及关系如下所示，可以看到WEB Server其实和数据库服务器一样，为我们提供了某项功能，即接收网络数据包，返回给我们一些数据，那么如果我们想要获得这些信息，就需要<strong>调用相关的接口如Servlet、JSP等等</strong>：</p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/network/network_027.png" alt="network_027.png (1343×664) (gitee.io)"></p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/network/network_028.png" alt="network_028.png (1154×594) (gitee.io)"></p>
 <h3 id="2-3-服务器调用资源文件"><a href="#2-3-服务器调用资源文件" class="headerlink" title="2.3 服务器调用资源文件"></a>2.3 服务器调用资源文件</h3><p>前面提到过，在接收到客户端的请求后，服务端会定位到请求的资源文件，然后再将文件传输给客户端。<strong>静态和动态资源文件，二者在服务器端被操作的时候有区别。</strong></p>
 <ul>
 <li>静态文件被索要时，<strong>Http服务器直接通过输出流将静态文件中的内容或命令以二进制形式推送给发起请求的浏览器</strong>。</li>
@@ -829,10 +866,18 @@
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
-                            hianian
+                            浮云
                             
                         </span>
                     </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/JavaWeb/">
+                        <span class="chip bg-color">JavaWeb</span>
+                    </a>
+                    
                 </div>
                 
             </div>
@@ -1078,7 +1123,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">129.2k</span>&nbsp;字
+                class="white-color">133.6k</span>&nbsp;字
             
             
             

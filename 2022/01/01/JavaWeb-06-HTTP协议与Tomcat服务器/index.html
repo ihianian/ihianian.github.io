@@ -429,9 +429,13 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/JavaWeb/">
+                                <span class="chip bg-color">JavaWeb</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -450,21 +454,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-01-01
+                    2022-01-05
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    0
+                    3.5k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    12 分
                 </div>
                 
 
@@ -484,7 +488,113 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                
+                <p>前面讲解了前端的相关知识，此时客户端的操作信息已经可以拿到，接下来就是通过网络发送到服务端，大体的网络通信流程已经在上篇文章中叙述了，接下来接续讲解一下详细的网络传输过程以及对应的服务端的服务器软件。网络传输主要采用计算机网络中的应用层的协议HTTP，服务器软件则是Tomcat。</p>
+<h2 id="1-网络协议"><a href="#1-网络协议" class="headerlink" title="1. 网络协议"></a>1. 网络协议</h2><p>网络中传输的信息都是以二进制形式存在的，接收方在收到信息后要做的第一件事就是将二进制数据进行编译转换成文字、图片、视频以及命令等等。但是这些资源文件一般情况下数据量往往比较巨大，导致接收方很难在一组连续的二进制中得到对应数据，比如，浏览器发送一个请求：<code>http://192.168.100.2:8080/index.html</code>。这个请求信息以二进制形式发送，如<code>01010001010101010001111010101010</code>等等，此时HTTP服务器很难从二进制数据得到相关信息，那么一个解决办法就是将上述的信息分门别类的存放。比如IP地址填写在一个位置，请求的资源文件填写在另一个位置，这样分别解析就可以得到对应的内容了。</p>
+<p>网络协议则是规定了不同的空间存储不同的数据，网络协议包，则是对应的数据包，是一组有规律的二进制数据，这组数据存在了固定空间，每一个空间专门存放特定信息，这样接收方在接收网络协议包之后就可以到固定空间得到对应信息，网络协议包的出现极大地降低了接收方对接收二进制数据编译的难度。</p>
+<p>为了适应不同的特点，出现了很多种网络协议，比如FTP、HTTP等等，这些协议具有不同的特点，适应不同的场景。<strong>在基于B/S结构下的互联网通信过程中，所有在网络中传输信息都是采用的HTTP协议，也就是地址栏中的http或者https字段。</strong></p>
+<h2 id="2-HTTP网络协议"><a href="#2-HTTP网络协议" class="headerlink" title="2. HTTP网络协议"></a>2. HTTP网络协议</h2><p>HTTP网络协议包分为请求包和响应包两种，分别对应客户端的请求以及服务端的响应。</p>
+<ol>
+<li><p>HTTP请求协议包</p>
+<p>在浏览器准备发送请求时，负责创建一个HTTP请求你协议包，浏览器将请求信息以二进制形式保存在HTPP请求协议包各个空间，由浏览器负责将HTTP请求协议包推送到指定服务端计算机。</p>
+</li>
+<li><p>HTTP响应协议包</p>
+<p>HTTP服务器在定位到被访问的资源文件之后，负责创建一个HTTP响应协议包，HTTP服务器将定位到的文件内容或者文件命令以二进制形式写入到HTTP响应协议包各个空间，由HTTP服务器负责将HTTP相应协议包推送回发起请求的浏览器上。</p>
+</li>
+</ol>
+<h3 id="2-1-请求协议包空间划分（重点）"><a href="#2-1-请求协议包空间划分（重点）" class="headerlink" title="2.1 请求协议包空间划分（重点）"></a>2.1 请求协议包空间划分（重点）</h3><p><strong>注意，请求方式get和post的区别，get是将请求参数保留在请求头中，而post则是将请求参数保留在请求体中。</strong>协议包的空间如下所示：</p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/network/network_003.png" alt="network_003.png (1503×756) (gitee.io)"></p>
+<p>简单案例如下所示，查看网络流量，可以看到解析后的空间分布（一般只能看到请求行和请求体）。<strong>下面的栏框中，左侧是从服务器响应过来的资源文件，电子左侧，可以看到具体右侧的请求包以及响应包的具体字段设置。</strong></p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/network/network_004.png" alt="network_004.png (1511×910) (gitee.io)"></p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/network/network_005.png" alt="network_005.png (1631×716) (gitee.io)"></p>
+<h3 id="2-2-响应协议包空间划分（重点）"><a href="#2-2-响应协议包空间划分（重点）" class="headerlink" title="2.2 响应协议包空间划分（重点）"></a>2.2 响应协议包空间划分（重点）</h3><p>响应包和请求包类似，也是分为四部分：状态行、响应头、空白行、响应体。其中状态行表明了服务器针对此请求所做出的的响应状态，典型状态码有200、404、405等等；响应头则主要是指定浏览器采用对应编译器对响应体二进制数据进行解析（content-type，表名资源文件的类型，指示浏览器以哪种格式解码）；空白行则依然是隔离；响应体存储的可能是静态资源文件的具体内容，也可能是动态资源文件的运行结果。</p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/network/network_006.png" alt="network_006.png (1224×804) (gitee.io)"></p>
+<p>如下所示，在下面的图片中，其响应头就是image/png。</p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/network/network_007.png" alt="network_007.png (1694×571) (gitee.io)"></p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/network/network_008.png" alt="network_008.png (1569×703) (gitee.io)"></p>
+<h2 id="3-HTTP服务器"><a href="#3-HTTP服务器" class="headerlink" title="3. HTTP服务器"></a>3. HTTP服务器</h2><p>前面提到过服务器就是服务器软件，能够处理特定请求的服务器软件。HTTP服务器是服务器中的一种，其行为与HTTP协议相关；HTTP服务器可以<strong>接收来自浏览器发送的HTTP请求协议包</strong>，并自动<strong>对HTTP请求协议包的内容进行解析</strong>；解析后，<strong>自动定位被访问的文件</strong>，并<strong>将定位的文件内容写入到HTTP响应协议包中</strong>；最后负责<strong>将HTTP响应协议包推送到发起请求的浏览器上</strong>。</p>
+<h3 id="3-1-HTTP分类"><a href="#3-1-HTTP分类" class="headerlink" title="3.1 HTTP分类"></a>3.1 HTTP分类</h3><p>HTTP服务器在B/S通信模型下广泛使用，到目前为止已经产生了大量的类型，大部分都是由Java开发的，目前在软件行业中比较知名的HTTP服务器有如下几种：</p>
+<ol>
+<li>JBOSS服务器（企业级）</li>
+<li>Glassfish服务器（企业级）</li>
+<li>Jetty服务器（轻量级）</li>
+<li>Weblogic服务器（企业级）</li>
+<li>Websphere服务器（公认目前最强大的服务器，企业级）</li>
+<li>Tomcat服务器（轻量级易上手）</li>
+</ol>
+<p>和客户端软件浏览器软件一样，服务器也不需要程序员开发，只需要会用即可。<strong>企业级服务器也被称为应用服务器，轻量级服务器被称为WEB服务器。</strong>应用服务器实现了JavaEE13个所有的规范，而WEB服务器则只实现了JavaEE中的<strong>Servlet+JSP两个核心的规范</strong>。</p>
+<h3 id="3-2-安装Tomcat服务器"><a href="#3-2-安装Tomcat服务器" class="headerlink" title="3.2 安装Tomcat服务器"></a>3.2 安装Tomcat服务器</h3><p>官网<a target="_blank" rel="noopener" href="https://tomcat.apache.org/">Apache Tomcat® - Welcome!</a>下载，一般下载8或者9版本，选择core目录，然后选择对应系统即可，下载完解压之后即安装成功。Tomcat还有一个名字，称为Catalina，据说作者是在这个岛屿上开发了一个轻量级的WEB服务器。</p>
+<p><strong>注意，Tomcat是Java编写的，所以需要有JRE的支持，这时候就需要配置JAVA_HOME或者JRE_HOME，即JDK目录或者jre目录</strong>，在系统的环境变量中添加二者其一即可,如下所示:</p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/network/network_009.png" alt="network_009.png (735×64) (gitee.io)"></p>
+<p><strong>注意,部分Windows用户需要配置<code>CATALINA_HOME</code>变量，告诉系统tomcat的安装目录。（可以看一下startup.bat文件的具体内容，需要这个变量）</strong></p>
+<p>启动和关闭的命令均在安装目录的bin目录下，<code>startup.bat</code>以及<code>shutdown.bat</code>，在cmd窗口执行的时候，不用写.dat后缀。在浏览器中输入<code>localhost:8080</code>或者<code>127.0.0.1:8080</code>即可看到Tomcat的启动页面。</p>
+<p>.bat是Windows操作系统的批处理文件，包含了一些dos命令，和Linux系统中的.sh脚本类似。</p>
+<h3 id="3-3-Tomcat服务器文件结构"><a href="#3-3-Tomcat服务器文件结构" class="headerlink" title="3.3 Tomcat服务器文件结构"></a>3.3 Tomcat服务器文件结构</h3><p>安装后的目录结构如下所示：</p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/network/network_010.png" alt="network_010.png (846×532) (gitee.io)"></p>
+<p>其中：</p>
+<ol>
+<li>bin文件夹，是Tomcat软件的命令管理中心，里面存放了一些命令，比如启动和关闭命令；</li>
+<li>conf文件夹，是Tomcat的核心配置文件，主要有properties和xml两种类型的配置文件，最核心的就是<code>server.xml</code>文件，里面有监听的端口号以及连接超时时间等等配置。</li>
+<li>lib文件夹，存放了Tomcat运行时所需要的jar包。</li>
+<li>log文件夹，存放了Tomcat运行时产生的一些日志信息，用于后续查看以及问题的排查等等。</li>
+<li>temp文件夹，存放了一些临时产生的文件。</li>
+<li>webapps文件夹，是web application的缩写，<strong>我们知道，服务器会自动定位硬盘中请求的资源文件，而硬盘又比较大，检索开销较大；另外，硬盘中只有一部分资源文件允许被外界客户端请求，这些需要对文件进行设置权限。所以，webapps定义了一个默认的位置，Tomcat会自动到这个文件夹下找相关的文件，找不到就会放弃。</strong>即该文件保存了可以被其他客户端访问到的资源文件。（注意，<strong>该文件夹下初始有5个文件夹，分别对应5个网站。</strong>或者也可以这样认为，该文件夹下就是可以被访问的资源，只不过为了更好的管理，将同类型的资源文件，或者说同功能的资源文件放到了同一个文件夹下。）</li>
+<li>work文件夹，是Tomcat的工作空间，存放.jsp文件翻译之后的.java文件以及编译后的.class文件。</li>
+</ol>
+<h3 id="3-4-简单例子"><a href="#3-4-简单例子" class="headerlink" title="3.4 简单例子"></a>3.4 简单例子</h3><p>本节概述一个例子：<strong>模拟第一次互联网通信</strong>，描述如下：</p>
+<blockquote>
+<ol>
+<li>在Tomcat安装地址中的webapps文件夹下，创建一个网站（myweb）。<strong>网站全称是网络资源站点，即该站点存储了若干个网络资源，允许被访问的静态或者动态资源文件。注意，要用英文。</strong></li>
+<li>将一个静态资源文件添加到网站（myweb）中。</li>
+<li>启动Tomcat。</li>
+<li>启动浏览器，命令浏览器向Tomcat索要该静态资源文件。即输入URL：<code>网络协议包://服务端计算机IP地址:HTTP服务器监听端口号/网站名/资源文件名称</code></li>
+</ol>
+</blockquote>
+<p>在3.3中提到，webapps目录下是Tomcat提供的示例，可以按照上述第4步骤，在浏览器中访问一下资源文件。简单测试例子如下所示，新建test网站，然后里面放置了一个静态资源文件，在浏览器中访问如下所示（<strong>可以F12查看网络传输的HTTP请求包和响应包的相关信息</strong>）：</p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/network/network_011.png" alt="network_011.png (952×149) (gitee.io)"></p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/network/network_012.png" alt="network_012.png (623×248) (gitee.io)"></p>
+<h3 id="3-5-IDEA管理Tomcat"><a href="#3-5-IDEA管理Tomcat" class="headerlink" title="3.5 IDEA管理Tomcat"></a>3.5 IDEA管理Tomcat</h3><p>后续的开发主要用到IDEA，所以可以用IDEA来管理Tomcat，首先就是告诉IDEA管理哪个服务器，在什么位置；然后设置一个开关，可以一键启动和关闭Tomcat，而不再需要cmd端手动用命令开始和关闭。</p>
+<p>设置路径如下：<strong>File—&gt;settings—&gt;Build,Execution,Deployment—&gt;Application servers</strong>，点击加号，选择对应类型的服务器并设置Tomcat的安装目录。</p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/network/network_013.png" alt="network_013.png (1206×859) (gitee.io)"></p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/network/network_014.png" alt="network_014.png (1000×840) (gitee.io)"></p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/network/network_015.png" alt="network_015.png (1304×836) (gitee.io)"></p>
+<p>即告诉了IDEA可以从哪里找到Tomcat，注意，上面还显示了两个jar包，即jsp和servlet相关API方面的class文件，后续，其他文件就可以调用这两个Jar包中的类了。<strong>接下来就是设置开关，可以通知IDEA来启动和关闭Tomcat了。</strong>设置路径如下：<strong>Run—&gt;Edit Configurations</strong>，点击加号，选择Tomcat server，因为作为练习，操作的是本地的Tomcat服务器，所以选择local即可。</p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/network/network_016.png" alt="network_016.png (1216×864) (gitee.io)"></p>
+<p>界面设置如下，设置好名字，以及打开的Tomcat、以及浏览器和URL（注意，此时还不能打开网站，因为还没有<strong>发布网站</strong>，见后续），点击ok：</p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/network/network_017.png" alt="network_017.png (1344×855) (gitee.io)"></p>
+<p>点击ok之后，如下所示，服务器左侧有两个按钮，一个是三角形的，启动之后，网站的资源文件不能被修改；另一个昆虫形状的启动按钮，启动之后可以修改资源文件（一般选择昆虫状启动）。</p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/network/network_018.png" alt="network_018.png (1536×880) (gitee.io)"></p>
+<h3 id="3-6-IDEA新建网站"><a href="#3-6-IDEA新建网站" class="headerlink" title="3.6 IDEA新建网站"></a>3.6 IDEA新建网站</h3><p>在IDEA开发，最简单的就是直接采用IDEA进行建站，不用再在Tomcat目录下新建文件夹了。选择<strong>File—&gt;New—&gt;Module</strong></p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/network/network_019.png" alt="network_019.png (718×271) (gitee.io)"></p>
+<p>选择<strong>Java企业级</strong>，点击<strong>Web Application</strong>，设置模块名称即可。</p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/network/network_020.png" alt="network_020.png (1457×718) (gitee.io)"></p>
+<p>创建好网站如下所示，主要有两个文件夹，src和web：</p>
+<ul>
+<li>src文件夹，存放作为动态资源文件的Java文件；</li>
+<li>web文件夹，存放作为静态资源文件的【图片、html、css、js】，存放网站运行时依赖的Jar包（如mysql驱动），存放网站的核心配置文件（web.xml）<ul>
+<li>WEB-INF文件夹：依赖的Jar包以及核心配置文件web.xml<ul>
+<li>lib文件夹，依赖的jar包（自己创建，然后Jar放入这里）</li>
+<li>web.xml，通知Tomcat当前网站哪些Java类是动态资源文件</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/network/network_021.png" alt="network_021.png (421×155) (gitee.io)"></p>
+<p>测试，将一个图片放入web文件夹下，<strong>注意，此时需要告诉Tomcat，让它管理这个网站，而Tomcat已经可以让IDEA启动了，那么此时就可以让IDEA来告诉Tomcat，让它来管理这个网站，和上面的配置开关一样，IDEA会自动为一个新建的网站创建一个开关，所以如果想用原来自己的开关，可以将新的开关删除。点击开关，右侧Deployment，点击加号，选择Artifacts，下方是网站的别名，即真正的URL访问网站根路径，比如以斜杠开头。</strong></p>
+<p><strong>注意，上述的操作，称为发布网站。</strong></p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/network/network_022.png" alt="network_022.png (1335×855) (gitee.io)"></p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/network/network_023.png" alt="network_023.png (1333×852) (gitee.io)"></p>
+<p>发布网站之后，可以看到Tomcat开关处，确实显示了当前管理的网站列表，启动Tomcat测试。</p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/network/network_024.png" alt="network_024.png (427×214) (gitee.io)"></p>
+<p>测试如下，输入资源路径即可，因为没有别的文件夹，所以静态资源是可以直接在网站根目录下访问的：</p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/network/network_025.png" alt="network_025.png (617×223) (gitee.io)"></p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/network/network_026.png" alt="network_026.png (1887×1021) (gitee.io)"></p>
+<p>至此，本地主机利用IDEA配置Tomcat，并新建网站测试结束。</p>
+<p>简单例子如下所示：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">title</span>&gt;</span>第一个Tomcat网页<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">		这是我的第一个Tomcat服务器网页。<span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;http://127.0.0.1:8080/test/second.html&quot;</span>&gt;</span>user login<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">&lt;!-- IP和端口号可以省略，采用下面的绝对路径，以 /web项目名 开始 --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/test/second.html&quot;</span>&gt;</span>user login plus<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="4-备注"><a href="#4-备注" class="headerlink" title="4. 备注"></a>4. 备注</h2><p><em>参考B站《动力节点》。</em></p>
+
                 
             </div>
             <hr/>
@@ -500,7 +610,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">hianian</a>
+                    <a href="/about" rel="external nofollow noreferrer">浮云</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -523,7 +633,7 @@
                     本博客所有文章除特別声明外，均采用
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     许可协议。转载请注明来源
-                    <a href="/about" target="_blank">hianian</a>
+                    <a href="/about" target="_blank">浮云</a>
                     !
                 </span>
             </div>
@@ -547,7 +657,11 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/JavaWeb/">
+                                    <span class="chip bg-color">JavaWeb</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -741,10 +855,18 @@
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
-                            hianian
+                            浮云
                             
                         </span>
                     </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/JavaWeb/">
+                        <span class="chip bg-color">JavaWeb</span>
+                    </a>
+                    
                 </div>
                 
             </div>
@@ -990,7 +1112,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">129.2k</span>&nbsp;字
+                class="white-color">133.6k</span>&nbsp;字
             
             
             
