@@ -454,21 +454,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-01-19
+                    2022-01-25
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    23.1k
+                    26.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    94 分
+                    107 分
                 </div>
                 
 
@@ -1410,7 +1410,153 @@
 <p>测试的时候，首先请求该Servlet路径，可以看到因为没有session对象，直接跳转到登录页面；之后再次请求该路径，因为session对象已经创建，并且在会话域中保存了会话信息，所以可以直接跳转到欢迎页面。</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">web-app</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://xmlns.jcp.org/xml/ns/javaee&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">version</span>=<span class="string">&quot;4.0&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">welcome-file-list</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">welcome-file</span>&gt;</span>login.html<span class="tag">&lt;/<span class="name">welcome-file</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">welcome-file-list</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>login<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>servlet.LoginServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>login<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/login<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>indexValidation<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>servlet.IndexServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>indexValidation<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/indexValidation<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">web-app</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="19-总结"><a href="#19-总结" class="headerlink" title="19. 总结"></a>19. 总结</h2><p>可以看到，</p>
+<h2 id="19-监听器"><a href="#19-监听器" class="headerlink" title="19. 监听器"></a>19. 监听器</h2><p>监听器（Listener）是Servlet规范的一种扩展，是一组来自Servlet规范下的接口，共有9个接口。<strong>监听器接口用于监控【作用域对象生命周期变化时刻】以及【作用域对象共享数据变化时刻】</strong>，比如session对象的创建和销毁以及所存储数据的变化情况。</p>
+<p>这里的作用域对象就是指的上面的三个对象：ServletContext、HttpSession、HttpRequest。和Servlet一样，如果我们需要监听器功能，就要实现监听器接口，而什么时候调用则已经在WEB容器中设置好了，我们只需要实现具体的监控功能即可。开发实现类一般情况下分为三步：</p>
+<ol>
+<li><p>根据监听的实际情况，选择对应的监听器接口进行实现（比如监听哪个作用域，监听对象的生命周期还是存储数据的变化情况）</p>
+</li>
+<li><p>选择好监听器接口后，重写接口的抽象方法（具体的操作）。</p>
+</li>
+<li><p>在web.xml文件中注册监听器接口实现类。</p>
+<p>在web.xml文件注册语法格式如下所示：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">listener</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">listener-class</span>&gt;</span>监听器实现类全路径<span class="tag">&lt;/<span class="name">listener-class</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">listener</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>通过在xml中注册实现类，Tomcat启动时会检测是否有监听器注册，有的话，则创建对象，并将其与作用域对象进行绑定，让满足监听器方法时就会被调用。</p>
+</li>
+</ol>
+<p>8个监听器接口如下所示：</p>
+<table>
+<thead>
+<tr>
+<th>接口名</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ServletContextListener</td>
+<td>关于Servlet应用域对象的生命周期的监听器接口</td>
+</tr>
+<tr>
+<td>ServletContextAttributeListener</td>
+<td>关于Servlet应用域对象存储数据的变化的监听器接口</td>
+</tr>
+<tr>
+<td>ServletRequestListener</td>
+<td>关于Request请求域对象的生命周期的监听器接口</td>
+</tr>
+<tr>
+<td>ServletRequestAttributeListener</td>
+<td>关于Request请求域对象存储数据的变化的监听器接口</td>
+</tr>
+<tr>
+<td>HttpSessionListener</td>
+<td>关于Session会话域对象的声明周期的监听器接口</td>
+</tr>
+<tr>
+<td>HttpSessionIdListener</td>
+<td></td>
+</tr>
+<tr>
+<td>HttpSessionActivationListener</td>
+<td></td>
+</tr>
+<tr>
+<td>HttpSessionAttributeListener</td>
+<td>关于Session会话域对象存储数据的变化的监听器接口</td>
+</tr>
+<tr>
+<td>HttpSessionBindingListener</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="19-1-ServletContextListener"><a href="#19-1-ServletContextListener" class="headerlink" title="19.1 ServletContextListener"></a>19.1 ServletContextListener</h3><p>该接口有两个抽象方法，分别负责监听应用域对象的初始化（创建）和销毁，即<code>void contextDestroyed(ServletContextEvent sce)</code>和<code>void contextInitialized(ServletContextEvent sce)</code>。简单测试案例如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ListenerTest01</span> <span class="keyword">implements</span> <span class="title">ServletContextListener</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">contextInitialized</span><span class="params">(ServletContextEvent sce)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Servlet应用域对象被创建&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">contextDestroyed</span><span class="params">(ServletContextEvent sce)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Servlet应用域对象被销毁&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">web-app</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://xmlns.jcp.org/xml/ns/javaee&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">version</span>=<span class="string">&quot;4.0&quot;</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="name">listener</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">listener-class</span>&gt;</span>listener.ListenerTest01<span class="tag">&lt;/<span class="name">listener-class</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">listener</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">web-app</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>可以看到在Tomcat服务器启动和关闭的时候，监听器中的两个方法确实被执行了。</p>
+<h3 id="19-2-ServletContextAttributeListener"><a href="#19-2-ServletContextAttributeListener" class="headerlink" title="19.2 ServletContextAttributeListener"></a>19.2 ServletContextAttributeListener</h3><p>该接口有三个抽象方法，分别负责存储数据的添加、删除和修改。即<code>void attributeAdded(ServletContextAttributeEvent scae)</code>、<code>void attributeRemoved(ServletContextAttributeEvent scae)</code>和<code>void attributeReplaced(ServletContextAttributeEvent scae)</code>。简单测试案例如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// servlet</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ListenerServlet</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doGet</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line"></span><br><span class="line">        ServletContext application = request.getServletContext();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 新增存储数据</span></span><br><span class="line">        application.setAttribute(<span class="string">&quot;name&quot;</span>, <span class="string">&quot;zhangSan&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 修改存储数据</span></span><br><span class="line">        application.setAttribute(<span class="string">&quot;name&quot;</span>, <span class="string">&quot;listener&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 删除存储数据</span></span><br><span class="line">        application.removeAttribute(<span class="string">&quot;name&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Listener</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ListenerTest02</span> <span class="keyword">implements</span> <span class="title">ServletContextAttributeListener</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">attributeAdded</span><span class="params">(ServletContextAttributeEvent scae)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;应用域对象添加数据&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">attributeRemoved</span><span class="params">(ServletContextAttributeEvent scae)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;应用域对象删除数据&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">attributeReplaced</span><span class="params">(ServletContextAttributeEvent scae)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;应用域对象修改数据&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/servlet/servlet_033.png" alt="servlet_033.png (282×122) (gitee.io)"></p>
+<h3 id="19-3-监听器作用"><a href="#19-3-监听器作用" class="headerlink" title="19.3 监听器作用"></a>19.3 监听器作用</h3><p>前面提到过，实际上数据库操作中最耗时的就是连接对象的创建，即二者的I/O通道创建比较耗时，所以为了提升效率，可以在服务器启动的时候创建好一批连接对象（数据库连接池，用的时候取一个，用完之后再放回），并且直到服务器关闭的时候再销毁连接对象。那么怎么知道服务器启动和关闭呢？<strong>可以监听ServletContext应用域，因为服务器启动的时候会先创建应用域对象，关闭的时候会先销毁应用域对象，那么监听二者，在二者事件触发的时候，就创建数据库连接对象以及销毁对象即可。</strong></p>
+<p>案例如下所示（可以测试一下插入语句消耗的时间）：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// TODO</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="20-过滤器"><a href="#20-过滤器" class="headerlink" title="20. 过滤器"></a>20. 过滤器</h2><p>和监听器（Listener）一样，过滤器（Filter）也是来自于Servlet下的接口。过滤器主要是在Http服务器<strong>调用资源文件之前</strong>，对Http服务器进行拦截，<strong>即不是无限制的对所有请求都应答，设置一个过滤器，即增加一个门槛</strong>。主要的作用如下所示：</p>
+<ol>
+<li>拦截Http服务器，帮助Http服务器检测当前请求合法性；</li>
+<li>拦截Http服务器，对当前请求进行增强操作；</li>
+</ol>
+<p>开发过滤器实现类分为以下三步：</p>
+<ol>
+<li>创建一个类实现Filter接口；</li>
+<li>重写接口中的doFilter方法；</li>
+<li>在web.xml配置文件中将实现类注册到WEB容器上。</li>
+</ol>
+<p>Filter接口全称是<code>javax.servlet.Filter</code>，该接口有三个方法，如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Filter</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">default</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">(FilterConfig filterConfig)</span> <span class="keyword">throws</span> ServletException </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">doFilter</span><span class="params">(ServletRequest request, ServletResponse response, FilterChain chain)</span> <span class="keyword">throws</span> IOException, ServletException</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">default</span> <span class="keyword">void</span> <span class="title">destroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中初始化方法和销毁方法已经default默认实现了，所以实现doFilter方法即可，即真正的过滤操作是在doFilter中执行的。</p>
+<p>其中<code>doFilter</code>方法中的三个参数分别是请求对象、响应对象以及过滤链对象，请求和响应对象即上面说的HTTP请求和响应。过滤链对象指的是这个链上有很多个过滤器（具体多少个由WEB容器自动创建并添加到该对象上），本过滤器过滤完之后，就调用方法将request和response传送到链的下一个过滤器中，如果是链的最后端，则相当于过滤结束（将请求和响应对象返回给WEB容器），让它调用请求的资源文件返回给客户端，该接口的全称是<code>javax.servlet.FilterChain</code>，该接口只有一个方法<code>void doFilter()</code>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">doFilter</span><span class="params">(ServletRequest request, ServletResponse response)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="comment">// Causes the next filter in the chain to be invoked, or if the calling filter is the last filter in the chain, causes the resource at the end of the chain to be invoked.</span></span></span><br></pre></td></tr></table></figure>
+
+<p>在web.xml中注册过滤器的格式如下所示（<strong>注意，和监听器不一样，因为监听器本身就指明了监听哪个动作，所以不需要在配置文件中指明监听哪些动作；而过滤器需要在配置文件中手动指明需要对哪些请求进行过滤操作，即请求哪些资源文件时需要对其进行过滤，所以下面的url-pattern可以写多个，和servlet一样。</strong>）：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">filter</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>myFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>servlet.filter.myFilter<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>myFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/mm.jpg<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>所以，WEB容器在读取web.xml文件的时候，就会知道哪些请求会有过滤器，所以在创建过滤器对象的时候，会创建FilterChain对象，将该请求上的所有过滤器对象都添加到FilterChain中。</strong></p>
+<h3 id="20-1-检测请求的合法性"><a href="#20-1-检测请求的合法性" class="headerlink" title="20.1 检测请求的合法性"></a>20.1 检测请求的合法性</h3><blockquote>
+<p>年龄未满18周岁禁止访问</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FilterTest01</span> <span class="keyword">implements</span> <span class="title">Filter</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doFilter</span><span class="params">(ServletRequest request, ServletResponse response, FilterChain chain)</span> <span class="keyword">throws</span> IOException, ServletException </span>&#123;</span><br><span class="line">        String age = request.getParameter(<span class="string">&quot;age&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span>(Integer.valueOf(age) &gt; <span class="number">18</span>)&#123;</span><br><span class="line">            chain.doFilter(request, response);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            ((HttpServletResponse) response).sendRedirect(((HttpServletRequest) request).getContextPath() + <span class="string">&quot;/no_access.jsp&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">web-app</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://xmlns.jcp.org/xml/ns/javaee&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">version</span>=<span class="string">&quot;4.0&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>myFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>filter.FilterTest01<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>myFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/index.jsp<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">web-app</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="20-2-对请求进行增强操作"><a href="#20-2-对请求进行增强操作" class="headerlink" title="20.2 对请求进行增强操作"></a>20.2 对请求进行增强操作</h3><p>一个典型的案例就是：有很多个请求，针对不同的Servlet，因为请求中可能存在中文，所以就需要设置字符编码方式，但是如果在每个Servlet中都写一遍，比较复杂。所以可以设置过滤器，在过滤器中因为传入了request对象，所以可以在这里设置，设置完之后再交给服务器进行后续操作。<strong>同理，如果很多个Servlet的response需要进行一些操作，也可以在过滤器中提前设置好。</strong></p>
+<h3 id="20-3-总结"><a href="#20-3-总结" class="headerlink" title="20.3 总结"></a>20.3 总结</h3><p>一般情况下，过滤器是在好多个文件下都添加的，那么难道为这些文件都创建映射吗（比如登录验证，要对所有的资源文件无论是动态还是静态的）。这个太多了，很麻烦，而且静态资源文件也无法写Java代码；所以，一般是将这些文件放在一个文件夹下，在<code>&lt;url-pattern&gt;</code>中采用星号通配符来映射。</p>
+<h2 id="21-MVC开发规则"><a href="#21-MVC开发规则" class="headerlink" title="21. MVC开发规则"></a>21. MVC开发规则</h2><p>这种开发规则规定了开发过程中出现的角色、所担负的职责以及出场顺序等等，使得开发业务更加方便高效地进行。MVC分别指的是（Model、Controller、View）：</p>
+<ul>
+<li><p>Model：</p>
+<p>业务模型对象（指的是具体业务实现步骤模型，一般用service对象表示）。</p>
+<ol>
+<li>处理业务任务；</li>
+<li>根据分支任务的执行情况判断业务是否处理成功；</li>
+<li>将处理结果返回给控制层对象Servlet。</li>
+</ol>
+</li>
+<li><p>View：</p>
+<p>视图层对象（指的是给用户展示的模型，一般用jsp或者response对象表示）。</p>
+<ol>
+<li>禁止参与业务处理；</li>
+<li>唯一的任务就是将处理结果写入到响应体中。</li>
+</ol>
+</li>
+<li><p>Controller：</p>
+<p>控制层对象（指的是核心控制，即针对用户的请求调用特定的业务模型，一般用servlet对象表示，<strong>实际上servlet就是相当于指路的，即表名哪种请求用哪种模型</strong>，然后将业务模型的执行结果传输到视图层模型展示）。</p>
+<ol>
+<li>该对象可以调用请求对象，读取请求包的参数信息；</li>
+<li>必须调用Service对象处理业务；</li>
+<li>可以将处理结果写入到作用域对象中作为共享数据；</li>
+<li>必须调用视图对象将写入到响应体中。</li>
+</ol>
+</li>
+</ul>
+<h2 id="22-DAO封装"><a href="#22-DAO封装" class="headerlink" title="22. DAO封装"></a>22. DAO封装</h2><p>DAO的全称是：DataBase Access Object，即数据库访问对象；作用是在开发时提供针对某张表的操作细节【增删改查】。优点是：</p>
+<ol>
+<li>在开发时，通过数据库访问对象可以避免反复的SQL命令书写；</li>
+<li>在开发时，通过数据库访问对象可以避免反复的JDBC开发步骤书写；</li>
+</ol>
+<p>DAO类指的是提供数据库访问对象的类，DAO类开发规则如下所示：</p>
+<ol>
+<li>一个DAO类中封装的是一张表的操作细节。</li>
+<li>DAO类命名规则：表名+Dao。比如封装的是emp表的操作细节：EmpDao。</li>
+<li>DAO类所在包的命名规则：公司网站域名倒序.dao。</li>
+</ol>
+<p>DAO封装就是提供一张表的增删改查，增删改查需要的参数直接作为实参传入即可。和前面的util类似，只不过这个DAO封装的功能更加全面。</p>
+<p>因为操作返回的结果集要在DAO中销毁，但是我们又需要返回给调用者结果集，这个时候该怎么办呢？<strong>需要将数据封装一个实体类，一个类关联一张表，类名和表名一致，可以忽略大小写，另外类的属性和表的字段保持一致。这样一个类对象就是一条记录，返回结果可以封装成Map等集合，包含多个类对象返回给调用者。</strong></p>
+<h2 id="23-总结"><a href="#23-总结" class="headerlink" title="23. 总结"></a>23. 总结</h2><p>可以看到，</p>
 <ul>
 <li>Servlet是最顶层的接口，Tomcat通过创建该接口的实现类对象为浏览器提供服务。</li>
 <li>在创建Servlet实现类对象的时候，调用init方法需要初始化ServletConfig接口的实现类对象。</li>
@@ -1419,8 +1565,10 @@
 <li>Servlet的核心方法是Service()方法，里面有两个参数ServletRequest和ServletResponse两个接口的实现类对象。</li>
 <li>为了方便HTTP协议的数据获取，JavaEE提供了HttpServlet这个类，该类实现了Servlet接口。以及ServletRequest和ServletResponse的实现类HttpServletRequest和HttpServletResponse。</li>
 <li>另外，JavaEE提供了HTTP协议中的Cookie和Session两个客户端和浏览器端的会话类，方便业务的实现。</li>
+<li>对于过滤器，其实就是将request和response对象提取出来，在web.xml中统一进行操作，之后再将两个对象返回给服务器。</li>
+<li>对于监听器，就是当某个事件发生时触发监听器函数进行一些操作。</li>
 </ul>
-<h2 id="20-备注"><a href="#20-备注" class="headerlink" title="20. 备注"></a>20. 备注</h2><p><em>参考B站《动力节点》。</em></p>
+<h2 id="24-备注"><a href="#24-备注" class="headerlink" title="24. 备注"></a>24. 备注</h2><p><em>参考B站《动力节点》。</em></p>
 
                 
             </div>
@@ -1682,10 +1830,18 @@
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
-                            hianian
+                            浮云
                             
                         </span>
                     </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/JavaWeb/">
+                        <span class="chip bg-color">JavaWeb</span>
+                    </a>
+                    
                 </div>
                 
             </div>
@@ -1931,7 +2087,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">156.6k</span>&nbsp;字
+                class="white-color">168.1k</span>&nbsp;字
             
             
             

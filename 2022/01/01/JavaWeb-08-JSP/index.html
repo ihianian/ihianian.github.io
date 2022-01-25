@@ -429,9 +429,13 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/JavaWeb/">
+                                <span class="chip bg-color">JavaWeb</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -450,21 +454,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-01-01
+                    2022-01-23
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    0
+                    8.4k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    35 分
                 </div>
                 
 
@@ -484,7 +488,334 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                
+                <p>前面数据库CRUD操作的例子中可以体会到，一些页面是动态显示的，所以为了动态显示，就在Servlet中形成页面将其返回到浏览器上渲染成页面。但是这样做耦合度比较高，因为前端的页面很可能为了提升用户体验而频繁发生改变，这样Servlet程序就需要修改，重新编译，重新部署，前后端的耦合度太高。那么能不能将页面展示部分的程序独立出来呢？或者动态的部分作为参数传入该独立的程序中。</p>
+<p>和JDBC类似，对于驱动、URL、用户名和密码等等，这些应该写在配置文件中（不需要编译），程序只需要读取即可，当需要连接其他数据库时，只需要修改驱动和URL即可（修改配置文件），对核心程序不会造成太大的改动。</p>
+<p>因此，JSP技术就诞生了，Java Sever Pages，基于Java语言实现的服务器页面，这样就不再通过核心Servlet代码来实现前端的页面，解耦合。<strong>JSP是JavaEE规范的一种，JSP文件通常存放在WEB-INF里面，保护JSP，不能通过URL路径直接访问到；但是也可以放在该目录外面。另外jsp文件的后缀是.jsp，这种后缀也是可以通过Tomcat安装目录下的<code>conf/web.xml</code>文件修改。</strong></p>
+<h2 id="1-第一个JSP"><a href="#1-第一个JSP" class="headerlink" title="1. 第一个JSP"></a>1. 第一个JSP</h2><p>为了方便访问，新建Module，在项目里面，WEB-INF外面，创建一个<strong>最简单的JSP空页面</strong>。部署项目并启动服务器，在浏览器访问该页面。虽然前端页面是空白的，但是<strong>在06文章中提到，Tomcat安装目录下的work文件夹存放的是JSP文件翻译后的java文件以及编译后的class文件</strong>（<strong>注意，如果是用IDEA创建的项目，就需要在IDEA的目录下去找，不是在Tomcat安装目录下去找。</strong>）。也就是说JSP文件，本质上也是某种功能的Java程序，只不过这个功能为了更加解耦合，独立出来。</p>
+<p>JSP文件的内容如下所示（可以看到自动生成的jsp和网页的框架一样）：</p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/jsp/jsp_03.png" alt="jsp_03.png (709×240) (gitee.io)"></p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/jsp/jsp_02.png" alt="jsp_02.png (545×203) (gitee.io)"></p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/jsp/jsp_01.png" alt="jsp_01.png (814×122) (gitee.io)"></p>
+<p>打开翻译后的java文件，发现该文件是一个类文件，该类继承了<code>org.apache.jasper.runtime.HttpJspBase</code>类，其中_jspService方法中的部分代码如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">index_jsp</span> <span class="keyword">extends</span> <span class="title">org</span>.<span class="title">apache</span>.<span class="title">jasper</span>.<span class="title">runtime</span>.<span class="title">HttpJspBase</span></span></span><br><span class="line"><span class="class">    <span class="keyword">implements</span> <span class="title">org</span>.<span class="title">apache</span>.<span class="title">jasper</span>.<span class="title">runtime</span>.<span class="title">JspSourceDependent</span>,</span></span><br><span class="line"><span class="class">                 <span class="title">org</span>.<span class="title">apache</span>.<span class="title">jasper</span>.<span class="title">runtime</span>.<span class="title">JspSourceImports</span></span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>查看Tomcat实现的该类的源码，<strong>该类是一个抽象类，并且该类继承了HttpServlet，即意味着jsp本质上也是一个Servlet</strong>，该类的部分代码如下所示，可以看到，index_jsp类作为servlet实现类，Tomcat会创建对象并调用service()方法，而该方法必定是HttpJspBase的service()方法，然后该方法再调用自己index_jsp实现的_jspService()方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">HttpJspBase</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span> <span class="keyword">implements</span> <span class="title">HttpJspPage</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">service</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span></span></span><br><span class="line"><span class="function">        <span class="keyword">throws</span> ServletException, IOException</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        _jspService(request, response);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-1-JSP的执行原理"><a href="#1-1-JSP的执行原理" class="headerlink" title="1.1 JSP的执行原理"></a>1.1 JSP的执行原理</h3><p>经过上面的分析，可以看到，浏览器上访问的路径虽然是以.jsp结尾，访问的是某个JSP文件，其实底层执行的是JSP文件对应的Java程序。</p>
+<p>Tomcat服务器负责将.jsp文件翻译生成.java文件，并将.java源文件编译生成.class字节码文件。访问.jsp文件，底层仍然执行的是.class文件中的程序。Tomcat服务器内置了一个JSP翻译引擎，专门负责翻译JSP文件，编译.java源文件。</p>
+<p>index.jsp会被翻译生成index_jsp.java文件，编译生成index_jsp.class文件。index_jsp这个类继承了HttpJspBase，而HttpJspBase又继承了HttpServlet，所以<strong>jsp就是Servlet，只不过职责不同，jsp的强项是做页面展示</strong>。<strong>这在一定程度上解耦合，也解释了为什么IDEA生成web项目默认创建一个jsp文件，就是作为首页展示的。</strong></p>
+<p>翻译后的index_jsp.java文件中的index_jsp类中的service方法部分代码如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">_jspService</span><span class="params">(<span class="keyword">final</span> javax.servlet.http.HttpServletRequest request, <span class="keyword">final</span> javax.servlet.http.HttpServletResponse response)</span></span></span><br><span class="line"><span class="function">      <span class="keyword">throws</span> java.io.IOException, javax.servlet.ServletException </span>&#123;</span><br><span class="line">        ...</span><br><span class="line">        out.write(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">        out.write(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">        out.write(<span class="string">&quot;&lt;html&gt;\n&quot;</span>);</span><br><span class="line">        out.write(<span class="string">&quot;  &lt;head&gt;\n&quot;</span>);</span><br><span class="line">        out.write(<span class="string">&quot;    &lt;title&gt;$Title$&lt;/title&gt;\n&quot;</span>);</span><br><span class="line">        out.write(<span class="string">&quot;  &lt;/head&gt;\n&quot;</span>);</span><br><span class="line">        out.write(<span class="string">&quot;  &lt;body&gt;\n&quot;</span>);</span><br><span class="line">        out.write(<span class="string">&quot;  $END$\n&quot;</span>);</span><br><span class="line">        out.write(<span class="string">&quot;  &lt;/body&gt;\n&quot;</span>);</span><br><span class="line">        out.write(<span class="string">&quot;&lt;/html&gt;\n&quot;</span>);</span><br><span class="line">        ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，实际上就是将页面的内容以及相关的代码独立成一个功能类，达到解耦合。<strong>即jsp文件中的普通内容（如html、css、js等等）都是被当做普通字符串来处理的，在翻译之后的java文件中，以out输出流的形式将其输出到浏览器中渲染。</strong></p>
+<h3 id="1-2-JSP第一次访问比较慢"><a href="#1-2-JSP第一次访问比较慢" class="headerlink" title="1.2 JSP第一次访问比较慢"></a>1.2 JSP第一次访问比较慢</h3><ul>
+<li>启动JSP翻译引擎</li>
+<li>需要一个翻译的过程</li>
+<li>需要一个编译的过程</li>
+<li>需要Servlet对象的创建过程</li>
+<li>init方法的调用</li>
+<li>service方法的调用……（后续访问只需要调用该方法即可）</li>
+</ul>
+<p>JSP本质上就是Servlet，所以它也是单实例多线程环境下运行的一个Servlet对象。所以一般情况下，项目部署后，自己先提前访问一遍所有的jsp，方便提升用户体验。</p>
+<p>那么Tomcat是怎么知道JSP文件需要重新翻译的呢？<strong>在访问jsp的时候，会记录一下该文件的最后修改时间(lastModified()方法)，然后对比上一次访问该jsp时该文件的修改时间，如果二者不一致，则重新翻译并编译。</strong></p>
+<h2 id="2-小脚本"><a href="#2-小脚本" class="headerlink" title="2. 小脚本"></a>2. 小脚本</h2><h3 id="2-1-注释"><a href="#2-1-注释" class="headerlink" title="2.1 注释"></a>2.1 注释</h3><p>因为JSP是作为页面展示用的，所以里面的内容主体上是前端的内容。这里的注释也就分为两种，一种是JSP注释，即不会被翻译引擎翻译到Java文件中（<strong>推荐</strong>）。</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;%-- 这是JSP中的注释 --%&gt;</span><br></pre></td></tr></table></figure>
+
+<p>另一种注释就是前端内容（html、css、js）的注释了，但是它仍然会被翻译到Java文件中，只不过在浏览器端被当做注释不被展示。</p>
+<h3 id="2-2-普通字符串翻译"><a href="#2-2-普通字符串翻译" class="headerlink" title="2.2 普通字符串翻译"></a>2.2 普通字符串翻译</h3><p><strong>JSP文件中所编写的所有的html、css、js都会被当做普通字符串原封不动地翻译到Servlet的service方法中的<code>out.write(&quot;翻译到这里&quot;)</code>部分</strong>，即输出到浏览器上。这些内容不需要特殊标签符号限制。</p>
+<h3 id="2-3-JSP的小脚本scriplet"><a href="#2-3-JSP的小脚本scriplet" class="headerlink" title="2.3 JSP的小脚本scriplet"></a>2.3 JSP的小脚本scriplet</h3><p>小脚本即指的是一段Java程序，因为作为动态页面，所以需要程序来控制，这就是JSP中的脚本，<strong>小脚本可以有多个，之间存在顺序关系</strong>。脚本格式如下所示：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;%</span><br><span class="line">	Java语句;</span><br><span class="line">	Java语句;</span><br><span class="line">	Java语句;</span><br><span class="line">	......</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure>
+
+<p>小脚本中的内容会被翻译到Servlet的service方法中，所以必须要编写Java语句，以分号结尾。</p>
+<p><strong>所谓的JSP规范，就是SUN公司制定好的一些翻译规则，按照翻译规则进行翻译，生成对应的Java源程序。不同的Web服务器，翻译的结果是完全相同的，因为这些服务器在翻译的时候，都遵守了JSP翻译规范。</strong></p>
+<p>JSP简单案例如下所示：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page contentType=<span class="string">&quot;text/html;charset=UTF-8&quot;</span> language=<span class="string">&quot;java&quot;</span> %&gt;</span><br><span class="line"></span><br><span class="line">&lt;%</span><br><span class="line">  System.out.println(<span class="string">&quot;这是JSP中的小脚本&quot;</span>);</span><br><span class="line">  <span class="keyword">int</span> i = <span class="number">10</span>;</span><br><span class="line">%&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">  &lt;head&gt;</span><br><span class="line">    &lt;%</span><br><span class="line">      System.out.println(<span class="string">&quot;i的值是：&quot;</span> + i);</span><br><span class="line">    %&gt;</span><br><span class="line">    &lt;title&gt;小脚本测试&lt;/title&gt;</span><br><span class="line">  &lt;/head&gt;</span><br><span class="line">  &lt;body&gt;</span><br><span class="line">  Hello 小脚本！</span><br><span class="line">  &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-声明语法"><a href="#3-声明语法" class="headerlink" title="3. 声明语法"></a>3. 声明语法</h2><p>前面的小脚本是将程序翻译到service方法中，那么怎么将其他内容，比如声明成员变量、静态变量等等翻译到service方法之外、Servlet类中呢？这就用到声明语法了。<strong>注意，声明块中的Java程序会被JSP翻译引擎翻译到service方法之外，声明块中不能直接编写Java语句，除非是变量的声明。</strong>语法格式如下：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;%!</span><br><span class="line">    实例变量;</span><br><span class="line">	静态变量;</span><br><span class="line">	方法;</span><br><span class="line">	静态语句块;</span><br><span class="line">	构造函数;</span><br><span class="line">	......</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure>
+
+<p>案例如下所示：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">&lt;%--</span><br><span class="line">    下面的是声明块，翻译到service方法外面，类里面</span><br><span class="line">--%&gt;</span><br><span class="line">&lt;%!</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSome</span><span class="params">()</span></span>&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;doSome方法执行&quot;</span>);</span><br><span class="line">    System.out.println(<span class="string">&quot;i + 10 = &quot;</span> + (i+<span class="number">10</span>));</span><br><span class="line">  &#125;</span><br><span class="line">%&gt;</span><br><span class="line"></span><br><span class="line">&lt;%--</span><br><span class="line">    下面的是小脚本</span><br><span class="line">--%&gt;</span><br><span class="line">&lt;%</span><br><span class="line">  System.out.println(<span class="string">&quot;service 方法执行&quot;</span>);</span><br><span class="line">  System.out.println(<span class="string">&quot;成员变量i的值是：&quot;</span> + i);</span><br><span class="line">  doSome();</span><br><span class="line">%&gt;</span><br><span class="line"></span><br><span class="line">&lt;%--</span><br><span class="line">    下面的是声明块，翻译到service方法外面，类里面</span><br><span class="line">--%&gt;</span><br><span class="line">&lt;%!</span><br><span class="line">  <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">static</span>&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;静态语句块执行&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">%&gt;</span><br><span class="line"></span><br><span class="line">&lt;%@ page contentType=<span class="string">&quot;text/html;charset=UTF-8&quot;</span> language=<span class="string">&quot;java&quot;</span> %&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">  &lt;head&gt;</span><br><span class="line">    &lt;title&gt;$Title$&lt;/title&gt;</span><br><span class="line">  &lt;/head&gt;</span><br><span class="line">  &lt;body&gt;</span><br><span class="line">  $END$</span><br><span class="line">  &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-JSP的内置对象"><a href="#4-JSP的内置对象" class="headerlink" title="4. JSP的内置对象"></a>4. JSP的内置对象</h2><p>这里所说的内置对象指的是<strong>可以直接在JSP小脚本中拿来使用的引用</strong>，即一些<strong>成员变量</strong>、<strong>局部变量</strong>或者<strong>传入的实参</strong>等等，即只能在service方法中直接使用的对象（当然也可以在service方法中传参的形式去调用其他方法，这样其他方法就可以使用了）。JSP中有九大内置对象（可以在JSP翻译之后的Java源码中看到）：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">_jspService</span><span class="params">(<span class="keyword">final</span> javax.servlet.http.HttpServletRequest request, <span class="keyword">final</span> javax.servlet.http.HttpServletResponse response)</span></span></span><br><span class="line"><span class="function">      <span class="keyword">throws</span> java.io.IOException, javax.servlet.ServletException </span>&#123;</span><br><span class="line">	<span class="keyword">final</span> javax.servlet.jsp.PageContext pageContext;</span><br><span class="line">    javax.servlet.http.HttpSession session = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">final</span> javax.servlet.ServletContext application;</span><br><span class="line">    <span class="keyword">final</span> javax.servlet.ServletConfig config;</span><br><span class="line">    javax.servlet.jsp.JspWriter out = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">final</span> java.lang.Object page = <span class="keyword">this</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">        application = pageContext.getServletContext();</span><br><span class="line">      	config = pageContext.getServletConfig();</span><br><span class="line">      	session = pageContext.getSession();</span><br><span class="line">      	out = pageContext.getOut();</span><br><span class="line">    &#125; <span class="keyword">catch</span>()&#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>对象名称</th>
+<th>完整类名（接口名）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>pageContext</td>
+<td>javax.servlet.jsp.PageContext（页面域）</td>
+</tr>
+<tr>
+<td>request</td>
+<td>javax.servlet.http.HttpServletRequest（请求域/请求对象）</td>
+</tr>
+<tr>
+<td>session</td>
+<td>javax.servlet.http.HttpSession（会话域）</td>
+</tr>
+<tr>
+<td>application</td>
+<td>javax.servlet.ServletContext（应用域）</td>
+</tr>
+<tr>
+<td>out</td>
+<td>javax.servlet.jsp.JspWriter（标准输出流）</td>
+</tr>
+<tr>
+<td>response</td>
+<td>javax.servlet.http.HttpServletResponse（响应对象）</td>
+</tr>
+<tr>
+<td>config</td>
+<td>javax.servlet.ServletConfig（Servlet配置信息对象）</td>
+</tr>
+<tr>
+<td>exception</td>
+<td>java.lang.Throwable（异常引用，isErrorPage=”true”使用）</td>
+</tr>
+<tr>
+<td>page</td>
+<td>java.lang.Object（page=this，很少用）</td>
+</tr>
+</tbody></table>
+<p><em>注意，除了应用域、会话域和请求域，JSP又提供了一个页面域，即pageContext对象，只在一个JSP页面中有效，覆盖范围最小。</em>request和session两个域使用较多。</p>
+<p>测试案例如下所示：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page contentType=<span class="string">&quot;text/html;charset=UTF-8&quot;</span> language=<span class="string">&quot;java&quot;</span> %&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">  &lt;head&gt;</span><br><span class="line">    &lt;title&gt;测试内置对象&lt;/title&gt;</span><br><span class="line">  &lt;/head&gt;</span><br><span class="line">  &lt;body&gt;</span><br><span class="line">  测试内置对象</span><br><span class="line">  &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line"></span><br><span class="line">&lt;br&gt;</span><br><span class="line">&lt;%</span><br><span class="line">  out.print(<span class="string">&quot;pageContext = &quot;</span> + pageContext);</span><br><span class="line">%&gt;</span><br><span class="line">&lt;br&gt;</span><br><span class="line"></span><br><span class="line">&lt;%</span><br><span class="line">  out.print(<span class="string">&quot;request = &quot;</span> + request);</span><br><span class="line">%&gt;</span><br><span class="line">&lt;br&gt;</span><br><span class="line"></span><br><span class="line">&lt;%</span><br><span class="line">  out.print(<span class="string">&quot;session = &quot;</span> + session);</span><br><span class="line">%&gt;</span><br><span class="line">&lt;br&gt;</span><br><span class="line"></span><br><span class="line">&lt;%</span><br><span class="line">  out.print(<span class="string">&quot;application = &quot;</span> + application);</span><br><span class="line">%&gt;</span><br><span class="line">&lt;br&gt;</span><br><span class="line"></span><br><span class="line">&lt;%</span><br><span class="line">  out.print(<span class="string">&quot;out = &quot;</span> + out);</span><br><span class="line">%&gt;</span><br><span class="line">&lt;br&gt;</span><br><span class="line"></span><br><span class="line">&lt;%</span><br><span class="line">  out.print(<span class="string">&quot;response = &quot;</span> + response);</span><br><span class="line">%&gt;</span><br><span class="line">&lt;br&gt;</span><br><span class="line"></span><br><span class="line">&lt;%</span><br><span class="line">  out.print(<span class="string">&quot;config = &quot;</span> + config);</span><br><span class="line">%&gt;</span><br><span class="line">&lt;br&gt;</span><br><span class="line"></span><br><span class="line">&lt;%</span><br><span class="line">  out.print(<span class="string">&quot;page = &quot;</span> + page);</span><br><span class="line">%&gt;</span><br><span class="line">&lt;br&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/jsp/jsp_04.png" alt="jsp_04.png (843×403) (gitee.io)"></p>
+<h3 id="4-1-pageContext对象"><a href="#4-1-pageContext对象" class="headerlink" title="4.1 pageContext对象"></a>4.1 pageContext对象</h3><p>该对象只能在同一个JSP页面中共享数据，不能跨JSP页面。<strong>可以用转发机制来进行测试一下。用的较少，常用方法也就是setAttribute和getAttribute等等。</strong>可以看一下翻译之后的源码，该对象的主要作用就是初始化其余的内置对象，另外获取JSTL标签库写入的内容。</p>
+<h2 id="5-表达式"><a href="#5-表达式" class="headerlink" title="5. 表达式"></a>5. 表达式</h2><p>上面说的是语句，但是有时候我们需要的是表达式，不是语句。比如要在页面上动态显示：<strong>登录成功，欢迎XX回来</strong>。这种该怎么做呢？目前为止有两种方法：</p>
+<ul>
+<li>一种是在小脚本中以输出流的形式，动态打印。（即前面servlet中的方法）</li>
+<li>一种是将静态内容以纯文本的形式打印出来，将动态内容以输出流的形式打印出来。</li>
+</ul>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;%</span><br><span class="line">	String username=<span class="string">&quot;jack&quot;</span>;</span><br><span class="line">%&gt;</span><br><span class="line"></span><br><span class="line">&lt;%-- 第一种方式 --%&gt;</span><br><span class="line">&lt;%</span><br><span class="line">	out.print(<span class="string">&quot;登录成功，欢迎&quot;</span>+ username +<span class="string">&quot;回来&quot;</span>);</span><br><span class="line">%&gt;</span><br><span class="line"></span><br><span class="line">&lt;%-- 第二种方式 --%&gt;</span><br><span class="line">登录成功，欢迎&lt;% out.print(username); %&gt;回来</span><br></pre></td></tr></table></figure>
+
+<p>除了之外，还有一种更为简单的方法，那就是表达式语法。如下所示：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;%=</span><br><span class="line">    Java表达式</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure>
+
+<p>上面的例子如下所示：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">登录成功，欢迎&lt;%= username %&gt;回来</span><br></pre></td></tr></table></figure>
+
+<p>查看翻译后的Java程序，可以看到，二者没什么区别，即翻译引擎会自动将表达式语句转换为<code>out.print(Java表达式);</code>语句，<strong>即表达式语句法具有输出到浏览器上的功能。</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 对应第二种方法</span></span><br><span class="line">out.write(<span class="string">&quot;登录成功，欢迎&quot;</span>);</span><br><span class="line">out.print(username); </span><br><span class="line">out.write(<span class="string">&quot;回来\n&quot;</span>);</span><br><span class="line">out.write(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">out.write(<span class="string">&quot;&lt;br&gt;\n&quot;</span>);</span><br><span class="line">out.write(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 对应第三种方法</span></span><br><span class="line">out.write(<span class="string">&quot;登录成功，欢迎&quot;</span>);</span><br><span class="line">out.print( username );</span><br><span class="line">out.write(<span class="string">&#x27;回&#x27;</span>);</span><br><span class="line">out.write(<span class="string">&#x27;来&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-1-表达式案例：动态输出-lt-h1-gt-到-lt-h6-gt-标题字"><a href="#5-1-表达式案例：动态输出-lt-h1-gt-到-lt-h6-gt-标题字" class="headerlink" title="5.1 表达式案例：动态输出&lt;h1&gt;到&lt;h6&gt;标题字"></a>5.1 表达式案例：动态输出&lt;h1&gt;到&lt;h6&gt;标题字</h3><p>采用Servlet的方法如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;%</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span> ; i&lt;=<span class="number">6</span> ; i++)&#123;</span><br><span class="line">    out.print(<span class="string">&quot;&lt;h&quot;</span> + i + <span class="string">&quot;&gt;&quot;</span> + <span class="string">&quot;标题字&quot;</span> + <span class="string">&quot;&lt;/h&quot;</span> + i + <span class="string">&quot;&gt;&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure>
+
+<p>那么既然表达式语法由自动输出的功能，可以将上面的out.print()语句省略即可，将字符串双引号去掉即可，<strong>注意，表达式语法自带输出功能，所以和前面的h标记中间要没有空格，否则不会将其作为一个完整标签来看待</strong>。</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;%</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span> ; i&lt;=<span class="number">6</span> ; i++)&#123;</span><br><span class="line">%&gt;</span><br><span class="line"></span><br><span class="line">    &lt;h&lt;%=i%&gt;&gt;标题字&lt;/h&lt;%=i%&gt;&gt;</span><br><span class="line"></span><br><span class="line">&lt;%  &#125;</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>这样，可以用JSP页面代替html页面，就可以动态获取项目名，然后将其拼接在form表单的action路径中了。</strong></p>
+<h2 id="6-指令"><a href="#6-指令" class="headerlink" title="6. 指令"></a>6. 指令</h2><p>JSP中的指令是指导JSP的翻译引擎如何翻译JSP代码。共三个指令：</p>
+<ul>
+<li><strong>page</strong>（页面指令）</li>
+<li><strong>include</strong> （包含指令）</li>
+<li><strong>taglib</strong>（标签库指令）</li>
+</ul>
+<p>指令的使用语法格式如下所示，可以有多个指令，同一个指令的多个属性可以分开写：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@指令名 属性名=属性值 属性名=属性值[ 属性名=属性值...]%&gt;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-1-page指令"><a href="#6-1-page指令" class="headerlink" title="6.1 page指令"></a>6.1 page指令</h3><p>page指令的属性有很多个，可以在IDE中，光标选中标签，然后点击ctrl+p，查看参数提示。常用属性如下所示：</p>
+<table>
+<thead>
+<tr>
+<th>属性名</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>contentType</td>
+<td>设置JSP的响应内容类型</td>
+</tr>
+<tr>
+<td>pageEncoding</td>
+<td>设置JSP响应时的字符编码方式</td>
+</tr>
+<tr>
+<td>import</td>
+<td>组织导入</td>
+</tr>
+<tr>
+<td>session</td>
+<td>设置当前JSP页面中是否可以直接使用session内置对象</td>
+</tr>
+<tr>
+<td>errorPage</td>
+<td>错误页面</td>
+</tr>
+<tr>
+<td>isErrorPage</td>
+<td>是否是错误页面</td>
+</tr>
+<tr>
+<td>isELIgnored</td>
+<td>是否忽略EL表达式（见后续文章讲解）</td>
+</tr>
+</tbody></table>
+<h4 id="6-1-1-contentType"><a href="#6-1-1-contentType" class="headerlink" title="6.1.1 contentType"></a>6.1.1 contentType</h4><p>该属性<strong>设置JSP的响应内容类型</strong>，即告诉浏览器本内容可以以哪种文本格式来看待渲染，对应<code>response.setContentType(属性值);</code>，也可以附带字符编码方式，如：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page contentType=<span class="string">&quot;text/html;charset=UTF-8&quot;</span> %&gt;</span><br></pre></td></tr></table></figure>
+
+<p>翻译之后的Java代码是<code>response.setContentType(&quot;text/html;charset=UTF-8&quot;)</code>。</p>
+<h4 id="6-1-2-pageEncoding"><a href="#6-1-2-pageEncoding" class="headerlink" title="6.1.2 pageEncoding"></a>6.1.2 pageEncoding</h4><p>该属性<strong>设置JSP响应时的字符编码方式</strong>，即以哪种格式编码的，所以浏览器在获取到数据时要以对应的编码方式来解码，解码之后再按照上面的响应内容类型来对待数据。也是对应<code>response.setContentType(属性值)</code>中的编码方式<code>charset</code>。如：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page pageEncoding=<span class="string">&quot;UTF-8&quot;</span> %&gt;</span><br></pre></td></tr></table></figure>
+
+<p>翻译之后的Java代码是<code>response.setContentType(&quot;charset=UTF-8&quot;)</code>。因为<strong>contentType</strong>属性设置的内容可以包含charset，所以一般这个不用写，直接在contentType属性中写即可。</p>
+<h4 id="6-1-3-import"><a href="#6-1-3-import" class="headerlink" title="6.1.3 import"></a>6.1.3 import</h4><p>前面提到了JSP翻译后，可以在service方法中，也可以翻译到servlet类中，那么怎么<strong>导入外部类</strong>呢？<strong>这就需要用到import属性</strong>。如下所示：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;%page <span class="keyword">import</span>=<span class="string">&quot;java.util.Date&quot;</span>%&gt;</span><br></pre></td></tr></table></figure>
+
+<p>翻译之后的Java代码是<code>import java.util.Date;</code>。</p>
+<h4 id="6-1-4-session"><a href="#6-1-4-session" class="headerlink" title="6.1.4 session"></a>6.1.4 session</h4><p>session属性<strong>设置本JSP是否可以直接使用session内置对象</strong>。用法如下所示：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;%page session=<span class="string">&quot;true&quot;</span>%&gt;</span><br><span class="line">&lt;%page session=<span class="string">&quot;false&quot;</span>%&gt;</span><br></pre></td></tr></table></figure>
+
+<p>通过前面的翻译源码可以看到，默认是没有session属性的（默认属性值为true），但是仍然创建了session对象，即<code>session = pageContext.getSession();</code>。<strong>也就是说，如果没有session，会自己创建session。</strong></p>
+<p>只有当session属性值为false的时候，才不会定义session局部变量（可以自己测试一下，查看翻译之后的源码），**注意，这里的不定义指的是根本不会创建这个变量，而不是getSession(false)**。</p>
+<p><strong>注意，session的内置对象，是没有session则自己创建session。那么如果没有session就不创建session，只获取当前已有的session或者null该怎么办呢？此时我们可以禁用内置对象session，自己创建session = pageContext.getSession(false)。</strong></p>
+<h4 id="6-1-5-errorPage"><a href="#6-1-5-errorPage" class="headerlink" title="6.1.5 errorPage"></a>6.1.5 errorPage</h4><p>我们可能会遇到这种情况，服务器端程序出现异常错误，这时候前端页面就会报错，那么这种情况对于程序员来说比较常见，但是对于客户来说就比较麻烦，他们没见过这种情况。所以一般来说，为了避免影响客户体验，<strong>如果程序出现错误，就跳转到指定页面，用errorPage属性指明跳转到的页面</strong>。语法如下所示：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;%<span class="meta">@page</span> errorPage=<span class="string">&quot;asdf.jsp&quot;</span>%&gt;</span><br></pre></td></tr></table></figure>
+
+<p>通过对比两个jsp文件翻译之后的Java代码，发现errorPage属性对应下面的变化：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pageContext = _jspxFactory.getPageContext(<span class="keyword">this</span>, request, response, <span class="keyword">null</span>, <span class="keyword">true</span>, <span class="number">8192</span>, <span class="keyword">true</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 变化为</span></span><br><span class="line">pageContext = _jspxFactory.getPageContext(<span class="keyword">this</span>, request, response, <span class="string">&quot;asdf.jsp&quot;</span>, <span class="keyword">true</span>, <span class="number">8192</span>, <span class="keyword">true</span>);</span><br></pre></td></tr></table></figure>
+
+<h4 id="6-1-6-isErrorPage"><a href="#6-1-6-isErrorPage" class="headerlink" title="6.1.6 isErrorPage"></a>6.1.6 isErrorPage</h4><p>上个指令虽然在前端省去了异常堆栈信息，但是注意后台却没有异常堆栈信息，这样就会导致程序员无法排错，此时我们需要使用内置对象exception，手动将异常堆栈信息打印到指定的位置（日志），<strong>注意，是在跳转后的错误页面进行设置</strong>。<strong>首先设置isErrorPage属性为true，这样才能使用内置对象exception。默认不写表示为false</strong>。</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page contentType=<span class="string">&quot;text/html;charset=UTF-8&quot;</span> isErrorPage=<span class="string">&quot;true&quot;</span> %&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">error page</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line"></span><br><span class="line">&lt;%</span><br><span class="line">    exception.printStackTrace();</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-2-include指令"><a href="#6-2-include指令" class="headerlink" title="6.2 include指令"></a>6.2 include指令</h3><p>在网页中有一些主体框架，例如：网页头、网页脚，这些都是固定不变的，我们可以将网页头、网页脚这些固定不变的内容单独抽取出来编写到某个JSP文件中，在需要的页面使用include指令将该JSP文件包含进来。该指令只有file一个属性，用于将其他文件内容引入到本文件中。</p>
+<p>优点是代码量少了，便于维护，修改一个文件即可作用于所有的页面。在一个JSP文件中可以使用多个include指令。</p>
+<p><strong>注意，前面提到过，JSP文件会被翻译成.java文件，那么这个include指令是怎么工作的呢？是在翻译前将两个jsp文件整合到一起再翻译成一个java文件，还是分别翻译，然后再将Java文件整合到一起呢？</strong></p>
+<p>查看翻译后的文件发现，只有一个java文件，那么include指令是在编译期包含，先将文件整合，然后再翻译成一个java文件。在翻译器包含或者编译期包含，这被称为<strong>静态联编</strong>。<strong>但是这样，两个文件不能包含重名的变量，会造成冲突。</strong></p>
+<p>案例如下所示：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;%-- index.jsp文件 --%&gt;</span><br><span class="line">&lt;%@ page contentType=<span class="string">&quot;text/html;charset=UTF-8&quot;</span> language=<span class="string">&quot;java&quot;</span> %&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">  &lt;head&gt;</span><br><span class="line">    &lt;title&gt;$Title$&lt;/title&gt;</span><br><span class="line">  &lt;/head&gt;</span><br><span class="line">  &lt;body&gt;</span><br><span class="line">  &lt;%<span class="meta">@include</span> file=<span class="string">&quot;/index2.jsp&quot;</span>%&gt;</span><br><span class="line">  &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;%-- index2.jsp文件 --%&gt;</span><br><span class="line">&lt;%@ page contentType=<span class="string">&quot;text/html;charset=UTF-8&quot;</span> language=<span class="string">&quot;java&quot;</span> %&gt;</span><br><span class="line">这是index2.jsp页面。</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意，因为是将JSP文件整合到一个文件中（service方法中的局部变量或者servlet中的成员变量），最终翻译到一个service方法中或者同一个servlet类中，所以两个文件定义的变量是可以共用的。</strong></p>
+<h3 id="6-3-taglib指令"><a href="#6-3-taglib指令" class="headerlink" title="6.3 taglib指令"></a>6.3 taglib指令</h3><p>见后续标签库部分。</p>
+<h2 id="7-动作"><a href="#7-动作" class="headerlink" title="7. 动作"></a>7. 动作</h2><p>JSP的动作指的是转发等操作（<strong>并不包含重定向</strong>），语法格式如下所示：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;jsp:动作名 属性名=属性值 属性名=属性值...&gt;&lt;/jsp:动作名jsp:动作名&gt;</span><br></pre></td></tr></table></figure>
+
+<p>JSP的动作如下所示：</p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/jsp/jsp_05.png" alt="jsp_05.png (624×321) (gitee.io)"></p>
+<p>主要的动作有forward、include等等。</p>
+<h3 id="7-1-include"><a href="#7-1-include" class="headerlink" title="7.1 include"></a>7.1 include</h3><p>前面提到过，include指令可以静态联编，将JSP文件整合到一起再翻译成Java文件。而<strong>include动作则可以动态联编</strong>，分别翻译成Java程序，在调用包括的文件即可。</p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/jsp/jsp_06.png" alt="jsp_06.png (796×142) (gitee.io)"></p>
+<p>可以看到在主JSP文件翻译后的Java程序中多了下面的这句话：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">org.apache.jasper.runtime.JspRuntimeLibrary.include(request, response, <span class="string">&quot;index2.jsp&quot;</span>, out, <span class="keyword">false</span>);</span><br></pre></td></tr></table></figure>
+
+<p>即运行时将二者联合起来，实际上是在运行阶段调用，<strong>动态联编</strong>。允许两个文件包括重名的变量。</p>
+<p>所以，如果两个文件不共享变量，但是有重名变量，这就需要动态联编；如果想共享变量，只能采用静态联编。</p>
+<h3 id="7-2-forward"><a href="#7-2-forward" class="headerlink" title="7.2 forward"></a>7.2 forward</h3><p>转发动作和Java中的转发一样，没什么区别。转发动作语法如下所示：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;jsp:forward page=<span class="string">&quot;index2.jsp&quot;</span>&gt;&lt;/jsp:forward&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="8-JSP总结"><a href="#8-JSP总结" class="headerlink" title="8. JSP总结"></a>8. JSP总结</h2><p>可以看到，目前JSP的初衷就是为了读取传过来的封装好的数据进行动态页面展示，可以自动翻译前端代码，也可以利用特殊语法嵌入后端代码。但是不得不说JSP规定了很多种语法，导致仍然出现了大量代码，前后端的分离并不是很理想。所以JSP后期改进，采用<strong>EL表达式+JSTL标签库来简化JSP中的Java代码，从而在一定程度上形成前后端解耦合</strong>。</p>
+<h2 id="9-EL表达式"><a href="#9-EL表达式" class="headerlink" title="9. EL表达式"></a>9. EL表达式</h2><p>上面总结中提到，JSP主要目的就是读取封装好的数据，然后将其输出到页面中，这部分代码比较繁琐，包括类型转换等等。那么可不可以将这些步骤简化呢？<strong>实际上是可以的，EL（Expression Language）表达式就是负责这部分，将这部分代码再封装。</strong></p>
+<p>EL表达式是一个由Java开发的工具包，专门用于从域对象读取数据并写入到响应体中，该工具包在Tomcat安装目录下的lib目录中（el-api.jar）。</p>
+<p>简单语法如下所示：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$&#123;域对象别名.关键字&#125;</span><br><span class="line"></span><br><span class="line">&lt;%-- 这里的域对象指的就是四个域，关键字就是Attribute中的key部分，返回的内容就是其value部分。 --%&gt;</span><br></pre></td></tr></table></figure>
+
+<p>域对象的别名如下所示：</p>
+<table>
+<thead>
+<tr>
+<th>域对象</th>
+<th>EL表达式别名</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>application</td>
+<td>applicationScope</td>
+</tr>
+<tr>
+<td>session</td>
+<td>sessionScope</td>
+</tr>
+<tr>
+<td>request</td>
+<td>requestScope</td>
+</tr>
+<tr>
+<td>pageContext</td>
+<td>pageScope</td>
+</tr>
+</tbody></table>
+<h3 id="9-1-简单使用"><a href="#9-1-简单使用" class="headerlink" title="9.1 简单使用"></a>9.1 简单使用</h3><p>在域中存储基本数据类型，简单获取如下所示：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;%</span><br><span class="line">pageContext.setAttribute(<span class="string">&quot;pageContext&quot;</span>, <span class="string">&quot;this is pageContext&quot;</span>);</span><br><span class="line">request.setAttribute(<span class="string">&quot;request&quot;</span>, <span class="number">123</span>);</span><br><span class="line">session.setAttribute(<span class="string">&quot;session&quot;</span>, <span class="number">3.1415926</span>);</span><br><span class="line">application.setAttribute(<span class="string">&quot;application&quot;</span>, <span class="string">&quot;this is application&quot;</span>);</span><br><span class="line">%&gt;</span><br><span class="line"></span><br><span class="line">pageContext: $&#123;pageScope.pageContext&#125;&lt;br&gt;</span><br><span class="line">request: $&#123;requestScope.request&#125;&lt;br&gt;</span><br><span class="line">session: $&#123;sessionScope.session&#125;&lt;br&gt;</span><br><span class="line">application: $&#123;applicationScope.application&#125;&lt;br&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/jsp/jsp_07.png" alt="jsp_07.png (512×339) (gitee.io)"></p>
+<p>查看翻译后的Java文件，翻译成的Java语句如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.proprietaryEvaluate(<span class="string">&quot;$&#123;pageScope.pageContext&#125;&quot;</span>, java.lang.String.class, (javax.servlet.jsp.PageContext)_jspx_page_context, <span class="keyword">null</span>));</span><br></pre></td></tr></table></figure>
+
+<h3 id="9-2-读取引用数据类型的属性数据"><a href="#9-2-读取引用数据类型的属性数据" class="headerlink" title="9.2 读取引用数据类型的属性数据"></a>9.2 读取引用数据类型的属性数据</h3><p>用法和上面类似：<code>$&#123;域对象别名.key.属性名&#125;</code>。<strong>注意，EL表达式利用反射机制，通过调用当前属性的get方法来读取对应的属性值的，所以引用数据类型要有get、set等方法。</strong>测试案例如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> el;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Objects;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">double</span> height;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">double</span> weight;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">(String name, <span class="keyword">double</span> height, <span class="keyword">double</span> weight)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.height = height;</span><br><span class="line">        <span class="keyword">this</span>.weight = weight;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getHeight</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> height;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setHeight</span><span class="params">(<span class="keyword">double</span> height)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.height = height;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getWeight</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> weight;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setWeight</span><span class="params">(<span class="keyword">double</span> weight)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.weight = weight;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Student&#123;&quot;</span> +</span><br><span class="line">                <span class="string">&quot;name=&#x27;&quot;</span> + name + <span class="string">&#x27;\&#x27;&#x27;</span> +</span><br><span class="line">                <span class="string">&quot;, height=&quot;</span> + height +</span><br><span class="line">                <span class="string">&quot;, weight=&quot;</span> + weight +</span><br><span class="line">                <span class="string">&#x27;&#125;&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object o)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span> == o) <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        <span class="keyword">if</span> (o == <span class="keyword">null</span> || getClass() != o.getClass()) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        Student student = (Student) o;</span><br><span class="line">        <span class="keyword">return</span> Double.compare(student.height, height) == <span class="number">0</span> &amp;&amp;</span><br><span class="line">                Double.compare(student.weight, weight) == <span class="number">0</span> &amp;&amp;</span><br><span class="line">                Objects.equals(name, student.name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Objects.hash(name, height, weight);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page contentType=<span class="string">&quot;text/html;charset=UTF-8&quot;</span> language=<span class="string">&quot;java&quot;</span> %&gt;</span><br><span class="line">&lt;%@ page <span class="keyword">import</span>=<span class="string">&quot;el.Student&quot;</span> %&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">  &lt;head&gt;</span><br><span class="line">    &lt;title&gt;EL表达式测试&lt;/title&gt;</span><br><span class="line">  &lt;/head&gt;</span><br><span class="line">  &lt;body&gt;</span><br><span class="line">  &lt;%</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    pageContext.setAttribute(<span class="string">&quot;pageContext&quot;</span>, <span class="keyword">new</span> Student(<span class="string">&quot;张三&quot;</span>, <span class="number">1.76</span>, <span class="number">70</span>));</span><br><span class="line">    request.setAttribute(<span class="string">&quot;request&quot;</span>, <span class="keyword">new</span> Student(<span class="string">&quot;李思&quot;</span>, <span class="number">1.65</span>, <span class="number">50</span>));</span><br><span class="line">    session.setAttribute(<span class="string">&quot;session&quot;</span>, <span class="number">3.1415926</span>);</span><br><span class="line">    application.setAttribute(<span class="string">&quot;application&quot;</span>, <span class="string">&quot;this is application&quot;</span>);</span><br><span class="line">  %&gt;</span><br><span class="line"></span><br><span class="line">  pageContext: $&#123;pageScope.pageContext.name&#125;; $&#123;pageScope.pageContext.height&#125;; $&#123;pageScope.pageContext.weight&#125;&lt;br&gt;</span><br><span class="line">  request: $&#123;requestScope.request&#125;&lt;br&gt;</span><br><span class="line">  session: $&#123;sessionScope.session&#125;&lt;br&gt;</span><br><span class="line">  application: $&#123;applicationScope.application&#125;&lt;br&gt;</span><br><span class="line"></span><br><span class="line">  &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="9-3-简化版"><a href="#9-3-简化版" class="headerlink" title="9.3 简化版"></a>9.3 简化版</h3><p>可以更简单点，不写域对象别名，直接写key。但是这样做的原理是什么呢？他怎么知道是哪个域对象的呢？<strong>它是根据作用域的范围来选择的，首先对pageContext对象进行查找，如果找到关键字则输出，没有则对request对象进行查找，然后对session查找，最后对application对象查找。都没有找到则返回null。</strong>所以它首选是根据域对象的作用范围由小到大进行查找，然后小范围对象优先，所以如果采用简化版，key要尽量不同。</p>
+<p>缺点：会增加检索时间，效率降低；另外key不同相同，否则会“覆盖”。所以，<strong>适合专门读取pageContext对象中的内容</strong>。</p>
+<h3 id="9-4-EL表达式中的运算"><a href="#9-4-EL表达式中的运算" class="headerlink" title="9.4 EL表达式中的运算"></a>9.4 EL表达式中的运算</h3><p>EL表达式支持算术运算（+-*/）、关系运算（&gt;, &gt;=, &lt;, &lt;=, ==, !=）和逻辑运算等运算(&amp;&amp;, ||, !)。<strong>注意，EL表达式没有if…else条件语句，所以在涉及到关系运算时可以采用条件表达式。</strong>简单案例如下所示：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;%</span><br><span class="line">    request.setAttribute(<span class="string">&quot;age&quot;</span>, <span class="number">23</span>);</span><br><span class="line">%&gt;</span><br><span class="line"></span><br><span class="line">el表达式：&lt;br&gt;</span><br><span class="line">算术运算：$&#123;requestScope.age + <span class="number">10</span>&#125;&lt;br&gt;</span><br><span class="line">关系运算：$&#123;requestScope.age &gt; <span class="number">18</span> ? <span class="string">&quot;欢迎光临&quot;</span> : <span class="string">&quot;谢绝入内&quot;</span>&#125;&lt;br&gt;</span><br><span class="line">逻辑运算：$&#123;(requestScope.age &gt; <span class="number">18</span>) &amp;&amp; <span class="keyword">true</span>&#125;&lt;br&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/jsp/jsp_08.png" alt="jsp_08.png (507×322) (gitee.io)"></p>
+<h3 id="9-5-EL表达式其他内置对象"><a href="#9-5-EL表达式其他内置对象" class="headerlink" title="9.5 EL表达式其他内置对象"></a>9.5 EL表达式其他内置对象</h3><ol>
+<li><p>param</p>
+<p>该对象表示<code>request.getParameter()</code>，语法格式<code>$&#123;param.请求参数名&#125;</code>，等同于<code>request.getParameter(&quot;请求参数名&quot;)</code>。即读取请求对象中的参数内容。</p>
+</li>
+<li><p>paramValues</p>
+<p>该对象相当于<code>request.getParameterValues()</code>，语法格式<code>$&#123;paramValues.请求参数名&#125;</code>，相当于获取类似复选框的这种一对多的属性的值，返回一个数组。<strong>注意，EL表达式不支持循环，所以对于数组这种就需要后续的JSTL标签库了。</strong></p>
+</li>
+<li><p>initParam</p>
+<p>该对象相当于<code>application.getInitParameter()</code>，读取应用域对象的一些全局配置信息（web.xml）。</p>
+</li>
+</ol>
+<p>简单案例测试如下所示：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">用户名：$&#123;param.username&#125;&lt;br&gt;</span><br><span class="line">密码：$&#123;param.password&#125;&lt;br&gt;</span><br><span class="line">爱好：$&#123;paramValues.interests[<span class="number">0</span>]&#125;;$&#123;paramValues.interests[<span class="number">1</span>]&#125;;$&#123;paramValues.interests[<span class="number">2</span>]&#125;&lt;br&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/jsp/jsp_09.png" alt="jsp_09.png (1229×298) (gitee.io)"></p>
+<h3 id="9-6-EL表达式缺点"><a href="#9-6-EL表达式缺点" class="headerlink" title="9.6 EL表达式缺点"></a>9.6 EL表达式缺点</h3><ul>
+<li>只能读取域对象数据，不能像域对象中写入数据和修改数据；</li>
+<li>不支持控制语句（if、for、while）等等。</li>
+</ul>
+<p><strong>而JSP页面中应当尽量少出现Java代码，所以这就需要另一个工具JSTL标签库。</strong></p>
+<h2 id="10-JSTL标签库"><a href="#10-JSTL标签库" class="headerlink" title="10. JSTL标签库"></a>10. JSTL标签库</h2><p>JSTL的全称是：JSP Standard Tag Lib，JSP的标准标签刻库。因为JSP中最好不要出现Java代码，所以出现了EL表达式简化Java代码，但是EL表达式存在一定的缺点，无法将所有的Java代码都转换成EL表达式，所以SUN公司又扩展了一些功能，将Java代码转换成标签形式。<strong>其实就是为了从表面看起来前后端分离，但是本质上仍然是Java代码，相当于EL表达式的扩展。</strong></p>
+<p>JSTL主要由以下四个模块组成：</p>
+<ul>
+<li>核心标签：Java在JSP上的基本功能的封装（如if、while等等）</li>
+<li>SQL标签：JDBC在JSP上的使用</li>
+<li>xml标签：DOM4J在JSP上的使用（专门用于读取xml文件）</li>
+<li>Format标签：JSP文件格式转换（如日期转换成字符串）</li>
+</ul>
+<p>其中，因为JSP现在越来越少用，所以主要是其核心标签用的比较多，主要讲解一下核心标签的用法。</p>
+<h3 id="10-1-配置JSTL"><a href="#10-1-配置JSTL" class="headerlink" title="10.1 配置JSTL"></a>10.1 配置JSTL</h3><p>和JDBC.jar包一样，这个标签库属于扩展的功能，不属于Java SE，所以首先需要导入已经实现的标签转换Jar包：<code>jstl.jar</code>和<code>standard.jar</code>，这两个jar包可以在Tomcat自带的examples项目中找到（<strong>这里的jar包，需要在external libraries中导入，不是项目的web-inf/lib下，不知道二者的区别是什么上</strong>）。导入项目所需的jar包后，需要在jsp文件中引入JSTL中core包依赖约束，即<strong>上面所述的jsp的taglib指令</strong>。如下所示，其中uri是固定的，prefix指的是所用标签的一个前缀，用于区分不同人所写的标签，相当于python中的import xxx as后的别名，下面的c指的就是core的别名，后续用core中的标签，可以先写一个前缀c用于表示core中的标签。</p>
+<p><code>&lt;%@taglib uri=&quot;http://java.sun.com/jsp/jstl/core&quot; prefix=&quot;c&quot;%&gt;</code></p>
+<h3 id="10-2-set标签"><a href="#10-2-set标签" class="headerlink" title="10.2 set标签"></a>10.2 set标签</h3><p>set标签用于在四个域对象中存储内容，（从域对象中取内容已经在EL表达式中讲解了），语法如下所示：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;c:set scpoe=<span class="string">&quot;session&quot;</span> <span class="keyword">var</span>=<span class="string">&quot;key&quot;</span>, value=<span class="string">&quot;value&quot;</span>&gt;&lt;/c:set&gt;</span><br></pre></td></tr></table></figure>
+
+<p>该句代替的是：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">session.setAttritube(<span class="string">&quot;key&quot;</span>, <span class="string">&quot;value&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>其中scope指的是四个域对象别名的别名，这里的别名是将上述别名后面的Scpoe去掉。var指的就是键值对中的key，value指的是键值对中的value。</p>
+<h3 id="10-3-if标签"><a href="#10-3-if标签" class="headerlink" title="10.3 if标签"></a>10.3 if标签</h3><p>if标签用于替代Java中的if语句。语法如下所示：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;c:<span class="keyword">if</span> test=<span class="string">&quot;通过EL表达式进行判断&quot;</span>&gt;</span><br><span class="line">    条件满足后执行该语句</span><br><span class="line">&lt;/c:<span class="keyword">if</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="10-4-choose标签"><a href="#10-4-choose标签" class="headerlink" title="10.4 choose标签"></a>10.4 choose标签</h3><p>choose标签用于代替Java中的switch语句。语法如下所示：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;c:choose&gt;</span><br><span class="line">    &lt;c:when test=<span class="string">&quot;通过EL表达式进行判断&quot;</span>&gt;条件满足后执行该语句&lt;/c:when&gt;</span><br><span class="line">    &lt;c:when test=<span class="string">&quot;通过EL表达式进行判断&quot;</span>&gt;条件满足后执行该语句&lt;/c:when&gt;</span><br><span class="line">    &lt;c:otherwise&gt;以上条件都不满足执行该语句&lt;/c:otherwise&gt;</span><br><span class="line">&lt;/c:choose&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="10-5-forEach标签"><a href="#10-5-forEach标签" class="headerlink" title="10.5 forEach标签"></a>10.5 forEach标签</h3><p>该标签用于替代Java中的循环，语法如下所示：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 第一种用法</span></span><br><span class="line"><span class="comment">// var变量会自动保存在当前页面域对象pageContext中</span></span><br><span class="line"><span class="comment">// step不写默认为1</span></span><br><span class="line">&lt;seleect&gt;</span><br><span class="line">    &lt;c:forEach <span class="keyword">var</span>=<span class="string">&quot;i&quot;</span> begin=<span class="string">&quot;1&quot;</span> end=<span class="string">&quot;5&quot;</span> step=<span class="string">&quot;1&quot;</span>&gt;</span><br><span class="line">        &lt;option&gt;第$&#123;pageScope.i&#125;页&lt;/option&gt;</span><br><span class="line">	&lt;/c:forEach&gt;</span><br><span class="line">&lt;/seleect&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 第二种用法</span></span><br><span class="line"><span class="comment">// 遍历items指向的对象，类似增强for循环，stu代表每次遍历的对象子对象。</span></span><br><span class="line">&lt;c:forEach items=<span class="string">&quot;通过EL表达式获得域对象中的集合&quot;</span> <span class="keyword">var</span>=<span class="string">&quot;stu&quot;</span>&gt;</span><br><span class="line">    $&#123;stu.name&#125;</span><br><span class="line">&lt;/c:forEach&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="10-6-案例"><a href="#10-6-案例" class="headerlink" title="10.6 案例"></a>10.6 案例</h3><p>案例如下所示：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page contentType=<span class="string">&quot;text/html;charset=UTF-8&quot;</span> language=<span class="string">&quot;java&quot;</span> %&gt;</span><br><span class="line">&lt;%@ taglib uri=<span class="string">&quot;http://java.sun.com/jsp/jstl/core&quot;</span> prefix=<span class="string">&quot;core&quot;</span> %&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">  &lt;head&gt;</span><br><span class="line">    &lt;title&gt;$Title$&lt;/title&gt;</span><br><span class="line">  &lt;/head&gt;</span><br><span class="line">  &lt;body&gt;</span><br><span class="line">  &lt;core:set scope=<span class="string">&quot;page&quot;</span> <span class="keyword">var</span>=<span class="string">&quot;name&quot;</span> value=<span class="string">&quot;zhangSan&quot;</span>&gt;&lt;/core:set&gt;</span><br><span class="line">  &lt;core:set scope=<span class="string">&quot;request&quot;</span> <span class="keyword">var</span>=<span class="string">&quot;name&quot;</span> value=<span class="string">&quot;liSi&quot;</span>&gt;&lt;/core:set&gt;</span><br><span class="line">  &lt;core:set scope=<span class="string">&quot;session&quot;</span> <span class="keyword">var</span>=<span class="string">&quot;name&quot;</span> value=<span class="string">&quot;wagnWu&quot;</span>&gt;&lt;/core:set&gt;</span><br><span class="line">  &lt;core:set scope=<span class="string">&quot;application&quot;</span> <span class="keyword">var</span>=<span class="string">&quot;name&quot;</span> value=<span class="string">&quot;zhaoLiu&quot;</span>&gt;&lt;/core:set&gt;</span><br><span class="line">  pageScope中的name: $&#123;pageScope.name&#125;&lt;br&gt;</span><br><span class="line">  requestScope中的name: $&#123;requestScope.name&#125;&lt;br&gt;</span><br><span class="line">  sessionScope中的name: $&#123;sessionScope.name&#125;&lt;br&gt;</span><br><span class="line">  applicationScope中的name: $&#123;applicationScope.name&#125;&lt;br&gt;</span><br><span class="line"></span><br><span class="line">  &lt;core:set scope=<span class="string">&quot;session&quot;</span> <span class="keyword">var</span>=<span class="string">&quot;age&quot;</span> value=<span class="string">&quot;15&quot;</span>&gt;&lt;/core:set&gt;</span><br><span class="line">  &lt;core:<span class="keyword">if</span> test=<span class="string">&quot;$&#123;sessionScope.age &gt; 18&#125;&quot;</span>&gt;</span><br><span class="line">    年龄满足，欢迎进入！</span><br><span class="line">  &lt;/core:<span class="keyword">if</span>&gt;</span><br><span class="line"></span><br><span class="line">  &lt;core:<span class="keyword">if</span> test=<span class="string">&quot;$&#123;sessionScope.age &lt;= 18&#125;&quot;</span>&gt;</span><br><span class="line">    年龄未满<span class="number">18</span>周岁，禁止进入！</span><br><span class="line">  &lt;/core:<span class="keyword">if</span>&gt;</span><br><span class="line">  &lt;br&gt;</span><br><span class="line"></span><br><span class="line">  该学生的成绩等级是：</span><br><span class="line">  &lt;core:set scope=<span class="string">&quot;session&quot;</span> <span class="keyword">var</span>=<span class="string">&quot;scope&quot;</span> value=<span class="string">&quot;95&quot;</span>&gt;&lt;/core:set&gt;</span><br><span class="line">  &lt;core:choose&gt;</span><br><span class="line">    &lt;core:when test=<span class="string">&quot;$&#123;sessionScope.scope &gt;= 90&#125;&quot;</span>&gt;A&lt;/core:when&gt;</span><br><span class="line">    &lt;core:when test=<span class="string">&quot;$&#123;sessionScope.scope &gt;= 80&#125;&quot;</span>&gt;B&lt;/core:when&gt;</span><br><span class="line">    &lt;core:when test=<span class="string">&quot;$&#123;sessionScope.scope &gt;= 70&#125;&quot;</span>&gt;C&lt;/core:when&gt;</span><br><span class="line">    &lt;core:when test=<span class="string">&quot;$&#123;sessionScope.scope &gt;= 60&#125;&quot;</span>&gt;D&lt;/core:when&gt;</span><br><span class="line">    &lt;core:otherwise&gt;E&lt;/core:otherwise&gt;</span><br><span class="line">  &lt;/core:choose&gt;</span><br><span class="line">  &lt;br&gt;</span><br><span class="line">  下拉列表</span><br><span class="line">  &lt;select&gt;</span><br><span class="line">  &lt;%</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>; i&lt;=<span class="number">5</span>; i++)&#123;</span><br><span class="line">  %&gt;</span><br><span class="line">    &lt;option&gt;第&lt;%=i%&gt;页&lt;/option&gt;</span><br><span class="line">  &lt;%</span><br><span class="line">    &#125;</span><br><span class="line">  %&gt;</span><br><span class="line">  &lt;/select&gt;</span><br><span class="line">  &lt;br&gt;</span><br><span class="line"></span><br><span class="line">  下拉列表（JSTL）</span><br><span class="line">  &lt;%-- 自动将变量写入页面域中 --%&gt;</span><br><span class="line">  &lt;select&gt;</span><br><span class="line">    &lt;core:forEach <span class="keyword">var</span>=<span class="string">&quot;i&quot;</span> begin=<span class="string">&quot;1&quot;</span> end=<span class="string">&quot;5&quot;</span> step=<span class="string">&quot;1&quot;</span>&gt;</span><br><span class="line">      &lt;option&gt;第$&#123;pageScope.i&#125;页&lt;/option&gt;</span><br><span class="line">    &lt;/core:forEach&gt;</span><br><span class="line">  &lt;/select&gt;</span><br><span class="line">  &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/jsp/jsp_10.png" alt="jsp_10.png (496×439) (gitee.io)"></p>
+<h2 id="11-备注"><a href="#11-备注" class="headerlink" title="11. 备注"></a>11. 备注</h2><p><em>参考B站《动力节点》。</em></p>
+
                 
             </div>
             <hr/>
@@ -500,7 +831,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">hianian</a>
+                    <a href="/about" rel="external nofollow noreferrer">浮云</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -523,7 +854,7 @@
                     本博客所有文章除特別声明外，均采用
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     许可协议。转载请注明来源
-                    <a href="/about" target="_blank">hianian</a>
+                    <a href="/about" target="_blank">浮云</a>
                     !
                 </span>
             </div>
@@ -547,7 +878,11 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/JavaWeb/">
+                                    <span class="chip bg-color">JavaWeb</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -990,7 +1325,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">156.6k</span>&nbsp;字
+                class="white-color">168.1k</span>&nbsp;字
             
             
             
