@@ -429,9 +429,13 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/JavaWeb/">
+                                <span class="chip bg-color">JavaWeb</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -450,21 +454,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-01-19
+                    2022-01-28
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    0
+                    3.7k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    15 分
                 </div>
                 
 
@@ -484,7 +488,111 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                
+                <p>在数据库CRUD这个例子中，可以看到，浏览器端展示的页面，在每次操作之后都是完全由服务器返回的页面，即页面是全部刷新的，称为<strong>全局刷新</strong>。但是有时候，我们进行一步操作之后，页面展示的内容并没有完全发生变化，即只有一小部分页面的内容发生了变化，那么这个时候如果还是采用全局刷新的形式，就会有很多无用的数据传输，响应时间变长，即浪费了带宽资源，也影响了用户体验。所以可以采用<strong>局部刷新</strong>（AJAX， Asynchronous JavaScript and XML），只传输需要改变的内容数据。</p>
+<p>全局刷新的流程如下所示：</p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/ajax/ajax_001.png" alt="ajax_001.png (867×208) (gitee.io)"></p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/ajax/ajax_002.png" alt="ajax_002.png (857×197) (gitee.io)"></p>
+<p>异步刷新的流程如下所示：</p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/ajax/ajax_003.png" alt="ajax_003.png (856×372) (gitee.io)"></p>
+<h2 id="1-异步请求对象"><a href="#1-异步请求对象" class="headerlink" title="1. 异步请求对象"></a>1. 异步请求对象</h2><p>在全局刷新中，浏览器向服务器发起请求，服务器响应内容，浏览器根据响应内容渲染页面。那么在局部刷新中，由<strong>异步对象（XMLHttpRequest）</strong>代替浏览器发起请求，并获取数据（服务端只会原路返回响应数据，所以谁发送的数据，谁就会收到数据），将其展示在浏览器页面上。<strong>在浏览器内存中，可以创建多个异步对象，每个都可独立地发起请求。</strong></p>
+<p>XMLHttpRequest对象能够：</p>
+<ul>
+<li>在不重新加载页面的情况下更新网页；</li>
+<li>在页面已加载后向服务器请求数据；</li>
+<li>在页面已加载后从服务器接收数据。</li>
+</ul>
+<p>AJAX， 即Asynchronous JavaScript and XML，和同步相对应，异步的JavaScript和xml；AJAX并不是一种语言，是一种方法。本质上AJAX属于JavaScript的内容，异步刷新对象可由JS来创建，如下所示：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> xmlhttp = <span class="keyword">new</span> XMLHttpRequest(); </span><br></pre></td></tr></table></figure>
+
+<p>JavaScript负责创建异步对象，发送请求，更新页面的dom对象。XML用于网络中传输数据的格式（现在一般用json格式来传输数据）。</p>
+<p>异步刷新的步骤如下所示：</p>
+<ol>
+<li><p>创建异步对象；</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> xmlhttp = <span class="keyword">new</span> XMLHttpRequest(); </span><br></pre></td></tr></table></figure></li>
+<li><p>给异步对象绑定事件（<strong>onreadystatechange</strong>）</p>
+<p>当异步对象发起请求或者获取数据，都会触发这个事件（实际上异步对象有一个属性，该属性<strong>readyState</strong>会随着请求对象的状态变化而变化，该属性的变化对应这个事件）。我们可以指定一个函数来处理相关操作（如刷新页面）。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">xmlHttp.onreadystatechange = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    处理请求的状态变化。</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>readyState</strong>属性代表异步对象XMLHttpRequest的状态，共5个（0,4）：</p>
+<ul>
+<li>0，请求未初始化，即刚刚创建完异步请求对象，<code>var xmlhttp = new XMLHttpRequest(); </code>；</li>
+<li>1，初始化异步请求对象，<code>xmlhttp.open(请求方法，请求地址，true)</code>；</li>
+<li>2，异步对象发送请求，<code>xmlhttp.send()</code>；</li>
+<li>3，异步对象接收应答数据，即从服务端返回数据，XMLHttpRequest内部处理。</li>
+<li>4，异步请求对象已经将数据解析完毕，此时才可以读取数据。<strong>开发人员根据数据来更新当前页面。所以我们主要判断异步对象的该属性是否为此状态。</strong></li>
+</ul>
+<p>除此之外，因为是网络请求，所以还需要异步请求对象的另一个属性<strong>status</strong>，表示网络响应的状态码。常见的状态码如下所示：</p>
+<ul>
+<li>200，请求成功</li>
+<li>404，资源未找到</li>
+<li>405，服务器不处理请求中的方法（如post、get等等）</li>
+<li>500，服务器内部错误</li>
+</ul>
+<p><strong>所以，当status为200，并且readyState为4时，表示异步对象成功获得了请求成功并响应的数据，程序员可以进一步操作</strong>。</p>
+</li>
+<li><p>初始化异步请求对象的参数</p>
+<p>根据异步对象的方法<code>open()</code>初始化异步请求对象的参数，即<code>xmlHttp.open(请求方法get|post，请求地址，异步true(默认)|同步请求false)</code>。</p>
+</li>
+<li><p>异步对象发送请求</p>
+<p>根据异步对象的方法<code>xmlHttp.send()</code>方法发送请求。发送请求后，等待服务器端响应。<strong>那么怎么获取服务器端的数据呢？</strong></p>
+<p>利用上述第2步的readyState和status两个属性判断，判断成功后，利用异步请求对象的<code>responseText</code>属性获取数据。</p>
+</li>
+</ol>
+<h2 id="2-异步刷新案例"><a href="#2-异步刷新案例" class="headerlink" title="2. 异步刷新案例"></a>2. 异步刷新案例</h2><p>简单的一个Servlet案例，计算BMI值，由前端提交数据，后端计算好BMI后返回给前端。</p>
+<h3 id="2-1-首先前端采用jsp来做，异步刷新采用4步骤。"><a href="#2-1-首先前端采用jsp来做，异步刷新采用4步骤。" class="headerlink" title="2.1 首先前端采用jsp来做，异步刷新采用4步骤。"></a>2.1 首先前端采用jsp来做，异步刷新采用4步骤。</h3><figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page contentType=<span class="string">&quot;text/html;charset=UTF-8&quot;</span> language=<span class="string">&quot;java&quot;</span> %&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;title&gt;局部刷新&lt;/title&gt;</span><br><span class="line">    &lt;script type=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">        <span class="function">function <span class="title">doAjax</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="comment">// 1. 创建异步请求对象</span></span><br><span class="line">            <span class="keyword">var</span> xmlHttp = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 2. 绑定事件</span></span><br><span class="line">            xmlHttp.onreadystatechange = function()&#123;</span><br><span class="line">                <span class="comment">// 事件发生后处理服务器端返回的数据，更新当前页面</span></span><br><span class="line">                <span class="comment">// 可以先进行一下状态的测试</span></span><br><span class="line">                alert(<span class="string">&quot;readyState:&quot;</span> + xmlHttp.readyState);</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 3. 初始化异步请求对象</span></span><br><span class="line">            xmlHttp.open(<span class="string">&quot;post&quot;</span>, <span class="string">&quot;/Ajax01/asyn&quot;</span>, <span class="keyword">true</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 4. 异步请求对象发送请求</span></span><br><span class="line">            xmlHttp.send();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">    &lt;body&gt;</span><br><span class="line">    &lt;!-- 注意，Ajax不局限于form表单提交，采用异步对象发送请求--&gt;</span><br><span class="line">        姓名：&lt;input type=<span class="string">&quot;text&quot;</span> name=<span class="string">&quot;name&quot;</span> id=<span class="string">&quot;name&quot;</span>&gt;&lt;br&gt;</span><br><span class="line">        身高(m)：&lt;input type=<span class="string">&quot;text&quot;</span> name=<span class="string">&quot;height&quot;</span> id=<span class="string">&quot;height&quot;</span>&gt;&lt;br&gt;</span><br><span class="line">        体重(kg)：&lt;input type=<span class="string">&quot;text&quot;</span> name=<span class="string">&quot;weight&quot;</span> id=<span class="string">&quot;weight&quot;</span>&gt;&lt;br&gt;</span><br><span class="line">        &lt;input type=<span class="string">&quot;button&quot;</span> value=<span class="string">&quot;计算&quot;</span> onclick=<span class="string">&quot;doAjax()&quot;</span>&gt;</span><br><span class="line">    &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>可以先在第2步测试一下异步对象的状态变化。</p>
+<p>首先是初始化异步对象（状态为1，状态0是取不到的）。</p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/ajax/ajax_004.png" alt="ajax_004.png (1356×770) (gitee.io)"></p>
+<p>点击确定按钮后，然后是异步对象发送请求（状态为2）。注意，下面的type为xhr指的就是<code>XML Http Request</code>的简称。可以看到发生了网络数据的传输</p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/ajax/ajax_005.png" alt="ajax_005.png (1345×768) (gitee.io)"></p>
+<p>之后，点击确定按钮，状态为4。（因为服务器端没有返回数据，所以这里没有状态3）</p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/ajax/ajax_006.png" alt="ajax_006.png (1346×774) (gitee.io)"></p>
+<p><strong>服务端返回数据，利用status和readyState来获取数据并显示出来</strong>：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">        <span class="function">function <span class="title">doAjax</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="comment">// 1. 创建异步请求对象</span></span><br><span class="line">            <span class="keyword">var</span> xmlHttp = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 2. 绑定事件</span></span><br><span class="line">            xmlHttp.onreadystatechange = function()&#123;</span><br><span class="line">                <span class="comment">// 事件发生后处理服务器端返回的数据，更新当前页面</span></span><br><span class="line">                <span class="keyword">if</span>(xmlHttp.status == <span class="number">200</span> &amp;&amp; xmlHttp.readyState == <span class="number">4</span>)&#123;</span><br><span class="line">                    alert(<span class="string">&quot;数据:&quot;</span> + xmlHttp.responseText);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 3. 初始化异步请求对象</span></span><br><span class="line">            xmlHttp.open(<span class="string">&quot;post&quot;</span>, <span class="string">&quot;/Ajax01/asyn&quot;</span>, <span class="keyword">true</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 4. 异步请求对象发送请求</span></span><br><span class="line">            xmlHttp.send();</span><br><span class="line">        &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>如下所示，可以看到即使收到服务器返回的数据，浏览器端的页面并没有变化。</p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/ajax/ajax_007.png" alt="ajax_007.png (1215×770) (gitee.io)"></p>
+<p><strong>可以看到，xmlHttp.responseText实际上就是Servlet中输出流输出的内容。</strong>经过上述测试，完整的jsp页面如下所示：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page contentType=<span class="string">&quot;text/html;charset=UTF-8&quot;</span> language=<span class="string">&quot;java&quot;</span> %&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;title&gt;局部刷新&lt;/title&gt;</span><br><span class="line">    &lt;script type=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">        <span class="function">function <span class="title">doAjax</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="comment">// 1. 创建异步请求对象</span></span><br><span class="line">            <span class="keyword">var</span> xmlHttp = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 2. 绑定事件</span></span><br><span class="line">            xmlHttp.onreadystatechange = function()&#123;</span><br><span class="line">                <span class="comment">// 事件发生后处理服务器端返回的数据，更新当前页面</span></span><br><span class="line">                <span class="keyword">if</span>(xmlHttp.status == <span class="number">200</span> &amp;&amp; xmlHttp.readyState == <span class="number">4</span>)&#123;</span><br><span class="line">                    <span class="comment">// alert(&quot;数据:&quot; + xmlHttp.responseText);</span></span><br><span class="line">                    <span class="comment">// 接收数据并更新局部页面</span></span><br><span class="line">                    document.getElementById(<span class="string">&quot;data&quot;</span>).innerText = xmlHttp.responseText;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 3. 初始化异步请求对象</span></span><br><span class="line">            <span class="comment">// 首先获取要传送的数据</span></span><br><span class="line">            <span class="keyword">var</span> height = document.getElementById(<span class="string">&quot;height&quot;</span>).value;</span><br><span class="line">            <span class="keyword">var</span> weight = document.getElementById(<span class="string">&quot;weight&quot;</span>).value;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">var</span> param = <span class="string">&quot;height=&quot;</span> + height + <span class="string">&quot;&amp;weight=&quot;</span> + weight;</span><br><span class="line"></span><br><span class="line">            xmlHttp.open(<span class="string">&quot;post&quot;</span>, <span class="string">&quot;/Ajax01/asyn&quot;</span>, <span class="keyword">true</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// （open之后）采用post方式需写下面一行（即告诉服务器本请求是post请求）</span></span><br><span class="line">            xmlHttp.setRequestHeader(<span class="string">&quot;Content-type&quot;</span>, <span class="string">&quot;application/x-www-form-urlencoded&quot;</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 4. 异步请求对象发送请求</span></span><br><span class="line">            xmlHttp.send(param);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">    &lt;body&gt;</span><br><span class="line">    &lt;!-- 注意，Ajax不局限于form表单提交，采用异步对象发送请求--&gt;</span><br><span class="line">        姓名：&lt;input type=<span class="string">&quot;text&quot;</span> name=<span class="string">&quot;name&quot;</span> id=<span class="string">&quot;name&quot;</span>&gt;&lt;br&gt;</span><br><span class="line">        身高(m)：&lt;input type=<span class="string">&quot;text&quot;</span> name=<span class="string">&quot;height&quot;</span> id=<span class="string">&quot;height&quot;</span>&gt;&lt;br&gt;</span><br><span class="line">        体重(kg)：&lt;input type=<span class="string">&quot;text&quot;</span> name=<span class="string">&quot;weight&quot;</span> id=<span class="string">&quot;weight&quot;</span>&gt;&lt;br&gt;</span><br><span class="line">        &lt;input type=<span class="string">&quot;button&quot;</span> value=<span class="string">&quot;计算&quot;</span> onclick=<span class="string">&quot;doAjax()&quot;</span>&gt;&lt;br&gt;</span><br><span class="line">        &lt;br&gt;</span><br><span class="line">        &lt;div id=<span class="string">&quot;data&quot;</span>&gt;等待服务器计算并返回数据...&lt;/div&gt;</span><br><span class="line">    &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-服务器采用Servlet处理请求"><a href="#2-2-服务器采用Servlet处理请求" class="headerlink" title="2.2 服务器采用Servlet处理请求"></a>2.2 服务器采用Servlet处理请求</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AsynServlet</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doPost</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line"></span><br><span class="line">        request.setCharacterEncoding(<span class="string">&quot;UTF-8&quot;</span>);</span><br><span class="line"></span><br><span class="line">        String height = request.getParameter(<span class="string">&quot;height&quot;</span>);</span><br><span class="line">        String weight = request.getParameter(<span class="string">&quot;weight&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">double</span> bmi = Double.parseDouble(weight) / Math.pow(Double.parseDouble(height), <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">        System.out.println(bmi);</span><br><span class="line"></span><br><span class="line">        response.setContentType(<span class="string">&quot;text/html; charset=UTF-8&quot;</span>);</span><br><span class="line"></span><br><span class="line">        PrintWriter out = response.getWriter();</span><br><span class="line">        out.write(String.valueOf(bmi));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><em>备注，其实send方法的参数就是请求体中的内容，如果采用get请求方式，则不需要参数；如果采用post请求方式，则需要设置传递的参数。</em></p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/ajax/ajax_008.png" alt="ajax_008.png (1125×888) (gitee.io)"></p>
+<h3 id="2-3-总结"><a href="#2-3-总结" class="headerlink" title="2.3 总结"></a>2.3 总结</h3><p>本质上利用异步请求对象，然后根据请求方式的不同，构建URL即可。服务器端Servlet没什么区别。利用异步对象的readyState和status两个属性来判断是否正常请求和响应，然后利用异步对象的responseText属性来获取数据，进而根据id来局部更新页面的内容。</p>
+<p><strong>异步对象为什么称为异步呢？当其发起请求后，不用等待数据处理完毕，就可以执行其他的操作，等上面的处理完毕后再回来继续执行操作。相当于多线程，不同的线程之间互不影响。</strong></p>
+<h2 id="3-json"><a href="#3-json" class="headerlink" title="3. json"></a>3. json</h2><p>上面的例子中，服务端仅仅是返回的简单数据，如果返回的是比较复杂的数据，比如性别、年龄、身高、体重等等这些很多个字段的数据该怎么办呢？必然是<strong>将其封装成对象</strong>，但是这些数据前端需要拿到，所以封装的对象，<strong>前后端要都有这种类型对象</strong>，可以采用json来做（但是网络传输，在另一端一定是字符串形式，即json形式的数据转换成的字符串，在另一端还要将字符串转换成json对象）。除此之外，json还有以下特点：</p>
+<ol>
+<li>json格式好理解；</li>
+<li>json格式数据在多种语言中，比较容易处理，使用Java、JavaScript读写json格式的数据比较容易；</li>
+<li>json格式数据在网络中传输较快。</li>
+</ol>
+<p>常用的json工具包有Gson、FastJson、Jackson、Json-lib。这些库有的依赖较多、性能差，有的性能较好，有的规范不是很全面。介绍一个常用的Jackson工具库，Json工具库和JDBC一样，属于标准，需要第三方实现，这里采用Jackson工具包，将所需要的三个jar包导入到工程lib中即可。</p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/ajax/ajax_009.png" alt="ajax_009.png (438×80) (gitee.io)"></p>
+<p>**注意，如果服务器端响应的数据为json格式数据的话，需要设置响应内容类型<code>response.setContentType(&quot;application/json;charset=utf-8&quot;)</code>**。</p>
+<h3 id="3-1-案例"><a href="#3-1-案例" class="headerlink" title="3.1 案例"></a>3.1 案例</h3><p>服务器端返回json格式的数据（字符串），浏览器接收到后（字符串形式），将其转换成json格式数据读取并显示。首先简单测试一下Json工具库，该库中有一个<code>ObjectMapper</code>类，该类有一个<code>writeValueAsString</code>方法，将对象映射为Json格式的字符串。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JsonTest01</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doPost</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line"></span><br><span class="line">        User u = <span class="keyword">new</span> User(<span class="string">&quot;张三&quot;</span>, <span class="number">23</span>, <span class="number">1.75</span>, <span class="number">68</span>);</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;采用toString方法输出对象：&quot;</span>);</span><br><span class="line">        System.out.println(u);</span><br><span class="line"></span><br><span class="line">        ObjectMapper om = <span class="keyword">new</span> ObjectMapper();</span><br><span class="line">        String json = om.writeValueAsString(u);</span><br><span class="line">        System.out.println(<span class="string">&quot;采用映射类将对象转换成json类型字符串：&quot;</span>);</span><br><span class="line">        System.out.println(json);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/ajax/ajax_010.png" alt="ajax_010.png (632×141) (gitee.io)"></p>
+<p>然后，服务端创建json格式类型的字符串，将其响应到浏览器端。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JsonTest01</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doPost</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line"></span><br><span class="line">        User u = <span class="keyword">new</span> User(<span class="string">&quot;张三&quot;</span>, <span class="number">23</span>, <span class="number">1.75</span>, <span class="number">68</span>);</span><br><span class="line"></span><br><span class="line">        ObjectMapper om = <span class="keyword">new</span> ObjectMapper();</span><br><span class="line">        String json = om.writeValueAsString(u);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 设置输出流，注意响应内容类型不再是文本或者html，而是application/json。</span></span><br><span class="line">        response.setContentType(<span class="string">&quot;application/json;charset=utf-8&quot;</span>);</span><br><span class="line">        PrintWriter out = response.getWriter();</span><br><span class="line">        out.print(json);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>简单的前端页面如下所示（<strong>注意，如何将收到的json字符串转换为json对象</strong>）：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page contentType=<span class="string">&quot;text/html;charset=UTF-8&quot;</span> language=<span class="string">&quot;java&quot;</span> %&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">  &lt;head&gt;</span><br><span class="line">    &lt;title&gt;测试Json&lt;/title&gt;</span><br><span class="line">  &lt;/head&gt;</span><br><span class="line">  &lt;script type=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><br><span class="line">    <span class="function">function <span class="title">doSubmit</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 1. 创建对象</span></span><br><span class="line">      <span class="keyword">var</span> xmlHttp = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 2. 绑定事件</span></span><br><span class="line">      xmlHttp.onreadystatechange = function () &#123;</span><br><span class="line">        <span class="keyword">if</span>(xmlHttp.readyState == <span class="number">4</span> &amp;&amp; xmlHttp.status == <span class="number">200</span>)&#123;</span><br><span class="line">          <span class="keyword">var</span> responseText = xmlHttp.responseText;</span><br><span class="line"></span><br><span class="line">          <span class="comment">// 将字符串转换为json对象</span></span><br><span class="line">          <span class="keyword">var</span> json = eval(<span class="string">&quot;(&quot;</span> + responseText + <span class="string">&quot;)&quot;</span>);</span><br><span class="line"></span><br><span class="line">          <span class="comment">// 异步刷新页面</span></span><br><span class="line">          document.getElementById(<span class="string">&quot;name&quot;</span>).value = json.name;</span><br><span class="line">          document.getElementById(<span class="string">&quot;age&quot;</span>).value = json.age;</span><br><span class="line">          document.getElementById(<span class="string">&quot;height&quot;</span>).value = json.height;</span><br><span class="line">          document.getElementById(<span class="string">&quot;weight&quot;</span>).value = json.weight;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 3. 初始化请求对象</span></span><br><span class="line">      xmlHttp.open(<span class="string">&quot;post&quot;</span>, <span class="string">&quot;/Ajax02/json&quot;</span>, <span class="keyword">true</span>);</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 4. 发送请求（为了简单起见，post的请求体中没有发送数据，因为数据是服务器自动生成的，不需要客户端提交数据）</span></span><br><span class="line">      xmlHttp.send();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">  &lt;/script&gt;</span><br><span class="line">  &lt;body&gt;</span><br><span class="line">  &lt;form action=<span class="string">&quot;/Ajax02/json&quot;</span> method=<span class="string">&quot;post&quot;</span>&gt;</span><br><span class="line">    &lt;input type=<span class="string">&quot;button&quot;</span> value=<span class="string">&quot;提交&quot;</span> onclick=<span class="string">&quot;doSubmit()&quot;</span>&gt;&lt;br&gt;</span><br><span class="line">    &lt;table border=<span class="string">&quot;1px&quot;</span>&gt;</span><br><span class="line">      &lt;tr&gt;</span><br><span class="line">        &lt;td&gt;姓名&lt;/td&gt;</span><br><span class="line">        &lt;td&gt;年龄&lt;/td&gt;</span><br><span class="line">        &lt;td&gt;身高&lt;/td&gt;</span><br><span class="line">        &lt;td&gt;体重&lt;/td&gt;</span><br><span class="line">      &lt;/tr&gt;</span><br><span class="line">      &lt;tr&gt;</span><br><span class="line">        &lt;td&gt;&lt;input type=<span class="string">&quot;text&quot;</span> id=<span class="string">&quot;name&quot;</span> readonly&gt;&lt;/td&gt;</span><br><span class="line">        &lt;td&gt;&lt;input type=<span class="string">&quot;text&quot;</span> id=<span class="string">&quot;age&quot;</span> readonly&gt;&lt;/td&gt;</span><br><span class="line">        &lt;td&gt;&lt;input type=<span class="string">&quot;text&quot;</span> id=<span class="string">&quot;height&quot;</span> readonly&gt;&lt;/td&gt;</span><br><span class="line">        &lt;td&gt;&lt;input type=<span class="string">&quot;text&quot;</span> id=<span class="string">&quot;weight&quot;</span> readonly&gt;&lt;/td&gt;</span><br><span class="line">      &lt;/tr&gt;</span><br><span class="line">    &lt;/table&gt;</span><br><span class="line">  &lt;/form&gt;</span><br><span class="line">  &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到浏览器中的响应结果以及网络流json如下所示：</p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/ajax/ajax_011.png" alt="ajax_011.png (952×642) (gitee.io)"></p>
+<h2 id="4-总结"><a href="#4-总结" class="headerlink" title="4. 总结"></a>4. 总结</h2><p>AJAX异步刷新本质上属于JS上的内容，通过创建异步对象（区别于浏览器自己发送请求，相当于多线程，不影响浏览器其他组件的运行），独立发送请求并接受数据，然后设置浏览器其他组件的value，从而达到异步刷新。有以下四个步骤：</p>
+<ol>
+<li>创建异步对象</li>
+<li>绑定事件（异步刷新页面部分内容）</li>
+<li>初始化异步对象</li>
+<li>异步对象发送请求</li>
+</ol>
+<p>另外，传送的数据有时候比较多，比较复杂，服务器端可以将其转换为Json格式的字符串，然后浏览器端收到数据后，将其转换为json对象，再取值。</p>
+<h2 id="5-备注"><a href="#5-备注" class="headerlink" title="5. 备注"></a>5. 备注</h2><p><em>参考B站《动力节点》。</em></p>
+
                 
             </div>
             <hr/>
@@ -500,7 +608,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">hianian</a>
+                    <a href="/about" rel="external nofollow noreferrer">浮云</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -523,7 +631,7 @@
                     本博客所有文章除特別声明外，均采用
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     许可协议。转载请注明来源
-                    <a href="/about" target="_blank">hianian</a>
+                    <a href="/about" target="_blank">浮云</a>
                     !
                 </span>
             </div>
@@ -547,7 +655,11 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/JavaWeb/">
+                                    <span class="chip bg-color">JavaWeb</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -741,10 +853,18 @@
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
-                            hianian
+                            浮云
                             
                         </span>
                     </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/JavaWeb/">
+                        <span class="chip bg-color">JavaWeb</span>
+                    </a>
+                    
                 </div>
                 
             </div>
@@ -990,7 +1110,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">168.1k</span>&nbsp;字
+                class="white-color">171.7k</span>&nbsp;字
             
             
             
