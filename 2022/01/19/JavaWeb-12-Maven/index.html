@@ -454,21 +454,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-01-28
+                    2022-02-14
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    0
+                    7.1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    26 分
                 </div>
                 
 
@@ -488,7 +488,388 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                
+                <p>本文介绍Maven相关内容。</p>
+<h2 id="1-Maven简介"><a href="#1-Maven简介" class="headerlink" title="1. Maven简介"></a>1. Maven简介</h2><p>Maven是一个项目管理工具，是一个辅助工具，不用它也可以完成，只不过比较繁琐。那么说到工具，就会想到Git，也是一个项目管理工具，负责版本控制。那么Maven主要是干什么的呢？</p>
+<p>我们知道，一个完整的项目，比如JavaWeb项目，除了编写代码之外，还需要一些配置文件，比如Jar包、xml文件等，以及各个文件之间的调用等等。这里回顾一下软件工程的概念：<strong>为了能够实现软件的流水线式生产，在设计和构建软件时能够有一种规范和工程化的方法，人们便提出了软件工程概念。</strong></p>
+<p>而在项目开发过程中，需要做的工具如下所示：</p>
+<ol>
+<li>分析项目要做什么，功能有哪些？</li>
+<li>设计项目，步骤、技术、人力、时间等等。</li>
+<li>组件团队，构建设备，软件以及硬件。</li>
+<li>开发人员写代码，测试程序，调Bug。</li>
+<li>测试人员对项目功能进行测试，是否符合功能要求。有问题则返回给开发人员，重复4、5步骤直到测试成功。</li>
+</ol>
+<p>那么在开发过程中存在哪些问题呢？</p>
+<ol>
+<li>模块很多，之间的关系复杂，手动管理模块比较繁琐；</li>
+<li>项目需要很多的第三方库，Jar包，需要手工从网络中获取Jar包；</li>
+<li>Jar包的版本需要手动管理，版本需要匹配；</li>
+<li>管理Jar包之间的依赖，比如a.jar包需要b.jar包中的类，这时候就需要手动将a和b都要下载到项目中，a需要b这个关系就叫做依赖。</li>
+</ol>
+<h3 id="1-1-项目管理"><a href="#1-1-项目管理" class="headerlink" title="1.1 项目管理"></a>1.1 项目管理</h3><p>上述的操作很繁琐耗时，这时候就需要Maven改进项目的开发和管理。</p>
+<ul>
+<li>Maven可以管理jar文件；</li>
+<li>自动下载jar和其他的文档、源代码；</li>
+<li>管理jar直接的依赖，比如a.jar需要b.jar，那么就会自动下载b.jar包；</li>
+<li>管理需要的jar版本；</li>
+<li>编译程序，将.java编译为.class，测试代码是否正确；</li>
+<li>帮助打包文件，形成jar文件或者war文件；</li>
+<li>帮助部署项目。</li>
+</ul>
+<h3 id="1-2-项目构建"><a href="#1-2-项目构建" class="headerlink" title="1.2 项目构建"></a>1.2 项目构建</h3><p>另外，编译、打包以及测试这些过程也被称为<strong>构建</strong>的过程。<strong>项目构建是面向过程的，就是一些步骤，完成项目代码的编译、测试、运行、打包、部署等等。</strong>Maven支持的构建有：</p>
+<ol>
+<li><strong>清理</strong>，即将之前项目编译的东西删除掉，为新的编译代码做准备；</li>
+<li><strong>编译</strong>，即将程序源代码编译为可执行代码，这里的编译是批量的，可以同时把成百上千的文件编译为class文件；</li>
+<li><strong>测试</strong>，Maven可以执行测试程序代码，验证功能是否正确，也是可以批量执行的；</li>
+<li><strong>报告</strong>，生成测试结果的文件，比如测试是否通过；</li>
+<li><strong>打包</strong>，将项目中的所有class文件、配置文件等等打包到一个压缩文件jar包（普通Java程序）或者war包（JavaWeb应用程序）；</li>
+<li><strong>安装</strong>，将jar包或者war包安装到本机仓库；</li>
+<li><strong>部署</strong>，把程序安装好可以执行。（用的少，主要是前6步）</li>
+</ol>
+<p>简单地说，Maven的作用就是：</p>
+<ol>
+<li>管理依赖：Jar包的管理、下载和版本控制；</li>
+<li>构建项目：完成项目代码的编译、测试、打包和部署；</li>
+</ol>
+<h3 id="1-3-Maven安装"><a href="#1-3-Maven安装" class="headerlink" title="1.3 Maven安装"></a>1.3 Maven安装</h3><p>官网下载<a target="_blank" rel="noopener" href="https://maven.apache.org/download.cgi">Maven – Download Apache Maven</a>指定版本即可，主要和Java的对应关系。这里下载<code>apache-maven-3.6.3-bin.zip</code>版本的，下载好后，解压到非中文目录下即可。解压后的目录如下所示：</p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/maven/maven_001.png" alt="maven_001.png (854×311) (gitee.io)"></p>
+<ul>
+<li>bin，该目录中主要是maven的一些命令，主要用<code>mvn.cmd</code>来构建项目；</li>
+<li>boot，该目录主要是启动Maven用到的工具；</li>
+<li>conf，该目录中主要是maven工具的一些配置文件，主要的配置文件是<code>settings.xml</code>；</li>
+<li>lib，该目录是maven运行所需的一些jar包。</li>
+</ul>
+<p>maven运行需要配置环境变量，和Servlet中的<code>CATALINA_HOME</code>一样，maven所需的系统环境变量是<code>M2_HOME</code>（尽量别用<code>MAVEN_HOME</code>），该变量值是Maven的安装目录。另外，为了方便使用maven的命令，也需要将bin目录加入到Path中。测试是否安装成功：</p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/maven/maven_002.png" alt="maven_002.png (862×260) (gitee.io)"></p>
+<h2 id="2-Maven的核心概念"><a href="#2-Maven的核心概念" class="headerlink" title="2. Maven的核心概念"></a>2. Maven的核心概念</h2><p>首先介绍一下Maven中的名词概念，如下所示：</p>
+<ol>
+<li><p>POM</p>
+<p>POM即项目对象模型（Project Object Model），Maven把一个项目当做一个模型来使用。与之关联的文件是<strong>pom.xml</strong>，和Servlet中的web.xml类似，对应整个项目，对项目的上述所有控制都是通过pom.xml文件来实现的。</p>
+</li>
+<li><p><strong>约定</strong>的目录结构</p>
+<p>Maven项目的目录和文件的位置都是有规定的。注意，这是约定，是大家都要遵循的规则。不是强制的，但是比规范要强势一点。</p>
+</li>
+<li><p>坐标</p>
+<p>是一个唯一的字符串，用来表示资源的。</p>
+</li>
+<li><p>依赖管理</p>
+<p>管理项目所使用的jar包的。</p>
+</li>
+<li><p>仓库管理（了解）</p>
+<p>资源存放的位置。</p>
+</li>
+<li><p>生命周期（了解）</p>
+<p>Maven工具构建项目的过程，就是生命周期，即上面7个过程。</p>
+</li>
+<li><p>插件和目标（了解）</p>
+<p>执行Maven构建的时候所用的工具就是插件，比如打包所用的工具等等；目标就是想干什么，比如打包。</p>
+</li>
+<li><p>继承</p>
+<p>和Java中的继承类似，见后续。</p>
+</li>
+<li><p>聚合</p>
+<p>将好多个项目聚合到一起，见后续。</p>
+</li>
+</ol>
+<h3 id="2-1-约定的目录结构（重点）"><a href="#2-1-约定的目录结构（重点）" class="headerlink" title="2.1 约定的目录结构（重点）"></a>2.1 约定的目录结构（重点）</h3><p>每一个Maven项目在磁盘中都是一个文件夹，项目文件夹（如Hello）的目录结构如下所示：</p>
+<ul>
+<li>Hello/（项目文件夹）<ul>
+<li>/src（源代码）<ul>
+<li>/main（主程序和配置文件）<ul>
+<li>/java（Java程序）</li>
+<li>/resources（程序使用的配置文件）</li>
+</ul>
+</li>
+<li>/test（测试程序和文件，可以没有）<ul>
+<li>/java（测试程序）</li>
+<li>/resources（测试程序使用的配置文件）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>/pom.xml（maven的核心文件，maven相关操作均在此文件下，必须有）</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-1-1-案例"><a href="#2-1-1-案例" class="headerlink" title="2.1.1 案例"></a>2.1.1 案例</h4><p>以上述例子为例，建立如上的目录结构，在java目录下创建主程序，建立文件夹<code>service</code>，创建Java文件，<code>HelloMaven.java</code>，源码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloMaven</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sayHello</span><span class="params">()</span></span>&#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;Hello Maven&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">		HelloMaven hm = <span class="keyword">new</span> HelloMaven();</span><br><span class="line">		hm.sayHello();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此时因为是Maven项目，采用Maven命令进行编译，在项目目录下，也就是Hello下输入命令<code>mvn compile</code>，会自动编译main/java目录下的所有java文件，如果是初次使用Maven，会自动下载很多东西。注意settings.xml文件中的配置问题，<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_45737419/article/details/106790054"> Maven ERROR 不再支持源选项 5，请使用 7 或更高版本的解决办法</a>。</p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/maven/maven_003.png" alt="maven_003.png (1228×429) (gitee.io)"></p>
+<p>那么为什么要下载呢？下载了什么东西？下载的东西存放到哪里了呢？</p>
+<blockquote>
+<p>Maven工具执行的操作是需要很多插件（Java类，Jar包）来完成的，所以初次使用会自动从<a target="_blank" rel="noopener" href="https://repo/maven.apache.org">中央仓库</a>中下载这些插件，比如编译功能、测试功能等等。下载的jar包会存放到<code>用户家目录下</code>的<code>.m2\repository</code>目录下，这个目录就被称为默认仓库（本机仓库，地址可以手动修改）。</p>
+<p>之后再次使用的时候，首先从本地仓库中检测是否有这个jar包，有的话则直接使用，没有的话会从中央仓库中下载到本地仓库中使用。</p>
+</blockquote>
+<p>命令执行的结果如下所示，即目录结构是正确的：</p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/maven/maven_004.png" alt="cybersecurity.gitee.io/blog-image-bed/JavaWeb/maven/maven_004.png"></p>
+<p>可以看到编译后的文件在项目根目录下的target目录中，该目录也被称为结果目录。但是仍然需要<code>java .class文件</code>手动运行。</p>
+<p>上图中的命令执行结果展示信息：</p>
+<ul>
+<li>项目的组织名以及项目名</li>
+<li>项目的版本号</li>
+<li>该命令使用的插件jar包以及各插件的作用<ul>
+<li>编译命令用到的插件有resources和compile</li>
+<li>resources插件是将程序用到的资源文件（非java文件）拷贝到classes目录下，用于程序执行时调用。</li>
+<li>compile插件是编译java文件生成.class文件</li>
+</ul>
+</li>
+<li>命令执行结果</li>
+<li>总耗时以及完成时间</li>
+</ul>
+<h3 id="2-2-仓库管理"><a href="#2-2-仓库管理" class="headerlink" title="2.2 仓库管理"></a>2.2 仓库管理</h3><p>前面简单提到了中央仓库和本地仓库两个概念。</p>
+<p>那么仓库是什么呢？<strong>仓库是存放东西的，比如存放maven使用的jar包以及项目使用的第三方jar包。</strong></p>
+<p>仓库主要分为本地仓库和远程仓库两类：</p>
+<ul>
+<li>本地仓库，就是在个人计算机上的文件夹，存放各种jar。</li>
+<li>远程仓库，就是在互联网上的仓库，使用网络可以访问并下载上面的资源。远程仓库又分为下面三类仓库：<ul>
+<li>中央仓库：最权威的远程仓库，所有的开发人员都共享使用的一个集中的仓库；</li>
+<li>中央仓库镜像：相当于中央仓库的镜像，在各大洲以及各大城市都有镜像，方便局域内的人员快速访问。</li>
+<li>私有仓库（私服）：在公司内部局域网内使用的，不是对外使用。</li>
+</ul>
+</li>
+</ul>
+<p>这里Maven仓库的概念和Git以及Docker的仓库类似。</p>
+<h4 id="2-2-1-仓库的使用"><a href="#2-2-1-仓库的使用" class="headerlink" title="2.2.1 仓库的使用"></a>2.2.1 仓库的使用</h4><p>仓库有那么多种类，那么Maven是怎么使用仓库的呢？<strong>实际上Maven仓库的使用不需要人为参与。</strong></p>
+<p>比如开发人员需要使用mysql驱动，</p>
+<ol>
+<li>Maven首先会检查本地仓库；</li>
+<li>如果本地仓库没有，则会判断是否设置了私服，有的话，则会访问私服查找mysql驱动，私服内有的话，则会下载到本地仓库，然后再返回程序中；</li>
+<li>如果没有设置私服或者私服中没有该jar包，则会访问中央仓库镜像，如果有驱动，则会下载到私服中，然后再从私服中下载到本地仓库中，最后返回程序中；</li>
+<li>如果镜像也没有，那么就会访问中央仓库，有的话，则逐级下载到本地并返回给程序，中央仓库如果也没有那就真没有了。</li>
+</ol>
+<p>也就是说，上述几类仓库是有优先级的，但是无论如何，本地仓库都会最终保留一份，方便下次使用。</p>
+<h4 id="2-2-2-修改本地仓库地址"><a href="#2-2-2-修改本地仓库地址" class="headerlink" title="2.2.2 修改本地仓库地址"></a>2.2.2 修改本地仓库地址</h4><p>前面提到，maven默认的本地仓库是用户目录下的<code>.m2/repository</code>下，但是这是系统盘，重装系统的话比较危险。可以在<code>maven安装目录/conf/settings.xml</code>配置文件中修改本地仓库，一般情况下建议提前备份一份。</p>
+<p>在配置文件中找到<code>localRepository</code>标签，修改目录即可，注意不要有中文。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">localRepository</span>&gt;</span>D:/profession/maven/maven_repository<span class="tag">&lt;/<span class="name">localRepository</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-pom-xml文件（重点）"><a href="#2-3-pom-xml文件（重点）" class="headerlink" title="2.3 pom.xml文件（重点）"></a>2.3 pom.xml文件（重点）</h3><p>POM即Project Object Model项目对象模型。Maven把一个项目的结构和内容抽象成一个模型，在xml文件中进行生命，以方便进行构建和描述。pro.xml文件是Maven的灵魂，对该项目Maven操作的核心。作为xml文件，该文件由若干个标签组成。常用的标签如下所示：</p>
+<table>
+<thead>
+<tr>
+<th>标签</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>基本信息</td>
+<td></td>
+</tr>
+<tr>
+<td>modelVersion</td>
+<td>Maven模型的版本，现在只能是4.0.0</td>
+</tr>
+<tr>
+<td>groupId</td>
+<td>组织名称，一般是公司域名倒写或者倒写+项目名</td>
+</tr>
+<tr>
+<td>artifactId</td>
+<td>项目名称，也是模块名称，对应groupId项目中的子项目</td>
+</tr>
+<tr>
+<td>version</td>
+<td>项目的版本号，如1.1.1。如果项目还在开发中，或者不稳定版本，通常后缀带-SNAPSHOT。</td>
+</tr>
+<tr>
+<td>packaging</td>
+<td>项目打包的类型，可以有jar、war、rar、ear、pom，默认是jar</td>
+</tr>
+<tr>
+<td>依赖</td>
+<td></td>
+</tr>
+<tr>
+<td>dependencies</td>
+<td>用于包含多个dependency依赖</td>
+</tr>
+<tr>
+<td>dependency</td>
+<td>Maven的一个重要作用就是管理jar包。Maven通过该标签来配置，如下图，该标签内嵌套了坐标三个标签，形成一个唯一的依赖坐标。用于Maven检索仓库。相当于Java中的import</td>
+</tr>
+<tr>
+<td>配置属性</td>
+<td></td>
+</tr>
+<tr>
+<td>properties</td>
+<td>用来设置属性，例如项目构建源码编码方式，Java版本等等。</td>
+</tr>
+<tr>
+<td>构建</td>
+<td></td>
+</tr>
+<tr>
+<td>build</td>
+<td>项目构建时的相关配置，例如设置编译插件的JDK版本。</td>
+</tr>
+<tr>
+<td>继承</td>
+<td></td>
+</tr>
+<tr>
+<td>parent</td>
+<td>在Maven中，如果多个模块都需要声明相同的配置，例如：groupId、version、有相同的依赖、或者相同的组件配置等，也有类似 Java 的继承机制，用parent声明要继承的父工程的pom配置。</td>
+</tr>
+<tr>
+<td>聚合</td>
+<td></td>
+</tr>
+<tr>
+<td>modules</td>
+<td>在Maven的多模块开发中，为了统一构建整个项目的所有模块，可以提供一个额外的模块，该模块打包方式为pom，并且在其中使用modules聚合的其它模块，这样通过本模块就可以一键自动识别模块间的依赖关系来构建所有模块，叫Maven的聚合。</td>
+</tr>
+</tbody></table>
+<p><strong>注意，groupId、artifactId和version三个元素生成了一个Maven项目的基本坐标，在众多的maven项目中可以唯一定位到某一个项目，那么之后Maven自动搜索远程仓库的时候就可以找到并下载了。坐标也决定着将来项目在仓库中的路径及名称。所以一个项目必须有这三个坐标。</strong></p>
+<p><strong>我们可以在<a target="_blank" rel="noopener" href="https://mvnrepository.com/">Maven Repository: Search/Browse/Explore (mvnrepository.com)</a>仓库中通过这三个元素值来搜索资源。该网站提供了jar包以及maven依赖的坐标以及其他方式，如下所示：</strong></p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/maven/maven_005.png" alt="cybersecurity.gitee.io/blog-image-bed/JavaWeb/maven/maven_005.png"></p>
+<h3 id="2-4-坐标（重点）"><a href="#2-4-坐标（重点）" class="headerlink" title="2.4 坐标（重点）"></a>2.4 坐标（重点）</h3><p>坐标即互联网中资源的唯一标识，在Maven中的体现就是groupId、artifactId和version三个标签。其实这三个标签就是三个层级文件夹。如下所示：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>mysql<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mysql-connector-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>6.0.4<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>可以看到，依赖写入之后，编译项目，在本地仓库中JDBC的驱动确实在三级文件夹下。</p>
+<h3 id="2-5-依赖（重点）"><a href="#2-5-依赖（重点）" class="headerlink" title="2.5 依赖（重点）"></a>2.5 依赖（重点）</h3><p>依赖就是项目依赖的第三方资源Jar包，那么怎么在互联网中确定第三方Jar包呢？就是通过上面的坐标，将坐标嵌套在&lt;dependency&gt;标签中，这就是一个依赖。然后多个依赖嵌套在&lt;dependencies&gt;标签中形成项目的全部依赖。</p>
+<h3 id="2-6-生命周期"><a href="#2-6-生命周期" class="headerlink" title="2.6 生命周期"></a>2.6 生命周期</h3><p>对项目的构建是建立在生命周期模型上的，它明确定义项目生命周期各个阶段，并且<strong>对于每一个阶段提供相对应的命令</strong>，对开发者而言仅仅需要掌握一小堆的命令就可以完成项目各个阶段的构建工作。 </p>
+<p>构建项目时按照生命周期顺序构建，每一个阶段都有特定的插件来完成。<strong>不论现在要执行生命周期中的哪个阶段，都是从这个生命周期的最初阶段开始的</strong>。</p>
+<p>对于我们程序员而言，<strong>无论我们要进行哪个阶段的构建，直接执行相应的命令即可，无需担心它前边阶段是否构建，Maven都会自动构建</strong>。这也就是Maven这种自动化构建工具给我们带来的好处。</p>
+<h3 id="2-7-Maven的常用命令"><a href="#2-7-Maven的常用命令" class="headerlink" title="2.7 Maven的常用命令"></a>2.7 Maven的常用命令</h3><p>Maven对所有的功能都提供相对应的命令，要想知道maven都有哪些命令，那要看 maven 有哪些功能。maven主要有三大功能：管理依赖、构建项目、管理项目信息。</p>
+<ul>
+<li>管理依赖，只需要声明就可以自动到仓库下载；</li>
+<li>管理项目信息其实就是生成一个站点文档，一个命令就可以解决，最后再说；</li>
+<li> maven 功能的主体其实就是项目构建。Maven提供一个项目构建的模型，把编译、测试、打包、部署等都对应成一个个的生命周期阶段，并对每一个阶段提供相应的命令，程序员只需要掌握一小堆命令，就可以完成项目的构建过程。</li>
+</ul>
+<p>常用命令如下所示：</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>mvn clean</td>
+<td>清除（会删除原来编译和测试的target目录，但是已经安装到本地仓库里的包不会删除）</td>
+</tr>
+<tr>
+<td>mvn compile</td>
+<td>编译主程序（会在项目主目录下生成一个target目录，里面存放编译主程序之后生成的字节码文件）</td>
+</tr>
+<tr>
+<td>mvn test-compile</td>
+<td>编译测试程序（会在项目主目录下生成一个target目录，里面存放编译测试程序之后生成的字节码文件）</td>
+</tr>
+<tr>
+<td>mvn test</td>
+<td>测试（会生成一个目录surefire-reports，保存测试结果）</td>
+</tr>
+<tr>
+<td>mvn package（常用）</td>
+<td>打包主程序（会编译、编译测试、测试，并且按照pom.xml配置把主程序打包成jar包或者war包）</td>
+</tr>
+<tr>
+<td>mvn install（常用）</td>
+<td>安装主程序（会把本工程打包，并且按照本工程的坐标保存到本地仓库中）</td>
+</tr>
+<tr>
+<td>mvn deploy</td>
+<td>部署主程序（会把本工程打包，按照本工程的坐标保存到本地仓库中，并且还会保存到私服仓库中，还会自动把项目部署到web容器中）</td>
+</tr>
+</tbody></table>
+<p><em>注意，以上命令必须在项目的根目录下运行，也就是在pom.xml所在目录下运行。</em></p>
+<p>Maven的上述功能命令是通过插件来完成的，而Maven是由Java编写的，所以插件就是一段代码，也就是Jar包。</p>
+<h3 id="2-8-单元测试"><a href="#2-8-单元测试" class="headerlink" title="2.8 单元测试"></a>2.8 单元测试</h3><p>单元测试用地是junit，该工具是一个专门测试的框架。junit测试的是类中的方法，每一个方法都是独立测试的，也就是说方法是测试的基本单位（单元）。</p>
+<p>Maven可借助单元测试来批量测试类中的大量方法是否符合预期的。步骤如下：</p>
+<ol>
+<li><p>在pom.xml中加入junit依赖；</p>
+</li>
+<li><p>在maven项目中的<code>src/test/java</code>目录下创建测试程序，推荐的创建类和方法的提示如下：</p>
+<ol>
+<li>测试类的名称：Test + 你要测试的类名（注意二者的包名要保持一致）</li>
+<li>测试的方法名称：test + 方法名称（注意驼峰命名规范）</li>
+</ol>
+<p>例如测试HelloMaven类，创建测试类TestHelloMaven，测试方法如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testAdd</span><span class="params">()</span></span>&#123;</span><br><span class="line">    测试HelloMaven的add方法是否正确，即结果正否正确；</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 其中testAdd叫做测试方法，它的定义规则：</span></span><br><span class="line"><span class="comment">// 		1. 方法必须是public修饰的</span></span><br><span class="line"><span class="comment">// 		2. 方法必须没有返回值</span></span><br><span class="line"><span class="comment">// 		3. 方法名称是自定义的，推荐是 test + 方法名称</span></span><br><span class="line"><span class="comment">// 		4. 在方法上加入注解 @test</span></span><br></pre></td></tr></table></figure>
+
+<p>注意，测试程序需要用到junit提供的方法（Assert、assertEquals(期望值, 实际值)）以及注解（@Test）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 导入junit包中的方法以及注解</span></span><br><span class="line"><span class="keyword">import</span> org.junit.Assert;</span><br><span class="line"><span class="keyword">import</span> org.junit.Test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestHelloMaven</span></span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testAdd</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">		System.out.println(<span class="string">&quot;=====maven junit testAdd()=====&quot;</span>);</span><br><span class="line">		HelloMaven hm = <span class="keyword">new</span> HelloMaven();</span><br><span class="line">		<span class="keyword">int</span> result = hm.add(<span class="number">10</span>, <span class="number">20</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 采用junit中的方法判断该测试的方法是否符合预期结果</span></span><br><span class="line">		Assert.assertEquals(<span class="number">30</span>, result);</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其实测试程序需要我们自己写，需要对比结果。只不过可以批量执行测试程序，这里的自动化体现的不是很强。</p>
+</li>
+</ol>
+<h3 id="2-9-命令测试"><a href="#2-9-命令测试" class="headerlink" title="2.9 命令测试"></a>2.9 命令测试</h3><p>测试一下<code>mvn clean</code>命令，可以看到该命令执行后，之前编译生成的target目录被删除了。</p>
+<p>测试一下<code>mvn compile</code>命令，可以看到该命令执行后，生成了target/classes目录，编译后的文件存放在这里；如果有资源文件则会生成resources目录存放。</p>
+<p>测试一下<code>mvn test-compile</code>命令，可以看到该命令执行后，生成了target/test-classes目录。</p>
+<p>测试一下<code>mvn test</code>命令，即执行上述测试编译后的.class文件，如下所示：</p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/maven/maven_006.png" alt="maven_006.png (844×366) (gitee.io)"></p>
+<p>通过上述指令，可以在cmd窗口中看到，每个命令都会自动执行前面所需的操作（清理、编译、测试、打包等等），比如测试<code>mvn test</code>命令，先resources、再compile、然后test-resources、test-compile，最后再test。<strong>所以我们只需要输入指令即可，前面所需的操作自动执行。</strong></p>
+<p>修改测试程序，看一下测试失败的结果。代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 导入junit包中的方法以及注解</span></span><br><span class="line"><span class="keyword">import</span> org.junit.Assert;</span><br><span class="line"><span class="keyword">import</span> org.junit.Test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestHelloMaven</span></span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testAdd</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">		System.out.println(<span class="string">&quot;=====maven junit testAdd()=====&quot;</span>);</span><br><span class="line">		HelloMaven hm = <span class="keyword">new</span> HelloMaven();</span><br><span class="line">		<span class="keyword">int</span> result = hm.add(<span class="number">10</span>, <span class="number">20</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 采用junit中的方法判断该测试的方法是否符合预期结果</span></span><br><span class="line">		Assert.assertEquals(<span class="number">30</span>, result);</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testAdd2</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">		System.out.println(<span class="string">&quot;*****maven junit testAdd()*****&quot;</span>);</span><br><span class="line">		HelloMaven hm = <span class="keyword">new</span> HelloMaven();</span><br><span class="line">		<span class="keyword">int</span> result = hm.add(<span class="number">10</span>, <span class="number">20</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 采用junit中的方法判断该测试的方法是否符合预期结果</span></span><br><span class="line">		Assert.assertEquals(<span class="number">50</span>, result);</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意看第二个测试方法，结果肯定不符合要求，测试结果如下所示（一个方法测试成功，另一个测试失败，测试不通过，所以会报错，构建失败，测试报告在target\surefire-reports目录下）：</p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/maven/maven_007.png" alt="maven_007.png (1179×887) (gitee.io)"></p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/maven/maven_008.png" alt="maven_008.png (1526×514) (gitee.io)"></p>
+<p>测试一下<code>mvn package</code>命令，该命令是将项目目录下的src/main目录下的所有内容打包，不包括test目录下的。<strong>注意，打包是在前面步骤运行成功的基础上做的，所以必须保证前面步骤没有问题。</strong>打包之后生成的jar包名由项目名以及版本号构成，存放在target目录下。</p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/maven/maven_009.png" alt="maven_009.png (934×188) (gitee.io)"></p>
+<p>测试一下<code>mvn install</code>命令，将打包后的jar包安装到本地仓库中，方便其他项目使用。</p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/maven/maven_010.png" alt="maven_010.png (1782×188) (gitee.io)"></p>
+<h3 id="2-10-插件配置"><a href="#2-10-插件配置" class="headerlink" title="2.10 插件配置"></a>2.10 插件配置</h3><p>上述的命令都是采用插件来实现的，可以手动配置一些非默认版本的插件。这里不再赘述，参考网上教程即可。</p>
+<h2 id="3-Maven在IDEA中的应用"><a href="#3-Maven在IDEA中的应用" class="headerlink" title="3. Maven在IDEA中的应用"></a>3. Maven在IDEA中的应用</h2><p>Maven是一个项目管理工具，和Git一样，可以结合IDEA开发工具结合使用。实际上IDEA内置了Maven，但是为了修改方便，建议使用自己安装的Maven。</p>
+<p>首先设置两个地方（就是告诉IDEA自己安装的maven在哪里）</p>
+<ul>
+<li><code>File/settings</code>，这个设置是对当前项目有效的；</li>
+<li><code>File/Other Settings</code>，这个设置是对以后其他所有项目有效的。</li>
+</ul>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/maven/maven_011.png" alt="cybersecurity.gitee.io/blog-image-bed/JavaWeb/maven/maven_011.png"></p>
+<p>除了Maven，Gradle也是一个项目管理工具。主要需要设置三个位置：</p>
+<ul>
+<li>Maven home directory：maven的安装目录</li>
+<li>User setting file：maven的配置文件</li>
+<li>Local respository：本地仓库</li>
+</ul>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/maven/maven_012.png" alt="cybersecurity.gitee.io/blog-image-bed/JavaWeb/maven/maven_012.png"></p>
+<p>设置Maven使用的JDK，为了使得Maven加载更快，创建项目时不需要联网下载模板文件（目录结构、常用文件等等），设置参数<code>-DarchetypeCatalog=internal</code>。</p>
+<p>other settings的设置和上面的设置一样。</p>
+<h3 id="3-1-新建Maven项目（JavaSE）"><a href="#3-1-新建Maven项目（JavaSE）" class="headerlink" title="3.1 新建Maven项目（JavaSE）"></a>3.1 新建Maven项目（JavaSE）</h3><p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/maven/maven_013.png" alt="maven_013.png (1452×751) (gitee.io)"></p>
+<p>普通的JavaSE项目选择quickstart模板即可，注意需要输入组织名、项目名和版本号（坐标）。采用的模板没有resources文件夹，需要自己创建，目录结构如下所示：</p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/maven/maven_014.png" alt="maven_014.png (455×267) (gitee.io)"></p>
+<p>创建java文件以及测试类文件即可。</p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/maven/maven_015.png" alt="cybersecurity.gitee.io/blog-image-bed/JavaWeb/maven/maven_015.png"></p>
+<p>另外，IDEA右侧的maven按钮，可以查看对应的项目以及生命周期、插件和依赖。对于生命周期，可以点击按钮来执行对应的命令，这就代替了命令行执行。</p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/maven/maven_016.png" alt="maven_016.png (615×882) (gitee.io)"></p>
+<h3 id="3-2-新建Maven项目（JavaWeb）"><a href="#3-2-新建Maven项目（JavaWeb）" class="headerlink" title="3.2 新建Maven项目（JavaWeb）"></a>3.2 新建Maven项目（JavaWeb）</h3><p>JavaWeb项目选择webapp模板即可，注意需要输入组织名、项目名和版本号（坐标）。采用的模板创建的目录结构和普通的Web项目一样，但是Maven项目需要在src/main下创建java和resources，在src下创建test及其子目录。创建后的目录结构如下所示：</p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/maven/maven_017.png" alt="maven_017.png (461×360) (gitee.io)"></p>
+<p>Web项目需要访问Servlet中的接口，可以在Maven项目中通过加入Servlet依赖（jar包）的方式来添加jar包。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>javax.servlet<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>javax.servlet-api<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.1.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">scope</span>&gt;</span>provided<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/javax.servlet.jsp/jsp-api --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>javax.servlet.jsp<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jsp-api<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">scope</span>&gt;</span>provided<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>其他的Servlet开发步骤基本上一样。开发完之后，package打包形成war文件，将该war文件放到Tomcat的webapps目录下，脱离IDEA以命令行的形式启动Tomcat，该war文件会自动解压成项目目录，可以直接访问。</p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/maven/maven_018.png" alt="maven_018.png (831×383) (gitee.io)"></p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/maven/maven_019.png" alt="maven_019.png (656×323) (gitee.io)"></p>
+<h2 id="4-依赖管理"><a href="#4-依赖管理" class="headerlink" title="4. 依赖管理"></a>4. 依赖管理</h2><p>我们在添加依赖的时候，主要是有坐标三个标签，那么还剩下&lt;scope&gt;这个标签，这个标签表明该依赖的作用范围，就是在maven构建项目的哪些阶段中起作用。</p>
+<ul>
+<li>test值，只在测试程序中起作用，比如junit.jar包，只在测试阶段用到，我们可以设置其作用范围为test，那么打包的时候就不会将该jar包打包进去，节省空间。</li>
+<li>provided值，这个就是在程序员编写阶段起作用，比如servlet，不需要打包安装部署，因为项目实际的运行环境中包含了所需的jar包。可以看一下上述打包的war包，解压后lib目录中没有servlet、jsp等jar包。</li>
+<li>compile值，在所有阶段都用到。</li>
+</ul>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/maven/maven_020.png" alt="maven_020.png (1084×240) (gitee.io)"></p>
+<h2 id="5-Maven常用设置"><a href="#5-Maven常用设置" class="headerlink" title="5. Maven常用设置"></a>5. Maven常用设置</h2><h3 id="5-1-Maven的属性设置"><a href="#5-1-Maven的属性设置" class="headerlink" title="5.1 Maven的属性设置"></a>5.1 Maven的属性设置</h3><p>属性设置是在pom.xml文件中的&lt;properties&gt;标签中进行设置，常用的属性有：</p>
+<ul>
+<li>&lt;project.build.sourceEncoding&gt;，构建项目时的编码方式</li>
+<li>&lt;maven.compiler.source&gt;，编译代码时的JDK版本</li>
+<li>&lt;maven.compiler.target&gt;，运行程序时的JDK版本</li>
+</ul>
+<h3 id="5-2-Maven的全局变量"><a href="#5-2-Maven的全局变量" class="headerlink" title="5.2 Maven的全局变量"></a>5.2 Maven的全局变量</h3><p>除了上述自带的属性，我们也可以自定义属性。在&lt;properties&gt;标签中定义属性（相当于全局变量），在其他位置中使用属性（相当于全局变量）。其中标签名就是属性名，标签嵌套的值就是属性值，后续使用的时候采用<code>$&#123;标签名&#125;</code>的方式来利用属性值。比如spring中的很多依赖都是同一个版本号，那么可以将其抽象成变量，这样可以方便统一修改。</p>
+<p>比如：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 自定义属性spring.version,值为5.2.0 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">spring.version</span>&gt;</span>5.2.0<span class="tag">&lt;/<span class="name">spring.version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring.core<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;spring.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring.aop<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;spring.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring.asdf<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;spring.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="5-3-指定资源插件"><a href="#5-3-指定资源插件" class="headerlink" title="5.3 指定资源插件"></a>5.3 指定资源插件</h3><p>默认情况下，maven执行代码的时候，会将<code>src/main/resources</code>目录中的资源文件拷贝到<code>src/target/classes</code>目录中，对于resources目录之外的其他非java文件不处理，所以这就要求我们将非java文件放到<code>src/main/resources</code>目录中。</p>
+<p><strong>但是有时候我们的程序需要把一些文件放到<code>src/main/java</code>目录中。我们可不可以设置一下也将该目录下的java文件拷贝呢？换句话说，我们可以可以额外指定将哪些目录下的资源文件拷贝呢？</strong>答案是可以的，在&lt;build&gt;中加入&lt;resources&gt;。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">resources</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">resource</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- 告诉指定的目录 --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">directory</span>&gt;</span>src/main/java<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></span><br><span class="line">            </span><br><span class="line">            <span class="comment">&lt;!-- 拷贝的资源文件类型 --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">includes</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">include</span>&gt;</span>**/*.properties<span class="tag">&lt;/<span class="name">include</span>&gt;</span></span><br><span class="line">            	<span class="tag">&lt;<span class="name">include</span>&gt;</span>**/*.xml<span class="tag">&lt;/<span class="name">include</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">includes</span>&gt;</span></span><br><span class="line">            </span><br><span class="line">            <span class="comment">&lt;!-- 设置过滤器，这里不用设置了，上面相当于设置了 --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">filtering</span>&gt;</span>false<span class="tag">&lt;/<span class="name">filtering</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">resource</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">resources</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>注意，这样的话相当于覆盖了Maven默认的设置，对于resources文件夹下不会再拷贝，此时再添加一个resources目录的拷贝即可。</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resource</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 告诉指定的目录 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">directory</span>&gt;</span>src/resources<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 拷贝的资源文件类型 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">includes</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">include</span>&gt;</span>*.*<span class="tag">&lt;<span class="name">include</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">includes</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!-- 设置过滤器，这里不用设置了，上面相当于设置了 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filtering</span>&gt;</span>false<span class="tag">&lt;/<span class="name">filtering</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resource</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="6-总结"><a href="#6-总结" class="headerlink" title="6. 总结"></a>6. 总结</h2><p>感觉Maven就是自动化了常用的操作，比如从下载和控制Jar包的依赖以及版本，批量编译、测试、打包、安装等等。</p>
+<h2 id="7-备注"><a href="#7-备注" class="headerlink" title="7. 备注"></a>7. 备注</h2><p><em>参考B站《动力节点》。</em></p>
+
                 
             </div>
             <hr/>
@@ -1006,7 +1387,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">190.7k</span>&nbsp;字
+                class="white-color">197.9k</span>&nbsp;字
             
             
             
