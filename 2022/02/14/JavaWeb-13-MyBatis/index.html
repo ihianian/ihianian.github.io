@@ -461,14 +461,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    0
+                    1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    3 分
                 </div>
                 
 
@@ -488,7 +488,43 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                
+                <p>本文介绍MyBatis框架。</p>
+<h2 id="1-MyBatis概述"><a href="#1-MyBatis概述" class="headerlink" title="1. MyBatis概述"></a>1. MyBatis概述</h2><p>MyBatis是操作数据库的框架，相当于增强的JDBC，用该框架操作数据库，更加方便快捷。在Servlet章节中介绍过MVC框架，这是Web项目的开发架构。这里再介绍另一个概念：三层架构，该架构是软件开发常用的结构，不局限于Web软件。</p>
+<p>三层架构包含了：界面层（User Interface Layer）、业务逻辑层（Business Logic Layer）和数据访问层（Data Access Layer）。这三层每层分别执行不同的工作，相当于将项目的功能进行分类。三层的职责如下所示：</p>
+<ul>
+<li>界面层（表示层、视图层）：主要功能是接受用户的数据，显示请求的处理结果。使用web页面和用户交互，手机App也属于表示层，用户在App中操作，业务逻辑在服务器端处理。（<strong>jsp、html、servlet等等，相当于controller包，后续用SpringMVC框架来做</strong>）</li>
+<li>业务逻辑层：接收页面层传递过来的数据，检查数据并计算业务逻辑，调用数据访问层操作数据。（<strong>相当于service包，后续用Spring框架来做</strong>）</li>
+<li>数据访问层（持久层）：与数据库打交道。主要实现对数据的增删改查。将存储在数据库中的数据提交给业务层，同时将业务层的数据保存到数据库。（<strong>相当于dao包，后续用MyBatis框架来做。</strong>）</li>
+</ul>
+<p>交互如下所示：</p>
+<p><code>用户 ---&gt; 界面层 ---&gt; 业务逻辑层 ---&gt; 数据访问层 ---&gt; 数据库 </code></p>
+<p>本文介绍最简单的MyBatis框架，即主要用于数据访问。那么什么是框架呢？框架相当于模板，只是给了最基本的通用的功能。我们可以用该框架完成自己特定的、个性化的内容。</p>
+<p>比如Servlet中的HttpServlet类，该类就是实现了各种请求类型的响应，但是响应的内容是404。我们可以重写doGet等方法来实现自定义的功能。再比如JDBC，是一个通用的访问数据库的API，我们只需要传入特定的参数即可。</p>
+<p>既然MyBatis是针对JDBC的强化，那么为什么要对JDBC进行优化呢？JDBC存在哪些缺点？</p>
+<ol>
+<li>代码比较多，开发效率低。</li>
+<li>需要关注Connection、PreparedStatement、ResultSet等对象的创建和销毁。</li>
+<li>对ResultSet查询的结果，需要自己封装成实体类。</li>
+<li>JDBC六步重复的代码比较多。</li>
+<li>业务代码和数据库的操作混在一起。</li>
+</ol>
+<p>虽然可以将JDBC的相关操作封装成工具类，但是仍然比较繁琐。因此针对上述缺点，出现了MyBatis框架。</p>
+<blockquote>
+<p>MyBatis 本是 apache的一个开源项目 iBatis, 2010年这个项目由 apache software foundation 迁移到了 google code，并且改名为 MyBatis 。2013年 11月迁移到 Github。iBATIS 一词来源于“internet”和“abatis”的组合，是一个基于 Java 的持久层框架。iBATIS 提供的持久层（数据访问层）框架包括 SQL Maps和 Data Access Objects（DAOs） 。</p>
+<p>SQL Maps：指的是可以把数据库表中的一行数据映射为一个Java对象，即不需要自己手动封装实体类了。</p>
+<p>Data Access Objects：指的是数据访问，对数据库执行增删改查。</p>
+</blockquote>
+<p>MyBatis提供了以下功能：</p>
+<ol>
+<li>提供了创建Connection、PreparedStatement、ResultSet的能力，不用开发人员创建这些对象了。</li>
+<li>提供了执行SQL语句的能力，不需要手动执行。</li>
+<li>提供了遍历结果集，并把结果封装为Java对象的能力，将对象封装成List集合。</li>
+<li>提供了关闭资源的能力，不用手动关闭Connection、PreparedStatement、ResultSet等资源。</li>
+<li><strong>我们所需要做的就是提供SQL语句。</strong></li>
+</ol>
+<p>总体来说，MyBatis是一个SQL映射框架，提供数据库的操作能力，相当于增强的JDBC，使得我们只需要集中精神写SQL即可。</p>
+<h2 id="2-MyBatis框架快速入门"><a href="#2-MyBatis框架快速入门" class="headerlink" title="2. MyBatis框架快速入门"></a>2. MyBatis框架快速入门</h2><h2 id="3-MyBatis框架Dao代理"><a href="#3-MyBatis框架Dao代理" class="headerlink" title="3. MyBatis框架Dao代理"></a>3. MyBatis框架Dao代理</h2><h2 id="4-MyBatis框架动态SQL"><a href="#4-MyBatis框架动态SQL" class="headerlink" title="4. MyBatis框架动态SQL"></a>4. MyBatis框架动态SQL</h2><h2 id="5-MyBatis配置文件"><a href="#5-MyBatis配置文件" class="headerlink" title="5. MyBatis配置文件"></a>5. MyBatis配置文件</h2><h2 id="6-扩展"><a href="#6-扩展" class="headerlink" title="6. 扩展"></a>6. 扩展</h2><h2 id="7-总结"><a href="#7-总结" class="headerlink" title="7. 总结"></a>7. 总结</h2><h2 id="8-备注"><a href="#8-备注" class="headerlink" title="8. 备注"></a>8. 备注</h2><p><em>参考B站《动力节点》。</em></p>
+
                 
             </div>
             <hr/>
@@ -1006,7 +1042,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">200k</span>&nbsp;字
+                class="white-color">202.7k</span>&nbsp;字
             
             
             

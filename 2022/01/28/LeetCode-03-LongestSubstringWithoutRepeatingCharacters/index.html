@@ -454,21 +454,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-02-15
+                    2022-02-19
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    0
+                    977
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    3 分
                 </div>
                 
 
@@ -488,7 +488,35 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                
+                <h2 id="1-question：无重复字符的最长子串（中等）"><a href="#1-question：无重复字符的最长子串（中等）" class="headerlink" title="1. question：无重复字符的最长子串（中等）"></a>1. question：无重复字符的最长子串（中等）</h2><h2 id="question-无重复字符的最长子串"><a href="#question-无重复字符的最长子串" class="headerlink" title="question: 无重复字符的最长子串"></a>question: 无重复字符的最长子串</h2><p>给定一个字符串 s ，请你找出其中不含有重复字符的 最长子串 的长度。</p>
+<p> 来源：力扣（LeetCode）<br> 链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/longest-substring-without-repeating-characters">https://leetcode-cn.com/problems/longest-substring-without-repeating-characters</a></p>
+<p>示例 1:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入: s = &quot;abcabcbb&quot;</span><br><span class="line">输出: 3 </span><br><span class="line">解释: 因为无重复字符的最长子串是 &quot;abc&quot;，所以其长度为 3。</span><br></pre></td></tr></table></figure>
+
+<p>示例 2:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入: s = &quot;bbbbb&quot;</span><br><span class="line">输出: 1</span><br><span class="line">解释: 因为无重复字符的最长子串是 &quot;b&quot;，所以其长度为 1。</span><br></pre></td></tr></table></figure>
+
+<p>示例 3:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">输入: s = &quot;pwwkew&quot;</span><br><span class="line">输出: 3</span><br><span class="line">解释: 因为无重复字符的最长子串是 &quot;wke&quot;，所以其长度为 3。</span><br><span class="line">     请注意，你的答案必须是 子串 的长度，&quot;pwke&quot; 是一个子序列，不是子串。</span><br></pre></td></tr></table></figure>
+
+<p>提示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">0 &lt;= s.length &lt;= 5 * 104</span><br><span class="line">s 由英文字母、数字、符号和空格组成</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-answers"><a href="#2-answers" class="headerlink" title="2. answers"></a>2. answers</h2><p>思路：</p>
+<blockquote>
+<p>这道题涉及到子串长度，可以采用双指针的方法来做。</p>
+<p>无限不重复子串，首先要保留一个指针，用于遍历字符串；另外需要一个指针，保存当前子串的下标，当出现重复字符的时候，即代表子串结束，计算当前子串的长度。</p>
+<p>比较之前保存的最长长度和当前子串的长度，取最大值保存。更新新子串的起始下标，继续遍历直到结束。</p>
+<p>注意，新子串的起始下标：</p>
+<ol>
+<li>必须是当前 最新 重复字符的后面的字符；</li>
+</ol>
+</blockquote>
+<p>代码如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution_0003</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">lengthOfLongestSubstring</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 将字符串转换成数组，便于后续根据下标访问</span></span><br><span class="line">        <span class="keyword">char</span>[] chars = s.toCharArray();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 保存 长度 和 计算长度的起始下标，初始化均为0.</span></span><br><span class="line">        <span class="keyword">int</span> answer = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> tempStart = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 创建map，存储遍历过的元素，&lt;元素, 最新的下标&gt;。</span></span><br><span class="line">        Map&lt;Character, Integer&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 遍历字符串，只要没有重复的元素，就将其添加到map中；如果有重复的元素，则起始下标向后移动一位，并更新重复元素的最新下标。</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; s.length(); i++) &#123;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(map.containsKey(chars[i]))&#123;</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 包含重复元素，说明此时获得了一个子串，比较当前子串的长度和之前的答案，取最大的值为答案。</span></span><br><span class="line">                answer = Math.max(answer, i - tempStart);</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 包含重复元素，当前子串结束，记录下一个重复子串的起始位置</span></span><br><span class="line">                <span class="comment">// 下一个子串的起始位置是 map保存的当前重复字符的下一个字符。</span></span><br><span class="line"></span><br><span class="line">                <span class="comment">// 但是Map是无序的，无法通过当前重复元素找到Map中的下一个字符。</span></span><br><span class="line">                <span class="comment">// 首先可以肯定的一点是：Map中保留的是不重复的字符，所以Map中保留的一定是字符串中相邻的元素</span></span><br><span class="line">                <span class="comment">// 我们可以通过当前字符获取到其在字符串中的下标，然后通过下标和字符串获取到下一个字符</span></span><br><span class="line"></span><br><span class="line">                <span class="comment">// 注意，要考虑 “abba”这种情况，当遍历a的时候，当时的子串是b，即起始下标是b，</span></span><br><span class="line">                <span class="comment">// 那么遍历a的时候，更新下标，实际上就不单纯是a的下一个元素了，</span></span><br><span class="line">                <span class="comment">// 应该是 a的下一个元素 和 当前起始下标的最大值。</span></span><br><span class="line">                tempStart = Math.max(map.get(chars[i]) + <span class="number">1</span>, tempStart);</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 将元素添加到map中</span></span><br><span class="line">            map.put(chars[i], i);</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 最后遍历完计算一遍长度，因为最后可能没有重复字符出现</span></span><br><span class="line">        answer = Math.max(answer, s.length() - tempStart);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> answer;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"><span class="comment">//        String s = &quot;abcabcbb&quot;;</span></span><br><span class="line"><span class="comment">//        String s = &quot;bbbbb&quot;;</span></span><br><span class="line"><span class="comment">//        String s = &quot;pwwkew&quot;;</span></span><br><span class="line"><span class="comment">//        String s = &quot;abcad&quot;;</span></span><br><span class="line">        String s = <span class="string">&quot;abba&quot;</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> subLength = lengthOfLongestSubstring(s);</span><br><span class="line">        System.out.println(subLength);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-备注"><a href="#3-备注" class="headerlink" title="3. 备注"></a>3. 备注</h2><p><em>参考<a target="_blank" rel="noopener" href="https://leetcode-cn.com/">力扣（LeetCode）官网 - 全球极客挚爱的技术成长平台 (leetcode-cn.com)</a>。</em></p>
+
                 
             </div>
             <hr/>
@@ -1006,7 +1034,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">200k</span>&nbsp;字
+                class="white-color">202.7k</span>&nbsp;字
             
             
             
