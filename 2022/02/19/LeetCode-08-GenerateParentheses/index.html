@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Java进阶_08_注解, ihianian">
+    <meta name="keywords" content="LeetCode_08_GenerateParentheses, ihianian">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Java进阶_08_注解 | ihianian</title>
+    <title>LeetCode_08_GenerateParentheses | ihianian</title>
     <link rel="icon" type="image/png" href="/header.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -310,12 +310,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Java进阶_08_注解</h1>
+                    <h1 class="description center-align post-title">LeetCode_08_GenerateParentheses</h1>
                 </div>
             </div>
         </div>
@@ -431,8 +431,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Java/">
-                                <span class="chip bg-color">Java</span>
+                            <a href="/tags/LeetCode/">
+                                <span class="chip bg-color">LeetCode</span>
                             </a>
                         
                     </div>
@@ -447,28 +447,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-11-03
+                    2022-02-19
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-02-11
+                    2022-02-19
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.6k
+                    0
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    6 分
+                    1 分
                 </div>
                 
 
@@ -488,72 +488,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>本文介绍Java中的注解机制。</p>
-<h2 id="1-注解概述"><a href="#1-注解概述" class="headerlink" title="1. 注解概述"></a>1. 注解概述</h2><p>注解，也被称为注释，英文单词是：Annotation。<strong>注解是一种引用数据类型，编译之后生成xxx.class文件</strong>。自定义注解语法格式如下所示：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[修饰符列表] <span class="meta">@interface</span> 注解类型名&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>那么<strong>注解作为一种引用数据类型，主要用在哪里呢？怎么使用呢？</strong></p>
-<blockquote>
-<p>第一：注解使用时的语法格式是：<code>@注解类型名</code>。</p>
-<p>第二：注解可以出现在类上、接口上、属性上、方法上、变量上等等…。注解也可以出现在注解类型上（默认情况下注解可以出现在任意位置，可以通过在注解上添加其他注解，来限制该注解的使用范围，如Override只能出现在方法上）。</p>
-<p><img src="http://cybersecurity.gitee.io/blog-image-bed/Java/Java_advance/adv_022.png" alt="adv_022.png (417×136) (gitee.io)"></p>
-</blockquote>
-<p>简单案例如下所示：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 注解数据类型</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">自定义注解</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> MyAnnotation &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 测试注解，可以用在很多位置上</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@MyAnnotation</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AnnotationTest01</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@MyAnnotation</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> no;</span><br><span class="line">    <span class="keyword">public</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@MyAnnotation</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">AnnotationTest01</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@MyAnnotation</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">m1</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="meta">@MyAnnotation</span></span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">100</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@MyAnnotation</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">m2</span><span class="params">(<span class="meta">@MyAnnotation</span> String name)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="2-JDK内置注解"><a href="#2-JDK内置注解" class="headerlink" title="2. JDK内置注解"></a>2. JDK内置注解</h2><p>注解作为一种数据类型，Java提供了一些注解，主要在<code>java.lang</code>包下，可以查看帮助文档，如下所示：</p>
-<p><img src="http://cybersecurity.gitee.io/blog-image-bed/Java/Java_advance/adv_020.png" alt="adv_020.png (1492×417) (gitee.io)"></p>
-<p>主要掌握<strong>Deprecated</strong>和<strong>Override</strong>两种注解即可。</p>
-<h3 id="2-1-Override"><a href="#2-1-Override" class="headerlink" title="2.1 Override"></a>2.1 Override</h3><p>表示一个方法声明打算重写父类中的另一个方法声明，<strong>只能注解方法</strong>。这个注解是给编译器参考的，和运行阶段没有关系。凡是Java中的方法带有这个注解的，编译器都会进行编译检查，如果不是重写父类的方法则会报错。</p>
-<p>例如，重写父类方法，但是怕写错了，可以添加注解，交给编译器来检查是否重写了父类方法。所以<strong>注解不是必须的</strong>。</p>
-<p><img src="http://cybersecurity.gitee.io/blog-image-bed/Java/Java_advance/adv_021.png" alt="adv_021.png (402×210) (gitee.io)"></p>
-<h3 id="2-2-Deprecated"><a href="#2-2-Deprecated" class="headerlink" title="2.2 Deprecated"></a>2.2 Deprecated</h3><p>表示所修饰的元素已经过时了，不再建议使用，主要是为了向程序员传达该元素已经过时，有更好的解决方案。在IDEA中的体现就是出现了横线。</p>
-<p><img src="http://cybersecurity.gitee.io/blog-image-bed/Java/Java_advance/adv_023.png" alt="adv_023.png (595×678) (gitee.io)"></p>
-<h3 id="2-3-元注解"><a href="#2-3-元注解" class="headerlink" title="2.3 元注解"></a>2.3 元注解</h3><p>用于修饰注解的注解被称为元注解，如下面的Target以及Retention就是元注解，这两个注解也是常用的元注解。</p>
-<ul>
-<li>Target注解主要用来限制被标注的注解可以出现在哪些位置上（方法、属性、类等等）。</li>
-<li>Retention注解主要用来限制被标注的注解最终保存在什么位置上，source表示只停留在源文件中，不会出现在class文件中。除了source还有class（保留在class文件中）和runtime（保留在class文件中，且可以被反射机制读取）。</li>
-</ul>
-<p><img src="http://cybersecurity.gitee.io/blog-image-bed/Java/Java_advance/adv_022.png" alt="adv_022.png (417×136) (gitee.io)"></p>
-<h2 id="3-注解属性"><a href="#3-注解属性" class="headerlink" title="3. 注解属性"></a>3. 注解属性</h2><p>我们通常可以在注解中定义属性，注解中的属性在语法上和方法类似，但是实际上是属性。<strong>注意，如果注解中有属性，那么在应用注解的时候必须给属性赋值，除非在定义的时候指定默认值，这样在使用的时候可以不用赋值了</strong>，语法格式如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义语法</span></span><br><span class="line">数据类型 属性名() [<span class="keyword">default</span> 默认值];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用语法</span></span><br><span class="line">@注解名(属性名=属性值)</span><br></pre></td></tr></table></figure>
-
-<p>案例如下所示：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> MyAnnotation02 &#123;</span><br><span class="line">    <span class="function">String <span class="title">name</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">age</span><span class="params">()</span> <span class="keyword">default</span> 18</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AnnotationTest03</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@MyAnnotation02(name = &quot;zhangSan&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">doSOme</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;------------&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>注意，如果注解中只有一个属性，并且属性名是value，那么在使用注解的时候，给属性赋值可以不用写属性名value。如<code>@Annotation(&quot;haha&quot;)</code>。</strong></p>
-<h3 id="3-1-属性类型"><a href="#3-1-属性类型" class="headerlink" title="3.1 属性类型"></a>3.1 属性类型</h3><p>注解中的属性都可以是哪些数据类型呢？</p>
-<blockquote>
-<p>byte，short，int，long，float，double，boolean，char</p>
-<p>String，Class，枚举</p>
-<p>以及上述类型的数组形式</p>
-</blockquote>
-<h2 id="4-反射注解"><a href="#4-反射注解" class="headerlink" title="4. 反射注解"></a>4. 反射注解</h2><p>要想通过反射获取注解，首先应该限制注解的保留策略为<code>RUNTIME</code>。</p>
-<ol>
-<li>首先判断是否有该注解修饰</li>
-<li>如果有的话，获取到该注解修饰类对象</li>
-<li>通过该对象获取到注解中的属性</li>
-</ol>
-<p>案例一：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 注解</span></span><br><span class="line"><span class="comment">// 设置该注解可以修饰类、普通方法</span></span><br><span class="line"><span class="meta">@Target(&#123;ElementType.TYPE, ElementType.METHOD&#125;)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置该注解的保留策略为运行时（可以被反射机制获取）</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> MyAnnotation03 &#123;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">name</span><span class="params">()</span> <span class="keyword">default</span> &quot;河北省&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 注解修饰类</span></span><br><span class="line"><span class="meta">@MyAnnotation03</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AnnotationTest04</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">AnnotationTest04</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@MyAnnotation03</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSome</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> j;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 反射注解</span></span><br><span class="line"><span class="comment">// 通过反射机制获取AnnotationTest04类上修饰的注解类及其属性</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ReflectAnnotationTest01</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 获取类</span></span><br><span class="line">            Class annotationtest04 = Class.forName(<span class="string">&quot;annotation.AnnotationTest04&quot;</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            <span class="comment">// 判断类上是否有指定的注解修饰</span></span><br><span class="line">            <span class="keyword">boolean</span> annotationPresent = annotationtest04.isAnnotationPresent(MyAnnotation03.class);</span><br><span class="line"><span class="comment">//            System.out.println(annotationPresent);</span></span><br><span class="line">            <span class="keyword">if</span>(annotationPresent)&#123;</span><br><span class="line">                <span class="comment">// 获取注解对象，注意要转型，否则拿到的是注解的父类Annotation，这样后续无法访问到具体的属性（以为内父类没有）</span></span><br><span class="line">                MyAnnotation03 annotation = (MyAnnotation03)annotationtest04.getAnnotation(MyAnnotation03.class);</span><br><span class="line">                System.out.println(annotation);</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 获取注解对象的属性值（直接 .属性名() 即可）</span></span><br><span class="line">                String name = annotation.name();</span><br><span class="line">                System.out.println(name);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>案例二：获取方法上修饰的注解类</p>
-<p>要想获取方法，首先要获取类。获取类之后获取该方法，然后判断该方法是否有该注解修饰，有的话，获取该注解对象，然后通过该对象获取属性值。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ReflectAnnotationTest02</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 获取类以及其方法</span></span><br><span class="line">            Class myAnnotation04 = Class.forName(<span class="string">&quot;annotation.AnnotationTest04&quot;</span>);</span><br><span class="line">            Method doSome = myAnnotation04.getDeclaredMethod(<span class="string">&quot;doSome&quot;</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 判断方法是否被该注解修饰</span></span><br><span class="line">            <span class="keyword">if</span>(doSome.isAnnotationPresent(MyAnnotation03.class))&#123;</span><br><span class="line">                <span class="comment">// 注意，该方法和类的方法不一样，返回的数据类型是根据参数的类型来确定的，所以这里不需要强转。</span></span><br><span class="line">                MyAnnotation03 annotation = doSome.getAnnotation(MyAnnotation03.class);</span><br><span class="line">                System.out.println(annotation.name());</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (NoSuchMethodException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="5-注解的作用"><a href="#5-注解的作用" class="headerlink" title="5. 注解的作用"></a>5. 注解的作用</h2><p>一个需求如下：如果一个类被<code>@Id</code>注解修饰，那么要求这个类必须有int类型的id属性，这样才合法，否则不合法。</p>
-<p>这时候，首先判断该类是否有该注解修饰，有的话，进而判断该类是否有int类型的id属性。</p>
-<p><strong>实际上，注解等同于一种标记，我们可以根据注解的不同而执行不同的程序。</strong></p>
-<h2 id="6-备注"><a href="#6-备注" class="headerlink" title="6. 备注"></a>6. 备注</h2><p><em>参考B站《动力节点》。</em></p>
-
+                
                 
             </div>
             <hr/>
@@ -569,7 +504,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">hianian</a>
+                    <a href="/about" rel="external nofollow noreferrer">浮云</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -579,7 +514,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://ihianian.github.io/2021/11/03/Java%E8%BF%9B%E9%98%B6-08-%E6%B3%A8%E8%A7%A3/">https://ihianian.github.io/2021/11/03/Java%E8%BF%9B%E9%98%B6-08-%E6%B3%A8%E8%A7%A3/</a>
+                    <a href="https://ihianian.github.io/2022/02/19/LeetCode-08-GenerateParentheses/">https://ihianian.github.io/2022/02/19/LeetCode-08-GenerateParentheses/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -592,7 +527,7 @@
                     本博客所有文章除特別声明外，均采用
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     许可协议。转载请注明来源
-                    <a href="/about" target="_blank">hianian</a>
+                    <a href="/about" target="_blank">浮云</a>
                     !
                 </span>
             </div>
@@ -617,8 +552,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Java/">
-                                    <span class="chip bg-color">Java</span>
+                                <a href="/tags/LeetCode/">
+                                    <span class="chip bg-color">LeetCode</span>
                                 </a>
                             
                         </div>
@@ -788,17 +723,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/11/17/MySQL-01-%E6%A6%82%E8%BF%B0/">
+                <a href="/2022/02/19/LeetCode-08-GenerateParentheses/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="MySQL_01_概述">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="LeetCode_08_GenerateParentheses">
                         
-                        <span class="card-title">MySQL_01_概述</span>
+                        <span class="card-title">LeetCode_08_GenerateParentheses</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -808,9 +744,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-11-17
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-19
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -819,11 +755,12 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/MySQL/">
-                        <span class="chip bg-color">MySQL</span>
+                    <a href="/tags/LeetCode/">
+                        <span class="chip bg-color">LeetCode</span>
                     </a>
                     
                 </div>
@@ -837,13 +774,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/10/26/Java%E8%BF%9B%E9%98%B6-07-%E5%8F%8D%E5%B0%84%E5%BA%8F%E5%88%97%E5%8C%96/">
+                <a href="/2022/02/19/LeetCode-07-MergeTwoSortedLists/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="Java进阶_07_反射序列化">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="LeetCode_07_MergeTwoSortedLists">
                         
-                        <span class="card-title">Java进阶_07_反射序列化</span>
+                        <span class="card-title">LeetCode_07_MergeTwoSortedLists</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -854,7 +791,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-26
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-19
                             </span>
                         <span class="publish-author">
                             
@@ -867,8 +804,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Java/">
-                        <span class="chip bg-color">Java</span>
+                    <a href="/tags/LeetCode/">
+                        <span class="chip bg-color">LeetCode</span>
                     </a>
                     
                 </div>
