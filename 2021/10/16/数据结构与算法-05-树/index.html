@@ -454,21 +454,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-11-12
+                    2022-03-17
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    73
+                    2.6k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    9 分
                 </div>
                 
 
@@ -489,9 +489,111 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>本文介绍一种经典的数据结构——树。</p>
-<h2 id="1-树理论基础"><a href="#1-树理论基础" class="headerlink" title="1. 树理论基础"></a>1. 树理论基础</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/wannuoge4766/article/details/83998377">数据结构之树_lishinho的博客-CSDN博客_数据结构树</a></p>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/90255760">数据结构中”树”的全面讲解 - 知乎 (zhihu.com)</a></p>
-<h2 id="2-树经典题目"><a href="#2-树经典题目" class="headerlink" title="2. 树经典题目"></a>2. 树经典题目</h2><h2 id="3-备注"><a href="#3-备注" class="headerlink" title="3. 备注"></a>3. 备注</h2><p><em>部分参考<a target="_blank" rel="noopener" href="https://programmercarl.com/">代码随想录 (programmercarl.com)</a>。</em></p>
+<h2 id="1-树理论基础"><a href="#1-树理论基础" class="headerlink" title="1. 树理论基础"></a>1. 树理论基础</h2><p>前面的数组、队列等数据结构，是线性结构，即元素之间的前后关系是一对一的，一个元素只有一个前驱元素、一个后继元素。而<strong>树则是非线性结构，一个元素只有一个前驱元素，但是可以有多个后继元素，即一对多的关系。</strong></p>
+<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CDataStructureAndAlgorithm%5CDSAA_028.png" alt="image-20220315152147186"></p>
+<p>可以看到，树本身就是一个递归的定义。</p>
+<h3 id="1-1-基本术语"><a href="#1-1-基本术语" class="headerlink" title="1.1 基本术语"></a>1.1 基本术语</h3><ul>
+<li>根节点、节点、前驱节点（双亲节点）、后继节点（孩子节点）、叶子节点（终端节点）、内部节点（非终端节点，根节点除外）、兄弟节点</li>
+<li>节点的度：节点拥有的子树（子节点）个数</li>
+<li>树的度：树内各节点的度的最大值</li>
+<li>节点的祖先：从根到该节点所经分支上的所有节点。</li>
+<li>节点的子孙：以该节点为根的子树中的任一节点。</li>
+<li>层次：根节点为第一层，孩子节点为第二层，以此类推。</li>
+<li>树的深度（树的高度）：树中节点的最大层次。</li>
+<li>有序树：树中节点的各子树从左到右有次序。即规定左边为第一个孩子，如果节点子树互换位置，则表明这是两棵不同的树。</li>
+<li>无序树：树中的子树可以交换位置，仍然看做是同一棵树。</li>
+<li>森林：多棵（也可以是一棵）互不相交的树的集合。</li>
+</ul>
+<h3 id="1-2-二叉树"><a href="#1-2-二叉树" class="headerlink" title="1.2 二叉树"></a>1.2 二叉树</h3><p>树作为一种数据结构，用来存储数据，而数据则是用来存取的。作为运算，上面的树实际上是很难找到规律的，那么为了方便计算，出现了一个“特殊的树”，即树中每个节点最多有两个子节点（二叉树）。同时如果树中每个节点都有两个子节点，则被称为完全二叉树、满二叉树等等。<strong>另外，子节点有左右之分，即左子树和右子树。</strong></p>
+<ul>
+<li>二叉树的结构最简单，规律性最强。</li>
+<li>可以证明，所有的树都能转为唯一对应的二叉树，不失一般性。</li>
+</ul>
+<blockquote>
+<p>二叉树在树结构的应用中起着非常重要的作用，因为对二叉的许多操作算法简单，而任何树都可以与二叉树相互转换，这样就解决了树的存储结构及其运算中存在的复杂性。</p>
+<p>这里注意一下，二叉树不是树，也不是树的一种特殊情况。虽然二叉树和有序树比较像，但是二叉树即使有一个子树也会区分左子树还是右子树，而有序树只有一个节点时，则不会区分左右。</p>
+<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CDataStructureAndAlgorithm%5CDSAA_029.png" alt="image-20220315155230990"></p>
+</blockquote>
+<p>二叉树有以下五种基本形态</p>
+<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CDataStructureAndAlgorithm%5CDSAA_030.png" alt="image-20220315155326355"></p>
+<h3 id="1-3-二叉树抽象数据类型定义"><a href="#1-3-二叉树抽象数据类型定义" class="headerlink" title="1.3 二叉树抽象数据类型定义"></a>1.3 二叉树抽象数据类型定义</h3><ul>
+<li><p>数据对象</p>
+<p>即存储的数据，比如存储整数、存储引用数据类型等等</p>
+</li>
+<li><p>数据关系</p>
+<p>定义左右节点</p>
+</li>
+<li><p>基本操作</p>
+<p>比如先序遍历、中序遍历、后续遍历等等。</p>
+</li>
+</ul>
+<h3 id="1-4-满二叉树"><a href="#1-4-满二叉树" class="headerlink" title="1.4 满二叉树"></a>1.4 满二叉树</h3><p>二叉树的每一层都是满的，即节点数达到了最大，即2^k - 1，叶子节点全部在最底层。</p>
+<h3 id="1-5-完全二叉树"><a href="#1-5-完全二叉树" class="headerlink" title="1.5 完全二叉树"></a>1.5 完全二叉树</h3><p>和满二叉树类似，只不过，不一定非要有两个节点，但是已有的节点必须是从左到右依次占满节点位置的。即如果缺少节点，则一定是右侧子节点空缺。</p>
+<ul>
+<li>叶子节点只可能分布在层次最大的两层上。</li>
+<li>对任意节点，如果其右子树的最大层次为i，那么其左子树的最大层次必为i或者i+1。</li>
+</ul>
+<p>即满二叉树一定是完全二叉树。</p>
+<h3 id="1-6-二叉树的存储结构"><a href="#1-6-二叉树的存储结构" class="headerlink" title="1.6 二叉树的存储结构"></a>1.6 二叉树的存储结构</h3><p>和前面的数据结构一样，二叉树的存储结构也分为顺序存储结构和链式存储结构。</p>
+<ul>
+<li><p>顺序存储结构（按照完全二叉树进行存储）</p>
+<p>即将二叉树的节点按照满二叉树的节点编号作为数组的下标索引存储。而根据完全二叉树的性质，下标为i的节点的左右两个子节点分别是2i和2i+1，这样就可以实现上下层之间的存取了。<strong>注意，这样对于非完全二叉树来说，就会出现空缺位置，但是这样做是无法避免的，为了方便存取，只能这样做。因此适合满二叉树和完全二叉树。</strong></p>
+</li>
+<li><p>链式存储结构</p>
+<p>和线性链表一样，对于二叉树，至少需要两个指针指向左右孩子节点（被称为二叉链表）。（如果需要逆向指向双亲节点，还需要加一个指针，即三叉链表）</p>
+</li>
+</ul>
+<h3 id="1-7-遍历二叉树"><a href="#1-7-遍历二叉树" class="headerlink" title="1.7 遍历二叉树"></a>1.7 遍历二叉树</h3><p>遍历的含义：顺着某一条搜索路径寻访二叉树中的节点，使得每个节点均被访问一次，而且仅被访问一次（又称周游）。访问的含义比较广，简单地说就是存取数据以及对数据进行运算，但是不能破坏数据结构。</p>
+<p>遍历的目的就是将非线性的数据结构按照某个线性顺序依次访问节点。主要的遍历顺序有：</p>
+<ul>
+<li>先序（根）遍历——根左右</li>
+<li>中序（根）遍历——左根右</li>
+<li>后序（根）遍历——左右根</li>
+</ul>
+<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CDataStructureAndAlgorithm%5CDSAA_031.png" alt="image-20220315175015123"></p>
+<p>上图中是采用递归的方式来遍历的，也有<strong>非递归的方式</strong>。我们知道，树的遍历分为左子树、根、右子树三部分，无论怎么遍历，<strong>左右子树都是分开遍历的</strong>，那么此时，就需要保存右子树（因为左子树是先访问的），但是保存右子树是没必要的，因为可以通过根节点来访问到右子树，所以需要<strong>保存根节点</strong>。另外，根据访问顺序可以看到，各个根节点是“先进后出”的，所以采用栈数据结构来存储根节点。<strong>以先序遍历为例，如下所示</strong>：</p>
+<ol>
+<li>访问根节点，并将其入栈。</li>
+<li>访问根节点的左子树，同样将该子树的根节点入栈。</li>
+<li>重复2步骤，直到当前节点的左子树为空，将栈中的根节点取出（访问节点），获得右子树。</li>
+<li>重复2、3步骤，直到栈为空。</li>
+</ol>
+<p>除了上面的先序中序和后序遍历，还有一种<strong>层次遍历方法，即逐层遍历二叉树</strong>。这种方法实现比较简单，采用队列：</p>
+<ul>
+<li>将根节点存入队列，</li>
+<li>出队，访问节点，并将当前元素的左右节点放入队列，</li>
+<li>继续出队，入队，直到队列为空。</li>
+</ul>
+<h3 id="1-8-线索二叉树"><a href="#1-8-线索二叉树" class="headerlink" title="1.8 线索二叉树"></a>1.8 线索二叉树</h3><p>我们知道，当用二叉链表作为二叉树的存储结构时，可以很方便地找到某个节点的左右孩子。但是一般情况下，无法直接找到该节点在某种遍历序列中的前驱和后继节点。解决方法有如下几种：</p>
+<ul>
+<li>遍历到该节点，找到其前驱和后继（费时）</li>
+<li>增设前驱和后继（费空间）</li>
+<li>利用二叉链表中的空指针域（我们知道，n个节点共有n+1个指针域为空）。</li>
+</ul>
+<p><strong>如果某个节点的左孩子为空，则将空的左孩子指针域修改为指向其前驱；如果某节点的右孩子为空，则将空的右孩子指针域修改为指向其后继。</strong>这种改变指向的指针称为“线索”，加上了线索的二叉树就被称为线索二叉树。</p>
+<p>既然有前驱和后继了，就说明有了遍历顺序，那么对二叉树按照某种遍历次序使其变为线索二叉树的过程叫线索化。例子如下所示：</p>
+<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CDataStructureAndAlgorithm%5CDSAA_032.png" alt="image-20220315203304127"></p>
+<p>但是这样线索化之后，实际上就没办法区分某个指针到底指向的是其孩子节点还是其前驱和后继了。所以此时在节点中增设两个标志域ltag和rtag，约定如下：</p>
+<ul>
+<li>ltag=0，lchild指向该节点的左孩子</li>
+<li>ltag=1，lchild指向该节点的前驱</li>
+<li>rtag=0，rchild指向该节点的右孩子</li>
+<li>rtag=1，rchild指向该节点的后继</li>
+</ul>
+<h3 id="1-9-二叉搜索树"><a href="#1-9-二叉搜索树" class="headerlink" title="1.9 二叉搜索树"></a>1.9 二叉搜索树</h3><p>注意，不是完全二叉树。二叉搜索树指的是节点中的数值，左节点的值小于根节点的值，右节点的值大于根节点的值。这样在查找的时候，就相当于二分查找了。</p>
+<h3 id="1-10-平衡二叉搜索树"><a href="#1-10-平衡二叉搜索树" class="headerlink" title="1.10 平衡二叉搜索树"></a>1.10 平衡二叉搜索树</h3><p>指的是在二叉搜索树的基础上，左右子树的高度差值不超过1。</p>
+<h2 id="2-树经典题目"><a href="#2-树经典题目" class="headerlink" title="2. 树经典题目"></a>2. 树经典题目</h2><p>树的定义如下（Java）：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BinaryTreeNode</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> value;</span><br><span class="line">    BinaryTreeNode lchild;</span><br><span class="line">    BinaryTreeNode rchild;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BinaryTreeNode</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BinaryTreeNode</span><span class="params">(<span class="keyword">int</span> value)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.value = value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BinaryTreeNode</span><span class="params">(<span class="keyword">int</span> value, BinaryTreeNode lchild, BinaryTreeNode rchild)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.value = value;</span><br><span class="line">        <span class="keyword">this</span>.lchild = lchild;</span><br><span class="line">        <span class="keyword">this</span>.rchild = rchild;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-1-二叉树的递归遍历"><a href="#2-1-二叉树的递归遍历" class="headerlink" title="2.1 二叉树的递归遍历"></a>2.1 二叉树的递归遍历</h3><p>下面是三种遍历方式的递归实现</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Traversal</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">preOrderTraversal</span><span class="params">(BinaryTreeNode T)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(T != <span class="keyword">null</span>)&#123;</span><br><span class="line">            System.out.println(T.value);</span><br><span class="line">            preOrderTraversal(T.lchild);</span><br><span class="line">            preOrderTraversal(T.rchild);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">midOrderTraversal</span><span class="params">(BinaryTreeNode T)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(T != <span class="keyword">null</span>)&#123;</span><br><span class="line">            midOrderTraversal(T.lchild);</span><br><span class="line">            System.out.println(T.value);</span><br><span class="line">            midOrderTraversal(T.rchild);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">posOrderTraversal</span><span class="params">(BinaryTreeNode T)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(T != <span class="keyword">null</span>)&#123;</span><br><span class="line">            posOrderTraversal(T.lchild);</span><br><span class="line">            posOrderTraversal(T.rchild);</span><br><span class="line">            System.out.println(T.value);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        BinaryTreeNode btn1 = <span class="keyword">new</span> BinaryTreeNode(<span class="number">7</span>);</span><br><span class="line">        BinaryTreeNode btn2 = <span class="keyword">new</span> BinaryTreeNode(<span class="number">5</span>, btn1, <span class="keyword">null</span>);</span><br><span class="line"></span><br><span class="line">        BinaryTreeNode btn3 = <span class="keyword">new</span> BinaryTreeNode(<span class="number">4</span>);</span><br><span class="line"></span><br><span class="line">        BinaryTreeNode btn4 = <span class="keyword">new</span> BinaryTreeNode(<span class="number">2</span>, btn3, btn2);</span><br><span class="line"></span><br><span class="line">        BinaryTreeNode btn5 = <span class="keyword">new</span> BinaryTreeNode(<span class="number">6</span>);</span><br><span class="line">        BinaryTreeNode btn6 = <span class="keyword">new</span> BinaryTreeNode(<span class="number">3</span>, <span class="keyword">null</span>, btn5);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// final tree</span></span><br><span class="line">        BinaryTreeNode btn7 = <span class="keyword">new</span> BinaryTreeNode(<span class="number">1</span>, btn4, btn6);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 1 2 4 5 7 3 6</span></span><br><span class="line">        preOrderTraversal(btn7);</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;===========&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 4 2 7 5 1 3 6</span></span><br><span class="line">        midOrderTraversal(btn7);</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;===========&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 5 7 5 2 6 3 1</span></span><br><span class="line">        posOrderTraversal(btn7);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-二叉树的迭代遍历（非递归遍历）"><a href="#2-2-二叉树的迭代遍历（非递归遍历）" class="headerlink" title="2.2 二叉树的迭代遍历（非递归遍历）"></a>2.2 二叉树的迭代遍历（非递归遍历）</h3><p>前面提到过，有非递归的实现方式，即将根节点保存起来，方便后续取出访问其右节点。下面是三种遍历方式的迭代实现</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-3-二叉树的层次遍历"><a href="#2-3-二叉树的层次遍历" class="headerlink" title="2.3 二叉树的层次遍历"></a>2.3 二叉树的层次遍历</h3><h2 id="3-备注"><a href="#3-备注" class="headerlink" title="3. 备注"></a>3. 备注</h2><p><em>部分参考<a target="_blank" rel="noopener" href="https://programmercarl.com/">代码随想录 (programmercarl.com)</a>。<a target="_blank" rel="noopener" href="https://blog.csdn.net/wannuoge4766/article/details/83998377">数据结构之树_lishinho的博客-CSDN博客_数据结构树</a>。<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/90255760">数据结构中”树”的全面讲解 - 知乎 (zhihu.com)</a>。B站《青岛大学数据结构与算法基础》</em></p>
 
                 
             </div>
@@ -1010,7 +1112,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">217.8k</span>&nbsp;字
+                class="white-color">224.1k</span>&nbsp;字
             
             
             
