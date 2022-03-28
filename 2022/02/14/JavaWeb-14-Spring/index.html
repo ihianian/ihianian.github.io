@@ -454,21 +454,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-03-25
+                    2022-03-28
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    7k
+                    9.3k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    27 分
+                    36 分
                 </div>
                 
 
@@ -686,24 +686,34 @@
 <p>该注解用于创建对象，相当于&lt;bean&gt;标签。有一个属性value，表示对象的名称，相当于bean标签的id值，是唯一的。这个注解用于修饰类，只能在类上面写，相当于创建某类的对象。<strong>注意，一个注解创建的对象，在整个Spring容器中就一个。</strong></p>
 </li>
 <li><p>@Repository</p>
-<p>该注解也是用于创建对象，只不过一般放在DAO的实现类上面，即用于持久层类对象。使用语法和Component一样，</p>
+<p>该注解也是用于创建对象，只不过一般放在DAO的实现类上面，即用于持久层类对象。使用语法和Component一样，用来访问数据库。</p>
 </li>
 <li><p>@Service</p>
-<p>该注解也是用于创建对象，只不过一般放在Service的实现类上面，用于业务层类对象。使用语法和Component一样，</p>
+<p>该注解也是用于创建对象，只不过一般放在Service的实现类上面，用于业务层类对象。使用语法和Component一样，用来处理业务逻辑。</p>
 </li>
 <li><p>@Controller</p>
-<p>该注解也是用于创建对象，只不过一般放在控制器的实现类上面，用于控制层类对象。使用语法和Component一样，</p>
+<p>该注解也是用于创建对象，只不过一般放在控制器的实现类上面，用于控制层类对象。使用语法和Component一样，用于接收请求，显示处理结果。</p>
 </li>
 <li><p>@Value</p>
 <p>用于给简单数据类型属性赋值。该注解有一个属性value，是String类型的，表示简单类型的属性值。<strong>有两个位置用法，一个是在属性定义的上面，无需set方法（推荐使用）；第二个是在set方法上面使用。</strong>注意，即使自己定义了set方法，但是对于第一种用法来说，并不会调用自定义的set方法。</p>
 </li>
 <li><p>@Autowired</p>
 <p>用于给引用类型属性赋值。该注解底层是Spring的自动注入原理。支持byType（默认）和byName。<strong>有两个位置用于，一个是在属性定义的上面，无序set方法（推荐使用）；第二个是在set方法上面使用。</strong>注意，在使用之前，一定要先用创建对应的对象（注解方式或配置文件方式均可，都会在容器中保存）。此时spring才会根据自动注入原理找同源类型对象，否则会找不到赋值为空。</p>
+<p>如果想要采用byName方式，则除了添加@Autowired之外，还需要添加@Qualifier(value=”bean的id”)注解，表示使用指定名称的bean完成赋值。（<strong>注意，两个注解没有先后顺序。</strong>）</p>
+<p><strong>@Autowired注解有一个required属性，该属性是布尔类型，默认为true，表示当引用类型属性赋值失败时（比如同源类型对象找不到），程序就报错，终止执行。如果设为false，则表示找不到就赋值为null，程序正常执行。</strong></p>
 </li>
 <li><p>@Resource</p>
+<p>该注解和Autowired注解的作用一致，语法和Resource类似，只不过<strong>该注解是JDK提供的</strong>，Spring提供了对该注解的支持。也是采用自动注入的原理，支持byName、byType。默认是byName。<strong>但是，该注解默认情况下@Resource，当使用byName赋值失败时，会使用byType进行尝试赋值。可以采用@Resource(name=”bean的id值”)来限制只采用byName。</strong></p>
 </li>
 </ol>
 <p><strong>注意，上述@Repository、@Service、@Controller除了创建对象之外，还有对应的扩展角色功能，实现了对项目的对象分层处理。所以说，如果该类不是上述三类，就采用@Component注解修饰创建对象。</strong></p>
+<p>案例如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 采用注解的方式创建对象，并赋值</span></span><br><span class="line"><span class="meta">@Component(value = &quot;myStudent&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value(value = &quot;张飞&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value(value = &quot;25&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired()</span></span><br><span class="line">    <span class="meta">@Qualifier(value = &quot;mySchool&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> School school;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;自定义set方法执行&quot;</span>);</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(<span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Student&#123;&quot;</span> +</span><br><span class="line">                <span class="string">&quot;name=&#x27;&quot;</span> + name + <span class="string">&#x27;\&#x27;&#x27;</span> +</span><br><span class="line">                <span class="string">&quot;, age=&quot;</span> + age +</span><br><span class="line">                <span class="string">&quot;, school=&quot;</span> + school +</span><br><span class="line">                <span class="string">&#x27;&#125;&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 采用注解的方式创建对象，并赋值</span></span><br><span class="line"><span class="meta">@Component(value = &quot;mySchool&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">School</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value(value = &quot;清华大学&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value(value = &quot;北京市海淀区&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String address;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAddress</span><span class="params">(String address)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.address = address;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;School&#123;&quot;</span> +</span><br><span class="line">                <span class="string">&quot;name=&#x27;&quot;</span> + name + <span class="string">&#x27;\&#x27;&#x27;</span> +</span><br><span class="line">                <span class="string">&quot;, address=&#x27;&quot;</span> + address + <span class="string">&#x27;\&#x27;&#x27;</span> +</span><br><span class="line">                <span class="string">&#x27;&#125;&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 测试类</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyTest01</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testZhujie</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">        String config = <span class="string">&quot;applicaitonContext.xml&quot;</span>;</span><br><span class="line"></span><br><span class="line">        ApplicationContext ac = <span class="keyword">new</span> ClassPathXmlApplicationContext(config);</span><br><span class="line"></span><br><span class="line">        Student myStudent = (Student) ac.getBean(<span class="string">&quot;myStudent&quot;</span>);</span><br><span class="line">        System.out.println(myStudent);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h3 id="2-5-补充"><a href="#2-5-补充" class="headerlink" title="2.5 补充"></a>2.5 补充</h3><p>什么样的对象放入容器中？</p>
 <blockquote>
 <p>DAO类、service类、controller类、工具类。Spring中的对象默认都是单例的，即在容器中叫这个名称的对象只有一个。</p>
@@ -727,9 +737,107 @@
 <p>此时，除了上述的分模块配置文件，我们还设置一个主配置文件，用于将各模块配置文件关联起来。即import，这样，<strong>就相当于所有的配置文件都处于一个总的配置文件中</strong>。语法规则如下所示：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.springframework.org/schema/beans&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 主配置文件，用来包含其他模块的配置文件，也就是将各个文件关联起来。一般情况下，本文件中不定义任何对象。 --&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">import</span> <span class="attr">resource</span>=<span class="string">&quot;classpath:ba06/sprint-student.xml&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">import</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">import</span> <span class="attr">resource</span>=<span class="string">&quot;classpath:ba06/sprint-school.xml&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">import</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">&lt;!-- 或者使用通配符 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">import</span> <span class="attr">resources</span>=<span class="string">&quot;classpath:ba06/*.xml&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">import</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-
 </blockquote>
-<h2 id="3-AOP面向切面编程"><a href="#3-AOP面向切面编程" class="headerlink" title="3. AOP面向切面编程"></a>3. AOP面向切面编程</h2><h2 id="4-Spring集成MyBatis"><a href="#4-Spring集成MyBatis" class="headerlink" title="4. Spring集成MyBatis"></a>4. Spring集成MyBatis</h2><h2 id="5-Spring事务"><a href="#5-Spring事务" class="headerlink" title="5. Spring事务"></a>5. Spring事务</h2><h2 id="6-Spring与Web"><a href="#6-Spring与Web" class="headerlink" title="6. Spring与Web"></a>6. Spring与Web</h2><h2 id="7-总结"><a href="#7-总结" class="headerlink" title="7. 总结"></a>7. 总结</h2><h2 id="8-备注"><a href="#8-备注" class="headerlink" title="8. 备注"></a>8. 备注</h2><p><em>参考B站《动力节点》。</em></p>
+<p>基于配置文件和基础注解的依赖注入有什么优缺点？</p>
+<blockquote>
+<p>配置文件的优点：</p>
+<ol>
+<li>和代码分离，修改配置文件不需要重新编译源码。</li>
+</ol>
+<p>配置文件的缺点：</p>
+<ol>
+<li>文件比较多，需要编写xml代码，而且不容易看清对象的内部逻辑。</li>
+</ol>
+<p>注解的优点：</p>
+<ol>
+<li>和代码在一起，容器看清对象的逻辑关系。</li>
+</ol>
+<p>注解的缺点：</p>
+<ol>
+<li>和代码在一起，修改注解需要重新编译源码。</li>
+</ol>
+<p>总体来说，注解适合不经常修改对象属性的情况。配置文件适合经常修改对象属性的情况。<strong>一般情况下，主要采用注解的方式，辅助采用配置文件的方式。</strong></p>
+</blockquote>
+<p>总体来看，IoC能够实现业务对象之间的解耦合。例如Service层和dao对象之间的解耦合。二者对象的赋值可以通过配置文件进行修改，对象之间没有必然的联系，使得程序更加松散。</p>
+<h2 id="3-AOP面向切面编程"><a href="#3-AOP面向切面编程" class="headerlink" title="3. AOP面向切面编程"></a>3. AOP面向切面编程</h2><p>AOP涉及到动态代理，而动态代理有JDK（内置类）和CGLIB（第三方库）两种方式，JDK要求除了有目标类之外还必须有接口。而CGLIB则不要求有接口，但是要求类和方法不能是final修饰，主要通过继承目标类实现代理和功能增强。CGLIB经常被应用在框架中，如Spring等，效率比JDK高。这里不再展开叙述，可参考前面的文章。<strong>总之，动态代理，一个是代理，进行了功能增强；一个是动态，代码比较灵活，减少代码量，可以在不修改源码的基础上进行代理其他功能。</strong></p>
+<p>总体来说动态代理有如下作用：</p>
+<ul>
+<li>在目标类源码不改变的情况下，增加功能</li>
+<li>减少代码的重复</li>
+<li>专注业务逻辑代码</li>
+<li>解耦合，让业务功能和日志、事务和非事务功能分离</li>
+</ul>
+<p>AOP也被称为面向切面编程（<strong>Aspect Orient Programming</strong>），基于动态代理。本质上说就是动态代理的规范化，把动态代理的实现步骤以及方式都定义好了，让开发人员用一种统一的方式使用动态代理。<strong>即既使用动态代理，也使得步骤变得统一，易于多个开发人员统一开发，易于维护。（因为动态代理本身比较灵活，可以任意开发，但是对于多人开发来说，必须形成统一规范，这样才方面协同）</strong>。</p>
+<blockquote>
+<p>一般情况下，切面指的是给目标类增加的功能（即功能增强）。切面一般是非业务方法，可以独立使用，不影响主体业务功能。</p>
+<p>面向切面编程和面向对象编程类似，以切面为核心，分析</p>
+<ol>
+<li>什么样的功能可以以切面的形式使用？</li>
+<li>什么时候使用？（连接点/切入点，执行时间）</li>
+<li>给谁用？（目标对象）</li>
+</ol>
+</blockquote>
+<p>AOP的术语以下几个：</p>
+<ol>
+<li>Aspect：切面，表示增强的功能，就是一堆代码，完成某个功能（非业务功能）。<strong>常见的切面有：日志，事务</strong>，统计信息，参数检查，权限验证。</li>
+<li>JoinPoint：连接点，连接业务方法和切面的位置。<strong>实际上就是某类中的业务方法</strong>。（比如在该方法执行前计时，在该方法执行后打日志，这里这个方法就是连接点，计时和打日志就是切面。本质上就是通过该方法将切面和整体业务逻辑连接起来）</li>
+<li>Pointcut：切入点，指多个连接点方法的集合（即多个连接点的统称，比如这些方法都要接入切面，那么这些方法就被称为切入点）。</li>
+<li>目标对象：给哪个类的方法增加功能，这个类就是目标对象。</li>
+<li>Advice：通知（或者说增强），表示切面功能执行的时间。</li>
+</ol>
+<p><strong>一个切面有三个关键要素：</strong></p>
+<ol>
+<li>切面的功能代码，切面干什么</li>
+<li>切面的执行位置，使用Pointcut表示切面执行的位置</li>
+<li>切面的执行时间，使用Advice表示时间，如在目标方法之前，还是目标方法之后使用。</li>
+</ol>
+<p>AOP的技术实现框架有以下几个：</p>
+<ol>
+<li>Spring框架，主要在事务处理时使用AOP，这是它自己实现的，比较笨重繁琐，我们在项目开发时很少使用自带的AOP。</li>
+<li>aspectJ框架，这是一个开源的专门做AOP的框架，在业界比较权威，在实际开发中用的比较多，而且Spring框架集成了该框架。<a target="_blank" rel="noopener" href="http://www.eclipse.org/aspectj/">官网</a>。另外，aspectJ框架实现AOP有两种方式：xml配置文件和注解。在开发过程中一般主要采用注解的形式，对于xml配置文件的方式主要是做事务时使用。</li>
+</ol>
+<h3 id="3-1-aspectJ框架"><a href="#3-1-aspectJ框架" class="headerlink" title="3.1 aspectJ框架"></a>3.1 aspectJ框架</h3><p>我们知道切面</p>
+<p>主要有三要素：</p>
+<ul>
+<li><p>功能代码，这个没什么可说的，就是代码实现。</p>
+</li>
+<li><p>切面的执行时间，也被称为Advice（翻译为通知、增强），在aspectJ框架中使用<strong>注解</strong>或xml配置文件来表示。主要的注解有以下五种：</p>
+<ol>
+<li>@Before</li>
+<li>@AfterReturning</li>
+<li>@Around</li>
+<li>@AfterThrowing</li>
+<li>@After</li>
+</ol>
+</li>
+<li><p>切面的执行位置（切入点），aspectJ框架使用的是<strong>切入点表达式</strong>来表示。我们知道切入点就是目标类方法（连接点），因此，需要指明该方法（权限修饰符、返回值类型、所在包名类名、方法名、参数列表、抛出异常等等），<strong>注意，方法返回值和方法声明(参数)这两部分是必须的</strong>。</p>
+<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJavaWeb%5Cspring%5Cspring_007.png" alt="image-20220328171929937"></p>
+<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJavaWeb%5Cspring%5Cspring_008.png" alt="image-20220328172614570"></p>
+<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJavaWeb%5Cspring%5Cspring_009.png" alt="image-20220328172725136"></p>
+<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJavaWeb%5Cspring%5Cspring_010.png" alt="image-20220328173423601"></p>
+</li>
+</ul>
+<p><strong>因此，总体来说，首先知道切入点，即在哪里插入切面。然后要知道切面的执行时间，即在什么时候。最后还要实现切面的具体功能。</strong></p>
+<h3 id="3-2-aspectJ框架的第一个程序"><a href="#3-2-aspectJ框架的第一个程序" class="headerlink" title="3.2 aspectJ框架的第一个程序"></a>3.2 aspectJ框架的第一个程序</h3><p>在现有的某个类的方法基础上，<strong>在不改变原来的类的代码的基础上，进行功能增强</strong>，比如在某个方法执行之前输出时间。使用aspectJ实现AOP的基本步骤：</p>
+<ol>
+<li>新建Maven项目</li>
+<li>加入Spring和aspectJ依赖</li>
+<li>创建目标类：接口和实现类。（本程序的目标是给类中的方法增加功能）</li>
+<li><strong>创建切面类</strong>（其实就是普通类，目的就是将普通类和实现类中的方法关联起来）<ol>
+<li>在类的上面加入注解：@Aspect</li>
+<li>在类中定义方法，方法就是切面要执行的功能代码。在方法的上面加入aspectJ中的通知注解，例如@Before。另外还需要指定切入点表达式execution()。</li>
+</ol>
+</li>
+<li>创建Spring的配置文件，声明对象，把对象交给容器统一管理。<ol>
+<li>声明目标对象</li>
+<li>声明切面类对象</li>
+<li><strong>声明aspectJ框架中的自动代理生成器</strong>标签。<strong>自动代理生成器对象是用来完成代理对象的自动创建功能的，不再需要手动创建代理类对象了。</strong></li>
+</ol>
+</li>
+<li>创建测试类，从Spring容器中获取目标对象（实际上就是代理对象），通过代理执行方法，实现AOP的功能增强。</li>
+</ol>
+<p><strong>从上面的步骤来看，Spring主要做的是控制反转，创建容器来管理对象，以及支持AOP框架。实现AOP功能则需要有切面类以及自动代理生成器对象。</strong></p>
+<h2 id="4-Spring集成MyBatis"><a href="#4-Spring集成MyBatis" class="headerlink" title="4. Spring集成MyBatis"></a>4. Spring集成MyBatis</h2><h2 id="5-Spring事务"><a href="#5-Spring事务" class="headerlink" title="5. Spring事务"></a>5. Spring事务</h2><h2 id="6-Spring与Web"><a href="#6-Spring与Web" class="headerlink" title="6. Spring与Web"></a>6. Spring与Web</h2><h2 id="7-总结"><a href="#7-总结" class="headerlink" title="7. 总结"></a>7. 总结</h2><h2 id="8-备注"><a href="#8-备注" class="headerlink" title="8. 备注"></a>8. 备注</h2><p><em>参考B站《动力节点》。</em></p>
 
                 
             </div>
@@ -1248,7 +1356,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">231.2k</span>&nbsp;字
+                class="white-color">234.9k</span>&nbsp;字
             
             
             
