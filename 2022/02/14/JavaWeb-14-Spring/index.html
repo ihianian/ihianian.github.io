@@ -454,21 +454,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-03-28
+                    2022-03-30
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    9.3k
+                    12.8k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    36 分
+                    50 分
                 </div>
                 
 
@@ -765,8 +765,14 @@
 <li>在目标类源码不改变的情况下，增加功能</li>
 <li>减少代码的重复</li>
 <li>专注业务逻辑代码</li>
-<li>解耦合，让业务功能和日志、事务和非事务功能分离</li>
+<li>解耦合，让业务功能和日志、事务等非事务功能分离</li>
 </ul>
+<p>什么时候考虑使用AOP技术？</p>
+<ol>
+<li>当要给一个系统中存在的类增加功能，但是不能修改源码，可以使用AOP增加功能。</li>
+<li>给项目中的多个类增加一个相同的功能，可以使用AOP。</li>
+<li>给业务方法增加事务，如日志输出。</li>
+</ol>
 <p>AOP也被称为面向切面编程（<strong>Aspect Orient Programming</strong>），基于动态代理。本质上说就是动态代理的规范化，把动态代理的实现步骤以及方式都定义好了，让开发人员用一种统一的方式使用动态代理。<strong>即既使用动态代理，也使得步骤变得统一，易于多个开发人员统一开发，易于维护。（因为动态代理本身比较灵活，可以任意开发，但是对于多人开发来说，必须形成统一规范，这样才方面协同）</strong>。</p>
 <blockquote>
 <p>一般情况下，切面指的是给目标类增加的功能（即功能增强）。切面一般是非业务方法，可以独立使用，不影响主体业务功能。</p>
@@ -793,8 +799,8 @@
 </ol>
 <p>AOP的技术实现框架有以下几个：</p>
 <ol>
-<li>Spring框架，主要在事务处理时使用AOP，这是它自己实现的，比较笨重繁琐，我们在项目开发时很少使用自带的AOP。</li>
-<li>aspectJ框架，这是一个开源的专门做AOP的框架，在业界比较权威，在实际开发中用的比较多，而且Spring框架集成了该框架。<a target="_blank" rel="noopener" href="http://www.eclipse.org/aspectj/">官网</a>。另外，aspectJ框架实现AOP有两种方式：xml配置文件和注解。在开发过程中一般主要采用注解的形式，对于xml配置文件的方式主要是做事务时使用。</li>
+<li><strong>Spring框架</strong>，主要在事务处理时使用AOP，这是它自己实现的，比较笨重繁琐，我们在项目开发时很少使用自带的AOP。</li>
+<li><strong>aspectJ框架</strong>，这是一个开源的专门做AOP的框架，在业界比较权威，在实际开发中<strong>用的比较多</strong>，而且Spring框架集成了该框架。<a target="_blank" rel="noopener" href="http://www.eclipse.org/aspectj/">官网</a>。另外，aspectJ框架实现AOP有两种方式：xml配置文件和注解。在开发过程中一般主要采用注解的形式，对于xml配置文件的方式主要是做事务时使用。</li>
 </ol>
 <h3 id="3-1-aspectJ框架"><a href="#3-1-aspectJ框架" class="headerlink" title="3.1 aspectJ框架"></a>3.1 aspectJ框架</h3><p>我们知道切面</p>
 <p>主要有三要素：</p>
@@ -803,40 +809,152 @@
 </li>
 <li><p>切面的执行时间，也被称为Advice（翻译为通知、增强），在aspectJ框架中使用<strong>注解</strong>或xml配置文件来表示。主要的注解有以下五种：</p>
 <ol>
-<li>@Before</li>
-<li>@AfterReturning</li>
-<li>@Around</li>
+<li>@Before（<strong>前置通知，掌握</strong>）<ol>
+<li>在目标方法之前执行</li>
+<li>不会改变目标方法的执行结果</li>
+<li>不会影响目标方法的执行</li>
+</ol>
+</li>
+<li>@AfterReturning（<strong>后置通知，掌握</strong>）<ol>
+<li>在目标方法之后执行</li>
+<li>能够获取到目标方法的返回值，可以根据这个返回值做不同的处理功能。</li>
+<li>因为能够获取到该值，所以可以“修改”返回值。</li>
+</ol>
+</li>
+<li>@Around（<strong>环绕通知，掌握</strong>）</li>
 <li>@AfterThrowing</li>
 <li>@After</li>
 </ol>
 </li>
-<li><p>切面的执行位置（切入点），aspectJ框架使用的是<strong>切入点表达式</strong>来表示。我们知道切入点就是目标类方法（连接点），因此，需要指明该方法（权限修饰符、返回值类型、所在包名类名、方法名、参数列表、抛出异常等等），<strong>注意，方法返回值和方法声明(参数)这两部分是必须的</strong>。</p>
+<li><p>切面的执行位置（切入点），aspectJ框架使用的是<strong>切入点表达式</strong>来表示。我们知道切入点就是<strong>目标类方法</strong>（连接点），因此，需要指明该方法（权限修饰符、返回值类型、所在包名类名、方法名、参数列表（主需要参数类型，形参名不需要）、抛出异常等等），<strong>注意，方法返回值和方法声明(参数)这两部分是必须的</strong>。</p>
 <p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJavaWeb%5Cspring%5Cspring_007.png" alt="image-20220328171929937"></p>
 <p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJavaWeb%5Cspring%5Cspring_008.png" alt="image-20220328172614570"></p>
 <p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJavaWeb%5Cspring%5Cspring_009.png" alt="image-20220328172725136"></p>
 <p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJavaWeb%5Cspring%5Cspring_010.png" alt="image-20220328173423601"></p>
 </li>
 </ul>
-<p><strong>因此，总体来说，首先知道切入点，即在哪里插入切面。然后要知道切面的执行时间，即在什么时候。最后还要实现切面的具体功能。</strong></p>
+<p><strong>因此，总体来说，首先知道切入点，即在哪里插入切面（切入点表达式）。然后要知道切面的执行时间，即在什么时候（注解、xml配置文件）。最后还要实现切面的具体功能（代码）。</strong></p>
 <h3 id="3-2-aspectJ框架的第一个程序"><a href="#3-2-aspectJ框架的第一个程序" class="headerlink" title="3.2 aspectJ框架的第一个程序"></a>3.2 aspectJ框架的第一个程序</h3><p>在现有的某个类的方法基础上，<strong>在不改变原来的类的代码的基础上，进行功能增强</strong>，比如在某个方法执行之前输出时间。使用aspectJ实现AOP的基本步骤：</p>
 <ol>
-<li>新建Maven项目</li>
-<li>加入Spring和aspectJ依赖</li>
-<li>创建目标类：接口和实现类。（本程序的目标是给类中的方法增加功能）</li>
-<li><strong>创建切面类</strong>（其实就是普通类，目的就是将普通类和实现类中的方法关联起来）<ol>
-<li>在类的上面加入注解：@Aspect</li>
-<li>在类中定义方法，方法就是切面要执行的功能代码。在方法的上面加入aspectJ中的通知注解，例如@Before。另外还需要指定切入点表达式execution()。</li>
+<li><p>新建Maven项目</p>
+</li>
+<li><p>加入Spring和aspectJ依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- Spring --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/org.springframework/spring-context --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-context<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.3.16<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/org.springframework/spring-aspects --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-aspects<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.3.15<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>创建目标类：接口和实现类。（本程序的目标是给类中的方法增加功能）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.hianian.ba01;</span><br><span class="line"><span class="comment">// 接口</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">SomeService</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">doSome</span><span class="params">(String name, Integer age)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.hianian.ba01.impl;</span><br><span class="line"><span class="comment">// 目标类以及业务方法</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SomeServiceImpl</span> <span class="keyword">implements</span> <span class="title">SomeService</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSome</span><span class="params">(String name, Integer age)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 给doSome方法增加一个功能，在doSome()执行之前，输出方法的执行时间</span></span><br><span class="line">        <span class="comment">// 业务方法</span></span><br><span class="line">        System.out.println(<span class="string">&quot;=====目标方法doSome()=====&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p><strong>创建切面类</strong>（其实就是普通类，目的就是将普通类和实现类中的方法关联起来）</p>
+<ol>
+<li><p>在类的上面加入注解：@Aspect</p>
+</li>
+<li><p>在类中定义方法（增强方法、通知方法），方法就是切面要执行的功能代码。在方法的上面加入aspectJ中的通知注解，例如@Before。另外还需要指定切入点表达式execution()。</p>
+<p><strong>注意，方法的定义有如下要求：</strong></p>
+<ol>
+<li>公共方法public</li>
+<li>方法没有返回值</li>
+<li>方法名称自定义</li>
+<li>方法可以有参数，也可以没有参数。（如果有参数，参数不是自定义的，只能使用特定的参数类型如JointPoint、Object等等。）<ol>
+<li>该参数表示目标方法。</li>
+<li>通过该方法我们可以获取目标方法执行时的信息，例如方法名称、方法实参等等。</li>
+<li>如果在通知方法中需要使用上述信息，可以加入JointPoint参数。</li>
+<li>这个参数是由框架赋值的，要求必须在<strong>第一个参数位置</strong>。</li>
 </ol>
 </li>
-<li>创建Spring的配置文件，声明对象，把对象交给容器统一管理。<ol>
+</ol>
+<p><strong>@Before注解的属性value的值为切面表达式，即指明切面的执行位置。Before本身指定了执行时间。</strong></p>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.hianian.ba01.acpect;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Aspect;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Before;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 切面类</span></span><br><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyAspect</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 定义实现切面功能的方法，注意方法的定义要求</span></span><br><span class="line">    <span class="comment">// 注意，切入点表达式，可以简化。Before注解表示在方法执行前执行本增强方法。</span></span><br><span class="line">    <span class="meta">@Before(value = &quot;execution(public void org.hianian.ba01.impl.SomeServiceImpl.doSome(String, Integer))&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">myBefore</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;前置通知，切面功能：在目标方法之前输出执行时间：&quot;</span> + <span class="keyword">new</span> Date());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><em>在IDEA中可以看到，此时会自动提示该方法为增强方法（Navigate To Advised Methods）。</em></p>
+<p>测试一下方法参数JointPoint。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Before(value = &quot;execution(public void org.hianian.ba01.impl.SomeServiceImpl.doSome(String, Integer))&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">myBefore</span><span class="params">(JoinPoint jp)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">&quot;目标方法的方法定义：&quot;</span> + jp.getSignature());</span><br><span class="line">    System.out.println(<span class="string">&quot;目标方法的方法名：&quot;</span> + jp.getSignature().getName());</span><br><span class="line">    System.out.println(<span class="string">&quot;前置通知，切面功能：在目标方法之前输出执行时间：&quot;</span> + <span class="keyword">new</span> Date());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">目标方法的方法定义：void org.hianian.ba01.SomeService.doSome(String,Integer)</span><br><span class="line">目标方法的方法名：doSome</span><br><span class="line">前置通知，切面功能：在目标方法之前输出执行时间：Tue Mar 29 11:28:30 CST 2022</span><br><span class="line">=====目标方法doSome()=====</span><br><span class="line">代理对象的类型：com.sun.proxy.$Proxy8</span><br></pre></td></tr></table></figure></li>
+<li><p>创建Spring的配置文件，声明对象，把对象交给容器统一管理。</p>
+<ol>
 <li>声明目标对象</li>
 <li>声明切面类对象</li>
-<li><strong>声明aspectJ框架中的自动代理生成器</strong>标签。<strong>自动代理生成器对象是用来完成代理对象的自动创建功能的，不再需要手动创建代理类对象了。</strong></li>
+<li><strong>声明aspectJ框架中的自动代理生成器</strong>标签（<code>&lt;aop:aspectj-autoproxy&gt;&lt;/aop:aspectj-autoproxy&gt;</code>）。<strong>自动代理生成器对象是用来完成代理对象的自动创建功能的，不再需要手动创建代理类对象了。</strong><ol>
+<li><strong>注意，自动代理生成器使用的是aspectJ框架内部的功能，来创建目标对象的代理对象。创建代理对象是在内存中实现的，修改目标对象的内存中的结构，将目标对象修改为代理对象。所以此时目标对象就是修改后的代理对象（本质上似乎并没有创建新对象，猜一下，是将切面类对象作为一个属性加入到目标类对象中，在执行目标类对象目标方法的时候，调用切面类对象的增强方法）。</strong></li>
+<li>自动代理生成器对象会将Spring容器中的所有的<strong>符合条件（切入点表达式）</strong>的目标对象，一次性都生成代理对象。</li>
 </ol>
 </li>
-<li>创建测试类，从Spring容器中获取目标对象（实际上就是代理对象），通过代理执行方法，实现AOP的功能增强。</li>
 </ol>
-<p><strong>从上面的步骤来看，Spring主要做的是控制反转，创建容器来管理对象，以及支持AOP框架。实现AOP功能则需要有切面类以及自动代理生成器对象。</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.springframework.org/schema/beans&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:aop</span>=<span class="string">&quot;http://www.springframework.org/schema/aop&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://www.springframework.org/schema/beans</span></span></span><br><span class="line"><span class="string"><span class="tag">       http://www.springframework.org/schema/beans/spring-beans.xsd</span></span></span><br><span class="line"><span class="string"><span class="tag">       http://www.springframework.org/schema/aop</span></span></span><br><span class="line"><span class="string"><span class="tag">       https://www.springframework.org/schema/aop/spring-aop.xsd&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 把对象交给Spring容器，由Spring容器统一创建，管理对象。 --&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 声明目标对象 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;someService&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.hianian.ba01.impl.SomeServiceImpl&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 声明切面对象 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;myAspect&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.hianian.ba01.acpect.MyAspect&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 注意，自动代理生成器使用的是aspectJ框架内部的功能，来创建目标对象的代理对象。</span></span><br><span class="line"><span class="comment">        创建代理对象是在内存中实现的，修改目标对象的内存中的结构，</span></span><br><span class="line"><span class="comment">        将目标对象修改为代理对象。所以此时目标对象就是修改后的代理对象（本质上似乎并没有创建新对象）。 --&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 同样，在加入该标签后，IDEA自动添加了若干个约束文件，如上xmlns所示 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">aop:aspectj-autoproxy</span>&gt;</span><span class="tag">&lt;/<span class="name">aop:aspectj-autoproxy</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>创建测试类，从Spring容器中获取目标对象（实际上就是代理对象），通过代理执行方法，实现AOP的功能增强。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test01</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testProxy</span><span class="params">()</span></span>&#123;</span><br><span class="line">        String config = <span class="string">&quot;applicationContext.xml&quot;</span>;</span><br><span class="line"></span><br><span class="line">        ApplicationContext ac = <span class="keyword">new</span> ClassPathXmlApplicationContext(config);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 从容器中获取目标对象（注意，此时已经经过了自动代理生成器对象在内存中转换，所以，获取到的目标对象就是代理对象）</span></span><br><span class="line">        SomeService proxy = (SomeService) ac.getBean(<span class="string">&quot;someService&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 通过代理对象执行目标方法，实现增强功能以及原有功能。</span></span><br><span class="line">        proxy.doSome(<span class="string">&quot;张三&quot;</span>, <span class="number">23</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 因为目标类实现了接口，所以aspectJ采用的是JDK的方式实现动态代理</span></span><br><span class="line">        <span class="comment">// com.sun.proxy.$Proxy8</span></span><br><span class="line">        System.out.println(<span class="string">&quot;代理对象的类型：&quot;</span> + proxy.getClass().getName());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p><strong>从上面的步骤来看，Spring主要做的是控制反转，创建容器来管理对象，以及支持AOP框架。实现AOP功能则需要有切面类以及AOP框架的自动代理生成器对象。该对象通过搜索spring容器中对象，通过@Aspect注解来找到切面类，进而找到其增强方法，根据方法上面的注解找到什么时候执行以及在哪里执行（切入点表达式，找到目标类）。</strong></p>
+<h3 id="3-3-AfterReturning"><a href="#3-3-AfterReturning" class="headerlink" title="3.3 @AfterReturning"></a>3.3 @AfterReturning</h3><p>上面的案例中讲解了前置通知注解，这里讲解一下后置通知，顾名思义就是在目标方法执行之后执行此通知方法（增强方法）。其属性主要有两个：</p>
+<ol>
+<li>value：即切入点表达式</li>
+<li>returning：自定义的变量，表示目标方法的返回值，注意变量名必须和增强方法的参数名一致。</li>
+</ol>
+<p>后置通知修饰的方法和前置通知类似，<strong>因为是后置通知，所以必须获得目标方法的执行结果，因此，通知方法中的形参可以表示目标方法的执行结果返回值，类型规定为Object。</strong></p>
+<p>因此，后置通知主要有以下几个特点：</p>
+<ol>
+<li>在目标方法之后执行</li>
+<li>能够获取到目标方法的返回值，可以根据这个返回值做不同的处理功能。</li>
+<li>因为能够获取到该值，所以可以“修改”返回值。（<strong>注意，经过测试，对于引用数据类型来说，是可以修改其值的，并且会影响最终方法获得的结果。</strong>）即执行顺序如下所示：<ol>
+<li>Object res = doOther();</li>
+<li>myAfterReturning(res);  // 如果是引用数据类型，则会修改值，影响下面的返回结果。</li>
+<li>return res;</li>
+</ol>
+</li>
+</ol>
+<p>案例如下所示（为了测试引用数据类型传参，采用了引用数据类型）：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 接口</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">SomeService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">doSome</span><span class="params">(String name, Integer age)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">doOther</span><span class="params">(String name, Integer age)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 测试引用数据类型传参，切面会不会影响最终返回结果。</span></span><br><span class="line">    <span class="function">Student <span class="title">doOthers</span><span class="params">(String name, Integer age)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 目标类以及业务方法</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SomeServiceImpl</span> <span class="keyword">implements</span> <span class="title">SomeService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Student <span class="title">doOthers</span><span class="params">(String name, Integer age)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;=====目标方法doOthers()=====&quot;</span>);</span><br><span class="line">        Student student = <span class="keyword">new</span> Student(<span class="string">&quot;张三&quot;</span>, <span class="number">25</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;目标方法：&quot;</span> + student);</span><br><span class="line">        <span class="keyword">return</span> student;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 切面类</span></span><br><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyAspect</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 后置通知</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@AfterReturning</span> 后置通知</span></span><br><span class="line"><span class="comment">     * 属性：</span></span><br><span class="line"><span class="comment">     *      1. value：切入点表达式</span></span><br><span class="line"><span class="comment">     *      2. returning：自定义的变量，表示目标方法的返回值。</span></span><br><span class="line"><span class="comment">     *          注意，变量名必须和通知方法（增强方法）的形参名一样。</span></span><br><span class="line"><span class="comment">     *      3. 位置：在方法定义的上面</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * 特点：</span></span><br><span class="line"><span class="comment">     *      1. 在目标方法之后执行</span></span><br><span class="line"><span class="comment">     *      2. 能够获取到目标方法的返回值，可以根据这个返回值做不同的处理功能</span></span><br><span class="line"><span class="comment">     *      3. 因为能够获取到该值，所以可以修改返回值。</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@AfterReturning(value = &quot;execution(public org.hianian.ba03.Student org.hianian.ba03.impl.SomeServiceImpl.doOthers(String, Integer))&quot;,</span></span><br><span class="line"><span class="meta">            returning = &quot;res&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">myAfterReturning</span><span class="params">(Object res)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// Object res 是目标方法执行之后的返回值，可以调用它来执行相关操作。</span></span><br><span class="line">        System.out.println(<span class="string">&quot;后置通知：在目标方法执行之后执行的，获取的返回值是：&quot;</span> + res);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 修改目标方法的返回值，验证增强方法是否会影响目标方法的返回结果。</span></span><br><span class="line">        <span class="keyword">if</span>(res != <span class="keyword">null</span>) &#123;</span><br><span class="line">            ((Student) res).setAge(<span class="number">16</span>);</span><br><span class="line">            System.out.println(<span class="string">&quot;增强方法修改后的结果是：&quot;</span> + res);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test01</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testProxy</span><span class="params">()</span></span>&#123;</span><br><span class="line">        String config = <span class="string">&quot;applicationContext.xml&quot;</span>;</span><br><span class="line"></span><br><span class="line">        ApplicationContext ac = <span class="keyword">new</span> ClassPathXmlApplicationContext(config);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 从容器中获取目标对象（注意，此时已经经过了自动代理生成器对象在内存中转换，所以，获取到的目标对象就是代理对象）</span></span><br><span class="line">        SomeService proxy = (SomeService) ac.getBean(<span class="string">&quot;someService&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 通过代理对象执行目标方法，实现增强功能以及原有功能。</span></span><br><span class="line">        Student result = proxy.doOthers(<span class="string">&quot;张三&quot;</span>, <span class="number">23</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;最终结果：&quot;</span> + result);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 因为目标类实现了接口，所以aspectJ采用的是JDK的方式实现动态代理</span></span><br><span class="line">        <span class="comment">// com.sun.proxy.$Proxy8</span></span><br><span class="line">        System.out.println(<span class="string">&quot;代理对象的类型：&quot;</span> + proxy.getClass().getName());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-4-Around"><a href="#3-4-Around" class="headerlink" title="3.4 @Around"></a>3.4 @Around</h3><p><strong>环绕通知是最强的通知</strong>。对修饰的方法有如下要求：</p>
+<ol>
+<li>public</li>
+<li>必须有一个返回值，推荐使用Object类型</li>
+<li>方法名称自定义</li>
+<li>方法有参数，固定的参数：ProceedingJoinPoint类型（注意，该类型继承了JoinPoint，所以有JoinPoint的一些方法调用）</li>
+</ol>
+<p>环绕通知的注解属性有value，值仍然是切入点表达式。环绕通知注解有以下特点：</p>
+<ol>
+<li>它是功能最强的通知（<strong>主要用来做事务</strong>）</li>
+<li>在目标方法的执行前后都能增强功能</li>
+<li>控制目标方法是否被调用执行（因为手动调用，所以可控制执行条件）</li>
+<li>可以修改目标方法的执行结果，影响最后的调用结果。（和引用数据类型修改不一样，这个似乎是将增强方法的返回结果返回给了调用者）</li>
+</ol>
+<p>实际上，环绕通知等同于JDK动态代理的InvocationHandler接口的invoke方法。增强方法的参数ProceedingJoinPoint就等同于invoke方法中的Method参数，用于执行目标方法。增强方法的返回值就是目标方法的执行结果，可以被修改。<strong>总体上说，环绕通知就是使得我们可以更加灵活地手动调用目标方法，以及调整增强功能的位置。</strong></p>
+<p>测试案例如下所示，其他代码和前面类似，这里不再展示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 切面类</span></span><br><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyAspect</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Around(value = &quot;execution(public String org.hianian.ba04.impl.SomeServiceImpl.doFirst(String, Integer))&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">myAround</span><span class="params">(ProceedingJoinPoint pjp)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 功能增强</span></span><br><span class="line">        System.out.println(<span class="string">&quot;环绕通知，在目标方法之前，输出时间：&quot;</span> + <span class="keyword">new</span> Date());</span><br><span class="line"></span><br><span class="line">        Object result = <span class="keyword">null</span>;</span><br><span class="line">        <span class="comment">// 目标方法调用</span></span><br><span class="line">        <span class="comment">// 等同于 method.invoke()，并且自动将调用的实参传递给目标方法了。</span></span><br><span class="line"><span class="comment">//        result = pjp.proceed();</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 测试一下，根据调用的实参来执行目标方法</span></span><br><span class="line">        Object[] args = pjp.getArgs();</span><br><span class="line">        <span class="keyword">if</span>(args != <span class="keyword">null</span> &amp;&amp; args.length &gt; <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span>(<span class="string">&quot;张三&quot;</span>.equals(args[<span class="number">0</span>])) &#123;</span><br><span class="line">                result = pjp.proceed();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 功能增强</span></span><br><span class="line">        System.out.println(<span class="string">&quot;环绕通知，在目标方法之后，提交事务&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 修改返回结果，本质上，环绕通知是将增强方法的执行结果返回给了调用者。</span></span><br><span class="line">        <span class="keyword">return</span> result + <span class="string">&quot;asdf&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-5-AfterThrowing"><a href="#3-5-AfterThrowing" class="headerlink" title="3.5 @AfterThrowing"></a>3.5 @AfterThrowing</h3><p>异常通知，主要用于目标方法在抛出异常时执行。异常通知修饰的方法要求如下：</p>
+<ol>
+<li>public</li>
+<li>没有返回值</li>
+<li>方法名称自定义</li>
+<li>方法有一个Exception类型参数（表示目标方法抛出的异常），如果还有就是JoinPoint</li>
+</ol>
+<p>该注解的属性有两个：</p>
+<ol>
+<li>value，即切入点表达式</li>
+<li>throwing，自定义的变量，表示目标方法抛出的异常对象，变量名必须和增强方法的参数名一样。</li>
+</ol>
+<p>特点是：</p>
+<ol>
+<li>在目标方法抛出异常时执行的</li>
+<li>可以做异常的监控程序，监控目标方法执行时是不是有异常，如果有异常，可以进行相关操作等等。</li>
+</ol>
+<p>该注解用的较少，简单测试一下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 目标类以及业务方法</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SomeServiceImpl</span> <span class="keyword">implements</span> <span class="title">SomeService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSecond</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 为了测试异常，设置除数为0</span></span><br><span class="line">        System.out.println(<span class="string">&quot;=====业务方法doSecond()=====&quot;</span> + (<span class="number">10</span> / <span class="number">0</span>));</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;asdf&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 切面类</span></span><br><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyAspect</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@AfterThrowing(value = &quot;execution(public void org.hianian.ba05.impl.SomeServiceImpl.doSecond())&quot;, throwing = &quot;ex&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">myAfterThrowing</span><span class="params">(Exception ex)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;发生异常：&quot;</span> + ex.getMessage());</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 进行其他操作等等</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-6-After"><a href="#3-6-After" class="headerlink" title="3.6 @After"></a>3.6 @After</h3><p>最终通知，顾名思义就是在程序执行结束之后，</p>
 <h2 id="4-Spring集成MyBatis"><a href="#4-Spring集成MyBatis" class="headerlink" title="4. Spring集成MyBatis"></a>4. Spring集成MyBatis</h2><h2 id="5-Spring事务"><a href="#5-Spring事务" class="headerlink" title="5. Spring事务"></a>5. Spring事务</h2><h2 id="6-Spring与Web"><a href="#6-Spring与Web" class="headerlink" title="6. Spring与Web"></a>6. Spring与Web</h2><h2 id="7-总结"><a href="#7-总结" class="headerlink" title="7. 总结"></a>7. 总结</h2><h2 id="8-备注"><a href="#8-备注" class="headerlink" title="8. 备注"></a>8. 备注</h2><p><em>参考B站《动力节点》。</em></p>
 
                 
@@ -1356,7 +1474,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">234.9k</span>&nbsp;字
+                class="white-color">240.1k</span>&nbsp;字
             
             
             
