@@ -454,21 +454,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-03-30
+                    2022-03-31
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    12.8k
+                    14k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    50 分
+                    55 分
                 </div>
                 
 
@@ -597,8 +597,31 @@
 <li><p>测试Spring创建对象。</p>
 <p>下面是Spring框架和传统方法的对比：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestSomeService</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testDoSome</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 不用Spring框架时的写法</span></span><br><span class="line">        SomeService ss = <span class="keyword">new</span> SomeServiceImpl();</span><br><span class="line">        ss.doSome();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSpringDoSome</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 用Spring框架时的写法</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 1. 指定Spring配置文件的名称</span></span><br><span class="line">        String config = <span class="string">&quot;beans.xml&quot;</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 2. 创建表示Spring容器的对象：ApplicationContext，</span></span><br><span class="line">        <span class="comment">// 这个ApplicationContext就是表示Spring容器，可以通过该容器获取到对象</span></span><br><span class="line">        <span class="comment">// ApplicationContext是一个接口，其常用的实现类有：</span></span><br><span class="line">        <span class="comment">//      FileSystemXmlApplicationContext 是从其他盘符中读取配置文件（较少使用）</span></span><br><span class="line">        <span class="comment">//      ClassPathXmlApplicationContext 是从 类路径 中读取配置文件。</span></span><br><span class="line">        <span class="comment">// 读取配置文件信息，当读取到bean标签的时候，就会完成创建对应对象的工作，将对象放入map中。</span></span><br><span class="line">        ApplicationContext ac = <span class="keyword">new</span> ClassPathXmlApplicationContext(config);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 从容器中获取某个对象，ApplicationContext.getBean()，有多个重载方法，一般用id来获取.</span></span><br><span class="line">        <span class="comment">// 返回类型是Object，这里需要强转，才能使用对象的方法以及后续的对象操作等等。</span></span><br><span class="line">        SomeService someService = (SomeService) ac.getBean(<span class="string">&quot;someService&quot;</span>);</span><br><span class="line"></span><br><span class="line">        someService.doSome();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">   </span><br><span class="line">   ![image-20220323161508273](D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJavaWeb%5Cspring%5Cspring_006.png)</span><br><span class="line"></span><br><span class="line">*注意，Spring默认创建对象的时间：在创建Spring容器ApplicationContext时，会创建配置文件中的所有的bean标签对象。*</span><br><span class="line"></span><br><span class="line">*注意，创建对象，默认调用的是无参构造方法。*</span><br><span class="line"></span><br><span class="line">**另外，似乎一个容器对应一个配置文件，那么也就是说，我们可以创建多个配置文件，并据此创建多个容器。**</span><br><span class="line"></span><br><span class="line">#### 2.2.1 获取Spring容器中的对象信息</span><br><span class="line"></span><br><span class="line">| 方法名                      | 描述                 |</span><br><span class="line">| --------------------------- | -------------------- |</span><br><span class="line">| ac.getBeanDefinitionCount() | 获取容器中对象的数量 |</span><br><span class="line">| ac.getBeanDefinitionNames() | 获取容器中对象的名称 |</span><br><span class="line"></span><br><span class="line">​```java</span><br><span class="line">@Test</span><br><span class="line">public void testSpring()&#123;</span><br><span class="line"></span><br><span class="line">    String config = &quot;beans.xml&quot;;</span><br><span class="line"></span><br><span class="line">    ApplicationContext ac = new ClassPathXmlApplicationContext(config);</span><br><span class="line"></span><br><span class="line">    // 获取容器中定义的对象的数量</span><br><span class="line">    int cnt = ac.getBeanDefinitionCount();</span><br><span class="line"></span><br><span class="line">    System.out.println(&quot;Spring容器中的对象数量：&quot; + cnt);</span><br><span class="line"></span><br><span class="line">    // 获取容器中定义的对象的名称</span><br><span class="line">    String[] names = ac.getBeanDefinitionNames();</span><br><span class="line"></span><br><span class="line">    for(String name: names)&#123;</span><br><span class="line">        System.out.println(&quot;容器中的对象有：&quot; + name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+
+<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJavaWeb%5Cspring%5Cspring_006.png" alt="image-20220323161508273"></p>
+</li>
 </ol>
+<p><em>注意，Spring默认创建对象的时间：在创建Spring容器ApplicationContext时，会创建配置文件中的所有的bean标签对象。</em></p>
+<p><em>注意，创建对象，默认调用的是无参构造方法。</em></p>
+<p><strong>另外，似乎一个容器对应一个配置文件，那么也就是说，我们可以创建多个配置文件，并据此创建多个容器。</strong></p>
+<h4 id="2-2-1-获取Spring容器中的对象信息"><a href="#2-2-1-获取Spring容器中的对象信息" class="headerlink" title="2.2.1 获取Spring容器中的对象信息"></a>2.2.1 获取Spring容器中的对象信息</h4><table>
+<thead>
+<tr>
+<th>方法名</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ac.getBeanDefinitionCount()</td>
+<td>获取容器中对象的数量</td>
+</tr>
+<tr>
+<td>ac.getBeanDefinitionNames()</td>
+<td>获取容器中对象的名称</td>
+</tr>
+</tbody></table>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSpring</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    String config = <span class="string">&quot;beans.xml&quot;</span>;</span><br><span class="line"></span><br><span class="line">    ApplicationContext ac = <span class="keyword">new</span> ClassPathXmlApplicationContext(config);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取容器中定义的对象的数量</span></span><br><span class="line">    <span class="keyword">int</span> cnt = ac.getBeanDefinitionCount();</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">&quot;Spring容器中的对象数量：&quot;</span> + cnt);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取容器中定义的对象的名称</span></span><br><span class="line">    String[] names = ac.getBeanDefinitionNames();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(String name: names)&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;容器中的对象有：&quot;</span> + name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h4 id="2-2-2-创建非自定义对象"><a href="#2-2-2-创建非自定义对象" class="headerlink" title="2.2.2 创建非自定义对象"></a>2.2.2 创建非自定义对象</h4><p>我们知道，通知Spring创建对象需要在配置文件中声明对象。此时，如果想要创建已有的类（Java内置类，比如String、ArrayList等等），和前面一样，只需要在声明的时候填写全限定名称即可，如</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;myDate&quot;</span> <span class="attr">class</span>=<span class="string">&quot;java.util.Date&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
@@ -822,8 +845,9 @@
 </ol>
 </li>
 <li>@Around（<strong>环绕通知，掌握</strong>）</li>
-<li>@AfterThrowing</li>
-<li>@After</li>
+<li>@AfterThrowing（异常通知，了解）</li>
+<li>@After（最终通知，了解）</li>
+<li>@PointCut（定义切入点）</li>
 </ol>
 </li>
 <li><p>切面的执行位置（切入点），aspectJ框架使用的是<strong>切入点表达式</strong>来表示。我们知道切入点就是<strong>目标类方法</strong>（连接点），因此，需要指明该方法（权限修饰符、返回值类型、所在包名类名、方法名、参数列表（主需要参数类型，形参名不需要）、抛出异常等等），<strong>注意，方法返回值和方法声明(参数)这两部分是必须的</strong>。</p>
@@ -954,8 +978,63 @@
 
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 切面类</span></span><br><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyAspect</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@AfterThrowing(value = &quot;execution(public void org.hianian.ba05.impl.SomeServiceImpl.doSecond())&quot;, throwing = &quot;ex&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">myAfterThrowing</span><span class="params">(Exception ex)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;发生异常：&quot;</span> + ex.getMessage());</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 进行其他操作等等</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="3-6-After"><a href="#3-6-After" class="headerlink" title="3.6 @After"></a>3.6 @After</h3><p>最终通知，顾名思义就是在程序执行结束之后，</p>
-<h2 id="4-Spring集成MyBatis"><a href="#4-Spring集成MyBatis" class="headerlink" title="4. Spring集成MyBatis"></a>4. Spring集成MyBatis</h2><h2 id="5-Spring事务"><a href="#5-Spring事务" class="headerlink" title="5. Spring事务"></a>5. Spring事务</h2><h2 id="6-Spring与Web"><a href="#6-Spring与Web" class="headerlink" title="6. Spring与Web"></a>6. Spring与Web</h2><h2 id="7-总结"><a href="#7-总结" class="headerlink" title="7. 总结"></a>7. 总结</h2><h2 id="8-备注"><a href="#8-备注" class="headerlink" title="8. 备注"></a>8. 备注</h2><p><em>参考B站《动力节点》。</em></p>
+<p>相当于try{}catch(){}中的catch。</p>
+<h3 id="3-6-After"><a href="#3-6-After" class="headerlink" title="3.6 @After"></a>3.6 @After</h3><p>最终通知修饰的方法有如下要求：</p>
+<ol>
+<li>public</li>
+<li>没有返回值</li>
+<li>方法名称自定义</li>
+<li>方法没有参数，如果有就是JoinPoint</li>
+</ol>
+<p>最终通知注解只有一个属性value，值为切入点表达式。修饰位置在方法的上面，特点是<strong>总是会执行（即使目标方法出现异常，增强方法也会执行），在目标方法之后执行。</strong>一般用来做资源清除工作。相当于try{}catch(){}finally{}中的finally。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 切面类</span></span><br><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyAspect</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 即使目标方法中有异常发生，该增强方法也会执行</span></span><br><span class="line">    <span class="meta">@After(value = &quot;execution(public void org.hianian.ba06.impl.SomeServiceImpl.doThird())&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">myAfterThrowing</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;最终通知&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-7-PointCut"><a href="#3-7-PointCut" class="headerlink" title="3.7 @PointCut"></a>3.7 @PointCut</h3><p>该注解是作为一个辅助出现的，用来定义和管理切入点。如果项目中有多个切入点表达式是重复的，可以复用的，可以使用PointCut。属性有一个value，值为切入点表达式，注解的使用位置是在自定义的方法上面。</p>
+<p>特点：</p>
+<ol>
+<li>当使用@PointCut定义在一个方法的上面，此时这个方法的名称就是切入点表达式的别名。在其他的通知中，value属性就可以使用这个方法名称（需要加括号），代替切入点表达式了。</li>
+</ol>
+<p><strong>因为有时候，针对一个目标方法，有时候会做多个增强，或者前置和后置通知等等，此时就需要多个增强方法，而就会写多个同样的切入点表达式。这时候，就可以使用@PointCut注解来定义别名。</strong></p>
+<p>似乎对该注解修饰的方法没有过多的要求。代码如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 切面类</span></span><br><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyAspect</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@After(value = &quot;myPc()&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">myAfterThrowing</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;最终通知&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 为该切入点表达式定义别名，后续其他注解的相同的切入点表达式可以使用该别名</span></span><br><span class="line">    <span class="meta">@Pointcut(value = &quot;execution(public void org.hianian.ba07.impl.SomeServiceImpl.doThird())&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">myPc</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-8-JDK和CGLIB"><a href="#3-8-JDK和CGLIB" class="headerlink" title="3.8 JDK和CGLIB"></a>3.8 JDK和CGLIB</h3><p>前面测试过，如果目标类实现了接口，那么aspectJ默认采用的就是JDK的方式实现动态代理。可以进行测试，如果没有实现接口，那么就采用的是CGLIB的方法实现动态代理。如下所示，可以看到CGLIB的字眼。</p>
+<p><code>org.hianian.ba07.impl.SomeServiceImpl$$EnhancerBySpringCGLIB$$8c0c98aa</code></p>
+<p>实际上，即使目标类实现了接口，仍然可以采用CGLIB方式实现动态代理。需要在配置文件中的<strong>自动代理生成器标签</strong>中加入<code>proxy-target-class=&quot;true&quot;</code>属性值。即：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">aop:aspectj-autoproxy</span> <span class="attr">proxy-target-class</span>=<span class="string">&quot;true&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">aop:aspectj-autoproxy</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="4-Spring集成MyBatis"><a href="#4-Spring集成MyBatis" class="headerlink" title="4. Spring集成MyBatis"></a>4. Spring集成MyBatis</h2><p>前面讲解过MyBatis，将SQL语句和程序分离，使得耦合度降低。而Spring依据IoC和AOP进一步解耦合。这是两个不同应用功能的框架，MyBatis更加具体，负责数据库，而Spring则是负责整体业务逻辑层面。<strong>很明显，MyBatis相当于一个子集。</strong></p>
+<p>可以把MyBatis集成到Spring中，像一个框架那样使用。<strong>IoC是管理对象的，而AOP则是负责业务逻辑的。因此可以用IoC来管理MyBatis框架的相关对象，比如SqlSessionFactory对象等等，这样开发人员可以从Spring容器中获取对象，这样开发人员就不用同时面对多个框架了，只需面对Spring框架即可。</strong></p>
+<p>我们知道，MyBatis框架的使用，有以下几个步骤：</p>
+<ol>
+<li>定义DAO接口，</li>
+<li>创建SQL映射文件，xml</li>
+<li>创建MyBatis主配置文件</li>
+<li>根据动态代理，利用SqlSession.getMapper()获取到DAO接口的代理对象</li>
+<li>根据代理对象执行数据库操作</li>
+</ol>
+<p>本质上主要用到的对象有：<strong>SqlSession</strong>、<strong>SqlSessionFactory（需要读取主配置文件）</strong>。而主配置文件主要有数据库连接信息以及SQL映射文件信息。</p>
+<p>在MyBatis中，采用自带的数据库连接池来进行连接对象，而该连接池性能较弱。因此在Spring中采用独立的连接池（如阿里的druid）来连接数据库。</p>
+<p><strong>因此，通过以上说明，我们需要让Spring创建以下对象（以目前掌握的知识来看，只能采用xml配置文件来创建，因为没有源码，所以无法采用注解方式创建）：</strong></p>
+<ol>
+<li>独立的连接池类的对象</li>
+<li>SqlSessionFactory对象</li>
+<li>SqlSession对象</li>
+<li>DAO对象</li>
+</ol>
+<h3 id="4-1-案例"><a href="#4-1-案例" class="headerlink" title="4.1 案例"></a>4.1 案例</h3><p>Spring集成MyBatis有如下步骤：</p>
+<ol>
+<li>新建Maven项目</li>
+<li>加入Maven依赖<ol>
+<li>spring依赖</li>
+<li>mybatis依赖</li>
+<li>mysql驱动</li>
+<li>spring的事务依赖</li>
+<li>mybatis和spring集成的依赖。该依赖是MyBatis官方提供的，用来在Spring项目中创建MyBatis的SqlSessionFactory、dao对象的。</li>
+</ol>
+</li>
+</ol>
+<h2 id="5-Spring事务"><a href="#5-Spring事务" class="headerlink" title="5. Spring事务"></a>5. Spring事务</h2><h2 id="6-Spring与Web"><a href="#6-Spring与Web" class="headerlink" title="6. Spring与Web"></a>6. Spring与Web</h2><h2 id="7-总结"><a href="#7-总结" class="headerlink" title="7. 总结"></a>7. 总结</h2><h2 id="8-备注"><a href="#8-备注" class="headerlink" title="8. 备注"></a>8. 备注</h2><p><em>参考B站《动力节点》。</em></p>
 
                 
             </div>
@@ -1474,7 +1553,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">240.1k</span>&nbsp;字
+                class="white-color">241.9k</span>&nbsp;字
             
             
             
