@@ -429,9 +429,13 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/LeetCode/">
+                                <span class="chip bg-color">LeetCode</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -450,21 +454,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-04-01
+                    2022-04-02
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    0
+                    497
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    2 分
                 </div>
                 
 
@@ -484,7 +488,25 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                
+                <h2 id="1-question-二叉树的所有路径（简单）"><a href="#1-question-二叉树的所有路径（简单）" class="headerlink" title="1. question: 二叉树的所有路径（简单）"></a>1. question: 二叉树的所有路径（简单）</h2><p>给你一个二叉树的根节点 root ，按 任意顺序 ，返回所有从根节点到叶子节点的路径。</p>
+<p>叶子节点 是指没有子节点的节点。</p>
+<p>来源：力扣（LeetCode）<br>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/binary-tree-paths">https://leetcode-cn.com/problems/binary-tree-paths</a></p>
+<p>示例 1：</p>
+<p><img src="https://assets.leetcode.com/uploads/2021/03/12/paths-tree.jpg" alt="示例1"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：root = [1,2,3,null,5]</span><br><span class="line">输出：[&quot;1-&gt;2-&gt;5&quot;,&quot;1-&gt;3&quot;]</span><br></pre></td></tr></table></figure>
+
+<p>示例 2：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：root = [1]</span><br><span class="line">输出：[&quot;1&quot;]</span><br></pre></td></tr></table></figure>
+
+<p>提示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">树中节点的数目在范围 [1, 100] 内</span><br><span class="line">-100 &lt;= Node.val &lt;= 100</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-answers"><a href="#2-answers" class="headerlink" title="2. answers"></a>2. answers</h2><p>这道题可以先用递归的方法做一遍。<strong>根节点形成的树的所有路径为根节点分别和以左右孩子节点形成的树的所有路径相拼接。而左右孩子节点的所有路径则又可以递归，以此类推。</strong></p>
+<p>代码如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution_0026</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;String&gt; <span class="title">binaryTreePaths</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 递归结束条件</span></span><br><span class="line">        <span class="keyword">if</span>(root == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        List&lt;String&gt; result = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 求解其左右孩子节点的所有路径</span></span><br><span class="line">        List&lt;String&gt; leftResult = binaryTreePaths(root.left);</span><br><span class="line">        List&lt;String&gt; rightResult = binaryTreePaths(root.right);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 当前节点和左孩子的所有路径重新组合形成新的路径</span></span><br><span class="line">        <span class="keyword">if</span>(leftResult != <span class="keyword">null</span>) &#123;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span>(String str: leftResult) &#123;</span><br><span class="line">                result.add(root.val + <span class="string">&quot;-&gt;&quot;</span> + str);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 当前节点和右孩子的所有路径重新组合形成新的路径</span></span><br><span class="line">        <span class="keyword">if</span>(rightResult != <span class="keyword">null</span>) &#123;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span>(String str: rightResult) &#123;</span><br><span class="line">                result.add(root.val + <span class="string">&quot;-&gt;&quot;</span> + str);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 如果是叶子节点，那么该节点的后续路径只有自己一条。</span></span><br><span class="line">        <span class="keyword">if</span>(leftResult == <span class="keyword">null</span> &amp;&amp; rightResult == <span class="keyword">null</span>) &#123;</span><br><span class="line">            result.add(root.val + <span class="string">&quot;&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        TreeNode tn1 = <span class="keyword">new</span> TreeNode(<span class="number">5</span>);</span><br><span class="line">        TreeNode tn2 = <span class="keyword">new</span> TreeNode(<span class="number">2</span>, <span class="keyword">null</span>, tn1);</span><br><span class="line">        TreeNode tn3 = <span class="keyword">new</span> TreeNode(<span class="number">3</span>);</span><br><span class="line">        TreeNode tn4 = <span class="keyword">new</span> TreeNode(<span class="number">1</span>, tn2, tn3);</span><br><span class="line"></span><br><span class="line"><span class="comment">//        TreeNode tn5 = new TreeNode(1);</span></span><br><span class="line"></span><br><span class="line">        List&lt;String&gt; strings = binaryTreePaths(tn4);</span><br><span class="line">        <span class="keyword">for</span>(String str: strings) &#123;</span><br><span class="line">            System.out.println(str);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-备注"><a href="#3-备注" class="headerlink" title="3. 备注"></a>3. 备注</h2><p><em>参考<a target="_blank" rel="noopener" href="https://leetcode-cn.com/">力扣（LeetCode）官网 - 全球极客挚爱的技术成长平台 (leetcode-cn.com)</a>，<a target="_blank" rel="noopener" href="https://programmercarl.com/">代码随想录 (programmercarl.com)</a>。</em></p>
+
                 
             </div>
             <hr/>
@@ -500,7 +522,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">hianian</a>
+                    <a href="/about" rel="external nofollow noreferrer">浮云</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -523,7 +545,7 @@
                     本博客所有文章除特別声明外，均采用
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     许可协议。转载请注明来源
-                    <a href="/about" target="_blank">hianian</a>
+                    <a href="/about" target="_blank">浮云</a>
                     !
                 </span>
             </div>
@@ -547,7 +569,11 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/LeetCode/">
+                                    <span class="chip bg-color">LeetCode</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -715,18 +741,17 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/04/01/LeetCode-28-BinaryTreePaths/">
+                <a href="/2022/04/02/LeetCode-29-SumOfLeftLeaves/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="LeetCode_28_BinaryTreePaths">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="LeetCode_29_SumOfLeftLeaves">
                         
-                        <span class="card-title">LeetCode_28_BinaryTreePaths</span>
+                        <span class="card-title">LeetCode_29_SumOfLeftLeaves</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -736,9 +761,9 @@
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-04-01
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-04-02
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -747,7 +772,6 @@
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>
@@ -992,7 +1016,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">243.4k</span>&nbsp;字
+                class="white-color">259.3k</span>&nbsp;字
             
             
             

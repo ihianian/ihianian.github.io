@@ -454,21 +454,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-11-16
+                    2022-04-08
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    16
+                    1.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    4 分
                 </div>
                 
 
@@ -489,6 +489,45 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>本文介绍Java中的多进程和多线程编程。</p>
+<h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h2><p>什么是进程？什么是线程？</p>
+<blockquote>
+<p>进程是一个应用程序，线程则是一个进程中的执行场景/执行单元。一个进程可以启动多个线程。</p>
+<p>比如对于Java程序，当在DOS命令窗口中执行时，会先启动JVM，而JVM就是一个进程。之后，JVM再启动一个主线程调用main方法，同时再启动一个垃圾回收线程负责看护，回收垃圾。<strong>最起码，Java程序中至少有两个线程并发，一个是main方法主线程，一个是垃圾回收线程。</strong></p>
+<p><strong>因此，使用多线程机制后，main方法结束后只代表主线程结束了，主栈空了，但并不意味着其他线程也结束了，所以程序不一定结束。</strong></p>
+</blockquote>
+<p>进程和线程的关系？</p>
+<blockquote>
+<p>进程可以看做是现实生活中的公司，线程可以看做是公司中的某个部门/员工。</p>
+</blockquote>
+<p>进程和进程的关系？</p>
+<blockquote>
+<p>进程和进程之间是相互独立的，不共享资源。在<strong>Java中内存独立不共享</strong>。</p>
+</blockquote>
+<p>线程和线程的关系？</p>
+<blockquote>
+<p>线程和线程之间有一定关联，在Java中同一个进程下的线程之间<strong>堆内存和方法区内存共享，栈内存独立，一个线程对应一个栈内存。</strong>（注意，内存中有三个区：方法区内存、堆内存、栈内存）</p>
+<p>多个线程一起运行（操作系统，宏观上），这就是并发。因为有时候某个线程A在等待某种资源，此时占着CPU不用，所以这对CPU来说是浪费的。因此此时可以让另一个线程B来运行，当线程B等待的时候或者时间片轮到到了A，A再执行。<strong>之所以有多线程机制，目的就是为了提供程序的处理效率。</strong></p>
+</blockquote>
+<h2 id="2-线程的实现方式"><a href="#2-线程的实现方式" class="headerlink" title="2. 线程的实现方式"></a>2. 线程的实现方式</h2><p>Java语言中，实现线程有三种方式：</p>
+<ol>
+<li><p>编写类，继承java.lang.Thread，重写run方法。</p>
+<p>我们知道main方法是主线程，那么在里面怎么创建线程对象呢？怎么启动线程呢？<strong>和创建普通对象一样，只不过启动线程需要<code>对象.start()</code>来运行run()方法里面的代码。</strong></p>
+<p><strong>start方法的作用就是启动一个分支线程，在JVM中开辟一个新的栈空间，这条语句瞬间就结束了，本质上这段调用start方法的代码仍然是主线程代码。启动成功的线程会自动调用run方法（JVM线程调度机制），并且run方法在分支栈的地步（相当于主栈的main方法）。</strong>代码如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadTest01</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 主线程</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 启动分支线程</span></span><br><span class="line">        MyThread mt = <span class="keyword">new</span> MyThread();</span><br><span class="line">        mt.start();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 继续主线程操作</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;主线程---&gt;&quot;</span> + i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 自定义类，继承Thread</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyThread</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 重写run方法，该方法内的程序运行在新线程中</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;分支线程---&gt;&quot;</span> + i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>编写类，实现java.lang.Runnable接口，实现run方法。（<strong>常用</strong>）</p>
+<p>之后，创建该类对象，将其作为参数传入到Thread构造方法中，利用Thread的start()方法启动分支线程。<strong>本质上和上面的方法差不多，只不过这种方法是以接口对象形式传参。</strong>代码如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadTest02</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 主线程</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 启动分支线程</span></span><br><span class="line">        MyRunnable mr = <span class="keyword">new</span> MyRunnable();</span><br><span class="line">        Thread t = <span class="keyword">new</span> Thread(mr);</span><br><span class="line"></span><br><span class="line">        t.start();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 继续主线程操作</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;主线程---&gt;&quot;</span> + i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 自定义类，实现Runnable接口以及run方法。</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyRunnable</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 实现run方法</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;分支线程---&gt;&quot;</span> + i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="2-1-方法对比"><a href="#2-1-方法对比" class="headerlink" title="2.1 方法对比"></a>2.1 方法对比</h3><p>第一种方法采用继承的方式，第二种方法采用实现接口的方式，<strong>第二种方法更加常用一些，面向接口编程，比较灵活，并且不受Java单继承的缺陷</strong>。</p>
+<h3 id="2-2-线程的生命周期"><a href="#2-2-线程的生命周期" class="headerlink" title="2.2 线程的生命周期"></a>2.2 线程的生命周期</h3><p>主要分为5个阶段</p>
+<ol>
+<li><strong>新建状态</strong>：调用start方法进入就绪状态</li>
+<li><strong>就绪状态</strong>（可运行状态）：等待时间片轮转运行，进入运行状态</li>
+<li><strong>运行状态</strong>：CPU运行该线程（run方法）。时间片结束之后，返回到就绪状态</li>
+<li><strong>阻塞状态</strong>：处于运行状态的线程需要其他资源，如接收用户输入等等，进入阻塞状态。当资源准备好之后，就会进入就绪状态。</li>
+<li><strong>死亡状态</strong>：线程执行完毕，run方法执行结束。</li>
+</ol>
+<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJava%5CJava_advance%5Cadv_024.png" alt="image-20220408225604238"></p>
 
                 
             </div>
@@ -1007,7 +1046,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">243.4k</span>&nbsp;字
+                class="white-color">259.3k</span>&nbsp;字
             
             
             
