@@ -454,7 +454,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-03-17
+                    2022-05-05
                 </div>
                 
 
@@ -490,7 +490,7 @@
             <div id="articleContent">
                 <p>本文介绍一种经典的数据结构——树。</p>
 <h2 id="1-树理论基础"><a href="#1-树理论基础" class="headerlink" title="1. 树理论基础"></a>1. 树理论基础</h2><p>前面的数组、队列等数据结构，是线性结构，即元素之间的前后关系是一对一的，一个元素只有一个前驱元素、一个后继元素。而<strong>树则是非线性结构，一个元素只有一个前驱元素，但是可以有多个后继元素，即一对多的关系。</strong></p>
-<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CDataStructureAndAlgorithm%5CDSAA_028.png" alt="image-20220315152147186"></p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/DataStructureAndAlgorithm/DSAA_028.png" alt="DSAA_028.png (1074×348) (gitee.io)"></p>
 <p>可以看到，树本身就是一个递归的定义。</p>
 <h3 id="1-1-基本术语"><a href="#1-1-基本术语" class="headerlink" title="1.1 基本术语"></a>1.1 基本术语</h3><ul>
 <li>根节点、节点、前驱节点（双亲节点）、后继节点（孩子节点）、叶子节点（终端节点）、内部节点（非终端节点，根节点除外）、兄弟节点</li>
@@ -512,10 +512,10 @@
 <blockquote>
 <p>二叉树在树结构的应用中起着非常重要的作用，因为对二叉的许多操作算法简单，而任何树都可以与二叉树相互转换，这样就解决了树的存储结构及其运算中存在的复杂性。</p>
 <p>这里注意一下，二叉树不是树，也不是树的一种特殊情况。虽然二叉树和有序树比较像，但是二叉树即使有一个子树也会区分左子树还是右子树，而有序树只有一个节点时，则不会区分左右。</p>
-<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CDataStructureAndAlgorithm%5CDSAA_029.png" alt="image-20220315155230990"></p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/DataStructureAndAlgorithm/DSAA_029.png" alt="DSAA_029.png (892×557) (gitee.io)"></p>
 </blockquote>
 <p>二叉树有以下五种基本形态</p>
-<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CDataStructureAndAlgorithm%5CDSAA_030.png" alt="image-20220315155326355"></p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/DataStructureAndAlgorithm/DSAA_030.png" alt="DSAA_030.png (977×384) (gitee.io)"></p>
 <h3 id="1-3-二叉树抽象数据类型定义"><a href="#1-3-二叉树抽象数据类型定义" class="headerlink" title="1.3 二叉树抽象数据类型定义"></a>1.3 二叉树抽象数据类型定义</h3><ul>
 <li><p>数据对象</p>
 <p>即存储的数据，比如存储整数、存储引用数据类型等等</p>
@@ -550,7 +550,7 @@
 <li>中序（根）遍历——左根右</li>
 <li>后序（根）遍历——左右根</li>
 </ul>
-<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CDataStructureAndAlgorithm%5CDSAA_031.png" alt="image-20220315175015123"></p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/DataStructureAndAlgorithm/DSAA_031.png" alt="DSAA_031.png (998×312) (gitee.io)"></p>
 <p>上图中是采用递归的方式来遍历的，也有<strong>非递归的方式</strong>。我们知道，树的遍历分为左子树、根、右子树三部分，无论怎么遍历，<strong>左右子树都是分开遍历的</strong>，那么此时，就需要保存右子树（因为左子树是先访问的），但是保存右子树是没必要的，因为可以通过根节点来访问到右子树，所以需要<strong>保存根节点</strong>。另外，根据访问顺序可以看到，各个根节点是“先进后出”的，所以采用栈数据结构来存储根节点。<strong>以先序遍历为例，如下所示</strong>：</p>
 <ol>
 <li>访问根节点，并将其入栈。</li>
@@ -572,7 +572,7 @@
 </ul>
 <p><strong>如果某个节点的左孩子为空，则将空的左孩子指针域修改为指向其前驱；如果某节点的右孩子为空，则将空的右孩子指针域修改为指向其后继。</strong>这种改变指向的指针称为“线索”，加上了线索的二叉树就被称为线索二叉树。</p>
 <p>既然有前驱和后继了，就说明有了遍历顺序，那么对二叉树按照某种遍历次序使其变为线索二叉树的过程叫线索化。例子如下所示：</p>
-<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CDataStructureAndAlgorithm%5CDSAA_032.png" alt="image-20220315203304127"></p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/DataStructureAndAlgorithm/DSAA_032.png" alt="DSAA_032.png (770×472) (gitee.io)"></p>
 <p>但是这样线索化之后，实际上就没办法区分某个指针到底指向的是其孩子节点还是其前驱和后继了。所以此时在节点中增设两个标志域ltag和rtag，约定如下：</p>
 <ul>
 <li>ltag=0，lchild指向该节点的左孩子</li>
@@ -588,12 +588,9 @@
 <h3 id="2-1-二叉树的递归遍历"><a href="#2-1-二叉树的递归遍历" class="headerlink" title="2.1 二叉树的递归遍历"></a>2.1 二叉树的递归遍历</h3><p>下面是三种遍历方式的递归实现</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Traversal</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">preOrderTraversal</span><span class="params">(BinaryTreeNode T)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(T != <span class="keyword">null</span>)&#123;</span><br><span class="line">            System.out.println(T.value);</span><br><span class="line">            preOrderTraversal(T.lchild);</span><br><span class="line">            preOrderTraversal(T.rchild);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">midOrderTraversal</span><span class="params">(BinaryTreeNode T)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(T != <span class="keyword">null</span>)&#123;</span><br><span class="line">            midOrderTraversal(T.lchild);</span><br><span class="line">            System.out.println(T.value);</span><br><span class="line">            midOrderTraversal(T.rchild);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">posOrderTraversal</span><span class="params">(BinaryTreeNode T)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(T != <span class="keyword">null</span>)&#123;</span><br><span class="line">            posOrderTraversal(T.lchild);</span><br><span class="line">            posOrderTraversal(T.rchild);</span><br><span class="line">            System.out.println(T.value);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        BinaryTreeNode btn1 = <span class="keyword">new</span> BinaryTreeNode(<span class="number">7</span>);</span><br><span class="line">        BinaryTreeNode btn2 = <span class="keyword">new</span> BinaryTreeNode(<span class="number">5</span>, btn1, <span class="keyword">null</span>);</span><br><span class="line"></span><br><span class="line">        BinaryTreeNode btn3 = <span class="keyword">new</span> BinaryTreeNode(<span class="number">4</span>);</span><br><span class="line"></span><br><span class="line">        BinaryTreeNode btn4 = <span class="keyword">new</span> BinaryTreeNode(<span class="number">2</span>, btn3, btn2);</span><br><span class="line"></span><br><span class="line">        BinaryTreeNode btn5 = <span class="keyword">new</span> BinaryTreeNode(<span class="number">6</span>);</span><br><span class="line">        BinaryTreeNode btn6 = <span class="keyword">new</span> BinaryTreeNode(<span class="number">3</span>, <span class="keyword">null</span>, btn5);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// final tree</span></span><br><span class="line">        BinaryTreeNode btn7 = <span class="keyword">new</span> BinaryTreeNode(<span class="number">1</span>, btn4, btn6);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 1 2 4 5 7 3 6</span></span><br><span class="line">        preOrderTraversal(btn7);</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;===========&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 4 2 7 5 1 3 6</span></span><br><span class="line">        midOrderTraversal(btn7);</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;===========&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 5 7 5 2 6 3 1</span></span><br><span class="line">        posOrderTraversal(btn7);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="2-2-二叉树的迭代遍历（非递归遍历）"><a href="#2-2-二叉树的迭代遍历（非递归遍历）" class="headerlink" title="2.2 二叉树的迭代遍历（非递归遍历）"></a>2.2 二叉树的迭代遍历（非递归遍历）</h3><p>前面提到过，有非递归的实现方式，即将根节点保存起来，方便后续取出访问其右节点。下面是三种遍历方式的迭代实现</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="2-3-二叉树的层次遍历"><a href="#2-3-二叉树的层次遍历" class="headerlink" title="2.3 二叉树的层次遍历"></a>2.3 二叉树的层次遍历</h3><h2 id="3-备注"><a href="#3-备注" class="headerlink" title="3. 备注"></a>3. 备注</h2><p><em>部分参考<a target="_blank" rel="noopener" href="https://programmercarl.com/">代码随想录 (programmercarl.com)</a>。<a target="_blank" rel="noopener" href="https://blog.csdn.net/wannuoge4766/article/details/83998377">数据结构之树_lishinho的博客-CSDN博客_数据结构树</a>。<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/90255760">数据结构中”树”的全面讲解 - 知乎 (zhihu.com)</a>。B站《青岛大学数据结构与算法基础》</em></p>
+<h3 id="2-2-二叉树的迭代遍历（非递归遍历）"><a href="#2-2-二叉树的迭代遍历（非递归遍历）" class="headerlink" title="2.2 二叉树的迭代遍历（非递归遍历）"></a>2.2 二叉树的迭代遍历（非递归遍历）</h3><p>前面提到过，有非递归的实现方式，即将根节点保存起来，方便后续取出访问其右节点。参考博客中的LeetCode标签中对应的题目。</p>
+<h3 id="2-3-二叉树的层次遍历"><a href="#2-3-二叉树的层次遍历" class="headerlink" title="2.3 二叉树的层次遍历"></a>2.3 二叉树的层次遍历</h3><p>层序遍历就是逐层遍历二叉树，可以采用队列来实现。参考博客中的LeetCode标签中对应的题目。</p>
+<h2 id="3-备注"><a href="#3-备注" class="headerlink" title="3. 备注"></a>3. 备注</h2><p><em>部分参考<a target="_blank" rel="noopener" href="https://programmercarl.com/">代码随想录 (programmercarl.com)</a>。<a target="_blank" rel="noopener" href="https://blog.csdn.net/wannuoge4766/article/details/83998377">数据结构之树_lishinho的博客-CSDN博客_数据结构树</a>。<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/90255760">数据结构中”树”的全面讲解 - 知乎 (zhihu.com)</a>。B站《青岛大学数据结构与算法基础》</em></p>
 
                 
             </div>
@@ -1112,7 +1109,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">280.2k</span>&nbsp;字
+                class="white-color">280.3k</span>&nbsp;字
             
             
             

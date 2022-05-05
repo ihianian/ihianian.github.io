@@ -454,7 +454,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-05-01
+                    2022-05-05
                 </div>
                 
 
@@ -525,7 +525,7 @@
 <li>jsp、servlet依赖</li>
 </ol>
 <p>可以看到springmvc依赖已经包括了spring必需的依赖。如下所示：</p>
-<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJavaWeb%5Cspringmvc%5Cspringmvc_001.png" alt="image-20220411172846072"></p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/springmvc/springmvc_001.png" alt="springmvc_001.png (905×362) (gitee.io)"></p>
 <p>具体的依赖如下所示：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.11<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- servlet依赖 --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>javax.servlet<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>javax.servlet-api<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.0.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">scope</span>&gt;</span>provided<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- jsp依赖 --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- https://mvnrepository.com/artifact/javax.servlet.jsp/jsp-api --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>javax.servlet.jsp<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jsp-api<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">scope</span>&gt;</span>provided<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- spring mvc 依赖 --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-webmvc<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.3.18<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
 <li><p><strong>重点</strong>：<strong>在web.xml中注册springmvc框架的核心对象：DispatcherServlet</strong>。</p>
@@ -564,13 +564,13 @@
 </ol>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.springframework.org/schema/beans&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:context</span>=<span class="string">&quot;http://www.springframework.org/schema/context&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- springmvc配置文件，用于声明springmvc容器中所需的一些对象，如控制器 --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 另外，即使没有要创建的对象，也需要这个配置文件，因为规定了中央调度器会读取这个文件，所以如果没有就会报错 --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 因为采用的是注解生成对象，所以需要声明组件扫描器 --&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 声明组件扫描器 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">&quot;org.hianian.controller&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">context:component-scan</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
 <li><p>结果如下所示：</p>
-<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJavaWeb%5Cspringmvc%5Cspringmvc_002.png" alt="image-20220417173948960"></p>
-<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJavaWeb%5Cspringmvc%5Cspringmvc_003.png" alt="image-20220417174022390"></p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/springmvc/springmvc_002.png" alt="springmvc_002.png (599×152) (gitee.io)"></p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/springmvc/springmvc_003.png" alt="springmvc_003.png (637×227) (gitee.io)"></p>
 </li>
 </ol>
 <h3 id="1-4-SpringMVC中的MVC组件"><a href="#1-4-SpringMVC中的MVC组件" class="headerlink" title="1.4 SpringMVC中的MVC组件"></a>1.4 SpringMVC中的MVC组件</h3><p>SpringMVC框架组织对象的时候实际上采用了MVC架构模式来组织的。如下所示，其中Front Controller就是前端控制器，即中央调度器DispatcherServlet；然后将请求转发给实际的控制器对象Controller（后端控制器，Back Controller），由它来处理用户请求；之后，Controller对象将结果（ModelAndView）返回给中央调度器，中央调度器调用View，将数据添加到视图中。</p>
 <p>上面的中央调度器以及控制器就是MVC中的C，是一个控制器的角色；Controller的处理请求生成的数据就是MVC中的M；View视图显示的结果就是MVC中的V。</p>
-<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJavaWeb%5Cspringmvc%5Cspringmvc_005.png" alt="image-20220419100536113"></p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/springmvc/springmvc_005.png" alt="springmvc_005.png (1046×725) (gitee.io)"></p>
 <h3 id="1-5-SpringMVC执行流程"><a href="#1-5-SpringMVC执行流程" class="headerlink" title="1.5 SpringMVC执行流程"></a>1.5 SpringMVC执行流程</h3><p><strong>SpringMVC处理流程如下所示：</strong></p>
 <blockquote>
 <ol>
@@ -581,7 +581,7 @@
 <li>框架执行该方法，得到了ModelAndView对象，并转发到<code>show.jsp</code>页面中。</li>
 </ol>
 <p>从上面可以看出，实际上中央调度器就是进行自动映射，将用户请求映射到具体的处理方法中。此时我们不再需要手动在配置文件中写&lt;servlet&gt;以及&lt;servlet-mapping&gt;了，使得配置文件更加简洁。<strong>大致的流程图如下所示：</strong></p>
-<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJavaWeb%5Cspringmvc%5Cspringmvc_004.png" alt="image-20220417174022391"></p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/springmvc/springmvc_004.png" alt="springmvc_004.png (1746×730) (gitee.io)"></p>
 <p>可以看到，这里实际上和动态代理比较相似，每增加一个用户请求，不再需要手动在配置文件中进行servlet映射了，只需要在处理方法中加上映射注解即可，具体的映射操作可由中央调度器进行管理。</p>
 </blockquote>
 <p><strong>SpringMVC执行过程源代码分析如下所示（主要分为两部分）：</strong></p>
@@ -620,7 +620,7 @@
 </blockquote>
 <p>另外，前面提到过，可以有多个Controller，也可以有多个RequestMapping，可以将多个请求映射到一个RequestMapping中，即value属性值有多个。</p>
 <p>(<strong>讲解完全部知识，这里再来回顾一下SpringMVC的执行流程</strong>)</p>
-<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJavaWeb%5Cspringmvc%5Cspringmvc_012.png" alt="image-20220428194636293"></p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/springmvc/springmvc_012.png" alt="springmvc_012.png (787×425) (gitee.io)"></p>
 <blockquote>
 <p>SpringMVC内部请求的处理流程如下所示：</p>
 <ol>
@@ -736,7 +736,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">HttpMessageConverter</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 针对控制器方法返回的Object，为了将其输出到浏览器，会用到该方法</span></span><br><span class="line">    <span class="comment">// 该方法会检查返回值Object能不能转换为MediaType类型，如果能就返回true</span></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">canWrite</span><span class="params">(Class&lt;?&gt; clazz, <span class="meta">@Nullable</span> MediaType mediaType)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 针对控制器方法返回的Object，为了将其输出到浏览器，会用到该方法</span></span><br><span class="line">    <span class="comment">// 将返回值Object转换成对应的MediaType类型数据</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">write</span><span class="params">(T t, <span class="meta">@Nullable</span> MediaType contentType, HttpOutputMessage outputMessage)</span> <span class="keyword">throws</span> IOException, HttpMessageNotWritableException</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>实际上，在加入该注解后，会自动创建该接口的7个实现类对象，用于后续的数据类型转换。</p>
-<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJavaWeb%5Cspringmvc%5Cspringmvc_006.png" alt="image-20220419175833802"></p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/springmvc/springmvc_006.png" alt="springmvc_006.png (1066×698) (gitee.io)"></p>
 </li>
 <li><p>@ResponseBody注解</p>
 <p>这个注解用于放置在处理器方法的上面，通过HttpServletResponse输出数据，响应AJAX请求。</p>
@@ -865,7 +865,7 @@
 </li>
 </ol>
 <p>最终的目录结构如下所示：</p>
-<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJavaWeb%5Cspringmvc%5Cspringmvc_007.png" alt="image-20220422202625873"></p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/springmvc/springmvc_007.png" alt="springmvc_007.png (292×613) (gitee.io)"></p>
 <h2 id="4-SpringMVC核心技术"><a href="#4-SpringMVC核心技术" class="headerlink" title="4. SpringMVC核心技术"></a>4. SpringMVC核心技术</h2><h3 id="4-1-请求重定向和转发"><a href="#4-1-请求重定向和转发" class="headerlink" title="4.1 请求重定向和转发"></a>4.1 请求重定向和转发</h3><p>在Servlet中，我们介绍过转发和重定向两个操作，Servlet中的代码分别是<code>request.getRequestDispatcher(&quot;xxx.jsp&quot;).forward()</code>和<code>response.sendRedirect(&quot;xxx.jsp&quot;)</code>。</p>
 <p>SpringMVC框架将上述两个操作进行了封装，可以使用比较简单的方式实现转发和重定向，直接使用forward和redirect两个关键字即可。<strong>这两个关键字有一个共同的特点：不和视图解析器一同工作（就是说，视图解析器对forward中的路径不起作用）。</strong></p>
 <h4 id="4-1-1-转发"><a href="#4-1-1-转发" class="headerlink" title="4.1.1 转发"></a>4.1.1 转发</h4><p>转发forward的语法为：<code>setViewName(&quot;forward:视图文件的完整路径&quot;)</code>，<strong>注意，因为该关键字对视图解析器无效，所以必须写视图资源的完整路径</strong>。其实对于ModelAndView来说，setViewName()方法本质上就是转发，只不过是自动执行的，即<strong>隐式转发</strong>，因为存在视图解析器的原因，所以隐式转发的路径相当于限制死了，不太灵活，如果想要转发到路径之外的资源，则只能采用forward显式转发，无需考虑视图解析器。代码如下所示：</p>
@@ -970,12 +970,12 @@
 </li>
 </ol>
 <p><strong>因此，添加拦截器的步骤比较简单，创建拦截器类，实现想要执行的方法，然后再配置文件中进行url和拦截器映射即可。感觉和异常处理类似，是作为切面功能加入到业务逻辑代码中的。实际上，preHandle方法是整个项目的入口，因为是先执行该方法的，只有该方法返回true，才会进而执行控制器中的方法。即拦截器可以看成是多个Controller中共用的功能，集中抽取出来统一处理。</strong></p>
-<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJavaWeb%5Cspringmvc%5Cspringmvc_008.png" alt="image-20220427194504118"></p>
-<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJavaWeb%5Cspringmvc%5Cspringmvc_009.png" alt="image-20220427201512874"></p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/springmvc/springmvc_008.png" alt="springmvc_008.png (1159×474) (gitee.io)"></p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/springmvc/springmvc_009.png" alt="springmvc_009.png (588×270) (gitee.io)"></p>
 <h4 id="4-3-1-多个拦截器"><a href="#4-3-1-多个拦截器" class="headerlink" title="4.3.1 多个拦截器"></a>4.3.1 多个拦截器</h4><p>可以声明多个拦截器，拦截器的执行顺序和声明顺序有关，<strong>先声明的拦截器，先执行。注意，这里相当于是栈，因为拦截器存在三个方法，分别在三个时间点执行。此时，又因为先声明的拦截器先执行。所以以拦截器A、B为例，A拦截器的preHandle()方法先执行，然后B拦截器的preHandle方法再执行。之后B拦截器的postHandle()方法执行，A拦截器的postHandle()方法执行。最后B拦截器的afterCompletion()方法执行，A拦截器的afterCompletion()方法执行。</strong></p>
 <p>如下所示：</p>
-<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJavaWeb%5Cspringmvc%5Cspringmvc_010.png" alt="image-20220427203109239"></p>
-<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJavaWeb%5Cspringmvc%5Cspringmvc_011.png" alt="image-20220427203331774"></p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/springmvc/springmvc_010.png" alt="springmvc_010.png (938×411) (gitee.io)"></p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/JavaWeb/springmvc/springmvc_011.png" alt="springmvc_011.png (633×631) (gitee.io)"></p>
 <h4 id="4-3-2-拦截器和过滤器"><a href="#4-3-2-拦截器和过滤器" class="headerlink" title="4.3.2 拦截器和过滤器"></a>4.3.2 拦截器和过滤器</h4><p>二者有以下区别：</p>
 <ol>
 <li>过滤器是Servlet规范中的对象，拦截器是框架中的对象；</li>
@@ -1528,7 +1528,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">280.2k</span>&nbsp;字
+                class="white-color">280.3k</span>&nbsp;字
             
             
             

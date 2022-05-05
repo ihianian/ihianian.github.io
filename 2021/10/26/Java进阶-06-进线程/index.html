@@ -454,7 +454,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-04-14
+                    2022-05-05
                 </div>
                 
 
@@ -530,7 +530,7 @@
 <li><strong>阻塞状态</strong>：处于运行状态的线程需要其他资源，如接收用户输入等等，进入阻塞状态。当资源准备好之后，就会进入就绪状态。</li>
 <li><strong>死亡状态</strong>：线程执行完毕，run方法执行结束。</li>
 </ol>
-<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJava%5CJava_advance%5Cadv_024.png" alt="image-20220408225604238"></p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/Java/Java_advance/adv_024.png" alt="adv_024.png (961×509) (gitee.io)"></p>
 <h2 id="3-线程的基本操作"><a href="#3-线程的基本操作" class="headerlink" title="3. 线程的基本操作"></a>3. 线程的基本操作</h2><h3 id="3-1-线程的基本设置"><a href="#3-1-线程的基本设置" class="headerlink" title="3.1 线程的基本设置"></a>3.1 线程的基本设置</h3><ol>
 <li><p>获取当前线程对象</p>
 <p><code>public static Thread currentThread()</code>，该方法是在Thread包下，是静态方法，<strong>注意，是获取当前线程，即该函数所在代码所在的线程</strong>。</p>
@@ -549,7 +549,7 @@
 <p><code>public void interrupt()</code>，该方法是在Thread包下，是成员方法，通过对象调用，来中止该对象的睡眠。<strong>本质上是通过触发该对象的异常，来进入try{}catch(){}异常捕获，进而跳出sleep()。</strong>代码如下所示：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadTest05</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;主线程 ---&gt; &quot;</span> + Thread.currentThread().getName());</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 创建分支线程并启动，注意，启动之后就会睡眠</span></span><br><span class="line">        Thread t = <span class="keyword">new</span> Thread(<span class="keyword">new</span> MyThread05());</span><br><span class="line">        t.start();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 模拟主线程工作</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Thread.sleep(<span class="number">1000</span> * <span class="number">5</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 唤醒分支线程</span></span><br><span class="line">        t.interrupt();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyThread05</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Thread.sleep(<span class="number">1000</span> * <span class="number">60</span> * <span class="number">60</span> * <span class="number">24</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;分支线程 ---&gt; &quot;</span> + Thread.currentThread().getName());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJava%5CJava_advance%5Cadv_025.png" alt="image-20220410161036944"></p>
+<p><img src="http://cybersecurity.gitee.io/blog-image-bed/Java/Java_advance/adv_025.png" alt="adv_025.png (675×284) (gitee.io)"></p>
 <p>当然，如果不希望异常信息输出，可以在catch(){}语句块中不打印异常信息。</p>
 </li>
 <li><p>终止线程的执行</p>
@@ -1100,7 +1100,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">280.2k</span>&nbsp;字
+                class="white-color">280.3k</span>&nbsp;字
             
             
             
