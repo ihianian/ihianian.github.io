@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="JavaWeb_03_CSS, ihianian">
+    <meta name="keywords" content="LeetCode_48_IntersectionOfTwoArrays, ihianian">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>JavaWeb_03_CSS | ihianian</title>
+    <title>LeetCode_48_IntersectionOfTwoArrays | ihianian</title>
     <link rel="icon" type="image/png" href="/header.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -310,12 +310,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">JavaWeb_03_CSS</h1>
+                    <h1 class="description center-align post-title">LeetCode_48_IntersectionOfTwoArrays</h1>
                 </div>
             </div>
         </div>
@@ -431,8 +431,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/JavaWeb/">
-                                <span class="chip bg-color">JavaWeb</span>
+                            <a href="/tags/LeetCode/">
+                                <span class="chip bg-color">LeetCode</span>
                             </a>
                         
                     </div>
@@ -447,28 +447,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-12-16
+                    2022-04-14
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-12-22
+                    2022-05-05
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.3k
+                    401
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    5 分
+                    1 分
                 </div>
                 
 
@@ -488,57 +488,21 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>本文介绍Web前端中的CSS相关知识。</p>
-<h2 id="1-CSS概述"><a href="#1-CSS概述" class="headerlink" title="1. CSS概述"></a>1. CSS概述</h2><p><strong>CSS的全称是Cascading style Sheet，即层叠样式表语言。其主要作用是设置HTML页面中某些元素的杨素，让HTML页面更好看。</strong></p>
-<p>CSS相当于HTML的化妆品，HTML是主题，CSS依赖HTML，CSS的存在就是修饰HTML，所以新建的文件还是<code>xxx.html</code>。</p>
-<h2 id="2-HTML嵌套使用CSS的三种方式"><a href="#2-HTML嵌套使用CSS的三种方式" class="headerlink" title="2. HTML嵌套使用CSS的三种方式"></a>2. HTML嵌套使用CSS的三种方式</h2><p>HTML页面嵌套使用CSS主要有三种方式</p>
-<h3 id="2-1-内联定义方式"><a href="#2-1-内联定义方式" class="headerlink" title="2.1 内联定义方式"></a>2.1 内联定义方式</h3><p>该方式是在标签内部使用style属性来设置元素的css样式，这种方式称为内联定义方式。语法结构如下所示：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;标签 style=&quot;样式名:样式值;样式名:样式值;样式名:样式值;。。。&quot;&gt;&lt;/标签&gt;</span><br></pre></td></tr></table></figure>
+                <h2 id="1-question-两个数组的交集（简单）"><a href="#1-question-两个数组的交集（简单）" class="headerlink" title="1. question: 两个数组的交集（简单）"></a>1. question: 两个数组的交集（简单）</h2><p>给定两个数组 nums1 和 nums2 ，返回 它们的交集 。输出结果中的每个元素一定是 唯一 的。我们可以 不考虑输出结果的顺序 。</p>
+<p>来源：力扣（LeetCode）<br>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/intersection-of-two-arrays">https://leetcode-cn.com/problems/intersection-of-two-arrays</a></p>
+<p>示例 1：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：nums1 = [1,2,2,1], nums2 = [2,2]</span><br><span class="line">输出：[2]</span><br></pre></td></tr></table></figure>
 
-<p><strong>具体的样式有字体、文本、背景、尺寸、边框、表格等等，可以参考网上文档，这里不再赘述。</strong></p>
-<p>简单案例如下所示：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">title</span>&gt;</span>HTML中引入CSS样式的第一种方式：内联定义方式<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&quot;width: 300px; height: 300px; background-color: #CCFFFF; border-color: red; border-width: 1px; border-style: solid&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">		<span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line"></span><br><span class="line">		<span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&quot;width: 300px; height: 300px; background-color: #CCFFFF; border : black 1px solid&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>示例 2：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：nums1 = [4,9,5], nums2 = [9,4,9,8,4]</span><br><span class="line">输出：[9,4]</span><br><span class="line">解释：[4,9] 也是可通过的</span><br></pre></td></tr></table></figure>
 
-<h3 id="2-2-定义内部样式块对象"><a href="#2-2-定义内部样式块对象" class="headerlink" title="2.2 定义内部样式块对象"></a>2.2 定义内部样式块对象</h3><p>在head标签中使用style块，style块中设置标签对应的样式，这种方式称为样式块方式。语法结构如下所示：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">&quot;text/css&quot;</span>&gt;</span><span class="css"></span></span><br><span class="line"><span class="css">        选择器 &#123;</span></span><br><span class="line"><span class="css">            样式名 : 样式值;</span></span><br><span class="line"><span class="css">            样式名 : 样式值;</span></span><br><span class="line"><span class="css">            样式名 : 样式值;</span></span><br><span class="line"><span class="css">            ......</span></span><br><span class="line"><span class="css">        &#125;</span></span><br><span class="line"><span class="css">        </span></span><br><span class="line"><span class="css">        选择器 &#123;</span></span><br><span class="line"><span class="css">            样式名 : 样式值;</span></span><br><span class="line"><span class="css">            样式名 : 样式值;</span></span><br><span class="line"><span class="css">            样式名 : 样式值;</span></span><br><span class="line"><span class="css">            ......</span></span><br><span class="line"><span class="css">        &#125;</span></span><br><span class="line"><span class="css">        </span></span><br><span class="line"><span class="css">        ......</span></span><br><span class="line"><span class="css">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>提示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1 &lt;= nums1.length, nums2.length &lt;= 1000</span><br><span class="line">0 &lt;= nums1[i], nums2[i] &lt;= 1000</span><br></pre></td></tr></table></figure>
 
-<p>其中选择器有以下几种方式：</p>
-<ul>
-<li><p>id选择器</p>
-<p>语法格式如下所示：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#id值 &#123;</span><br><span class="line">	样式名: 样式值;</span><br><span class="line">	样式名: 样式值;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p>标签选择器</p>
-<p>语法格式如下所示：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">标签名 &#123;</span><br><span class="line">	样式名: 样式值;</span><br><span class="line">	样式名: 样式值;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="2-answers"><a href="#2-answers" class="headerlink" title="2. answers"></a>2. answers</h2><p>这道题也是比较简单的，采用哈希表来做，先遍历第一个数组，存入哈希表；然后遍历第二个数组，利用哈希表来检索是否存在该元素，如果存在就说明该元素是交集。代码如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution_0045</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[] intersection(<span class="keyword">int</span>[] nums1, <span class="keyword">int</span>[] nums2) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 对reshuffle情况进行判断一下</span></span><br><span class="line">        <span class="keyword">if</span>(nums1 == <span class="keyword">null</span> || nums1.length == <span class="number">0</span> || nums2 == <span class="keyword">null</span> || nums2.length == <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">        HashSet&lt;Integer&gt; hashSet = <span class="keyword">new</span> HashSet&lt;&gt;();</span><br><span class="line">        HashSet&lt;Integer&gt; results = <span class="keyword">new</span> HashSet&lt;&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i: nums1) &#123;</span><br><span class="line">            hashSet.add(i);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i: nums2) &#123;</span><br><span class="line">            <span class="keyword">if</span>(hashSet.contains(i)) results.add(i);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span>[] result = <span class="keyword">new</span> <span class="keyword">int</span>[results.size()];</span><br><span class="line">        <span class="keyword">int</span> index = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (Integer integer : results) &#123;</span><br><span class="line">            result[index++] = integer;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        System.out.println();</span><br><span class="line"></span><br><span class="line"><span class="comment">//        int[] nums1 = &#123;1, 2, 2, 1&#125;;</span></span><br><span class="line"><span class="comment">//        int[] nums2 = &#123;2, 2&#125;;</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span>[] nums1 = &#123;<span class="number">4</span>, <span class="number">9</span>, <span class="number">5</span>&#125;;</span><br><span class="line">        <span class="keyword">int</span>[] nums2 = &#123;<span class="number">9</span>, <span class="number">4</span>, <span class="number">9</span>, <span class="number">8</span>, <span class="number">4</span>&#125;;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span>[] result = intersection(nums1, nums2);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i: result) &#123;</span><br><span class="line">            System.out.println(i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>注意，标签选择器的作用范围比id选择器的范围广。</p>
-</li>
-<li><p>类选择器</p>
-<p>语法格式如下所示：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">.类名 &#123;</span><br><span class="line">	样式名: 样式值;</span><br><span class="line">	样式名: 样式值;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>即根据class值来定位元素，因为id值不能重复，标签选择器只能定位相同的标签，所以可以根据class值来定位多个不同的标签，<strong>可以跨标签</strong>。</p>
-<p>另外，标签中的class可以有多个值，中间用空格隔开即可，即class=”abd qwer”，在CSS的时候，可以将多个样式修饰和这个标签。</p>
-</li>
-</ul>
-<p>简单案例如下所示：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">title</span>&gt;</span>HTML中引入CSS样式的第二种方式：样式快<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"></span><br><span class="line">		<span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">&quot;text/css&quot;</span>&gt;</span><span class="css"></span></span><br><span class="line"><span class="css">			<span class="comment">/*</span></span></span><br><span class="line"><span class="comment"><span class="css">				这是CSS的注释。</span></span></span><br><span class="line"><span class="comment"><span class="css">			*/</span></span></span><br><span class="line"><span class="css">			<span class="selector-id">#usernameErrorMsg</span> &#123;</span></span><br><span class="line"><span class="css">				<span class="attribute">color</span>: red;</span></span><br><span class="line"><span class="css">				<span class="attribute">font-size</span>: <span class="number">18px</span>;</span></span><br><span class="line"><span class="css">			&#125;</span></span><br><span class="line"><span class="css"></span></span><br><span class="line"><span class="css">			<span class="selector-tag">div</span> &#123;</span></span><br><span class="line"><span class="css">				<span class="attribute">background-color</span>: blue;</span></span><br><span class="line"><span class="css">				<span class="attribute">border</span>: <span class="number">1px</span> solid green; </span></span><br><span class="line"><span class="css">				<span class="attribute">width</span>: <span class="number">100px</span>;</span></span><br><span class="line"><span class="css">				<span class="attribute">height</span>:<span class="number">100px</span>;</span></span><br><span class="line"><span class="css">			&#125;</span></span><br><span class="line"><span class="css"></span></span><br><span class="line"><span class="css">			<span class="selector-class">.myClass</span> &#123;</span></span><br><span class="line"><span class="css">				<span class="attribute">border</span>: <span class="number">2px</span> solid pink;</span></span><br><span class="line"><span class="css">			&#125;</span></span><br><span class="line"><span class="css"></span></span><br><span class="line"><span class="css">		</span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">&quot;usernameErrorMsg&quot;</span>&gt;</span>对不起，用户名不能为空！<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"></span><br><span class="line">		<span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line"></span><br><span class="line">		<span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">		<span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line"></span><br><span class="line">		<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">class</span>=<span class="string">&quot;myClass&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">		<span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line"></span><br><span class="line">		<span class="tag">&lt;<span class="name">select</span> <span class="attr">class</span>=<span class="string">&quot;myClass&quot;</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">option</span>&gt;</span>专科<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">option</span>&gt;</span>本科<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="2-3-链入外部样式表文件"><a href="#2-3-链入外部样式表文件" class="headerlink" title="2.3 链入外部样式表文件"></a>2.3 链入外部样式表文件</h3><p>顾名思义，就是将样式写到一个独立的<code>xxx.css</code>文件当中，在需要的网页中直接在head标签中引入css文件，这样样式就引入了。<strong>这种方式最常用。</strong>语法格式如下所示：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">type</span>=<span class="string">&quot;text/css&quot;</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">href</span>=<span class="string">&quot;css文件的路径&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>这种方式易维护，维护成本较低。比如很多个html都引入了这个样式文件，那么如果想要修改css样式的话，可以直接修改css文件即可。</p>
-<p>其实css文件的内容可以是上面的两种方式，我们只需要在html文档中引入css文件即可。</p>
-<p>简单例子如下所示：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- CSS文件 --&gt;</span></span><br><span class="line">a &#123;</span><br><span class="line">	text-decoration: none;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#links &#123;</span><br><span class="line">	cursor: pointer;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">title</span>&gt;</span>HTML中引入CSS样式的第三种方式：引入外部独立的css文件<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"></span><br><span class="line">		<span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text/css&quot;</span> <span class="attr">href</span>=<span class="string">&quot;test.css&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;http://www.baidu.com&quot;</span>&gt;</span>百度<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"></span><br><span class="line">		<span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line"></span><br><span class="line">		<span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">&quot;links&quot;</span>&gt;</span>点击我连接到百度<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="3-绝对定位"><a href="#3-绝对定位" class="headerlink" title="3. 绝对定位"></a>3. 绝对定位</h2><p>可以设置一些标签在页面的位置。采用position来设置定位，搭配left和top，left指的是离左边多少像素，top指的是离顶部多少像素。</p>
-<p>简单例子如下所示：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">title</span>&gt;</span>绝对定位<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"></span><br><span class="line">		<span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">&quot;text/css&quot;</span>&gt;</span><span class="css"></span></span><br><span class="line"><span class="css">			<span class="selector-id">#div1</span> &#123;</span></span><br><span class="line"><span class="css">				<span class="attribute">background-color</span>: black;</span></span><br><span class="line"><span class="css">				<span class="attribute">border</span>: <span class="number">1px</span> red solid;</span></span><br><span class="line"><span class="css">				<span class="attribute">width</span>: <span class="number">300px</span>;</span></span><br><span class="line"><span class="css">				<span class="attribute">height</span>: <span class="number">300px</span>;</span></span><br><span class="line"><span class="css">				<span class="attribute">position</span>: absolute;</span></span><br><span class="line"><span class="css">				<span class="attribute">left</span>: <span class="number">100px</span>;</span></span><br><span class="line"><span class="css">				<span class="attribute">top</span>: <span class="number">100px</span>; </span></span><br><span class="line"><span class="css">			&#125;</span></span><br><span class="line"><span class="css">		</span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;div1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="4-备注"><a href="#4-备注" class="headerlink" title="4. 备注"></a>4. 备注</h2><p><em>参考B站《动力节点》。</em></p>
+<h2 id="3-备注"><a href="#3-备注" class="headerlink" title="3. 备注"></a>3. 备注</h2><p><em>参考<a target="_blank" rel="noopener" href="https://leetcode-cn.com/">力扣（LeetCode）官网 - 全球极客挚爱的技术成长平台 (leetcode-cn.com)</a>，<a target="_blank" rel="noopener" href="https://programmercarl.com/">代码随想录 (programmercarl.com)</a>。</em></p>
 
                 
             </div>
@@ -565,7 +529,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://ihianian.github.io/2021/12/16/JavaWeb-03-CSS/">https://ihianian.github.io/2021/12/16/JavaWeb-03-CSS/</a>
+                    <a href="https://ihianian.github.io/2022/04/14/LeetCode-48-IntersectionOfTwoArrays/">https://ihianian.github.io/2022/04/14/LeetCode-48-IntersectionOfTwoArrays/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -603,8 +567,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/JavaWeb/">
-                                    <span class="chip bg-color">JavaWeb</span>
+                                <a href="/tags/LeetCode/">
+                                    <span class="chip bg-color">LeetCode</span>
                                 </a>
                             
                         </div>
@@ -778,13 +742,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/12/16/JavaWeb-04-JavaScript/">
+                <a href="/2022/04/14/LeetCode-49-HappyNumber/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="JavaWeb_04_JavaScript">
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="LeetCode_49_HappyNumber">
                         
-                        <span class="card-title">JavaWeb_04_JavaScript</span>
+                        <span class="card-title">LeetCode_49_HappyNumber</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -795,7 +759,7 @@
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-12-16
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-04-14
                         </span>
                         <span class="publish-author">
                             
@@ -808,8 +772,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/JavaWeb/">
-                        <span class="chip bg-color">JavaWeb</span>
+                    <a href="/tags/LeetCode/">
+                        <span class="chip bg-color">LeetCode</span>
                     </a>
                     
                 </div>
@@ -823,13 +787,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/12/16/JavaWeb-02-HTML/">
+                <a href="/2022/04/14/LeetCode-47-ValidAnagram/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="JavaWeb_02_HTML">
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="LeetCode_47_ValidAnagram">
                         
-                        <span class="card-title">JavaWeb_02_HTML</span>
+                        <span class="card-title">LeetCode_47_ValidAnagram</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -840,7 +804,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-12-16
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-04-14
                             </span>
                         <span class="publish-author">
                             
@@ -853,8 +817,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/JavaWeb/">
-                        <span class="chip bg-color">JavaWeb</span>
+                    <a href="/tags/LeetCode/">
+                        <span class="chip bg-color">LeetCode</span>
                     </a>
                     
                 </div>
