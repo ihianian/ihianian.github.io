@@ -454,21 +454,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-05-16
+                    2022-06-14
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.4k
+                    4.5k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    4 分
+                    18 分
                 </div>
                 
 
@@ -588,7 +588,162 @@
 </ol>
 </li>
 </ol>
-
+<h2 id="3-物理模型设计"><a href="#3-物理模型设计" class="headerlink" title="3. 物理模型设计"></a>3. 物理模型设计</h2><h3 id="3-1-数据表"><a href="#3-1-数据表" class="headerlink" title="3.1 数据表"></a>3.1 数据表</h3><p>CRM项目用到的数据表：</p>
+<ol>
+<li><p>用户表：tbl_user</p>
+<p>主要用于系统功能，主要用于登录。</p>
+</li>
+<li><p>数据字典值：tbl_dic_val</p>
+<p>主要用于系统功能，主要用于下拉列表的选项值。</p>
+</li>
+<li><p>数据字典类型表：tbl_dic_type</p>
+<p>主要用于系统功能，因为有多个下拉列表，每个下拉列表的选项值不同。为了区分，为每个下拉列表设置一个类型。本张表就是为了存储下拉类型。这样，选取了特定的下拉类型，就能从<code>tbl_dic_type</code>中选择出特定类型的值来显示。</p>
+</li>
+<li><p>市场活动表：tbl_activity</p>
+<p>主要用于业务功能，存储开展的市场活动。</p>
+</li>
+<li><p>市场活动备注表：tbl_activity_remark</p>
+<p>主要用于业务功能，对市场活动进行备注评价意见等等。</p>
+</li>
+<li><p>线索表：tbl_clue</p>
+<p>主要用于业务功能，开展的市场活动主要是为了拉取客户，因此本张表主要是存储潜在客户的相关信息。</p>
+</li>
+<li><p>线索备注表：tbl_clue_remark</p>
+<p>主要用于业务功能，对线索进行备注评价意见等等。</p>
+</li>
+<li><p>线索和市场活动关联关系表：tbl_clue_activity_relation</p>
+<p>主要用于业务功能，二者属于多对多的关系，一场活动可和产生多个线索，一个线索可由多个活动产生（一个人参加了多场活动，且都留下了联系方式）</p>
+</li>
+<li><p>客户表：tbl_customer</p>
+<p>主要用于业务功能，线索表示潜在的客户，可发展为真正的客户。</p>
+</li>
+<li><p>客户备注表：tbl_customer_remark</p>
+<p>主要用于业务功能，对客户进行备注评价意见等等。</p>
+</li>
+<li><p>联系人：tbl_contacts</p>
+<p>主要用于业务功能，联系人由潜在的客户发展而来。</p>
+</li>
+<li><p>联系人备注表：tbl_contacts_remark</p>
+<p>主要用于业务功能，对联系人进行备注评价意见等等。</p>
+</li>
+<li><p>联系人和市场活动关联关系表：tbl_contacts_activity_relation</p>
+<p>主要用于业务功能，二者属于多对多的关系，联系人和线索类似，都由活动产生。</p>
+</li>
+<li><p>交易表：tbl_tran</p>
+<p>主要用于业务功能，客户有了交易意愿，进行交易</p>
+</li>
+<li><p>交易备注表：tbl_tran_remark</p>
+<p>主要用于业务功能，对业务进行备注评价意见等等。</p>
+</li>
+<li><p>交易历史表：tbl_tran_history</p>
+<p>主要用于业务功能，对交易的谈判历程等进行记录。</p>
+</li>
+<li><p>任务表：tbl_task（暂时不做这个功能）</p>
+<p>主要用于业务功能，给客户使用，客服依据此表，进行回访。</p>
+</li>
+</ol>
+<p>数据表中的主键：推荐使用和业务无关的字段做主键，因为业务数据可能会变，主键也就跟着变，这是不合理的，所以尽量将其不作为主键。</p>
+<p><strong>主键字段的类型和长度由主键值的生成方式来决定，而主键值的生成方式主要有：</strong></p>
+<ol>
+<li><strong>自增（借助数据库自增主键生成机制）</strong>，即数值型，长度由数据量决定。（<strong>效率较低，在实际开发中使用较少</strong>）</li>
+<li><strong>assign，程序员手动生成主键值，写程序生成唯一的值</strong>。常见的算法有：hi/low（数值型，长度由数据量决定，使用较少），UUID（字符串型，长度为32位，使用较多），雪花算法等等。</li>
+<li><strong>共享主键</strong>：两张表的数据有关联，且一一对应，因此两张表共享同一个主键。（使用较少）</li>
+<li><strong>联合主键</strong>：由多个字段的类型和长度决定。（使用较少）</li>
+</ol>
+<p>数据表中的外键：外键是用来确定表和表之间的关系。表和表之间的关系：</p>
+<ol>
+<li><p>一对多</p>
+<p>一张表A中的一条记录对应另一张表B中的多条记录。另一张表B中的一条记录只能对应一张表A中的一条记录。表A就是父表，表B就是子表。比如一个班级，有多个学生，但是一个学生只属于一个班级。</p>
+<p>添加数据时，先添加父表记录，再添加子表记录；删除数据时，先删除子表记录，在删除父表记录；查询数据时，可能会进行关联查询（内连接、外连接、等值连接、全连接）。</p>
+</li>
+<li><p>一对一</p>
+<p>一张表A中的一条记录只能对应另一张表B中的一条记录。另一张表B中的一条记录页只能对应一张表A中的一条记录。比如一个公民对应一个驾照。两表采用<strong>共享主键</strong>或者<strong>唯一外键</strong>。</p>
+</li>
+<li><p>多对多</p>
+<p>一张表A中的一条记录对应另一张表B中的多条记录。另一张表B中的一条记录页也能对应一张表A中的多条记录。比如学生表、课程表，即一个学生可选择多门课程，一门课程也被多门学生选择。<strong>选课表采用学生表和课程表的两个主键作为联合主键。</strong></p>
+</li>
+</ol>
+<p>数据表的日期和时间字段：日期和时间是比较特殊的数据类型，都有特定的格式，数据库中的类型为：</p>
+<ol>
+<li>date：只有日期（年月日）</li>
+<li>time：只有时间（时分秒）</li>
+<li>datatime：日期加时间</li>
+</ol>
+<p>Java程序和SQL中的日期时间格式是不通的，所以需要工具类转换，一般情况下都可定义为定长字符串，此时就无需再进行转换了，因为Java和SQL中的字符串是想通的。等到操作时间的时候再格式化。</p>
+<p><strong>具体的数据表可到网盘中下载。</strong></p>
+<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJavaWeb%5Cproject%5Ccrm_project%5Ccrm_005.png" alt="image-20220613231816571"></p>
+<h2 id="4-搭建开发环境"><a href="#4-搭建开发环境" class="headerlink" title="4. 搭建开发环境"></a>4. 搭建开发环境</h2><h3 id="4-1-IDEA创建项目工程"><a href="#4-1-IDEA创建项目工程" class="headerlink" title="4.1 IDEA创建项目工程"></a>4.1 IDEA创建项目工程</h3><p>一般情况下，创建一个新的空Project，用于管理各个模块Module。模块Module是用于具体的功能代码，同类的业务实现放在同一个Module中。这样一个完整的项目（Project）由各个子业务（Module）共同组成。<strong>本项目比较简单，只有一个模块。</strong></p>
+<p>SSM项目，在创建Module的时候，直接选择Maven中的webapp即可，自动导入Jar包，比较方便。</p>
+<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJavaWeb%5Cproject%5Ccrm_project%5Ccrm_001.png" alt="image-20220613225550175"></p>
+<p>其中，GroupId可以认为是项目名（Project），ArtifactId可以认为是模块名（Module）</p>
+<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJavaWeb%5Cproject%5Ccrm_project%5Ccrm_002.png" alt="image-20220613225821295"></p>
+<p>IDEA创建的Maven中的webapp项目，自带的目录结构不全，需要手动补全，如<code>src/main/java</code>、<code>src/main/resources</code>、<code>src/test/java</code>、<code>src/test/resources</code>。</p>
+<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJavaWeb%5Cproject%5Ccrm_project%5Ccrm_003.png" alt="image-20220613230508225"></p>
+<p>并修改目录属性。</p>
+<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJavaWeb%5Cproject%5Ccrm_project%5Ccrm_004.png" alt="image-20220613231550237"></p>
+<p>也要注意，设置项目的编码方式。</p>
+<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJavaWeb%5Cproject%5Ccrm_project%5Ccrm_006.png" alt="image-20220614103945743"></p>
+<h3 id="4-2-添加jar包依赖"><a href="#4-2-添加jar包依赖" class="headerlink" title="4.2 添加jar包依赖"></a>4.2 添加jar包依赖</h3><ol>
+<li><p>MySQL驱动</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>mysql<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mysql-connector-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>8.0.27<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>Druid连接池</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/com.alibaba/druid --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>druid<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2.8<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>MyBatis框架</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/org.mybatis/mybatis --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.mybatis<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.5.6<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>Spring依赖</p>
+<p>（核心依赖已由SpringMVC间接导入）</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- Spring事务依赖 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/org.springframework/spring-tx --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-tx<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.3.14<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- Spring事务依赖（JDBC数据库） --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-jdbc<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.3.14<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>SpringMVC依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- SpringMVC依赖（已经包括了Spring核心依赖） --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-webmvc<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.3.18<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>Spring AOP依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/org.springframework/spring-aspects --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-aspects<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.3.15<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>Spring与MyBatis整合依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/org.mybatis/mybatis-spring --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.mybatis<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis-spring<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.0.6<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>添加项目对JSP、Servlet、JSTL等的支持</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- servlet依赖 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>javax.servlet<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>javax.servlet-api<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.0.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">scope</span>&gt;</span>provided<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- jsp依赖 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/javax.servlet.jsp/jsp-api --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>javax.servlet.jsp<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jsp-api<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">scope</span>&gt;</span>provided<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- JSTL --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/javax.servlet/jstl --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>javax.servlet<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jstl<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>Jackson插件依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.fasterxml.jackson.core<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jackson-databind<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.13.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.fasterxml.jackson.core<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jackson-core<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.13.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.fasterxml.jackson.core<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jackson-annotations<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.13.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>poi依赖（用于导出excel等办公文件）</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/org.apache.poi/poi --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.poi<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>poi<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.17<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>fileupload依赖（用于文件上传）</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/org.apache.poi/poi --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.poi<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>poi<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.17<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>Log4j依赖（日志）</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.logging.log4j<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>log4j-core<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.17.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.logging.log4j<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>log4j-api<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.17.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-jcl --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.logging.log4j<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>log4j-jcl<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.17.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="4-3-添加配置文件"><a href="#4-3-添加配置文件" class="headerlink" title="4.3 添加配置文件"></a>4.3 添加配置文件</h3><p>创建配置文件，用于后续的各项配置。</p>
+<ol>
+<li><p>mybatis（<code>mybatis-config.xml</code>）</p>
+</li>
+<li><p>spring（<code>applicationContext-datasource.xml</code>、<code>applicationContext.xml</code>）</p>
+<p><code>applicationContext-datasource.xml</code>文件主要关于数据库，即整合Mybatis（<strong>负责扫描mapper</strong>）：</p>
+<ol>
+<li>配置数据源</li>
+<li>配置SqlSessionFactory</li>
+<li>mapper注解扫描器配置</li>
+<li>配置事务管理器</li>
+<li>配置事务</li>
+</ol>
+<p><code>applicationContext.xml</code>是Spring总配置文件，用于导入其他Spring子配置文件、<strong>扫描Service</strong>等等。</p>
+<p>这里为了方便，将Spring配置文件分为若干个子文件。</p>
+</li>
+<li><p>sprinbmvc（<code>applicationContext-mvc.xml</code>）</p>
+<p>该文件主要<strong>负责扫描Controller</strong>。</p>
+</li>
+<li><p><code>web.xml</code></p>
+<p>该文件是web项目的核心配置，和上述框架没关系。负责web项目启动的时候一些配置、加载框架配置文件（加载applicationContext.xml监听器、SpringMVC核心调度器）、字符过滤器等等。</p>
+</li>
+<li><p><code>pom.xml</code></p>
+<p>在该文件中设置maven对配置文件的编译选项，即将资源文件编译到指定的类路径目录下面。</p>
+</li>
+</ol>
+<h3 id="4-4-添加资源文件"><a href="#4-4-添加资源文件" class="headerlink" title="4.4 添加资源文件"></a>4.4 添加资源文件</h3><p>资源文件主要是前端页面以及涉及到的图片、js等等。资源文件可根据不同的功能存放在不同的文件夹下。注意，整个项目分为<strong>系统功能</strong>和<strong>业务功能</strong>两部分。</p>
+<p>注意，一般情况下，资源文件和<code>WEB-INF</code>平级，都在webapp目录下，而<code>WEB-INF</code>里面是不可通过URL访问到。（对于一些重要的页面，需要把页面放到<code>WEB-INF</code>下面，通过其他页面处理请求Controller（增加账号验证）来转发到该页面）。</p>
+<ol>
+<li>为了更加安全，统一将需要保护的页面资源文件放置到<code>WEB-INF</code>里面的某个目录下，如<code>pages</code>。</li>
+<li>对于js、css等公开数据，可直接放到<code>webapp</code>下面。因为这些资源都是页面引用的，如果放到<code>WEB-INF</code>下面，就会导致在引用的时候，还需要通过Controller来访问，比较麻烦。</li>
+</ol>
+<h2 id="5-功能实现"><a href="#5-功能实现" class="headerlink" title="5. 功能实现"></a>5. 功能实现</h2><p>一个项目比较复杂，有很多个功能。但是应该先做哪些呢？<strong>先做没有依赖的功能，也就是独立的功能。</strong>首先是业务功能是依赖于系统功能的。因为业务功能需要账号，因此需要先做系统功能。</p>
+<h3 id="5-1-系统功能"><a href="#5-1-系统功能" class="headerlink" title="5.1 系统功能"></a>5.1 系统功能</h3><h3 id="5-2-业务功能"><a href="#5-2-业务功能" class="headerlink" title="5.2 业务功能"></a>5.2 业务功能</h3>
                 
             </div>
             <hr/>
@@ -1106,7 +1261,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">326.6k</span>&nbsp;字
+                class="white-color">382.1k</span>&nbsp;字
             
             
             
