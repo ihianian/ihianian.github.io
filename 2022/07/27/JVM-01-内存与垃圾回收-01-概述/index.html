@@ -1,0 +1,1346 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="JVM_01_内存与垃圾回收_01_概述, ihianian">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>JVM_01_内存与垃圾回收_01_概述 | ihianian</title>
+    <link rel="icon" type="image/png" href="/header.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/header.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">ihianian</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/404" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/404" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/header.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">ihianian</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/404" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/404" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/blinkfox/hexo-theme-matery" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/blinkfox/hexo-theme-matery" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">JVM_01_内存与垃圾回收_01_概述</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/JVM/">
+                                <span class="chip bg-color">JVM</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2022-07-27
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2022-07-30
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    4.2k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    15 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p>从本文开始介绍JVM。</p>
+<h2 id="1-Java和JVM简介"><a href="#1-Java和JVM简介" class="headerlink" title="1. Java和JVM简介"></a>1. Java和JVM简介</h2><p>前面学到的Java基本语法以及各种Java框架，其实底层都离不开JVM，Java程序是基于JVM运行的，使得无需考虑操作系统，相比于C/C++来说，正是JVM的存在，使得Java程序可以跨平台运行【本质上就是无论哪种操作系统，只要安装了JVM，Java程序都可运行。不过，不同操作系统的JVM，是不同的。换句话说，JVM的存在，使得程序员可以不同考虑操作系统之间的差异，<strong>一次编译，到处运行</strong>】。</p>
+<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJVM%5CJVM_01%5Cjvm_001.png" alt="image-20220727153034678"></p>
+<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJVM%5CJVM_01%5Cjvm_003.png" alt="image-20220727163305917"></p>
+<p>本科阶段学习过汇编语言，很容易理解，编程语言随着计算机的发展，逐渐产生了适用于各种业务的专属语言，这些语言，毫无意外，都是方便上手学习，不像汇编、C/C++这些再提供对操作系统硬件方面的接口。这是为什么呢？因为各个时代，计算机有着不同的发展，早期，内存是瓶颈，所以程序对内存的占用有着严格限制。后来，内存技术的提升，使得内存不再那么重要，因此，完全可以基于C/C++编写出更加适用于人类学习上手使用的语言。比如Java、Python等等。从一定程度上说，语言就是人与计算机沟通的桥梁，语言越高级，人类就越容易理解，容易上手。但是随之而来的是，计算机就越不容易理解。而无论什么高级语言，最终都是会转换成机器指令，让计算机执行这些指令。语言越高级，翻译成机器指令也就越繁琐，效率也就越低，也就越不容易充分利用计算机硬件。</p>
+<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJVM%5CJVM_01%5Cjvm_002.png" alt="image-20220727154318798"></p>
+<p>因此说，后期程序优化的时候，优化的就是效率，除了架构方面，还有就是硬盘、缓存、内存之间数据和业务需求之间的关系等等。JVM则是介于Java程序和操作系统之间的一层程序，JVM会将Java程序翻译成机器指令，使其可以运行。另外，JVM会进行垃圾回收等一些涉及到程序效率方面的工作。</p>
+<p>参考文档：<a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/specs/index.html">Java SE Specifications (oracle.com)</a>，里面有各个版本的语言规范和虚拟机规范。<strong>注意，这里的规范，指的就是标准，规则，比如计算机网络中的RFC1035等各种规范。不是具体的语言和虚拟机实现。</strong>因此说，对于某种规范，每个人都可以自己根据规范实现一种版本的语言或者某个版本的虚拟机。比如在Oracle官网下载的JDK中，Oracle实现的虚拟机叫做Hotspot。这是人家官方自己实现的。当然，除了这种之外，其他公司也有自己实现的虚拟机【按照官方同一种规范】。</p>
+<h3 id="1-1-Java历史进程"><a href="#1-1-Java历史进程" class="headerlink" title="1.1 Java历史进程"></a>1.1 Java历史进程</h3><p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJVM%5CJVM_01%5Cjvm_005.png" alt="image-20220727174304483"></p>
+<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJVM%5CJVM_01%5Cjvm_006.png" alt="image-20220727174832846"></p>
+<p>在2018年，调整JDK授权许可，即此时出现了两个版本的JDK：OpenJDK和OracleJDK。</p>
+<ul>
+<li>OpenJDK：仅6个月的维护期，超出维护期之后，如果出现bug，只能安装最新版本。（基于GNU的GPL协议，免费）</li>
+<li>OracleJDK：长期维护（基于OTN协议，商用付费，个人免费）</li>
+<li>除此之外，二者几乎没什么太大的区别。</li>
+</ul>
+<p>其中，JDK8和JDK11都是LTS版本，即long-term support，即长期维护的版本，出现了bug会及时修复。</p>
+<h2 id="2-虚拟机和Java虚拟机"><a href="#2-虚拟机和Java虚拟机" class="headerlink" title="2. 虚拟机和Java虚拟机"></a>2. 虚拟机和Java虚拟机</h2><h3 id="2-1-Java虚拟机"><a href="#2-1-Java虚拟机" class="headerlink" title="2.1 Java虚拟机"></a>2.1 Java虚拟机</h3><p>摘自JVM规范：</p>
+<blockquote>
+<p>The  Java  Virtual  Machine  is  the  cornerstone  of  the  Java  platform.  It  is  the component of the technology responsible for its hardware- and operating system-independence, the small size of its compiled code, and its ability to protect users from malicious programs.<br>The Java Virtual Machine is an abstract computing machine. Like a real computing machine, it has an instruction set and manipulates various memory areas at run time. It  is  reasonably  common  to  implement  a  programming language  using  a  virtual machine; the best-known virtual machine may be the P-Code machine of UCSD Pascal.</p>
+</blockquote>
+<p>Java被称为跨平台语言，这是因为JVM的缘故。其实JVM除了支持Java语言的字节码文件外，还支持Scala、Kotlin等语言的字节码文件，因此说，JVM也可被称为跨语言平台。（<strong>注意，Java虚拟机只是支持上述语言的字节码文件，并不是编译语言源代码，对Java同理。JVM只关心字节码文件，只要给的字节码文件是按照JVM要求的规范格式生成的，那么就支持运行。</strong>）</p>
+<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJVM%5CJVM_01%5Cjvm_004.png" alt="image-20220727171648854"></p>
+<blockquote>
+<p>For  the  sake  of  security,  the  Java  Virtual  Machine  imposes  strong  syntactic  and structural  constraints  on  the  code  in  a  class  file.  However,  any  language  with functionality that can be expressed in terms of a valid class file can be hosted by the Java Virtual Machine. Attracted by a generally available, machine-independent platform, implementors of other languages can turn to the Java Virtual Machine as a delivery vehicle for their languages.</p>
+</blockquote>
+<p>我们平时说的Java字节码文件，指的是用Java语言编译成的字节码。准确的说，其实<strong>任何能在JVM平台上执行的字节码格式都是一样的</strong>，所以统称为：<strong>JVM字节码</strong>。</p>
+<p>不同的编译器，编译出相同的字节码文件，字节码文件也可以在不同的JVM上运行。</p>
+<p>JVM与Java语言并没有必然联系，JVM只与特定的二进制文件格式——Class文件格式所关联。Class文件包含了JVM指令集（或者成为字节码、Bytecodes）和符号表，还有一些其他辅助信息。<strong>只要某种语言源程序可以编译成这种Class文件格式的文件，那么该文件就能在JVM上运行，即JVM就支持该语言。</strong></p>
+<p>只不过，最开始Java语言团队，构建的JVM主要用于Java程序编译后的字节码文件，所以JVM看起来是和Java密切相关的。</p>
+<p>总体来说，Java虚拟机是一台执行字节码的虚拟计算机，它拥有独立的运行机制。换句话说，JVM是运行字节码文件的运行环境，负责装载字节码到其内部，解释/编译为对应平台上（Linux、Windows、Mac）的机器指令执行。JVM主要有以下特点：</p>
+<ol>
+<li>一次编译，到处运行</li>
+<li>自动内存管理</li>
+<li>自动垃圾回收功能</li>
+</ol>
+<p>降低了内存泄露和内存溢出的风险。</p>
+<h3 id="2-2-虚拟机"><a href="#2-2-虚拟机" class="headerlink" title="2.2 虚拟机"></a>2.2 虚拟机</h3><p>虚拟机（Virtual Machine），就是一台虚拟的计算机。它是一款软件，用来执行一系列虚拟计算机指令。大体上，虚拟机可以分为系统虚拟机和程序虚拟机。</p>
+<ul>
+<li>Virtual Box、VMWare就属于系统虚拟机，他们完全是对物理计算机的仿真，提供了一个可运行完整操作系统的软件平台。</li>
+<li>程序虚拟机的典型代表就是Java虚拟机，它专门为执行单个计算机程序而设计，在Java虚拟机中执行的指令，我们成为Java字节码指令。</li>
+</ul>
+<p><strong>无论是系统虚拟机还是程序虚拟机，在上面运行的软件都被限制于虚拟机提供的资源中</strong>。<em>因此，个人认为，JVM调优似乎就是如何合理地运用JVM所提供的资源，高效利用资源。</em>JVM</p>
+<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJVM%5CJVM_01%5Cjvm_007.png" alt="image-20220727203232450"></p>
+<p>Java程序先通过编译器编译成字节码文件（典型的编译器就是javac，前端编译器），然后通过JVM中的后端编译器解释运行。之前学习的内容是通过Java API来编写Java程序，现在就是学习底层JVM是如何解释运行的。</p>
+<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJVM%5CJVM_01%5Cjvm_008.png" alt="image-20220727203557837"></p>
+<h2 id="3-JVM整体结构"><a href="#3-JVM整体结构" class="headerlink" title="3. JVM整体结构"></a>3. JVM整体结构</h2><p>前面提到过，针对JVM规范，现在有很多种JVM，本文主要针对Hotspot虚拟机。Hotspot虚拟机是目前市面上高性能虚拟机的代表作之一。它采用解释器与即时编译器并存的架构。在今天，Java程序的运行性能早已脱胎换股，已经达到了和C/C++程序一较高下的地步。</p>
+<p>整体内存结构图如下所示：</p>
+<ol>
+<li><p>上层（类加载子系统/类装载器子系统）</p>
+<p>将class字节码文件生成一个大的Class对象。加载、链接、初始化。</p>
+</li>
+<li><p>中层（运行时数据区）</p>
+<p>方法区、堆、栈（Java栈/虚拟机栈、本地方法栈）、程序计数器（PC寄存器）。<strong>多线程共享方法区和堆。剩余三个，每个线程单独保留一份。</strong></p>
+</li>
+<li><p>下层（执行引擎）</p>
+<p>解释运行（解释器、JIT编译器（后端）、垃圾回收器等等）。执行引擎就是将字节码文件翻译成机器指令。</p>
+</li>
+</ol>
+<blockquote>
+<p>总体上说，最重要的是类加载子系统和执行引擎。通过类加载子系统获取到class文件（程序）的类的信息（常量、变量、方法等等），将这些内容有组织地分配在内存中（运行时数据区）。执行引擎则是逐条解释指令，执行程序。</p>
+</blockquote>
+<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJVM%5CJVM_01%5Cjvm_009.png" alt="image-20220727204101270"></p>
+<h2 id="4-Java代码执行流程"><a href="#4-Java代码执行流程" class="headerlink" title="4. Java代码执行流程"></a>4. Java代码执行流程</h2><p>有前面可以知道，通过编译器【编译原理】，将Java源码编译成字节码文件，然后通过JVM翻译成机器指令，调用操作系统执行命令。</p>
+<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJVM%5CJVM_01%5Cjvm_010.png" alt="image-20220727213942602"></p>
+<h2 id="5-JVM的架构模型（了解，涉及到本科的计组和汇编）"><a href="#5-JVM的架构模型（了解，涉及到本科的计组和汇编）" class="headerlink" title="5. JVM的架构模型（了解，涉及到本科的计组和汇编）"></a>5. JVM的架构模型（了解，涉及到本科的计组和汇编）</h2><p>Java编译器输入的指令流基本上是一种<strong>基于栈的指令集架构</strong>，另外一种指令集架构则是<strong>基于寄存器的指令集架构</strong>。Hotspot虚拟机是基于栈的指令集架构。</p>
+<p>具体来说，这两种架构之间的区别：</p>
+<ol>
+<li>基于栈式架构的特点<ol>
+<li>设计和实现更简单，适用于资源受限的系统；</li>
+<li>避开了寄存器的分配难题：使用零地址指令方式分配。</li>
+<li>指令流中的指令大部分是零地址指令，其执行过程依赖于栈。指令集更小【但是完成同样的操作，用到的指令数更多】，编译器容易实现。</li>
+<li>不需要硬件支持，可移植性更好，更好实现跨平台</li>
+</ol>
+</li>
+<li>基于寄存器架构的特点<ol>
+<li>典型的应用是X86的二进制指令集：比如传统的PC以及Android的Davlik虚拟机。</li>
+<li>指令集架构完全依赖硬件，可移植性差</li>
+<li>性能优秀和执行更高效</li>
+<li>花费更少的指令去完成一项操作</li>
+<li>在大部分情况下，基于寄存器架构的指令集往往都以一地址指令、二地址指令和三地址指令为主，而基于栈式结构的指令集却是以零地址指令为主。</li>
+</ol>
+</li>
+</ol>
+<p>总体上来说，由于跨平台性的设计，Java的指令都是依据栈来设计的。<strong>不同平台CPU架构不同，所以不能设计为基于寄存器的</strong>。优点是跨平台，指令集小，编译器容易实现，缺点是性能下降，实现同样的功能需要更多的指令。</p>
+<h2 id="6-JVM的生命周期"><a href="#6-JVM的生命周期" class="headerlink" title="6. JVM的生命周期"></a>6. JVM的生命周期</h2><h3 id="6-1-启动"><a href="#6-1-启动" class="headerlink" title="6.1 启动"></a>6.1 启动</h3><p>Java虚拟机的启动是通过<strong>引导类加载器</strong>（bootstrap class loader）创建的一个<strong>初始类</strong>（initial class）来完成的，这个类是由虚拟机的具体实现（即哪个虚拟机，因为规范只是规定了启动流程，具体的实现由实现人自己决定，如Hotspot）指定的。</p>
+<p>即运行程序，需要加载这个类，而这个类是有父类的（最终父类为Object），不同的父类其所用的类加载器是不同的，比如自定义类、Object类等等，这些类采用不同的类加载器。其实就是某个类需要依赖另一个类，而最根本的那个类就是需要JVM创建一个初始类，这时候通过引导类加载器加载。【似乎可以认为，一个程序就会对应一个JVM】</p>
+<h3 id="6-2-执行"><a href="#6-2-执行" class="headerlink" title="6.2 执行"></a>6.2 执行</h3><p>一个运行中的Java虚拟机有着一个清晰的任务：执行Java程序。程序开始执行时他才运行，程序结束时他就停止了。执行一个所谓的Java程序的时候，真真正正在执行的是一个叫做Java虚拟机的进程。</p>
+<h3 id="6-3-退出"><a href="#6-3-退出" class="headerlink" title="6.3 退出"></a>6.3 退出</h3><p>虚拟机退出有如下几种情况：</p>
+<ul>
+<li>程序正常执行结束</li>
+<li>程序在执行过程中遇到了异常或错误而异常终止</li>
+<li>由于操作系统出现错误而导致Java虚拟机进程终止</li>
+<li>某线程调用Runtime类或System类的exit方法，或Runtime类的halt方法，并且Java安全管理器也允许这次exit或halt操作。</li>
+<li>除此之外，JNI（Java Native Interface）规范描述了用JNI Invocation API来加载或卸载Java虚拟机时，Java虚拟机的退出情况。</li>
+</ul>
+<h2 id="7-JVM的发展历程"><a href="#7-JVM的发展历程" class="headerlink" title="7. JVM的发展历程"></a>7. JVM的发展历程</h2><h3 id="7-1-Sun-Classic-VM"><a href="#7-1-Sun-Classic-VM" class="headerlink" title="7.1 Sun Classic VM"></a>7.1 Sun Classic VM</h3><p>早在1996年Java1.0版本的时候，Sun公司发布了一款名为Sun Classic VM的Java虚拟机，它同时也是世界上第一款商用的Java虚拟机，JDK1.4时完全被淘汰。</p>
+<p>这款虚拟机内部只提供解释器。如果使用JIT编译器，就需要进行外挂。但是一旦使用了JIT编译器，JIT就会接管虚拟机的执行系统。解释器就不再工作。解释器和编译器不能配合工作。</p>
+<p>现在Hotspot内置了此虚拟机。<strong>解释器的效率比较低，如果单纯采用解释器，程序总体上效率较低。而JIT即时编译器，如果发现某段代码反复执行，那么就会将其翻译成机器指令，缓存下来。方便后续运行此段代码时，直接运行机器指令即可。从而提升效率。</strong></p>
+<p>但是JIT翻译时，需要暂停时间，导致时间开销比较大，所以既不能翻译代码，缓存起来。也不能不翻译，所以只能翻译一部分重复执行的代码。<strong>最开始，Java程序是比C/C++程序慢的，但是经过这么多年发展，经过JIT的加入，Java程序运行效率已经很高了。</strong></p>
+<h3 id="7-2-Exact-VM"><a href="#7-2-Exact-VM" class="headerlink" title="7.2 Exact VM"></a>7.2 Exact VM</h3><p>为了解决上面虚拟机的问题，JDK1.2时，sun提供了此虚拟机。</p>
+<p>Exact Memory Management（Non-Conservative/Accurate Memory Management），虚拟机可以知道内存中某个位置的数据具体是什么类型。</p>
+<p>具备现代高性能虚拟机的雏形：</p>
+<ul>
+<li>热点代码探测</li>
+<li>编译器与解释器混合工作模式</li>
+</ul>
+<p>该虚拟机只在Solaris平台短暂使用，其他平台上还是classic VM，最终被Hotspot虚拟机替换。</p>
+<h3 id="7-3-HotSpot-VM（重点，三大商用VM之一）"><a href="#7-3-HotSpot-VM（重点，三大商用VM之一）" class="headerlink" title="7.3 HotSpot VM（重点，三大商用VM之一）"></a>7.3 HotSpot VM（重点，三大商用VM之一）</h3><p>HotSpot历史：</p>
+<ul>
+<li>最初由一家名为“Longview Technologies”的小公司设计</li>
+<li>1997年，此公司被Sun收购；2009年，Sun公司被甲骨文收购</li>
+<li>JDK1.3时，HotSpot VM称为默认虚拟机</li>
+</ul>
+<p>目前HotSpot占有绝对的市场地位，称霸武林。</p>
+<ul>
+<li>不管是现在仍在广泛使用的JDK6，还是使用比例较多的JDK8，默认的虚拟机都是HotSpot</li>
+<li>Sun/Oracle JDK和OpenJDK的默认虚拟机</li>
+<li>因此，后续文章中介绍的概念机制等，基本上默认都是HotSpot。（比如其他两个商用虚拟机都没有方法区的概念）</li>
+</ul>
+<p>从服务器、桌面到移动端、嵌入式都有应用。</p>
+<p><strong>名称中的HotSpot指的就是他的热点代码探测技术</strong>：</p>
+<ul>
+<li>通过计数器找到最具编译价值代码，触发即时编译或栈上替换。</li>
+<li>通过即时编译器与解释器协同工作，在最优化的程序响应时间（解释器）与最佳执行性能（即时编译器）取得平衡。</li>
+</ul>
+<h3 id="7-4-JRockit（三大商用VM之一）"><a href="#7-4-JRockit（三大商用VM之一）" class="headerlink" title="7.4 JRockit（三大商用VM之一）"></a>7.4 JRockit（三大商用VM之一）</h3><p>该虚拟机专注于服务器端应用。即可以不太关注程序启动速度，因此JRockit内部不包含解释器实现，全部代码都靠即时编译器编译后执行。</p>
+<p>大量的行业基准测试显示，JRockit JVM是世界上最快的JVM。</p>
+<p>目前Oracle已经将HotSpot和JRockit进行了简单整合。</p>
+<h3 id="7-5-J9（三大商用VM之一）"><a href="#7-5-J9（三大商用VM之一）" class="headerlink" title="7.5 J9（三大商用VM之一）"></a>7.5 J9（三大商用VM之一）</h3><p>和HotSpot类似，在服务端、桌面应用以及嵌入式等多领域都有应用。</p>
+<h3 id="7-6-KVM和CDC-CLDC-HotSpot"><a href="#7-6-KVM和CDC-CLDC-HotSpot" class="headerlink" title="7.6 KVM和CDC/CLDC HotSpot"></a>7.6 KVM和CDC/CLDC HotSpot</h3><p>在Java ME（移动端），曾经开发了两款虚拟机CDC/CLDC HotSpot、Implementation VM。现在随着移动端被Android、IOS占有，Java ME基本上退出了市场。KVM（Kilobyte）是CLDC-HI早期产品，现在在低端设备上有一定的市场。</p>
+<h3 id="7-7-其他"><a href="#7-7-其他" class="headerlink" title="7.7 其他"></a>7.7 其他</h3><p>上面几个都是通用的虚拟机。Azul VM、BEA Liquid VM、Zing JVM等几个都是与硬件绑定的虚拟机，即对硬件做了自适应。在特殊硬件上，效率较高。</p>
+<p>另外，Apache harmony、Microsoft JVM等，都是曾经比较优秀的JVM。此外，国内的TaobaoJVM（AliJVM），也是比较优秀的JVM。</p>
+<h3 id="7-8-非JVM的VM"><a href="#7-8-非JVM的VM" class="headerlink" title="7.8 非JVM的VM"></a>7.8 非JVM的VM</h3><p>Dalvik VM应用于Android系统，只能成为虚拟机，不能被称为Java虚拟机，因为没有遵守JVM规范，因此不能直接执行class文件。</p>
+<h2 id="8-备注"><a href="#8-备注" class="headerlink" title="8. 备注"></a>8. 备注</h2><p><em>参考B站《尚硅谷》。</em></p>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">浮云</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://ihianian.github.io/2022/07/27/JVM-01-%E5%86%85%E5%AD%98%E4%B8%8E%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6-01-%E6%A6%82%E8%BF%B0/">https://ihianian.github.io/2022/07/27/JVM-01-%E5%86%85%E5%AD%98%E4%B8%8E%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6-01-%E6%A6%82%E8%BF%B0/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">浮云</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/JVM/">
+                                    <span class="chip bg-color">JVM</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/null" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/null" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2022/07/27/JVM-02-%E5%AD%97%E8%8A%82%E7%A0%81%E4%B8%8E%E7%B1%BB%E5%8A%A0%E8%BD%BD-01-%E6%A6%82%E8%BF%B0/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="JVM_02_字节码与类加载_01_概述">
+                        
+                        <span class="card-title">JVM_02_字节码与类加载_01_概述</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-07-27
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            hianian
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/07/21/project-03-%E5%9F%BA%E4%BA%8ESpringBoot%E7%9A%84%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="project_03_基于SpringBoot的个人博客系统">
+                        
+                        <span class="card-title">project_03_基于SpringBoot的个人博客系统</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-07-21
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            浮云
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/project/">
+                        <span class="chip bg-color">project</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2021-2023</span>
+            
+            <span id="year">2021</span>
+            <a href="/about" target="_blank">hianian</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">600.8k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+	
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

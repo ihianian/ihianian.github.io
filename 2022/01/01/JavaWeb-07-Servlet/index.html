@@ -454,14 +454,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-01-25
+                    2022-08-25
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    26.2k
+                    26.3k
                 </div>
                 
 
@@ -1211,7 +1211,8 @@
 <ul>
 <li>转发会存在浏览器的刷新问题，因为转发不会修改浏览器的URL，这时候操作完之后，如果在浏览器端刷新，那么就相当于再次发送了请求（发送的请求是重定向之前的请求）。此时如果该请求涉及到数据库操作，比如新增一条记录，那么这时候，每刷新一次就会新增一次记录，<strong>比如上述的新增操作，在新增成功后，再次刷新，服务器端就会返回主键重复异常</strong>。而重定向则不会，因为重定向已经将浏览器的URL修改为操作之后的URL了，即使再刷新，请求的仍然是重定向之后的URL，不涉及到数据库操作。</li>
 </ul>
-<h2 id="15-Servlet线程安全问题"><a href="#15-Servlet线程安全问题" class="headerlink" title="15. Servlet线程安全问题"></a>15. Servlet线程安全问题</h2><p><strong>Servlet是单实例多线程环境下运行的</strong>，什么时候存在线程安全问题呢？</p>
+<h2 id="15-Servlet线程安全问题"><a href="#15-Servlet线程安全问题" class="headerlink" title="15. Servlet线程安全问题"></a>15. Servlet线程安全问题</h2><p><strong>注意，客户端的每一次Http请求，服务器都会分配一个线程处理该请求，而该请求在返回给客户端之前，这个请求【这个线程】时候不会结束的。后续在框架中，如果在其他类中不方便获取请求中的某个参数时，可以通过线程对象ThreadLocal来拿到。</strong></p>
+<p><strong>Servlet是单实例多线程环境下运行的</strong>，什么时候存在线程安全问题呢？</p>
 <ul>
 <li>多线程并发</li>
 <li>有共享的数据</li>
@@ -2078,7 +2079,7 @@
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2021-2022</span>
+                <span id="year">2021-2023</span>
             
             <span id="year">2021</span>
             <a href="/about" target="_blank">hianian</a>
@@ -2087,7 +2088,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">382.1k</span>&nbsp;字
+                class="white-color">600.8k</span>&nbsp;字
             
             
             

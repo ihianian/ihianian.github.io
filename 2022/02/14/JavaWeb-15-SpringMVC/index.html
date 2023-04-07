@@ -454,14 +454,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-05-05
+                    2022-07-04
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    18.3k
+                    18.5k
                 </div>
                 
 
@@ -701,7 +701,7 @@
 <li>无返回值void</li>
 <li>自定义类型对象（Object）</li>
 </ol>
-<p>可以根据不同的情况，使用不同的返回值。</p>
+<p>可以根据不同的情况，使用不同的返回值。<strong>本质上说，这里的返回值只是让MVC框架知道返回值类型，方便框架进一步转换操作。其实我们也可以不借助框架，自己通过response的输出流来返回值。 比如返回一个文件【用于文件下载】。</strong></p>
 <h4 id="2-3-1-返回ModelAndView"><a href="#2-3-1-返回ModelAndView" class="headerlink" title="2.3.1 返回ModelAndView"></a>2.3.1 返回ModelAndView</h4><p>若处理器方法处理完后，<strong>需要跳转到其他资源，并且需要在跳转的资源之间传递数据</strong>，此时处理器方法返回ModelAndView类型比较好。当然，若要返回ModelAndView，则处理器方法中需要定义ModelAndView。</p>
 <p>在使用时，若该处理器方法只是进行跳转而不传递数据，或者只是传递数据而不向任何资源跳转（如对页面的AJAX异步响应），此时若返回ModelAndView，则将总有一部分是多余的，要么是Model多余，要么是View多余。此时返回ModelAndView则不太合适。</p>
 <h4 id="2-3-2-返回String"><a href="#2-3-2-返回String" class="headerlink" title="2.3.2 返回String"></a>2.3.2 返回String</h4><p><strong>如果只需要视图之间的跳转，而不需要传递数据，那么可以采用String返回值类型</strong>。处理器方法返回的字符串可以指定逻辑视图名（或者物理视图地址），通过视图解析器可以将其转换为物理视图地址。</p>
@@ -720,8 +720,9 @@
 <li>将JSON格式数据通过HttpServletResponse输出到用户端。</li>
 </ol>
 <p>那么其中2、3步骤是通用的，关键在于第一部分。所以可以进一步简化上述操作，由框架来执行2、3步骤，见2.3.4。</p>
+<p><strong>如果是文件下载，即返回值是文件类型，可以设置为void类型，自己在内部通过response来通过输出流来设置。</strong></p>
 <h4 id="2-3-4-返回Object"><a href="#2-3-4-返回Object" class="headerlink" title="2.3.4 返回Object"></a>2.3.4 返回Object</h4><p>处理器方法也可以返回Object对象。这个Object可以是Integer、String、自定义对象、Map、List等等。<strong>但是返回的对象不是作为逻辑视图出现的，而是作为直接在页面显示的数据出现的。主要处理AJAX请求。返回对象，需要使用@ResponseBody注解，将转换后的JSON数据放入到响应体中。</strong></p>
-<p>可以看出来，这里的Object不是真正的Object，而是Object所包括的任意数据类型。响应AJAX（<strong>针对json格式数据</strong>）的相关步骤如下所示：</p>
+<p>可以看出来，这里的Object不是真正的Object，而是Object所包括的任意数据类型【就是说，虽然返回值类型是Object，但是可以返回任意类型的对象】。响应AJAX（<strong>针对json格式数据</strong>）的相关步骤如下所示：</p>
 <ol>
 <li>加入处理json的工具库的依赖，springmvc默认使用jackson。</li>
 <li>在springmvc的配置文件中加入&lt;mvc:annotation-driven&gt;注解驱动，功能负责上面的第二步骤。</li>
@@ -762,7 +763,7 @@
 </blockquote>
 <p><strong>有时候，我们返回的不是一个对象，而是对象集合List、Map等集合，那么此时该怎么做呢？</strong></p>
 <p>其实步骤和上面一样，框架会先将List中的每个对象转化为json对象，再将json对象封装为json数组。（不需要我们进行额外操作）</p>
-<p>另外，Object类型也可以是String，因为有了注解@ResponseBody修饰，此时String不再表示视图，而是数据。<strong>注意，此时返回的类型就不是json格式了，在用户端接收的时候需要注意。</strong>此时可能出现乱码问题，可以在@ResultMapping注解中加入<code>produces=&quot;test/plain;charset=utf-8&quot;</code>属性。<strong>注意，这里是通过专有的渠道返回给AJAX，并不走过滤器，所以过滤器对此时的乱码无效。</strong></p>
+<p>另外，Object类型也可以是String，因为有了注解@ResponseBody修饰，此时String不再表示视图，而是数据。<strong>注意，此时返回的类型就不是json格式了，在用户端接收的时候需要注意。</strong>此时可能出现乱码问题，可以在@RequestMapping注解中加入<code>produces=&quot;test/plain;charset=utf-8&quot;</code>属性。<strong>注意，这里是通过专有的渠道返回给AJAX，并不走过滤器，所以过滤器对此时的乱码无效。</strong></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(value = &quot;/resutrnStudentJsonArray.do&quot;)</span></span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">doStudentJsonObjectArray</span><span class="params">(String name, Integer age)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> name + <span class="string">&quot;--&gt;是&quot;</span> + age;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p><strong>这部分主要讲解了返回Object类型数据的相关处理，如何转换成json数据类型，如何接收等等。这部分主要用于处理ajax异步请求，比void更加方便。</strong></p>
@@ -872,6 +873,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="meta">@RequestMapping(value = &quot;/user&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping(value = &quot;/doForward.do&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ModelAndView <span class="title">doSome</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        ModelAndView mav = <span class="keyword">new</span> ModelAndView();</span><br><span class="line"></span><br><span class="line">        mav.addObject(<span class="string">&quot;msg&quot;</span>, <span class="string">&quot;转到到本页面&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//        mav.setViewName(&quot;show&quot;);  // 这里是隐式转发</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 显式转发，注意，此时可以转发到WEB-INF目录下的资源</span></span><br><span class="line">        mav.setViewName(<span class="string">&quot;forward: WEB-INF/view/show.jsp&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> mav;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h4 id="4-1-2-重定向"><a href="#4-1-2-重定向" class="headerlink" title="4.1.2 重定向"></a>4.1.2 重定向</h4><p>重定向redirect的语法为：<code>setViewName(&quot;redirect: 视图文件的完整路径&quot;)</code>，一些细节和forward一样。<strong>注意，因为重定向是两次请求，两次request作用域，因此重定向后的页面使用EL表达式从request作用域是取不到数据的。框架为了实现两次请求中传递数据，提供了一个功能，就是将ModelAndView中的数据以get请求形式附加到重定向的URL中，此时可以先将第一次的请求数据加入到ModelAndView中，然后在重定向页面中利用EL表达式从URL中取数据。</strong></p>
+<p>如果返回值是String类型，也可以<code>return &quot;redirect: 视图文件的完整路径&quot;</code>。</p>
 <p><strong>注意，重定向仍然不能访问WEB-INF目录下的资源。</strong></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="meta">@RequestMapping(value = &quot;/user&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping(value = &quot;/doRedirect.do&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ModelAndView <span class="title">doRedirect</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        ModelAndView mav = <span class="keyword">new</span> ModelAndView();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 注意，addObject是将数据放到了request作用域中，而重定向是客户端再次发起请求，两次不是同一个作用域，</span></span><br><span class="line">        <span class="comment">// 在hello.jsp中，使用转发页面中的EL表达式只能从request作用域中取数据（而重定向是两次请求request作用域）</span></span><br><span class="line">        <span class="comment">// 因此在重定向的页面中使用EL表达式是请求不到第一次请求的数据的。</span></span><br><span class="line">        <span class="comment">// 但是，框架会提供一个功能，就是将本次addObject中添加的数据，作为请求的参数附加到重定向的再次请求中。</span></span><br><span class="line">        <span class="comment">// 可以在url中看到，</span></span><br><span class="line">        <span class="comment">// http://localhost:8080/springmvc05/hello.jsp?msg=重定向到本页面</span></span><br><span class="line">        <span class="comment">// 所以这个目的就是为了两次请求之间可以传递数据</span></span><br><span class="line">        <span class="comment">// 注意，需要使用param.EL表达式从url中取数据。</span></span><br><span class="line">        mav.addObject(<span class="string">&quot;msg&quot;</span>, <span class="string">&quot;重定向到本页面&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 重定向</span></span><br><span class="line">        mav.setViewName(<span class="string">&quot;redirect:/hello.jsp&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> mav;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -1519,7 +1521,7 @@
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2021-2022</span>
+                <span id="year">2021-2023</span>
             
             <span id="year">2021</span>
             <a href="/about" target="_blank">hianian</a>
@@ -1528,7 +1530,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">382.1k</span>&nbsp;字
+                class="white-color">600.8k</span>&nbsp;字
             
             
             

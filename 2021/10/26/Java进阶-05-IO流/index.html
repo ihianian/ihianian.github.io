@@ -454,21 +454,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-11-02
+                    2022-07-08
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    41
+                    3.5k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    14 分
                 </div>
                 
 
@@ -489,7 +489,238 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>本文介绍Java中的IO流机制。</p>
-<p>前面提到的数据基本上都是我们提前写好或者等待用户输入的输入，此时</p>
+<h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h2><p>输入就是将数据从硬盘读取到内存中，输出就是将数据从内存传送到硬盘中。其实输入输出就是相对于内存来说的，数据流向内存，就是输入（读）；数据流出内存就是输出（写）。</p>
+<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJava%5CJava_advance%5Cadv_026.png" alt="image-20220707151917660"></p>
+<p>除了上面按照流的方向分为<strong>输入流、输出流</strong>，还可以按照读取方式不同进行分类，如</p>
+<ol>
+<li>一次读取一个字节（一次读取8个二进制位），这种<strong>字节流</strong>是万能的，可以读取任何类型的文件，如视频、音频、文件等等。</li>
+<li>一个读取一个字符，这种<strong>字符流</strong>是为了方便读取普通文本文件而存在的（如txt），不能读取声音、图片等有格式的文件，连word都不能。比如英文字符占1个字节，中文占2个字节。字符流可以区分字符，直接将其读取出来。</li>
+</ol>
+<p>综上所述，流按照方向分为两种，按照读取方式分为两种。此时输入流可分为字节输入流和字符输入流，输出流也分为字节输出流和字符输出流。有如下四大家族【都是抽象类】：</p>
+<table>
+<thead>
+<tr>
+<th>类</th>
+<th>流</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>java.io.InputStream</td>
+<td>字节输入流</td>
+</tr>
+<tr>
+<td>java.io.OutputStream</td>
+<td>字节输出流</td>
+</tr>
+<tr>
+<td>java.io.Reader</td>
+<td>字符输入流</td>
+</tr>
+<tr>
+<td>java.io.Writer</td>
+<td>字符输出流</td>
+</tr>
+</tbody></table>
+<p><em>只要以Stream结尾的，都是字节流；只要以Reader、Writer结尾的都是字符流。</em></p>
+<blockquote>
+<ol>
+<li>上面四个类，都实现了java.io.Closeable接口，都是可关闭的。因此，这些流在使用完毕之后，一定要关闭。可看成是管道，都是占用资源的，需要需要关闭。</li>
+<li>上面的输出流，无论是字节流和字符流，都实现了java.io.Flushable接口，都是可刷新的。输出流在用完之后，一定要刷新，刷新表示将管道中剩余未输出的数据强行输出完，即清空管道。【一般情况下，只有管道满了之后才会自动刷新】。</li>
+</ol>
+</blockquote>
+<p>Java中提供的具体流有如下16个。</p>
+<table>
+<thead>
+<tr>
+<th>类</th>
+<th>流</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>java.io.FileInputStream</td>
+<td>文件专属</td>
+</tr>
+<tr>
+<td>java.io.FileOutputStream</td>
+<td>文件专属</td>
+</tr>
+<tr>
+<td>java.io.FileReader</td>
+<td>文件专属</td>
+</tr>
+<tr>
+<td>java.io.FileWriter</td>
+<td>文件专属</td>
+</tr>
+<tr>
+<td>java.io.BufferedInputStream</td>
+<td>缓冲流专属</td>
+</tr>
+<tr>
+<td>java.io.BufferedOutputStream</td>
+<td>缓冲流专属</td>
+</tr>
+<tr>
+<td>java.io.BufferedReader</td>
+<td>缓冲流专属</td>
+</tr>
+<tr>
+<td>java.io.BufferedWriter</td>
+<td>缓冲流专属</td>
+</tr>
+<tr>
+<td>java.io.DataInputStream</td>
+<td>数据流专属</td>
+</tr>
+<tr>
+<td>java.io.DataOutputStream</td>
+<td>数据流专属</td>
+</tr>
+<tr>
+<td>java.io.ObjectInputStream</td>
+<td>对象专属流</td>
+</tr>
+<tr>
+<td>java.io.ObjectOutputStream</td>
+<td>对象专属流</td>
+</tr>
+<tr>
+<td>java.io.PrintWriter</td>
+<td>标准输出流</td>
+</tr>
+<tr>
+<td>java.io.PrintStream</td>
+<td>标准输出流</td>
+</tr>
+<tr>
+<td>java.io.InputStreamReader</td>
+<td>将字节流转换为字符流（输入）</td>
+</tr>
+<tr>
+<td>java.io.OutputStreamWriter</td>
+<td>将字节流转换为字符流（输出）</td>
+</tr>
+</tbody></table>
+<h2 id="2-文件专属流"><a href="#2-文件专属流" class="headerlink" title="2. 文件专属流"></a>2. 文件专属流</h2><h3 id="2-1-FileInputStream（重点）"><a href="#2-1-FileInputStream（重点）" class="headerlink" title="2.1 FileInputStream（重点）"></a>2.1 FileInputStream（重点）</h3><h4 id="2-1-1-read"><a href="#2-1-1-read" class="headerlink" title="2.1.1 read()"></a>2.1.1 read()</h4><p>文件字节输入流，是万能的，可以读取任意文件。FileInputStream类有一个read方法，一次可读取一个字节。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IOTest01</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        FileInputStream fis = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            fis = <span class="keyword">new</span> FileInputStream(<span class="string">&quot;D:\\others\\study_source\\Java\\test\\src\\io\\test.txt&quot;</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 该方法，读取一个字节，返回读取到的字节的ascii</span></span><br><span class="line">            <span class="comment">// 相当于迭代器，有一个游标</span></span><br><span class="line">            <span class="comment">// 当到达文件结尾时，返回-1</span></span><br><span class="line">            <span class="comment">// 这种一次读取一个字节，效率有点低，大部分时间都浪费在管道中。</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">int</span> read;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">while</span>((read = fis.read()) != -<span class="number">1</span>) &#123;</span><br><span class="line">                System.out.println(read);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 关闭流</span></span><br><span class="line">            <span class="keyword">if</span> (fis != <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    fis.close();</span><br><span class="line">                &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>除了读取一个字节，可传入一个byte数组，一次最多读取byte数组长度的字节数量，效率较高。此时该方法返回值为读取到的字节数量，而读取到的内容则保存在byte数组中。<strong>后面的读取会覆盖数组中前面读取的内容。</strong>如果到文件末尾，那么仍然返回-1。代码如下所示：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">IOTest02</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    public <span class="keyword">static</span> <span class="keyword">void</span> <span class="function"><span class="title">main</span>(<span class="params"><span class="built_in">String</span>[] args</span>)</span> &#123;</span><br><span class="line"></span><br><span class="line">        FileInputStream fis = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            fis = <span class="keyword">new</span> FileInputStream(<span class="string">&quot;D:\\others\\study_source\\Java\\test\\src\\io\\test.txt&quot;</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 此时read保存的值为读取的字节数量，bytes数组存储的是内容</span></span><br><span class="line">            byte[] bytes = <span class="keyword">new</span> byte[<span class="number">10</span>];</span><br><span class="line">            int read;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">while</span>((read = fis.read(bytes)) != -<span class="number">1</span>) &#123;</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 输出读取到的内容</span></span><br><span class="line"><span class="comment">//                for (int i = 0; i &lt; read; i++) &#123;</span></span><br><span class="line"><span class="comment">//                    System.out.print(bytes[i] + &quot;\t&quot;);</span></span><br><span class="line"><span class="comment">//                &#125;</span></span><br><span class="line"><span class="comment">//                System.out.println();</span></span><br><span class="line"></span><br><span class="line">                System.out.println(<span class="keyword">new</span> <span class="built_in">String</span>(bytes, <span class="number">0</span>, read));</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (fis != <span class="literal">null</span>) &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    fis.close();</span><br><span class="line">                &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-1-2-skip"><a href="#2-1-2-skip" class="headerlink" title="2.1.2 skip()"></a>2.1.2 skip()</h4><p>跳过几个字节不读。</p>
+<h4 id="2-2-3-available"><a href="#2-2-3-available" class="headerlink" title="2.2.3 available()"></a>2.2.3 available()</h4><p>返回流中剩余的没有读到的字节数量。</p>
+<h3 id="2-2-FileOutputStream（重点）"><a href="#2-2-FileOutputStream（重点）" class="headerlink" title="2.2 FileOutputStream（重点）"></a>2.2 FileOutputStream（重点）</h3><p>FileOutputStream是字节输出流。</p>
+<h4 id="2-2-1-write"><a href="#2-2-1-write" class="headerlink" title="2.2.1 write()"></a>2.2.1 write()</h4><p>该方法是写入文件，参数是byte数组，也可以是指定byte数组中的指定区间。</p>
+<p><strong>注意，下面方式是将原文件清空再写入。</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IOTest04</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        FileOutputStream fos = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            fos = <span class="keyword">new</span> FileOutputStream(<span class="string">&quot;D:\\others\\study_source\\Java\\test\\src\\io\\testOut2.txt&quot;</span>);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">byte</span>[] bytes = &#123;<span class="number">97</span>, <span class="number">98</span>, <span class="number">99</span>, <span class="number">100</span>&#125;;</span><br><span class="line"></span><br><span class="line">            fos.write(bytes, <span class="number">0</span>, <span class="number">2</span>);</span><br><span class="line">            </span><br><span class="line">            fos.flush();</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (fos != <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    fos.close();</span><br><span class="line">                &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>要想以追加的形式写入内容，则需要在创建输出流对象的时候，传入参数true，表示append为true。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fos = <span class="keyword">new</span> FileOutputStream(<span class="string">&quot;D:\\others\\study_source\\Java\\test\\src\\io\\testOut2.txt&quot;</span>, <span class="keyword">true</span>);</span><br></pre></td></tr></table></figure>
+
+<p>对于字符串等内容，需要将其转换成byte数组，才能写入。<strong>注意，最后输出流要flush。</strong></p>
+<h3 id="2-3-文件拷贝"><a href="#2-3-文件拷贝" class="headerlink" title="2.3 文件拷贝"></a>2.3 文件拷贝</h3><p>可利用输入流读取到内存，然后获取到byte数组，调用输出流，将byte数组的内容输出到文件中【注意，输出流对象以追加形式创建】。</p>
+<p>代码如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IOTest05</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        System.out.println();</span><br><span class="line"></span><br><span class="line">        FileInputStream fis = <span class="keyword">null</span>;</span><br><span class="line">        FileOutputStream fos = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            fis = <span class="keyword">new</span> FileInputStream(<span class="string">&quot;D:\\others\\study_source\\Java\\test\\src\\io\\testOut2.txt&quot;</span>);</span><br><span class="line"></span><br><span class="line">            fos = <span class="keyword">new</span> FileOutputStream(<span class="string">&quot;D:\\others\\study_source\\Java\\test\\src\\io\\testOut3.txt&quot;</span>, <span class="keyword">true</span>);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">byte</span>[] bytes = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">2</span>];</span><br><span class="line">            <span class="keyword">int</span> read;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 循环读写</span></span><br><span class="line">            <span class="keyword">while</span>((read = fis.read(bytes)) != -<span class="number">1</span>) &#123;</span><br><span class="line">                fos.write(bytes, <span class="number">0</span>, read);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            fos.flush();</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (fis != <span class="keyword">null</span>) &#123;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    fis.close();</span><br><span class="line">                &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (fos != <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    fos.close();</span><br><span class="line">                &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-4-FileReader"><a href="#2-4-FileReader" class="headerlink" title="2.4 FileReader"></a>2.4 FileReader</h3><p>文本字符输入流，只能读取<strong>普通文本</strong>。和FileInputStream类似，只不过参数不是byte数组，而是char数组，<strong>每次读取的内容都存储到char数组中</strong>。</p>
+<h3 id="2-5-FileWriter"><a href="#2-5-FileWriter" class="headerlink" title="2.5 FileWriter"></a>2.5 FileWriter</h3><p>文本字符输出流，只能写入<strong>普通文本</strong>。该方法可以写入char数组，也可以是字符串，而无需是byte数组。</p>
+<h2 id="3-缓冲专属流"><a href="#3-缓冲专属流" class="headerlink" title="3. 缓冲专属流"></a>3. 缓冲专属流</h2><h3 id="3-1-BufferedReader"><a href="#3-1-BufferedReader" class="headerlink" title="3.1 BufferedReader"></a>3.1 BufferedReader</h3><p>这种字符输入流，自带缓冲区，在读取的时候，无需再传入数组参数存放读取的内容。可以查看源码，该类内部有一个数组，保存读取的数据。并且读取方法有多种，可直接读取一行【不带换行符】。</p>
+<p>注意，该类创建对象，需要传入Reader对象，而FileReader等就是继承了该抽象类，可作为参数传入。传入的流就是要读取的文件，被称为节点流。而创建的BufferedReader对象，则被称为包装流/处理流。</p>
+<p><strong>注意，关闭的时候只需要关闭包装流即可，因为包装流会关闭节点流。</strong></p>
+<p>另外，因为对于FileInputStream，因为不是Reader类型，不能传入BufferedReader，但是可通过InputStreamReader将FileInputStream转换为Reader类型，然后传入。</p>
+<h3 id="3-2-BufferedWriter"><a href="#3-2-BufferedWriter" class="headerlink" title="3.2 BufferedWriter"></a>3.2 BufferedWriter</h3><p>同样，该类对象创建需要Writer流，FileWriter可作为参数传入。可直接写入字符串。也可利用OutputStreamWriter将OutputStream转换为Writer后传入。</p>
+<h2 id="4-数据流（了解）"><a href="#4-数据流（了解）" class="headerlink" title="4. 数据流（了解）"></a>4. 数据流（了解）</h2><p>这两个流DataInputStream、DataOutputStream是数据专属的流，可将数据连同数据类型一并写入文件。生成的文件不是普通文本文档，用记事本打不开。文件只能由DataInputStream读取文件。</p>
+<h2 id="5-标准输出流（重点）"><a href="#5-标准输出流（重点）" class="headerlink" title="5. 标准输出流（重点）"></a>5. 标准输出流（重点）</h2><p>注意，标准输出流不需要手动关闭。前面最经常使用的语句就是：<code>System.out.println()</code>，那么这个表达式，<code>System.out</code>就是获取到的是PrintStream类型对象，通过该对象调用println方法来实现输出。</p>
+<p>另外，可通过标准输出流来改变JVM的输出流方向，如下所示【日志工具】：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 设置标准输出流不再指向控制台，而是指向log文件。</span></span><br><span class="line">PrintStream ps = <span class="keyword">new</span> PrintStream(<span class="keyword">new</span> FileOutputStream(<span class="string">&quot;D:\\others\\study_source\\Java\\test\\src\\io\\log&quot;</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 修改系统的输出方向为该标准输出流</span></span><br><span class="line">System.setOut(ps);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 再次进行系统输出</span></span><br><span class="line">System.out.println(<span class="string">&quot;hello world&quot;</span>);</span><br><span class="line">System.out.println(<span class="string">&quot;hello kitty&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-对象流（重点，序列化）"><a href="#6-对象流（重点，序列化）" class="headerlink" title="6. 对象流（重点，序列化）"></a>6. 对象流（重点，序列化）</h2><p>我们知道，在Java程序运行过程中，会创建对象，而前面的IO流仅仅是将普通数据存储到文件中，<strong>那能不能将对象存储到硬盘中呢？</strong>当然可以，<strong>将Java对象存储到硬盘的过程称为序列化（Serialize）</strong>，将对象拆分成小部分，每部分都有一个编号，转换成流，输入到硬盘中。将硬盘中的对象数据重新恢复到内存中，使其成为Java对象，这被称为反序列化（DeSerialize）。</p>
+<p><strong>注意，如果一个类要序列化，必须实现Serializable接口。这个接口其实什么方法也没有，只是起到一个标识的作用，当JVM看到这个类实现这个接口后，会对这个类进行特殊待遇，为该类自动生成一个序列化版本号。</strong></p>
+<p>那么序列化版本号有什么用呢？</p>
+<p>ObjectOutputStream类用于序列化，ObjectInputStream类用于反序列化。</p>
+<p>序列化如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IOTest09</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line"></span><br><span class="line">        Student s = <span class="keyword">new</span> Student(<span class="string">&quot;张三&quot;</span>, <span class="number">19</span>, <span class="number">175</span>);</span><br><span class="line"></span><br><span class="line">        ObjectOutputStream oos = <span class="keyword">new</span> ObjectOutputStream(<span class="keyword">new</span> FileOutputStream(<span class="string">&quot;D:\\others\\study_source\\Java\\test\\src\\io\\student&quot;</span>));</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 序列化</span></span><br><span class="line">        oos.writeObject(s);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 刷新</span></span><br><span class="line">        oos.flush();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 关闭</span></span><br><span class="line">        oos.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> height;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">(String name, <span class="keyword">int</span> age, <span class="keyword">int</span> height)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">        <span class="keyword">this</span>.height = height;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAge</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(<span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getHeight</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> height;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setHeight</span><span class="params">(<span class="keyword">int</span> height)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.height = height;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Student&#123;&quot;</span> +</span><br><span class="line">                <span class="string">&quot;name=&#x27;&quot;</span> + name + <span class="string">&#x27;\&#x27;&#x27;</span> +</span><br><span class="line">                <span class="string">&quot;, age=&quot;</span> + age +</span><br><span class="line">                <span class="string">&quot;, height=&quot;</span> + height +</span><br><span class="line">                <span class="string">&#x27;&#125;&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>反序列化如下所示，因为已经实现了toString方法，所以可直接输出，输出的属性和创建的对象是一样的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IOTest10</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        System.out.println();</span><br><span class="line"></span><br><span class="line">        ObjectInputStream ois = <span class="keyword">new</span> ObjectInputStream(<span class="keyword">new</span> FileInputStream(<span class="string">&quot;D:\\others\\study_source\\Java\\test\\src\\io\\student&quot;</span>));</span><br><span class="line"></span><br><span class="line">        Object o = ois.readObject();</span><br><span class="line"></span><br><span class="line">        System.out.println(o);</span><br><span class="line"></span><br><span class="line">        ois.close();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可将对象放入到集合中，直接序列化集合，这样就可一次性序列化多个对象。<strong>另外，如果序列化对象的时候，不希望某个属性值序列化，那么可在该属性上加入transient关键字修饰。之后反序列化的时候获取到的属性值就是null。</strong></p>
+<blockquote>
+<p>注意，本质上说，反序列化时，是依据的class文件。那么如果在反序列化之前，将java文件修改，重新编译之后，生成新的class文件以及新的序列化版本号。反序列化的时候就会依据新的class文件，此时就会反序列化失败，因为两个序列化版本号不一样【java.io.InvalidClassException】。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Exception in thread <span class="string">&quot;main&quot;</span> java.io.InvalidClassException: io.Student; local <span class="class"><span class="keyword">class</span> <span class="title">incompatible</span>: <span class="title">stream</span> <span class="title">classdesc</span> <span class="title">serialVersionUID</span> </span>= -<span class="number">218909040601832639</span>, local <span class="class"><span class="keyword">class</span> <span class="title">serialVersionUID</span> </span>= -<span class="number">423644352464462558</span></span><br></pre></td></tr></table></figure>
+
+<p>Java语言中采用什么机制来区分类的？</p>
+<ol>
+<li>首先通过类名，如果类名不一样，肯定不是同一个类。</li>
+<li>如果类名一样，就通过序列化版本号进行区分。</li>
+</ol>
+<p>JVM在编译的时候会自动为该类生成序列化版本号。因为是自动生成的，此时如果后续修改了该类之后，之前序列化后的数据此时无法反序列化。</p>
+<p><strong>因此，如果想要后续反序列化，为了避免修改源码后自动生成新的序列化版本号。可手动生成版本号【相当于静态常量】，这样，后续无论怎么修改都是这个手动生成的版本号。</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">1L</span>;</span><br></pre></td></tr></table></figure>
+
+<p>注意，变量名只能是serialVersionUID。</p>
+</blockquote>
+<h2 id="7-java-io-File"><a href="#7-java-io-File" class="headerlink" title="7. java.io.File"></a>7. java.io.File</h2><p><strong>File类是文件和目录路径名的抽象表示形式</strong>，该类和流没有关系，不能完成文件的读和写，仅仅能够表示路径名【可是文件夹，也可以是文件】。</p>
+<p>通过File，可以得到目录，进而可通过IO流读取文件，实现文件夹的文件读取。简单代码如下所示，其中exists()方法表示判断file所表示的路径名是否存在：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IOTest08</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        System.out.println();</span><br><span class="line"></span><br><span class="line">        File file = <span class="keyword">new</span> File(<span class="string">&quot;D:\\others\\study_source\\Java\\test\\src\\io\\loging&quot;</span>);</span><br><span class="line"></span><br><span class="line">        System.out.println(file.exists());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-1-常用方法"><a href="#7-1-常用方法" class="headerlink" title="7.1 常用方法"></a>7.1 常用方法</h3><table>
+<thead>
+<tr>
+<th>方法名</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>File()</td>
+<td>构造方法，参数为路径名（文件名）的字符串形式</td>
+</tr>
+<tr>
+<td>exists()</td>
+<td>判断该对象所表示的路径名是否存在</td>
+</tr>
+<tr>
+<td>createNewFile()</td>
+<td>以文件形式创建该对象所表示的路径名</td>
+</tr>
+<tr>
+<td>mkdir()</td>
+<td>以目录形式创建该对象所表示的路径名</td>
+</tr>
+<tr>
+<td>mkdirs()</td>
+<td>上面只是最后一级目录不存在可创建，本方法是允许多级目录不存在，然后创建</td>
+</tr>
+<tr>
+<td>getParent()</td>
+<td>以字符串形式获取该路径的父路径</td>
+</tr>
+<tr>
+<td>getParentFile()</td>
+<td>以对象形式获取父路径</td>
+</tr>
+<tr>
+<td>getAbsolutePath()</td>
+<td>获取该对象的绝对路径</td>
+</tr>
+<tr>
+<td>delete()</td>
+<td>删除该对象所表示的路径/文件</td>
+</tr>
+<tr>
+<td>getName()</td>
+<td>获取该对象所表示的名字</td>
+</tr>
+<tr>
+<td>isDirectory()</td>
+<td>判断该对象是否是目录</td>
+</tr>
+<tr>
+<td>isFile()</td>
+<td>判断该对象是否是文件</td>
+</tr>
+</tbody></table>
+<p>File类和String一样，有很多方法，比如该目录/文件的最后一次修改时间、文件大小、重命名、获取所有的子目录（listFiles()）等等。</p>
 
                 
             </div>
@@ -999,7 +1230,7 @@
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2021-2022</span>
+                <span id="year">2021-2023</span>
             
             <span id="year">2021</span>
             <a href="/about" target="_blank">hianian</a>
@@ -1008,7 +1239,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">382.1k</span>&nbsp;字
+                class="white-color">600.8k</span>&nbsp;字
             
             
             

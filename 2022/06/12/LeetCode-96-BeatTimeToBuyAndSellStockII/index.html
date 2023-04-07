@@ -454,21 +454,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-06-12
+                    2022-07-09
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    912
+                    1.1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    3 分
+                    4 分
                 </div>
                 
 
@@ -505,7 +505,7 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1 &lt;= prices.length &lt;= 3 * 104</span><br><span class="line">0 &lt;= prices[i] &lt;= 104</span><br></pre></td></tr></table></figure>
 
 <h2 id="2-answers"><a href="#2-answers" class="headerlink" title="2. answers"></a>2. answers</h2><p>感觉最近做的几道题已经不能简答地划分为某种算法了，更多地是对问题的认识，对题目的分解等等。</p>
-<p>这道题最开始想的是：<strong>计算不想交的升序子序列之和。</strong>但是感觉需要回溯，有点麻烦。参考了题解，发现问题可以简化。</p>
+<p>这道题最开始想的是：<strong>计算不相交的升序子序列之和。</strong>但是感觉需要回溯，有点麻烦。参考了题解，发现问题可以简化。</p>
 <blockquote>
 <p>首先，第一天到第五天的收益可以转化为：之间每一天的收益总和（即使是负数）。比如[7,1,5,3,6,4]，p=1和p=6之间的收益（6-1=5），可以转换为（5-1 + 3-5 + 6-3 = 5）。</p>
 <p>那么也就是说：某几天的收益，可以由若干个子天的收益组合求出。<strong>更大一点地说，本题目中没有描述出可以买卖几次，因此本题目的总收益可以由若干次的子买卖组成。这些子买卖都是连续天内组成的。即类似上面的[6-1]。</strong></p>
@@ -517,6 +517,9 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution_0096</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxProfit</span><span class="params">(<span class="keyword">int</span>[] prices)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 遍历数组，计算收益差。</span></span><br><span class="line">        <span class="keyword">int</span>[] result = <span class="keyword">new</span> <span class="keyword">int</span>[prices.length - <span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; prices.length - <span class="number">1</span>; i++) &#123;</span><br><span class="line">            result[i] = prices[i + <span class="number">1</span>] - prices[i];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 求和正收益</span></span><br><span class="line">        <span class="keyword">int</span> sums = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> value : result) &#123;</span><br><span class="line">            <span class="keyword">if</span> (value &gt; <span class="number">0</span>) sums += value;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> sums;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        System.out.println();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span>[] prices = &#123;<span class="number">7</span>, <span class="number">1</span>, <span class="number">5</span>, <span class="number">3</span>, <span class="number">6</span>, <span class="number">4</span>&#125;;</span><br><span class="line"></span><br><span class="line">        Solution_0096 s = <span class="keyword">new</span> Solution_0096();</span><br><span class="line"></span><br><span class="line">        System.out.println(s.maxProfit(prices));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p> <strong>其实可以进一步优化：在计算每天收益的时候，如果为正，直接累加即可，无需再次遍历。</strong></p>
+<p>以动态规划的角度看一下，这道题其实和买卖股票类似，只不过这道题允许多次交易，此时dp[i][0]除了由dp[i-1][0]得到，还可以是前一天不持有，今天持有得到。代码如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution_0096_05</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxProfit</span><span class="params">(<span class="keyword">int</span>[] prices)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 初始化dp[0][0] = -prices[0]，dp[0][1] = 0</span></span><br><span class="line">        <span class="keyword">int</span>[][] dp = <span class="keyword">new</span> <span class="keyword">int</span>[prices.length][<span class="number">2</span>];</span><br><span class="line">        dp[<span class="number">0</span>][<span class="number">0</span>] = -prices[<span class="number">0</span>];</span><br><span class="line">        dp[<span class="number">0</span>][<span class="number">1</span>] = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; dp.length; i++) &#123;</span><br><span class="line"></span><br><span class="line">            dp[i][<span class="number">0</span>] = Math.max(dp[i-<span class="number">1</span>][<span class="number">0</span>], dp[i-<span class="number">1</span>][<span class="number">1</span>] - prices[i]);</span><br><span class="line"></span><br><span class="line">            dp[i][<span class="number">1</span>] = Math.max(dp[i-<span class="number">1</span>][<span class="number">1</span>], dp[i-<span class="number">1</span>][<span class="number">0</span>] + prices[i]);</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 其实最终结果肯定是dp[n][1]</span></span><br><span class="line">        <span class="keyword">return</span> dp[dp.length - <span class="number">1</span>][<span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        System.out.println();</span><br><span class="line"></span><br><span class="line">        Solution_0096_05 s = <span class="keyword">new</span> Solution_0096_05();</span><br><span class="line"></span><br><span class="line"><span class="comment">//        int[] prices = &#123;7,1,5,3,6,4&#125;;</span></span><br><span class="line"><span class="comment">//        int[] prices = &#123;1,2,3,4,5&#125;;</span></span><br><span class="line">        <span class="keyword">int</span>[] prices = &#123;<span class="number">7</span>,<span class="number">6</span>,<span class="number">4</span>,<span class="number">3</span>,<span class="number">1</span>&#125;;</span><br><span class="line"></span><br><span class="line">        System.out.println(s.maxProfit(prices));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h2 id="3-备注"><a href="#3-备注" class="headerlink" title="3. 备注"></a>3. 备注</h2><p><em>参考<a target="_blank" rel="noopener" href="https://leetcode-cn.com/">力扣（LeetCode）官网 - 全球极客挚爱的技术成长平台 (leetcode-cn.com)</a>，<a target="_blank" rel="noopener" href="https://programmercarl.com/">代码随想录 (programmercarl.com)</a>。</em></p>
 
                 
@@ -1027,7 +1030,7 @@
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2021-2022</span>
+                <span id="year">2021-2023</span>
             
             <span id="year">2021</span>
             <a href="/about" target="_blank">hianian</a>
@@ -1036,7 +1039,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">382.1k</span>&nbsp;字
+                class="white-color">600.8k</span>&nbsp;字
             
             
             

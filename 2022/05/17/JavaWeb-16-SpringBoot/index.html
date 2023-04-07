@@ -454,7 +454,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-06-04
+                    2022-07-16
                 </div>
                 
 
@@ -560,7 +560,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test04</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 创建容器对象，以JavaConfig注解对象作为参数</span></span><br><span class="line">    ApplicationContext ctx = <span class="keyword">new</span> AnnotationConfigApplicationContext(SpringConfig.class);</span><br><span class="line"></span><br><span class="line">    Tiger bean = (Tiger) ctx.getBean(<span class="string">&quot;tiger&quot;</span>);</span><br><span class="line">    System.out.println(bean);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="2-6-小节"><a href="#2-6-小节" class="headerlink" title="2.6 小节"></a>2.6 小节</h3><p><strong>实际上，原始xml配置文件创建对象有两种方式，一种是bean标签，一种是注解并在xml文件中使用组件扫描器；上面前2个例子中介绍的是如何将xml中标签形式创建的对象替换为JavaConfig形式创建，以及采用@ImportResource注解形式将xml以bean标签创建的对象引入到JavaConfig中。</strong></p>
-<p>那么以注解形式创建对象，是在Java类中操作的，因此JavaConfig不需要对其转换。对于组件扫描器扫描，xml中的组件扫描器是标签，在JavaConfig中对应的注解是<code>@ComponentScan(basePackages = &quot;org.hianian.entity&quot;)</code>。另外，xml中需要指明属性文件的位置，此时再JavaConfig中指明位置采用的是<code>@PropertySource(value = &quot;classpath:config.properties&quot;) </code>标签。</p>
+<p>那么以注解形式创建对象，是在Java类中操作的，因此JavaConfig不需要对其转换。对于组件扫描器扫描，xml中的组件扫描器是标签，在JavaConfig中对应的注解是<code>@ComponentScan(basePackages = &quot;org.hianian.entity&quot;)</code>。另外，xml中需要指明属性文件的位置，此时在JavaConfig中指明位置采用的是<code>@PropertySource(value = &quot;classpath:config.properties&quot;) </code>标签。</p>
 <p>总体上说，JavaConfig提供了和xml配置文件相同的功能，即以<code>类、方法和注解</code>的形式等同于<code>xml以及其标签</code>。也就是说，JavaConfig仍然有两种方式创建对象：方法、注解。</p>
 <h2 id="3-SpringBoot入门"><a href="#3-SpringBoot入门" class="headerlink" title="3. SpringBoot入门"></a>3. SpringBoot入门</h2><p>SpringBoot作为Spring全家桶的一员，可在官网<a target="_blank" rel="noopener" href="https://spring.io/">Spring | Home</a>中找到。有以下几个特点：</p>
 <ul>
@@ -883,7 +883,7 @@
 <h3 id="5-3-mapper文件和Java代码分开管理"><a href="#5-3-mapper文件和Java代码分开管理" class="headerlink" title="5.3 mapper文件和Java代码分开管理"></a>5.3 mapper文件和Java代码分开管理</h3><p>仔细观察项目目录可以发现，Dao接口和其映射文件xml是放在一个目录下的。为了方便，一般情况下一个目录中存放的文件应该是同一类型的，因此可将mapper文件和Java代码分开存放。<strong>一般情况下，可将mapper映射文件放置到resources目录中自定的子目录下。</strong>此时因为java目录下没有了要编译的除.java外的文件，因此pom.xml就不需要设置resources插件了。</p>
 <p>但是此时，因为Dao和Mapper映射文件不在同一个目录下，此时SpringBoot中的@Mapper注解和@MapperScan注解在找到Dao文件后，怎么找到映射文件呢？<strong>需要在application.properties文件中配置目录。</strong></p>
 <p>注意，resources目录中所有的内容都会在编译之后放置到target目录下的classes目录中。因此在application.properties文件中设置目录的时候，需要指定的是编译之后的目录（即<code>类路径classpath+自定义目录</code>）。</p>
-<p><strong>此时，springboot通过两个注解，会找到Dao接口，然后通过主配置文件中的配置信息找到其映射文件，进而创阿金代理对象，执行指定的SQL语句方法。</strong></p>
+<p><strong>此时，springboot通过两个注解，会找到Dao接口，然后通过主配置文件中的配置信息找到其映射文件，进而创建代理对象，执行指定的SQL语句方法。</strong></p>
 <figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">mybatis.mapper-locations</span>=<span class="string">classpath:resources下自定义的目录/*.xml</span></span><br></pre></td></tr></table></figure>
 
 <p>目录如下所示，这样的话，目录还是比较清晰的：</p>
@@ -1789,7 +1789,7 @@
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2021-2022</span>
+                <span id="year">2021-2023</span>
             
             <span id="year">2021</span>
             <a href="/about" target="_blank">hianian</a>
@@ -1798,7 +1798,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">382.1k</span>&nbsp;字
+                class="white-color">600.8k</span>&nbsp;字
             
             
             

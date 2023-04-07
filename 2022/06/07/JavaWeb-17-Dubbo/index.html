@@ -429,9 +429,13 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/JavaWeb/">
+                                <span class="chip bg-color">JavaWeb</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -450,21 +454,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-06-07
+                    2022-06-29
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    0
+                    10k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    37 分
                 </div>
                 
 
@@ -484,7 +488,283 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                
+                <p>本文介绍Dubbo框架。</p>
+<h2 id="0-分布式和微服务"><a href="#0-分布式和微服务" class="headerlink" title="0. 分布式和微服务"></a>0. 分布式和微服务</h2><p>前面的CRM项目，一个应用包含了该项目的所有功能，比如市场活动、销售、部门、人员等等。这种应用被称为<strong>单一应用</strong>，即里面的功能以及业务都是之间互相调用。开发相对容易一些，因为都是自己调用自己。</p>
+<p>但是单一应用有一定的缺点，在部署和后期的开发维护上比较麻烦，而且不容易优化。比如<strong>修改了某个功能，即整个项目都需要重新发布</strong>。而且如何整个项目后期用户量增加，<strong>一台服务器的负载量不够了，显然就需要布置多台服务器，那么此时如果修改了某个功能，就需要在所有服务器上都重新部署</strong>。</p>
+<p>因此，可将单一应用拆分成若干个小功能，部署到若干个服务器上【一个功能部署到一台服务器上】。一方面细化到某个功能，容易优化【只需考虑本功能整体逻辑即可】；另一方面，仅修改该功能，其他服务器上的功能不需要重新部署，只需要重新部署本功能即可，对整个应用并无太大影响。另外，如果负载量不够了，只需要增加对应功能服务器的数量即可，比如销售功能用户访问比较多，只需增加该服务器即可，而后台管理用户并不多，就无需增加。<strong>这在整体上也缓解了服务器的压力，使得服务器利用率更多。</strong></p>
+<p>这就是<strong>微服务开发</strong>的思想：将一个大项目，拆分成若干个只完成某个功能的小项目，不同小项目之间进行API业务调用，共同实现整个大的逻辑项目。【这里说的不是很准确】</p>
+<p>而不同服务器在逻辑上共同为外界提供一个完整功能则称为<strong>分布式部署</strong>。【个人认为微服务开发的应用一定会以分布式部署的，而分布式部署的不一定是以微服务模式开发的。因为单一应用也可部署在多台服务器上，这似乎也是分布式部署。<strong>但是不一定正确</strong>】</p>
+<blockquote>
+<p>分布式指多台计算机位于网络系统中，多台计算机形成一个整体对外界提供服务。用户使用系统，并不知道是多台计算机、使用不同的操作系统、不同的应用程序提供服务。</p>
+</blockquote>
+<p>一些常见的服务有：<a target="_blank" rel="noopener" href="https://www.juhe.cn/">API-API接口-数据服务专家-「聚合数据」 (juhe.cn)</a>，京东万象等等。这些服务有免费的，也有付费的。比如发送短信服务、查询邮政编码服务等。</p>
+<blockquote>
+<p>应用架构的发展演变：</p>
+<ol>
+<li><p>单一应用架构</p>
+<p>当网站流量很小时，只需一个应用，将所有功能都部署在一起，以减少部署节点和成本。此时，用于简化增删改查工作量的数据访问框架（ORM）是项目性能的关键。</p>
+</li>
+<li><p>垂直应用架构</p>
+<p>当访问量逐渐增大，其实可将单一应用部署到多台服务器上（集群），通过负载均衡实现访问不同的用户访问不同服务器【这种集群只能是提升整个应用的服务能力，并不能提供单个功能的效率，比如用户购买商品等等；而用户注册模块则不需要提升】。但是随着单一应用增加机器带来的加速度越来越小，可以将应用拆分成互不相干的几个应用，以提升效率。此时，用于加速前端页面开发的Web框架（MVC）是项目性能的关键。【这种是按模块拆分，比如订单模块、用户管理模块、用户购买模块等等】</p>
+</li>
+<li><p>分布式服务架构</p>
+<p>当垂直应用越来越多，应用之间交互不可避免，将核心业务抽取出来，作为独立的服务，逐渐形成稳定的服务中心，使前端应用能快速的响应多变的市场需求。此时，用于提高业务复用及整合的分布式服务框架（RPC）是项目性能的关键。【这种并不是从整个项目功能上面，而是按照服务和被服务的理念来拆分的，比如视图层、控制层、持久层等等，按照这种业务的实现步骤上来拆分的。控制层为视图层提供服务，持久层为控制层提供服务等等。】</p>
+</li>
+<li><p>流动计算架构（SOA，面向服务架构）</p>
+<p>当服务越来越多，容量的评估、小服务资源的浪费等问题逐渐显现，此时需增加一个调度中心基于访问压力实时管理集群容量，提高集群利用率。此时，用于提高机器利用率的资源调度和治理中心（SOA）是项目性能的关键。<strong>SOA相比分布式架构，就多了一个注册中心，起到一个管理作用。</strong></p>
+</li>
+<li><p>微服务架构</p>
+<p>细分的服务比SOA更加细化，更加独立。</p>
+</li>
+</ol>
+</blockquote>
+<h2 id="1-远程调用"><a href="#1-远程调用" class="headerlink" title="1. 远程调用"></a>1. 远程调用</h2><p>不同微服务之间互相调用，这和本地调用不同，需要计算机之间进行通信，涉及到网络数据传输。那么怎么更快更方便的调用呢？这就需要RPC协议。协议就是多方共同遵守的约定，以这种格式进行数据传输和接收。</p>
+<h3 id="1-1-远程调用"><a href="#1-1-远程调用" class="headerlink" title="1.1 远程调用"></a>1.1 远程调用</h3><p>RPC是Remote Procedure Call Protocol的简称，即<strong>远程过程调用协议</strong>。是一种通过网络从远程计算机程序上请求服务，而不需要了解底层网络技术的协议。该协议允许运行于一台计算机的程序调用另一台计算机的程序。程序员无需编写底层网络交互功能代码（<strong>因为网络通信，必定会涉及到数据包，既然是数据包，就必定要封包解包等；而RPC就像Servlet一样，只需调用POST、GET等方法就可获取数据，无需处理具体细节。</strong>）。RPC协议是一个类别，具体会细分为若干个子协议。</p>
+<p>RPC的主要功能是让构建分布式计算（应用）更容易，<strong>在提供强大的远程调用能力时不损失本地调用的语义简洁性。在一台计算机的程序使用其他计算机上的功能就像使用自己的功能一样。</strong>RPC技术提供了透明的访问其他服务的底层实现细节。使用分布式系统中的服务更加方便。</p>
+<p>协议可以自定义，自己实现。</p>
+<blockquote>
+<p>经过前面学到的知识，可以发现，最直接的调用方式就是通过URL来调用，比如Servlet，我们在本地调用的时候，是输入本项目的相对路径；<strong>其实完全可以输入绝对路径，这样如果是调用其他服务器上的服务，那么就直接输入URL即可。</strong>而Servlet是采用http协议通信的。</p>
+<p>Dubbo采用的是Socket通信机制，一步到位，提升了通信效率，并且可以建立长连接，不用反复连接，直接传输数据。</p>
+</blockquote>
+<h2 id="2-Dubbo"><a href="#2-Dubbo" class="headerlink" title="2. Dubbo"></a>2. Dubbo</h2><p>Dubbo框架是阿里开发的，后来由Apache基金会托管，官网<a target="_blank" rel="noopener" href="https://dubbo.apache.org/en/">Apache Dubbo</a>。注意，Dubbo框架是用来构架分布式服务的，不是微服务。其他的RPC框架有新浪微博的Motan，Dubbo的升级版Dubbox、Google的grpc。</p>
+<h3 id="2-1-Dubbo介绍"><a href="#2-1-Dubbo介绍" class="headerlink" title="2.1 Dubbo介绍"></a>2.1 Dubbo介绍</h3><p>Dubbo框架的结构如下所示。有一个容器（Spring），服务的提供者Provider，服务的调用者Consumer，注册中心Registry，用来管理提供者和调用者，监控中心Monitor用来监控提供者和调用者的调用情况。</p>
+<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJavaWeb%5Cdubbo%5Cdubbo_001.png"></p>
+<ol>
+<li><p>Dubbo能做什么</p>
+<ol>
+<li>实现透明的远程方法调用，就像调用本地方法一样。可以忽略远程调用的实现细节。简单配置即可使用。</li>
+<li>服务的自动注册和服务发现。通过注册中心，服务实现动态管理（增减服务方）。调用服务的消费者无需写死调用地址。</li>
+<li>软件的负载均衡实现和容错机制，无需使用硬件。降低成本。</li>
+</ol>
+</li>
+<li><p>Dubbo服务的实现原理</p>
+<p>Dubbo的底层实现是动态代理，由Dubbo框架创建远程服务（接口）对象的代理对象，通过代理对象调用远程方法。即本地通过动态代理创建服务端的代理对象，然后由该对象与服务端进行通信。【仔细想想，其实这是合理的，因为我们在单体应用中，也是通过调用Service层对象来调用具体的方法。】</p>
+<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJavaWeb%5Cdubbo%5Cdubbo_002.png" alt="image-20220625123647639"></p>
+</li>
+</ol>
+<h3 id="2-2-Dubbo支持的协议"><a href="#2-2-Dubbo支持的协议" class="headerlink" title="2.2 Dubbo支持的协议"></a>2.2 Dubbo支持的协议</h3><p>RPC是一个大协议，具体来说，可以有很多自定义的小协议。比如Dubbo框架自己定义了一个协议dubbo。除此之外，Dubbo框架还支持一些其他协议：hessian（国外公司定义）、rmi（SUN公司定义）、http、webservice、thrift（FaceBook定义、后来贡献给了Apache）、memcached、redis。<strong>Dubbo官方推荐使用dubbo协议，默认端口是20880。</strong></p>
+<h4 id="2-2-1-dubbo协议"><a href="#2-2-1-dubbo协议" class="headerlink" title="2.2.1 dubbo协议"></a>2.2.1 dubbo协议</h4><p>dubbo协议采用单一长连接和异步通讯，<strong>适合于小数据量（单次）、大并发的服务调用，以及服务消费者机器数远大于服务提供者机器数的情况</strong>。</p>
+<p>dubbo协议底层网络通信默认使用的netty框架（这个框架是网络编程框架），性能非常好，官方推荐使用。</p>
+<p>dubbo不适合传送大数据量（单次）的服务，比如传文件，传视频等等，除非情况量很低。</p>
+<p>为什么不适合大数据量呢？<strong>因为dubbo采用的是单一长连接。</strong></p>
+<h4 id="2-2-2-长连接和短连接"><a href="#2-2-2-长连接和短连接" class="headerlink" title="2.2.2 长连接和短连接"></a>2.2.2 长连接和短连接</h4><p>在服务调用者和服务提供者建立好通信通道之后，这个连接通道如果建立通道之后，不再断开，后续再次调用无需再次建立，这种就是长连接【建立长连接比较费时】。</p>
+<p>为什么要求小数据量呢？因为这样的话，在通道中可以有多个请求，而大数据量的话，则会占满通道，减少了允许存在的请求个数（可以为更多次请求、更多个调用者提供服务）。<strong>单一长连接省去了通道的建立时长，比如MySQL就是长连接，只要连接了，就一直打开着，对于服务器来说，维持连接占用一定的资源。</strong>单一指定是所有的调用者共用一条通道。</p>
+<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJavaWeb%5Cdubbo%5Cdubbo_003.png" alt="image-20220625125645971"></p>
+<p>短连接，则是一次请求建立一个连接，处理完成之后，就关闭了连接。<strong>短连接就是只提供一次请求服务。对于服务器来说，占用资源较少，无需维护连接。</strong></p>
+<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJavaWeb%5Cdubbo%5Cdubbo_004.png" alt="image-20220625125818100"></p>
+<p>其实短链接，类似用户访问web项目。长连接则用于服务器和服务器之间调用。</p>
+<h4 id="2-3-3-使用dubbo协议"><a href="#2-3-3-使用dubbo协议" class="headerlink" title="2.3.3 使用dubbo协议"></a>2.3.3 使用dubbo协议</h4><p>在Spring配置文件中，使用标签来指定：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:protocol</span> <span class="attr">name</span>=<span class="string">&quot;dubbo&quot;</span> <span class="attr">port</span>=<span class="string">&quot;20880&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-Dubbo的组件"><a href="#2-3-Dubbo的组件" class="headerlink" title="2.3 Dubbo的组件"></a>2.3 Dubbo的组件</h3><p>前面的框架只是简单描述了一下，这里再详细描述一下。主要由5大组件组成。</p>
+<ol>
+<li><p>Spring容器</p>
+<p>Spring框架管理Dubbo用到的对象。</p>
+</li>
+<li><p>服务的提供者Provider</p>
+<p>Dubbo框架程序。暴露服务的服务提供方，服务提供者在启动时，向注册中心注册自己提供的服务。</p>
+</li>
+<li><p>服务的调用者（消费者）Consumer</p>
+<p>Dubbo框架程序。调用远程服务的服务消费方，服务消费者在启动时，向注册中心订阅自己所需的服务，然后在接收到注册中心发来的服务提供者列表中，基于软负载均衡算法，选一台提供者进行调用，如果调用失败，再选另一台调用。</p>
+</li>
+<li><p>注册中心Registry</p>
+<p>注册中心其实是一个单独的应用程序，和Dubbo源码没有太大关联，可以用数据库来代替。注册中心返回服务提供者地址系列表给消费者，如果有变更，注册中心将基于长连接推送变更数据给消费者。</p>
+</li>
+<li><p>监控中心Monitor</p>
+<p>作为一个管理者，在后台应用程序中，管理提供者和调用者，记录调用者和提供者的调用关系、调用次数以及调用时间（其实是提供者和调用者主动向监控中心发送）。（可有可无，这部分似乎相当于后续审查，作为日志）</p>
+</li>
+</ol>
+<p><strong>其实用Dubbo框架来实现一个分布式项目，只需要提供者、调用者和注册中心即可。</strong></p>
+<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJavaWeb%5Cdubbo%5Cdubbo_005.png" alt="image-20220625143417070"></p>
+<h3 id="2-4-使用Dubbo的第一个项目【直连项目】"><a href="#2-4-使用Dubbo的第一个项目【直连项目】" class="headerlink" title="2.4 使用Dubbo的第一个项目【直连项目】"></a>2.4 使用Dubbo的第一个项目【直连项目】</h3><p>先简单实现一个小项目，即不是单体应用，而是两个应用互相调用，完成一个整体功能。</p>
+<blockquote>
+<p>点对点的直连项目：消费者直接访问服务提供者，<strong>没有注册中心</strong>。消费者必须指定服务提供者的访问地址（URL）。<strong>消费者直接调用服务提供者，这就是直连</strong>。</p>
+<p><strong>注意，Dubbo应用，既可以是普通的Java项目，也可以是Web项目。</strong></p>
+</blockquote>
+<p><strong>注意，本人先自己用SpringMVC实现了简单的二者调用，需要解决AJAX跨域问题【协议、IP地址（域名）、端口号等只要有一个不同就是跨域】。比如A应用访问B应用的天气服务。也就是在A中发送一个请求，该URL是B的某个请求，此时B接收到后经过URL映射找到对应的Controller进行处理，最终返回数据，A应用接收，并显示。</strong></p>
+<blockquote>
+<p>其实，如果在一台计算机上，部署两个项目（都是8080端口），两个项目互相访问，是不会造成跨域问题的。但是我当时在启动的时候，一个是localhost、一个是127.0.0.1，因此，这就形成了跨域。</p>
+<p>不过，虽然改成localhost可以解决，但是这并不典型。因为最终肯定是要部署到不同服务器的。所以在网上找到了解决办法。<a target="_blank" rel="noopener" href="https://blog.csdn.net/MicroAnswer/article/details/102913571">Access-Control-Allow-Origin跨域解决及详细介绍_Microanswer的博客-CSDN博客_access-control-allow-origin</a></p>
+</blockquote>
+<p>Dubbo项目（<strong>提供者</strong>）需要以下步骤：</p>
+<ol>
+<li><p>新建web项目</p>
+</li>
+<li><p>添加依赖</p>
+<ol>
+<li><p>dubbo依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- Dubbo依赖 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/com.alibaba/dubbo --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>dubbo<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.6.9<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>netty依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- netty依赖 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/io.netty/netty-all --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.netty<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>netty-all<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.1.77.Final<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>SpringMVC依赖（这里是为了web项目添加的mvc依赖，其实不是web项目的话，那就添加spring依赖即可。）</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- Springmvc依赖，包含了spring依赖 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-webmvc<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.3.20<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+<li><p>新建实体类Weather，保存在网络中传输的数据</p>
+<p>注意，这个类是在网络中传输数据，需要实现序列化接口，用于在接收端反序列化。【<strong>在Java网络开发的时候，我们知道，本地的对象要想在网络上传输，必须实现Serializable接口。</strong>】</p>
+</li>
+<li><p>定义Service服务的接口和实现类</p>
+<p>接口如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ProWeather</span> </span>&#123;</span><br><span class="line">    <span class="function">String <span class="title">proWeather</span><span class="params">(String id)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>实现类如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ProWeatherImpl</span> <span class="keyword">implements</span> <span class="title">ProWeather</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">proWeather</span><span class="params">(String id)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 这里方便，不再访问数据库，直接自己生成数据。</span></span><br><span class="line">        <span class="comment">// 北京天气</span></span><br><span class="line">        <span class="keyword">if</span>(<span class="string">&quot;11&quot;</span>.equals(id)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;城市:北京, 温度:26, 湿度:32, 天气:晴朗&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 上海天气</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(<span class="string">&quot;21&quot;</span>.equals(id)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;城市:上海, 温度:29, 湿度:12, 天气:多云&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 广州天气</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(<span class="string">&quot;31&quot;</span>.equals(id)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;城市:广州, 温度:27, 湿度:37, 天气:小雨&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 深圳天气</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(<span class="string">&quot;41&quot;</span>.equals(id)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;城市:深圳, 温度:20, 湿度42, 天气:小雪&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 其他</span></span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;城市:全国, 温度:32, 湿度:50, 天气:多云转晴&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>定义Spring的配置文件（<code>dubbo-provider.xml</code>）</p>
+<ol>
+<li>声明服务的名称：自定义的名字表示当前的服务提供者。</li>
+<li>暴露服务提供者的接口</li>
+<li>声明服务接口的是实现类对象，真正提供接口的功能实现。</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 配置Dubbo --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 声明服务提供者名称，保证他的唯一性，它是dubbo内部使用的唯一标识，一般情况下可直接使用项目名。这个名称主要是用来Dubbo框架内部使用，我们不会用到。 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:application</span> <span class="attr">name</span>=<span class="string">&quot;dubbo02-provider&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 指定dubbo协议和端口号（默认就是这两个值） --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:protocol</span> <span class="attr">name</span>=<span class="string">&quot;dubbo&quot;</span> <span class="attr">port</span>=<span class="string">&quot;20880&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 暴露服务 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- interface是服务接口的全限定类名 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- ref是引用接口实现类对象在Spring容器中的标识名称，也就是指定容器中该接口实现类对象的标识 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- registry是注册中心，表名是否使用注册中心，因为本例子是直连，所以值为N/A --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:service</span> <span class="attr">interface</span>=<span class="string">&quot;org.hianian.service.ProWeather&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;proWeatherImpl&quot;</span> <span class="attr">registry</span>=<span class="string">&quot;N/A&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 创建接口实现类对象 ，用于暴露服务--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;proWeatherImpl&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.hianian.service.impl.ProWeatherImpl&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>修改web.xml，注册Spring的监听器，让Spring容器及其对象可以在web应用中使用，进而可以使用Dubbo暴露服务。【<strong>因为本项目是服务提供者，无需用到map映射等，所以无需设置SpringMVC的中央调度器</strong>】</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">web-app</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://xmlns.jcp.org/xml/ns/javaee&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">version</span>=<span class="string">&quot;4.0&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- 配置Spring监听器，在Tomcat启动时，就创建Spring容器 --&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- Spring相关配置 --&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 注册Spring监听器 ，并指定自定义的配置文件位置(就是说，创建容器的时候，扫描哪个文件，创建里面的对象)--&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">context-param</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>contextConfigLocation<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>classpath:dubbo-provider.xml<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">context-param</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">listener</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">listener-class</span>&gt;</span>org.springframework.web.context.ContextLoaderListener<span class="tag">&lt;/<span class="name">listener-class</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">listener</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">web-app</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>将本项目打包并发布到本地【方便调用者知道可调用的接口】</p>
+<p>在单一项目中，我们是可以知道在Controller中调用哪些Service的。但是本项目是两个不同的子项目，必须要知道提供者提供了哪些接口供我们使用。因此，需要将提供者打包，然后在调用者中添加该包的依赖。即调用者依赖于提供者。</p>
+</li>
+</ol>
+<p><strong>可以看到，服务提供者就是创建并实现了服务接口，然后通过Dubbo将该实现类对象暴露出去，等待其他请求来调用即可。具体来说，就是暴露了本接口，然后同时该接口绑定了实现类对象，因此最终是该对象处理请求提供服务。</strong></p>
+<p>Dubbo项目（<strong>调用者</strong>）需要以下步骤：</p>
+<ol>
+<li><p>新建web项目</p>
+</li>
+<li><p>添加依赖</p>
+<p>依赖和提供者相同，同时要添加提供者打包的依赖。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 但是还需要额外添加一个提供者的依赖 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.hianian<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>dubbo02_provider<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>设置Spring配置文件</p>
+<ol>
+<li>声明服务的名称。</li>
+<li>声明要使用的服务，引用服务提供者。（这里相当于<strong>创建bean对象，这是远程的，可以本地使用，即本地调用该对象的相关方法进行服务。</strong>）</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.springframework.org/schema/beans&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span> <span class="attr">xmlns:dubbo</span>=<span class="string">&quot;http://code.alibabatech.com/schema/dubbo&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 声明服务调用者名称，保证唯一性，它是dubbo内部服务名称的唯一标识 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dubbo:application</span> <span class="attr">name</span>=<span class="string">&quot;dubbo02_consumer&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 声明要使用的服务 --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- id是远程服务的代理对象名称，用该ID来访问对象 --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- interface就是远程提供者的服务接口全限定类名 --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- url是调用远程接口服务的URL地址，即从该接口找到提供者提供的接口。协议://IP:prot --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- registry 这里采用直连方式，不使用注册中心，值为：N/A --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dubbo:reference</span> <span class="attr">id</span>=<span class="string">&quot;proWeather&quot;</span> <span class="attr">interface</span>=<span class="string">&quot;org.hianian.service.ProWeather&quot;</span> <span class="attr">url</span>=<span class="string">&quot;dubbo://localhost:20880&quot;</span> <span class="attr">registry</span>=<span class="string">&quot;N/A&quot;</span>/&gt;</span></span><br><span class="line">    </span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>注意，SpringMVC项目不要忘了进行配置，如组件扫描器，注解驱动等等。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 配置SpringMVC --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 声明组件扫描器 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">&quot;org.hianian.controller&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">context:component-scan</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--配置注解驱动，用返回JSON数据--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mvc:annotation-driven</span>&gt;</span><span class="tag">&lt;/<span class="name">mvc:annotation-driven</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>定义使用者类，调用服务提供者的功能（这里是web项目，所以在Controller中调用服务），这是一个远程调用。</p>
+<p>虽然通过调用者标签，可直接使用该对象，但是一般情况下，为了项目架构比较清晰，仍然创建Service类，服务提供者对象作为Service类的一个属性出现，通过Service对象来调用服务，并返回结果。</p>
+<p>Service如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">InvokeService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 作为service类属性存在</span></span><br><span class="line">    <span class="keyword">private</span> ProWeather proWeather;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setProWeather</span><span class="params">(ProWeather proWeather)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.proWeather = proWeather;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">doService</span><span class="params">(String id)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> proWeather.proWeather(id);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在Spring配置文件中，声明Service对象。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;invokeService&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.hianian.service.InvokeService&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;proWeather&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;proWeather&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>Controller中提供服务如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 调用提供者的接口</span></span><br><span class="line">    <span class="comment">// 注意，这里是自动将容器中的对象赋值给该属性。注意不要使用Autowired自动注入，这种注解不能注入远程对象</span></span><br><span class="line">    <span class="comment">// 而容器中的对象，则是通过dubbo获取到的远程服务对象</span></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> InvokeService invokeService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping(value = &quot;/weather&quot;, method = RequestMethod.GET, produces=&quot;test/plain;charset=utf-8&quot;)</span></span><br><span class="line">    <span class="meta">@ResponseBody</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">doControl</span><span class="params">(String id)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 调用提供者提供的接口提供服务即可。</span></span><br><span class="line">        <span class="keyword">return</span> invokeService.doService(id);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>修改web.xml。注册SpringMVC的中央调度器，用于映射URL，去调用不同的Service，进而可以使用Dubbo暴露服务。【<strong>因为本项目是服务调用者，并没有具体的业务实现（没有对象），所以无需设置Spring的监听器。</strong>】</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">web-app</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://xmlns.jcp.org/xml/ns/javaee&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">version</span>=<span class="string">&quot;4.0&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- 配置SpringMVC中央调度器 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>springmvc<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>org.springframework.web.servlet.DispatcherServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 自定义springmvc读取的配置文件的位置，中央调度器需要读取该文件创建对象，并将其放入到springmvc容器中 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">      <span class="comment">&lt;!-- springmvc的配置文件的位置的属性 --&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>contextConfigLocation<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">      <span class="comment">&lt;!-- 指定自定义文件的位置，一般放置在类路径下 --&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>classpath:springmvc.xml, classpath:dubbo-consumer.xml<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 表示服务器启动的时候就创建该对象，数字表示优先级，越小优先级越高，大于等于0的整数 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">load-on-startup</span>&gt;</span>1<span class="tag">&lt;/<span class="name">load-on-startup</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>springmvc<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">web-app</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<p><strong>可以看到，服务消费者就是为用户提供服务，但是本质上是调用服务提供者的接口，并不是自己真正处理业务。也就是Service层的底层不是自己实现的。只需要通过Dubbo框架来远程调用该对象的方法即可。均需要Dubbo、Spring、Netty依赖，如果是Web项目，那么就还需要SpringMVC等依赖。</strong></p>
+<p><strong>注意，如果在测试中没有问题【这说明至少可以远程调用服务了】，而启动项目的时候出现问题，说明这是SpringMVC容器出现了问题，很有可能是依赖有冲突。</strong></p>
+<h3 id="2-5-使用接口作为独立项目"><a href="#2-5-使用接口作为独立项目" class="headerlink" title="2.5 使用接口作为独立项目"></a>2.5 使用接口作为独立项目</h3><p>其实上面有一个问题，就是我们在调用者处导入了提供者依赖，那么从调用者的角度来看，只要调用某个服务，就需要导入它的依赖，这是十分不方便的。因此一般情况下，可将某个公司所能提供的所有接口（及其所需的实体类）都定义在一个项目中，只需要将这个项目依赖导入即可。<strong>因此，Dubbo官方推荐的项目结构如下：</strong></p>
+<ol>
+<li><p>服务提供者工程</p>
+<p>实现接口工程中的业务接口。</p>
+</li>
+<li><p>服务消费者工程</p>
+<p>消费服务提供者提供的业务接口。</p>
+</li>
+<li><p>接口工程</p>
+<p>业务接口和实体类。【所有的接口及其所需的实体类】</p>
+</li>
+</ol>
+<blockquote>
+<p>此时，可先创建一个接口项目，该项目中只有接口及其实体类，然后导出jar包。</p>
+<p>然后服务提供者项目，将jar包依赖加入到自身项目中，实现具体的某个服务（<strong>一般情况下，一个服务就是一个项目。</strong>），并通过Dubbo暴露服务，这样就有了若干个服务提供者。</p>
+<p>然后服务消费者项目，将jar包依赖加入到自身项目中【<strong>注意，此时不需要加入服务提供者的jar包</strong>】，通过Dubbo调用服务提供者暴露的服务。</p>
+</blockquote>
+<h3 id="2-6-Dubbo常用标签"><a href="#2-6-Dubbo常用标签" class="headerlink" title="2.6 Dubbo常用标签"></a>2.6 Dubbo常用标签</h3><p>Dubbo即可以使用标签也可以使用注解来声明。<strong>但是在配置文件中使用标签可以更加全局的看待整个项目，暴露了哪些服务或者调用了哪些服务。</strong>标签主要分为三类：公用标签、服务提供者标签和服务消费者标签。</p>
+<ol>
+<li>公用标签指的是在提供者和消费者都可以使用的标签<ol>
+<li>&lt;dubbo:application name=””&gt;：指定服务名称，用于框架内部使用</li>
+<li>&lt;dubbo:registry address=”ip:port” protocol=”协议”&gt;：用于配置注册中心</li>
+</ol>
+</li>
+<li>服务提供者标签指的是仅在服务提供者配置文件中使用<ol>
+<li>&lt;dubbo:service interface=”服务接口名” ref=”服务实现对象bean”&gt;：用来暴露服务，这些服务可被调用者调用。</li>
+<li>&lt;dubbo:protocol name=”协议名” port=”端口号”&gt;：配置访问服务提供者的协议信息，<strong>即只能通过此协议以及此端口号来调用我提供的服务。</strong></li>
+</ol>
+</li>
+<li>服务调用者标签指的是仅在服务调用者配置文件中使用<ol>
+<li>&lt;dubbo:reference interface=”服务接口名” id=”代理对象名(相当于本地可使用的对象)”  url=”暴露服务主机的url”&gt;：用来调用服务，id就是通过调用生成的代理对象，可本地调用和远程交互。</li>
+<li>除了上面的三个属性，还有check、retries等属性。</li>
+</ol>
+</li>
+</ol>
+<h3 id="2-7-常用配置项目"><a href="#2-7-常用配置项目" class="headerlink" title="2.7 常用配置项目"></a>2.7 常用配置项目</h3><p>可参考官网<a target="_blank" rel="noopener" href="https://dubbo.apache.org/zh/docs/references/xml/">Schema 配置参考手册 | Apache Dubbo</a>。</p>
+<h2 id="3-注册中心"><a href="#3-注册中心" class="headerlink" title="3. 注册中心"></a>3. 注册中心</h2><p>前面提到过，Dubbo项目至少要有三个模块：服务提供者、服务消费者、注册中心。而前面的例子只有服务提供者和服务消费者，即使将接口抽象出一个项目，但仍然是消费者和服务者来调用【消费者手动写死指明调用者的地址】，没有一个管理中心来统一管理。并且如果写死的地址出现了服务错误，那么此时就不能调用服务了。</p>
+<p>因此，对于服务提供方，它需要发布服务，而且由于应用系统的复杂性，服务的数量、类型也不断膨胀；对于服务消费方，它对关心如何获取到它所需要的服务，而面对复杂的应用系统，需要管理大量的服务调用。</p>
+<p>而且<strong>对于服务提供方和服务消费方来说，他们还可能兼具这两种特色，既需要提供服务，也需要消费服务</strong>。通过将服务统一管理起来，可以有效地优化内部应用对服务发布/使用的流程和管理。服务注册中心可以通过特定协议来完成服务对外的统一。Dubbo提供的注册中心有如下几种类型可供选择<a target="_blank" rel="noopener" href="https://dubbo.apache.org/zh/docs/references/registry/">注册中心参考手册 | Apache Dubbo</a>：</p>
+<ol>
+<li>Multicast注册中心：组播方式。【用的较少】</li>
+<li>Redis注册中心：使用Redis作为注册中心。【在数据库中存储各个服务和其访问地址，用的较少】</li>
+<li>Simple注册中心：就是一个Dubbo服务作为注册中心，提供查找鼓服务的功能。【用的较少】</li>
+<li>Zookeeper：使用Zookeeper作为注册中心。【常用】</li>
+</ol>
+<p>其实通过上面描述可以看出，仅有服务提供者和服务消费者，还不足以管理所有的服务，粗略地说，此时需要一个“数据库”来有效存储所有可用的服务及其调用地址。这时候，消费者可直接访问数据拿到访问地址进行访问即可。</p>
+<p>推荐使用Zookeeper作为注册中心。</p>
+<blockquote>
+<p>Zookeeper是Apache Hadoop的子项目，是一个树形的目录服务，支持变更推送，适合作为Dubbo服务的注册中心，工业强度较高，可用于生产环境，推荐使用。</p>
+<p>Zookeeper就像是Windows的资源管理器，包含了所有的文件，都可以在这里找到。服务提供者和服务消费者，都需要在注册中心登记，即<strong>以目录的形式来管理提供者和消费者</strong>。服务消费者调用的服务地址不用写死。而且注册中心使用“心跳”机制更新服务提供者的状态。不能使用的服务提供者会自动从注册中心删除，服务提供者不会调用<a target="_blank" rel="noopener" href="https://dubbo.apache.org/zh/docs/references/registry/zookeeper/">Zookeeper 注册中心 | Apache Dubbo</a>。</p>
+</blockquote>
+<h3 id="3-1-注册中心Zookeeper"><a href="#3-1-注册中心Zookeeper" class="headerlink" title="3.1 注册中心Zookeeper"></a>3.1 注册中心Zookeeper</h3><p>Zookeeper是一个高性能的，分布式的，开放源码的分布式应用程序协调服务，简称zk。Zookeeper翻译为动物管理员，可以理解为Windows中的资源管理器或者注册表。它是一个树形结构。这个树形结构和标准文件系统相似，Zookeeper树中的每个节点被称为Znode。和文件系统的目录树一样，Zookeeper树中的每个节点都可以拥有子节点。每个节点表示一个唯一服务资源。Zookeeper是基于Java开发的，需要有Java环境。</p>
+<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJavaWeb%5Cdubbo%5Cdubbo_006.png" alt="image-20220628165217000"></p>
+<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJavaWeb%5Cdubbo%5Cdubbo_007.png" alt="image-20220628170039040"></p>
+<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJavaWeb%5Cdubbo%5Cdubbo_008.png" alt="image-20220628170156091"></p>
+<p>三个模块流程图如上所示：</p>
+<ol>
+<li>先启动注册中心</li>
+<li>再启动服务提供者，每个服务在运行的时候首先会向注册中心进行登记。</li>
+<li>最后启动服务消费者，先访问注册中心，订阅注册中心【登记访问哪些服务】，注册中心会将这些服务的访问地址发送给消费者。【然后通过负载均衡访问Dubbo服务】</li>
+<li>在运行过程中，注册中心会启用心跳机制，向注册的服务进行访问服务提供者，判断是否正常提供服务，如果不能正常，那么就将自身的注册数据删除该服务，并向订阅该服务的消费者发送可用的服务地址，即保证了消费者拿到的都是可用的服务地址。</li>
+</ol>
+<h4 id="3-1-1-下载安装"><a href="#3-1-1-下载安装" class="headerlink" title="3.1.1 下载安装"></a>3.1.1 下载安装</h4><p>可在官网<a target="_blank" rel="noopener" href="https://zookeeper.apache.org/">Apache ZooKeeper</a>上下载。下载格式为<code>.tar.gz</code>，直接解压缩即可，之后即可直接使用。目录结构如下所示：</p>
+<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJavaWeb%5Cdubbo%5Cdubbo_009.png" alt="image-20220628174954913"></p>
+<p>其中，bin目录中的<code>zkServer.cmd</code>是用来启动Zookeeper的。conf目录下是配置文件，其中<code>zoo_sample.cfg</code>是配置文件的样例，真实配置文件为<code>zoo.cfg</code>，这个文件需要自己建立，主要有如下配置：</p>
+<ol>
+<li>tickTime，为心跳时间，每个2s进行一次心跳检测。</li>
+<li>dataDir，用于存放Zookeeper的数据文件，即提供者和调用者的相关信息，<strong>注意，该目录默认是临时的tmp，所以需要自己修改，一般在安装目录下新建data目录作为存储目录</strong>。</li>
+<li>clientPort，表示Zookeeper的端口号。</li>
+</ol>
+<p>在运行前要确保当前计算机已经安装了Java环境。之后，执行bin下面的<code>zkServer.cmd</code>命令即可。<strong>注意，Zookeeper会启动后，除了clientPort外，adminServer会占用8080端口。这里要注意和Web项目可能会端口冲突，需要修改一下。</strong></p>
+<h3 id="3-2-使用Zookeeper注册中心"><a href="#3-2-使用Zookeeper注册中心" class="headerlink" title="3.2 使用Zookeeper注册中心"></a>3.2 使用Zookeeper注册中心</h3><p>主要步骤和上面的一样。额外的步骤有：</p>
+<ol>
+<li><p>加入curator客户端依赖、加入Zookeeper依赖【一定要注意依赖的版本问题】</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- Zookeeper客户端依赖 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/com.101tec/zkclient --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.curator<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>curator-framework<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.2.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- Zookeeper依赖 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/org.apache.zookeeper/zookeeper --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.zookeeper<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>zookeeper<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.8.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>在Spring配置文件中声明注册中心的地址【调用者和消费者均需要加】。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:registry</span> <span class="attr">address</span>=<span class="string">&quot;zookeeper://localhost:2181&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>注意，既然设置了注册中心，那么前面的protocol不再需要了，而且registry=”N/A”也不需要了。另外，消费者中的URL也就无需设置了。</p>
+</li>
+</ol>
+<p>其实，只需要在提供者和调用者中加入注册中心即可。对于前面抽取出的接口独立项目无需加入注册中心。</p>
+<blockquote>
+<p>总体来说，通过接口独立项目，提供者和消费者均能获得所有的接口。提供者只需要加入该接口项目的依赖，并实现该接口功能即可，并将服务发布到Zookeeper注册中心【注意，这里注册中心其实也可以是一台独立的服务器】。而消费者只需要接入注册中心，直接请求服务即可。</p>
+<p>具体的细节操作，可由注册中心自己来完成。</p>
+</blockquote>
+<h2 id="4-监控中心"><a href="#4-监控中心" class="headerlink" title="4. 监控中心"></a>4. 监控中心</h2><p>监控中心，其实可有可无。这个监控中心，Dubbo官方已经实现了这个Web项目，监控中心从注册中心获取到提供者和消费者的相关信息。<a target="_blank" rel="noopener" href="https://github.com/alibaba/dubbo/dubbo-admin">官网</a>，这里是源代码，需要手动编译才能使用。</p>
+<h3 id="4-1-发布配置中心"><a href="#4-1-发布配置中心" class="headerlink" title="4.1 发布配置中心"></a>4.1 发布配置中心</h3><h3 id="4-2-发布Dubbo项目"><a href="#4-2-发布Dubbo项目" class="headerlink" title="4.2 发布Dubbo项目"></a>4.2 发布Dubbo项目</h3><p>下载后可编译成war包，放置到Tomcat的webapp目录下即可。在该项目中，可看到具体的服务</p>
+<p><img src="D:%5Cothers%5Cstudy_source%5CGithubBlog%5CBlogImageBed%5Cblog-image-bed%5CJavaWeb%5Cdubbo%5Cdubbo_010.png" alt="image-20220629092348446"></p>
+<h2 id="5-负载均衡"><a href="#5-负载均衡" class="headerlink" title="5. 负载均衡"></a>5. 负载均衡</h2><p>负载均衡主要是针对集群来说的。</p>
+<blockquote>
+<p>集群是一种服务结构，把一组多个计算机，包括硬件和软件组织在一个网络中。相互连接起来共同完成某个工作。对用户来说使用的是一个计算机，集群对用户是透明的。</p>
+</blockquote>
+<p><strong>负载均衡是以集群为前提的</strong>。英文名称是Load Balance，其意思就是将负载（工作任务）进行平衡、分摊到多个操作单元上进行执行。</p>
+<p>对于网络而言，并不是一开始就需要负载均衡，当网络应用的访问量不断增长，单个处理单元无法满足负载需求时，网络应用流量将要出现瓶颈时，负载均衡才会起到作用。一般通过一个或者多个前端负载均衡器，将工作负载分发到后端的一组服务器上，从而达到整个系统的高性能和高可用性。</p>
+<p>负载均衡有两方面的含义：首先，单个重负载的工作分配到多台服务器并做处理，每个服务器处理结束后，将结果汇总，返回给用户，系统处理能力得到大幅度提高。第二：大量的并发访问或数据流量分担到多台服务器分别处理，减少用户等待响应的时间。每个访问分配给不同的服务器处理。</p>
+<p>本质上说，负载均衡就是合理分配请求，相当于一个转发的作用，并不真正处理请求。</p>
+<h3 id="5-1-Dubbo负载均衡"><a href="#5-1-Dubbo负载均衡" class="headerlink" title="5.1 Dubbo负载均衡"></a>5.1 Dubbo负载均衡</h3><p>Dubbo提供了多种均衡策略，默认为Random随机调用。</p>
+<h4 id="5-1-1-Random-LoadBalance"><a href="#5-1-1-Random-LoadBalance" class="headerlink" title="5.1.1 Random LoadBalance"></a>5.1.1 Random LoadBalance</h4><p>随机负载均衡，按照权重设置随机概率。在一个截面上碰撞的概率高，但调用量越大越分布均匀，而且按概率使用权重后也比较均匀，有利于动态调整提供者权重。</p>
+<p><strong>当一个请求到达后，为该请求生成一个随机数，随机数为多少，就将其请求转发到对应的服务器。</strong></p>
+<h4 id="5-1-2-RoundRobin-LoadBalance"><a href="#5-1-2-RoundRobin-LoadBalance" class="headerlink" title="5.1.2 RoundRobin LoadBalance"></a>5.1.2 RoundRobin LoadBalance</h4><p>轮询负载均衡，按照公约后的权重设置轮询比率。也就是说，依次分配给每一台服务器，这些服务器轮流接收请求。这种方式存在：效率低的服务器累积请求问题。比如，某台服务器的处理请求很慢，但是仍然给它分配和其他服务器相同数量的请求，显然该服务器上的请求就会累积。</p>
+<h4 id="5-1-3-LeastActive-LoadBalance"><a href="#5-1-3-LeastActive-LoadBalance" class="headerlink" title="5.1.3 LeastActive LoadBalance"></a>5.1.3 LeastActive LoadBalance</h4><p>最好活跃调用数负载均衡，即检查每台服务器剩余未处理的请求，剩余请求量越多，后续分配给它的请求就会少一点。</p>
+<h4 id="5-1-4-ConsistentHash-LoadBalance"><a href="#5-1-4-ConsistentHash-LoadBalance" class="headerlink" title="5.1.4 ConsistentHash LoadBalance"></a>5.1.4 ConsistentHash LoadBalance</h4><p>一致性Hash，相同参数的请求总是发送到统一提供者服务器上。类似哈希算法。<strong>当已有的服务节点宕掉后，会重新进行哈希节点分配，即对故障节点不再分配请求。</strong></p>
+<h3 id="5-2-代码实现"><a href="#5-2-代码实现" class="headerlink" title="5.2 代码实现"></a>5.2 代码实现</h3><p>可在提供者或者消费者的配置文件中指明。</p>
+<p>如：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:service</span> <span class="attr">loadbalance</span>=<span class="string">&quot;random&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:service</span> <span class="attr">loadbalance</span>=<span class="string">&quot;roundrobin&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:service</span> <span class="attr">loadbalance</span>=<span class="string">&quot;leastactive&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:service</span> <span class="attr">loadbalance</span>=<span class="string">&quot;consistenthash&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 或者 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:reference</span> <span class="attr">loadbalance</span>=<span class="string">&quot;random&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:reference</span> <span class="attr">loadbalance</span>=<span class="string">&quot;roundrobin&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:reference</span> <span class="attr">loadbalance</span>=<span class="string">&quot;leastactive&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:reference</span> <span class="attr">loadbalance</span>=<span class="string">&quot;consistenthash&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="6-总结"><a href="#6-总结" class="headerlink" title="6. 总结"></a>6. 总结</h2><p>随着应用越来越臃肿，单一应用部署到一台服务器上服务效率较低，因此出现了垂直架构、分布式架构以及流架构等等。</p>
+<p>Dubbo框架，则是基于RPC协议实现了远程调用，可以实现垂直架构、分布式架构和流架构等等。有提供者、调用者、注册中心和监控中心等等，并且实现了负载均衡。</p>
+<h2 id="7-备注"><a href="#7-备注" class="headerlink" title="7. 备注"></a>7. 备注</h2><p><em>参考B站《动力节点》。</em></p>
+<p><strong>待解决问题：Netty网络通信。Zookeeper到底是什么，如果没有Dubbo，它的作用是干嘛的。</strong></p>
+
                 
             </div>
             <hr/>
@@ -500,7 +780,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">hianian</a>
+                    <a href="/about" rel="external nofollow noreferrer">浮云</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -523,7 +803,7 @@
                     本博客所有文章除特別声明外，均采用
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     许可协议。转载请注明来源
-                    <a href="/about" target="_blank">hianian</a>
+                    <a href="/about" target="_blank">浮云</a>
                     !
                 </span>
             </div>
@@ -547,7 +827,11 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/JavaWeb/">
+                                    <span class="chip bg-color">JavaWeb</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -989,7 +1273,7 @@
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2021-2022</span>
+                <span id="year">2021-2023</span>
             
             <span id="year">2021</span>
             <a href="/about" target="_blank">hianian</a>
@@ -998,7 +1282,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">382.1k</span>&nbsp;字
+                class="white-color">600.8k</span>&nbsp;字
             
             
             
